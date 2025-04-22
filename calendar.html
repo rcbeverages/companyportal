@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scheduled Calls</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0057b7;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .welcome {
+      background: #cfe2ff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .btn {
+      background: #0057b7;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    .btn:hover {
+      background: #0042a5;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .day-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .slots {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .slot {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      position: relative;
+      min-height: 80px;
+      transition: background-color 0.3s ease;
+    }
+    .slot.logged {
+      background-color: #d4edda;
+    }
+    .slot-header {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .slot-buttons {
+      margin-top: 0.5rem;
+    }
+    .slot-buttons button {
+      margin-right: 8px;
+    }
+    .slot[draggable=\"true\"] {
+      cursor: move;
+    }
+    .slot.drag-over {
+      border: 2px dashed #0057b7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Scheduled Calls</h1>
+  </header>
+
+  <div class="welcome">
+    <button class="btn" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="btn" onclick="openAddCalls()">+ Add Calls</button>
+    <div class="controls">
+      <button class="btn" onclick="goToToday()">Today</button>
+      <input type="date" id="datePicker" onchange="loadDay(this.value)" />
+    </div>
+  </div>
+
+  <div id="dayTitle" class="day-title"></div>
+  <div id="slots" class="slots"></div><script>
+const sheetEndpoint = "https://sheetdb.io/api/v1/9envyaeemiz9h";
+const customerEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const visitLogEndpoint = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
+
+const username = localStorage.getItem("username");
+const bdmMap = {
+  rhincksman: "Ryan Hincksman",
+  chawkins: "Chris Hawkins"
+};
+const bdmName = bdmMap[username];
+
+let currentDate = new Date().toISOString().split("T")[0];
+let currentCalls = [];
+let customerCache = [];
+let visitLogCache = [];
+let dragIndex = null;
+
+function goToToday() {
+  currentDate = new Date().toISOString().split("T")[0];
+  loadDay(currentDate);
+}
+
+async function loadDay(date) {
+  currentDate = date;
+  document.getElementById("datePicker").value = date;
+  document.getElementById("dayTitle").textContent = `Scheduled Calls for ${new Date(date).toDateString()}`;
+
+  const [callRes, customerRes, logRes] = await Promise.all([
+    fetch(sheetEndpoint),
+    fetch(customerEndpoint),
+    fetch(visitLogEndpoint)
+  ]);
+  const callData = await callRes.json();
+  customerCache = await customerRes.json();
+  visitLogCache = await logRes.json();
+
+  currentCalls = callData
+    .filter(d => d.Date?.startsWith(date) && d.BDM === bdmName && d.Status !== "Deleted")
+    .sort((a, b) => Number(a.Order || 999) - Number(b.Order || 999));
+
+  renderSlots(currentCalls);
+}
+
+function renderSlots(calls) {
+  const container = document.getElementById("slots");
+  container.innerHTML = "";
+
+  for (let i = 0; i < 20; i++) {
+    const call = calls[i];
+    const slot = document.createElement("div");
+    slot.className = "slot";
+    slot.dataset.index = i;
+
+    if (call) {
+      const customer = customerCache.find(c => c["Customer Name"] === call["Customer Name"]);
+      const isLogged = visitLogCache.some(
+        log => log["Customer Name"] === call["Customer Name"] && log.Date?.startsWith(currentDate)
+      );
+
+      if (isLogged) slot.classList.add("logged");
+
+      slot.setAttribute("draggable", "true");
+      slot.ondragstart = () => dragIndex = i;
+      slot.ondragover = (e) => {
+        e.preventDefault();
+        slot.classList.add("drag-over");
+      };
+      slot.ondragleave = () => slot.classList.remove("drag-over");
+      slot.ondrop = () => {
+        slot.classList.remove("drag-over");
+        dropCall(i);
+      };
+
+      slot.innerHTML = `
+        <div class="slot-header">${call["Customer Name"]}</div>
+        <div><strong>Sub Owner:</strong> ${customer?.["Sub Owner Group"] || "-"}</div>
+        <div><strong>Key Account:</strong> ${customer?.["Key Account Group"] || "-"}</div>
+        <div><strong>Grade:</strong> ${customer?.Grade || "-"}</div>
+        <div class="slot-buttons">
+          <button class="btn" onclick="startCall('${call["Customer Name"]}')">Start</button>
+          <button class="btn" onclick="removeCall('${call["Customer Name"]}')">Remove</button>
+        </div>
+      `;
+    } else {
+      slot.innerHTML = `<div class="slot-header">[Empty Slot]</div>`;
+    }
+
+    container.appendChild(slot);
+  }
+}
+</script><script>
+function removeCall(customerName) {
+  fetch(`${sheetEndpoint}?limit=1000`)
+    .then(res => res.json())
+    .then(data => {
+      const match = data.find(row =>
+        row["Customer Name"] === customerName &&
+        row.Date?.substring(0, 10) === currentDate &&
+        row.BDM === bdmName &&
+        row.Status !== "Deleted"
+      );
+      if (!match || !match.id) {
+        alert("Call not found or already removed.");
+        return;
+      }
+
+      fetch(`${sheetEndpoint}/id/${match.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: { Status: "Deleted" } })
+      }).then(() => location.reload());
+    });
+}
+
+function dropCall(targetIndex) {
+  if (dragIndex === null || dragIndex === targetIndex) return;
+  const updated = [...currentCalls];
+  const [moved] = updated.splice(dragIndex, 1);
+  updated.splice(targetIndex, 0, moved);
+
+  const reordered = updated
+    .filter(c => c)
+    .map((c, i) => ({
+      "Customer Name": c["Customer Name"],
+      Date: c.Date,
+      BDM: c.BDM,
+      Order: i + 1
+    }));
+
+  Promise.all(reordered.map(entry =>
+    fetch(`${sheetEndpoint}/search?Customer%20Name=${encodeURIComponent(entry["Customer Name"])}&Date=${entry.Date}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: { Order: entry.Order } })
+    })
+  )).then(() => location.reload());
+}
+</script><script>
+function startCall(customerName) {
+  const customer = customerCache.find(c => c["Customer Name"] === customerName);
+  if (customer) {
+    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+    window.location.href = "visit.html";
+  } else {
+    alert("Customer not found.");
+  }
+}
+
+function openAddCalls() {
+  document.getElementById("addCallModal").style.display = "flex";
+  loadCustomerList();
+}
+
+function closeAddCalls() {
+  document.getElementById("addCallModal").style.display = "none";
+}
+
+function loadCustomerList() {
+  const container = document.getElementById("customerSelect");
+  container.innerHTML = "";
+
+  const todaysCalls = currentCalls.map(c => c["Customer Name"]);
+  const options = customerCache.filter(c =>
+    c.BDM === bdmName && !todaysCalls.includes(c["Customer Name"])
+  );
+
+  options.forEach(c => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+      <input type="checkbox" value="${c["Customer Name"]}" 
+        data-bdm="${c.BDM}" 
+        data-grade="${c.Grade}" 
+        data-key="${c["Key Account Group"]}" 
+        data-sub="${c["Sub Owner Group"]}"> 
+      ${c["Customer Name"]}
+    `;
+    container.appendChild(label);
+    container.appendChild(document.createElement("br"));
+  });
+}
+
+function submitCalls() {
+  const selected = [...document.querySelectorAll("#customerSelect input:checked")];
+  if (selected.length === 0) return alert("Select at least one customer.");
+
+  fetch(sheetEndpoint)
+    .then(res => res.json())
+    .then(existing => {
+      const todays = existing.filter(c =>
+        c.Date?.startsWith(currentDate) && c.BDM === bdmName && c.Status !== "Deleted"
+      );
+      const maxOrder = Math.max(0, ...todays.map(c => Number(c.Order || 0)));
+
+      const newData = selected.map((el, i) => ({
+        "Customer Name": el.value,
+        "Date": currentDate,
+        "BDM": el.dataset.bdm,
+        "Grade": el.dataset.grade,
+        "Key Account Group": el.dataset.key,
+        "Sub Owner Group": el.dataset.sub,
+        "Order": maxOrder + i + 1
+      }));
+
+      return fetch(sheetEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: newData })
+      });
+    })
+    .then(() => location.reload());
+}
+
+window.onload = () => {
+  document.getElementById("datePicker").value = currentDate;
+  loadDay(currentDate);
+};
+</script>
+
+<!-- Add Calls Modal -->
+<div id="addCallModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:white; padding:20px; border-radius:8px; max-width:500px; width:90%; max-height:90vh; overflow-y:auto;">
+    <h3>Add Calls for Selected Date</h3>
+    <div id="customerSelect" style="max-height:300px; overflow-y:auto; border:1px solid #ccc; margin:10px 0; padding:5px;"></div>
+    <button class="btn" onclick="submitCalls()">Add Calls</button>
+    <button class="btn" onclick="closeAddCalls()" style="margin-left:10px;">Cancel</button>
+  </div>
+</div>
+
+</body>
+</html>
