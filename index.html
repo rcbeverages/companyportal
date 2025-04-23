@@ -1,92 +1,67 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RC Beverages Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to RC Beverages</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
-    }
-    .btn {
-      background: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 16px;
-      margin: 0.5rem;
-      cursor: pointer;
-      flex: 1 1 auto;
-    }
-    .btn:hover {
-      background: #0042a5;
-    }
-    .button-row {
+      background: linear-gradient(to bottom right, #ffffff, #dbeafe);
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      padding: 1rem;
-    }
-    .section-block {
-      width: 100%;
+      height: 100vh;
+      flex-direction: column;
+      color: #111827;
       text-align: center;
-      padding: 0.5rem 1rem;
     }
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      max-width: 90%;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+    img {
+      max-width: 160px;
+      margin: 20px auto;
+      display: block;
     }
   </style>
 </head>
 <body>
-<div id="headerContainer"></div>
-<div id="dashboardContainer"></div>
 
-<script>
-const layout = {"Customer Tools": [{"label": "Add Customer", "href": "add_customer.html"}, {"label": "Journey Planner", "href": "calendar.html"}, {"label": "Store Database", "href": "store_database.html"}, {"label": "Email Database", "href": "email_database.html"}, {"label": "Place Pre-Order", "href": "preorder.html"}, {"label": "Portfolio", "href": "portfolio.html"}, {"label": "Rewinded Arcade Hub", "href": "arcade.html"}, {"label": "Wholesaler Portals", "href": "wholesalers.html"}]};
-const username = localStorage.getItem("username");
-const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
-const bdmName = bdmMap[username] || "";
+  <img src="logo.png" alt="RC Beverages Logo" />
+  <h1>Welcome to RC Beverages</h1>
 
-document.getElementById("headerContainer").innerHTML = `
-<header style="background: #0057b7; color: white; padding: 1rem; text-align: center;">
-  <img src="logo.png" alt="RC Beverages Logo" style="max-height: 60px; display: block; margin: 0 auto 10px;" />
-  <h1 id="pageTitle" style="margin: 0;">Dashboard</h1>
-</header>
-<div style="background: #cfe2ff; text-align: center; padding: 1rem;">
-  <button onclick="location.href='index.html'" class="btn">Back to Dashboard</button>
-  <div id="bdmWelcome"></div>
-</div>
-`;
-if (window.location.pathname.includes("index.html") && bdmName) {
-  document.getElementById("bdmWelcome").textContent = "Welcome, " + bdmName;
-}
+  <p>Your central hub for managing customer visits and field activities.</p>
 
-const container = document.getElementById("dashboardContainer");
-for (const [section, buttons] of Object.entries(layout)) {
-  const sectionBlock = document.createElement("div");
-  sectionBlock.className = "section-block";
-  const heading = document.createElement("h3");
-  heading.textContent = section;
-  sectionBlock.appendChild(heading);
+  <p>
+    At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites.
+    Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast,
+    thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising
+    quality, and unforgettable branding that speaks to a new generation of drinkers.
+  </p>
 
-  const row = document.createElement("div");
-  row.className = "button-row";
-  buttons.forEach(btn => {
-    const button = document.createElement("button");
-    button.className = "btn";
-    button.textContent = btn.label;
-    button.onclick = () => location.href = btn.href;
-    row.appendChild(button);
-  });
-  sectionBlock.appendChild(row);
-  container.appendChild(sectionBlock);
-}
-</script>
+  <button onclick="location.href='login.html'">Get Started</button>
+
 </body>
 </html>
