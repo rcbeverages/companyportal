@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RC Beverages Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    .btn {
+      background: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      margin: 0.5rem;
+      cursor: pointer;
+      flex: 1 1 auto;
+    }
+    .btn:hover {
+      background: #0042a5;
+    }
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .section-block {
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+<div id="headerContainer"></div>
+<div id="dashboardContainer"></div>
+
+<script>
+const layout = {"Customer Tools": [{"label": "Add Customer", "href": "add_customer.html"}, {"label": "Journey Planner", "href": "calendar.html"}, {"label": "Store Database", "href": "store_database.html"}, {"label": "Email Database", "href": "email_database.html"}, {"label": "Place Pre-Order", "href": "preorder.html"}, {"label": "Portfolio", "href": "portfolio.html"}, {"label": "Rewinded Arcade Hub", "href": "arcade.html"}, {"label": "Wholesaler Portals", "href": "wholesalers.html"}]};
+const username = localStorage.getItem("username");
+const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
+const bdmName = bdmMap[username] || "";
+
+document.getElementById("headerContainer").innerHTML = `
+<header style="background: #0057b7; color: white; padding: 1rem; text-align: center;">
+  <img src="logo.png" alt="RC Beverages Logo" style="max-height: 60px; display: block; margin: 0 auto 10px;" />
+  <h1 id="pageTitle" style="margin: 0;">Dashboard</h1>
+</header>
+<div style="background: #cfe2ff; text-align: center; padding: 1rem;">
+  <button onclick="location.href='index.html'" class="btn">Back to Dashboard</button>
+  <div id="bdmWelcome"></div>
+</div>
+`;
+if (window.location.pathname.includes("index.html") && bdmName) {
+  document.getElementById("bdmWelcome").textContent = "Welcome, " + bdmName;
+}
+
+const container = document.getElementById("dashboardContainer");
+for (const [section, buttons] of Object.entries(layout)) {
+  const sectionBlock = document.createElement("div");
+  sectionBlock.className = "section-block";
+  const heading = document.createElement("h3");
+  heading.textContent = section;
+  sectionBlock.appendChild(heading);
+
+  const row = document.createElement("div");
+  row.className = "button-row";
+  buttons.forEach(btn => {
+    const button = document.createElement("button");
+    button.className = "btn";
+    button.textContent = btn.label;
+    button.onclick = () => location.href = btn.href;
+    row.appendChild(button);
+  });
+  sectionBlock.appendChild(row);
+  container.appendChild(sectionBlock);
+}
+</script>
+</body>
+</html>
