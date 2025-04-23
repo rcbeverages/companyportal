@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RC Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+    }
+    header {
+      background: #0057b7;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .welcome {
+      background: #cfe2ff;
+      padding: 2rem;
+      text-align: center;
+    }
+    .btn {
+      background: #0057b7;
+      color: white;
+      border: none;
+      padding: 16px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 80%;
+      max-width: 320px;
+      margin: 10px auto;
+      display: block;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .btn:hover {
+      background: #0042a5;
+    }
+    .button-group {
+      margin-bottom: 2rem;
+    }
+    h3 {
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>RC Beverages Portal</h1>
+</header>
+<div class="welcome">
+  <h2>Welcome</h2>
+  <div id="dashboardContainer"></div>
+</div>
+<script>
+const layout = {
+  "Customer Tools": [
+    { "label": "Add Customer", "href": "dashboard.html" },
+    { "label": "Store Database", "href": "calendar.html" },
+    { "label": "Email Database", "href": "dashboard.html" },
+    { "label": "Journey Planner", "href": "calendar.html" }
+  ],
+  "Warehouse Tools": [
+    { "label": "View Stock", "href": "dashboard.html" },
+    { "label": "Returns", "href": "dashboard.html" }
+  ]
+};
+
+const container = document.getElementById('dashboardContainer');
+for (const [section, buttons] of Object.entries(layout)) {
+  const h3 = document.createElement('h3');
+  h3.textContent = section;
+  const group = document.createElement('div');
+  group.className = 'button-group';
+  buttons.forEach(btn => {
+    const el = document.createElement('button');
+    el.className = 'btn';
+    el.textContent = btn.label;
+    el.onclick = () => window.location.href = btn.href;
+    group.appendChild(el);
+  });
+  container.appendChild(h3);
+  container.appendChild(group);
+}
+</script>
+</body>
+</html>
