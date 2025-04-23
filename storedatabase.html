@@ -13,38 +13,44 @@
       background: #f4f4f4;
       text-align: center;
     }
+
     header {
       background: #0057b7;
       color: white;
       padding: 1rem;
     }
+
     header img {
       max-height: 60px;
       display: block;
       margin: 0 auto 10px;
     }
+
     h1 {
       margin: 0;
     }
+
     .sub-header {
       background: #cfe2ff;
       padding: 1rem;
     }
+
     .search-box {
       margin-top: 1rem;
       padding: 0.5rem;
       width: 80%;
-      max-width: 600px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+
     .customer-tiles {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin: 2rem 0;
     }
+
     .customer-tile {
       background-color: #fff;
       padding: 1rem;
@@ -54,9 +60,11 @@
       border-radius: 8px;
       text-align: left;
     }
+
     .customer-tile h3 {
-      margin: 0 0 0.5rem;
+      margin: 0 0 10px;
     }
+
     .visit-button {
       background: #0057b7;
       color: white;
@@ -65,96 +73,114 @@
       border-radius: 6px;
       cursor: pointer;
     }
+
     .visit-button:hover {
       background: #0042a5;
     }
+
+    /* Mobile Styling */
     @media screen and (max-width: 768px) {
-      .customer-tile {
-        width: calc(50% - 1rem);
-      }
-    }
-    @media screen and (max-width: 480px) {
       .customer-tile {
         width: 100%;
       }
     }
+
   </style>
 </head>
 
 <body>
+  <!-- Header -->
   <header>
     <h1>RC Beverages - Store Database</h1>
   </header>
 
+  <!-- Sub Header with Search bar -->
   <div class="sub-header">
     <input type="text" id="search-box" class="search-box" placeholder="Search by Store Name" />
   </div>
 
+  <!-- Store List Tiles -->
   <div class="customer-tiles" id="customer-tiles"></div>
 
   <script>
-    // Fetch data from the SheetDB API
-    fetch('https://sheetdb.io/api/v1/6t9yz1xgzgc7s')
+    const loggedInBDM = localStorage.getItem("username"); // Getting logged-in BDM from localStorage
+
+    let storeData = [];
+    let visitData = [];
+
+    // Fetch Store List Data
+    fetch('https://sheetdb.io/api/v1/8ba1eug88u4y1')
       .then(response => response.json())
       .then(data => {
-        const customerTilesContainer = document.getElementById('customer-tiles');
+        storeData = data;
+        populateStoreList();
+      })
+      .catch(error => {
+        console.error('Error fetching store data:', error);
+      });
 
-        // Loop through the data to display customer tiles
-        data.forEach(store => {
+    // Fetch Visit Log Data
+    fetch('https://sheetdb.io/api/v1/3jn3pg6hok7hj')
+      .then(response => response.json())
+      .then(data => {
+        visitData = data;
+        populateStoreList();
+      })
+      .catch(error => {
+        console.error('Error fetching visit log data:', error);
+      });
+
+    function populateStoreList() {
+      // Ensure both store and visit data are fetched before populating
+      if (storeData.length > 0 && visitData.length > 0) {
+        const container = document.getElementById("customer-tiles");
+        container.innerHTML = '';
+
+        // Filter stores based on the logged-in BDM
+        const filteredStores = storeData.filter(store => store.BDM === loggedInBDM);
+
+        filteredStores.forEach(store => {
           const storeTile = document.createElement('div');
           storeTile.classList.add('customer-tile');
 
-          // Store Name, Sub Owner Group, Key Account Group, Grade
-          const storeName = document.createElement('h3');
-          storeName.textContent = store['Store Name'];
-          storeTile.appendChild(storeName);
+          // Get last visit data for the store from visitData
+          const visit = visitData.find(v => v.storeName === store['Store Name']);
+          const lastVisit = visit ? visit['Last Visit'] : 'N/A';
 
-          const subOwnerGroup = document.createElement('p');
-          subOwnerGroup.textContent = `Sub Owner Group: ${store['Sub Owner Group']}`;
-          storeTile.appendChild(subOwnerGroup);
+          storeTile.innerHTML = `
+            <h3>${store['Store Name']}</h3>
+            <p><strong>Sub Owner Group:</strong> ${store['Sub Owner Group']}</p>
+            <p><strong>Key Account Group:</strong> ${store['Key Account Group']}</p>
+            <p><strong>Grade:</strong> ${store['Grade']}</p>
+            <p><strong>Last Visit:</strong> ${lastVisit}</p>
+            <button class="visit-button" onclick="visitStore('${store['Store Name']}')">Visit</button>
+          `;
 
-          const keyAccountGroup = document.createElement('p');
-          keyAccountGroup.textContent = `Key Account Group: ${store['Key Account Group']}`;
-          storeTile.appendChild(keyAccountGroup);
-
-          const grade = document.createElement('p');
-          grade.textContent = `Grade: ${store['Grade']}`;
-          storeTile.appendChild(grade);
-
-          // Last Visit
-          const lastVisit = document.createElement('p');
-          lastVisit.textContent = `Last Visit: ${store['Last Visit'] || 'N/A'}`;
-          storeTile.appendChild(lastVisit);
-
-          // Visit button
-          const visitButton = document.createElement('button');
-          visitButton.classList.add('visit-button');
-          visitButton.textContent = 'Visit';
-          visitButton.onclick = function () {
-            window.location.href = `visit.html?store=${store['Store Name']}`; // Directs to a visit page for this store
-          };
-          storeTile.appendChild(visitButton);
-
-          // Append the store tile to the container
-          customerTilesContainer.appendChild(storeTile);
+          container.appendChild(storeTile);
         });
+      }
+    }
 
-        // Search Functionality
-        const searchBox = document.getElementById('search-box');
-        searchBox.addEventListener('input', function () {
-          const searchTerm = searchBox.value.toLowerCase();
-          const tiles = document.querySelectorAll('.customer-tile');
-
-          tiles.forEach(tile => {
-            const storeName = tile.querySelector('h3').textContent.toLowerCase();
-            if (storeName.includes(searchTerm)) {
-              tile.style.display = '';
-            } else {
-              tile.style.display = 'none';
-            }
-          });
-        });
+    function filterStores() {
+      const query = document.getElementById("search-box").value.toLowerCase();
+      const tiles = document.querySelectorAll('.customer-tile');
+      tiles.forEach(tile => {
+        const storeName = tile.querySelector('h3').textContent.toLowerCase();
+        if (storeName.includes(query)) {
+          tile.style.display = 'block';
+        } else {
+          tile.style.display = 'none';
+        }
       });
+    }
+
+    function visitStore(storeName) {
+      alert(`Visiting store: ${storeName}`);
+      // Redirect or open another page for detailed info
+    }
+
+    // Add event listener to the search box
+    document.getElementById('search-box').addEventListener('keyup', filterStores);
   </script>
 </body>
 
