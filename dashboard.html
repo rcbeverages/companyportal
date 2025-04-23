@@ -38,6 +38,7 @@
       padding: 1rem;
       min-width: 220px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex-shrink: 0;
     }
 
     .section-tile h3 {
@@ -63,6 +64,13 @@
 
     .btn:hover {
       background-color: #1e40af;
+    }
+
+    .no-access {
+      color: #888;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -93,15 +101,21 @@
           title.textContent = section;
           sectionTile.appendChild(title);
 
-          buttons
-            .filter(btn => btn.roles.includes(role))
-            .forEach(btn => {
+          const allowed = buttons.filter(btn => btn.roles.includes(role));
+          if (allowed.length > 0) {
+            allowed.forEach(btn => {
               const button = document.createElement("button");
               button.className = "btn";
               button.textContent = btn.label;
               button.onclick = () => location.href = btn.href;
               sectionTile.appendChild(button);
             });
+          } else {
+            const emptyNote = document.createElement("div");
+            emptyNote.className = "no-access";
+            emptyNote.textContent = "No tools available for your role.";
+            sectionTile.appendChild(emptyNote);
+          }
 
           container.appendChild(sectionTile);
         }
