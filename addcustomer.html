@@ -24,6 +24,11 @@
             text-align: center;
             padding: 20px 0;
         }
+        .header-subtitle {
+            background-color: #e0f2ff;
+            padding: 10px 0;
+            text-align: center;
+        }
         .form-container {
             background-color: #fff;
             padding: 20px;
@@ -60,6 +65,15 @@
         .form-container button:hover {
             background-color: #4a90e2;
         }
+        /* Mobile-friendly layout */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+            .header-subtitle {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -67,6 +81,11 @@
     <header>
         <h1>RC Beverages - Add Customer</h1>
     </header>
+
+    <div class="header-subtitle">
+        <p>Welcome, <span id="welcomeUser">Loading...</span></p>
+        <button onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+    </div>
 
     <div class="container">
         <div class="form-container">
@@ -185,6 +204,11 @@
 
         // Call the function to fetch dropdown data when the page loads
         fetchDropdownData();
+
+        // Get user from localStorage
+        const userFullName = localStorage.getItem("fullname");
+        const welcomeUserElement = document.getElementById("welcomeUser");
+        welcomeUserElement.textContent = userFullName || "Loading..."; // Default to "Loading..." if no user data found
     </script>
 
 </body>
