@@ -1,105 +1,108 @@
+<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RC Beverages Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      background-color: #f0f4ff;
     }
-    header {
-      background: #0057b7;
+    .header {
+      background-color: #0353a4;
       color: white;
       padding: 1rem;
       text-align: center;
+      font-size: 1.5rem;
     }
     .sub-header {
-      background-color: #cfe2ff;
+      background-color: #d7e3fc;
       padding: 0.75rem;
       text-align: center;
-    }
-    .section-title {
       font-weight: bold;
-      font-size: 1.1rem;
-      margin: 1rem 0 0.5rem;
-      text-align: center;
     }
-    .button-grid {
+    .group-title {
+      margin: 1rem 1rem 0.5rem;
+      font-size: 1.1rem;
+      color: #0353a4;
+      border-bottom: 2px solid #cce;
+      padding-bottom: 0.3rem;
+    }
+    .button-container {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      justify-content: center;
-      padding: 0 1rem 1.5rem;
+      padding: 0 1rem 1rem;
     }
-    .button-tile {
+    .dash-button {
+      flex: 1 1 calc(33% - 1rem);
+      padding: 1rem;
       background-color: #2563eb;
       color: white;
-      padding: 1rem;
+      border: none;
       border-radius: 8px;
-      text-decoration: none;
-      flex: 1 0 220px;
-      max-width: 220px;
       text-align: center;
+      cursor: pointer;
       font-size: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .button-tile:hover {
+    .dash-button:hover {
       background-color: #1e40af;
+    }
+    @media screen and (max-width: 768px) {
+      .dash-button {
+        flex: 1 1 calc(50% - 1rem);
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .dash-button {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>RC Beverages Dashboard</h1>
-  </header>
+  <div class="header">RC Beverages Dashboard</div>
+  <div class="sub-header" id="welcome">Welcome</div>
 
-  <div class="sub-header">
-    <span id="welcomeText">Welcome</span>
-  </div>
-
-  <div id="dashboard"></div>
+  <div id="dashboard-sections"></div>
 
   <script>
-    const username = localStorage.getItem("username") || "Guest";
-    const role = localStorage.getItem("role") || "Guest";
-    document.getElementById("welcomeText").innerText = "Welcome " + username;
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
+    document.getElementById("welcome").textContent = `Welcome ${username}`;
 
     fetch("dashboard.json")
       .then(res => res.json())
       .then(data => {
-        const dashboard = document.getElementById("dashboard");
-
-        for (const section in data) {
-          const buttons = data[section];
-
+        const container = document.getElementById("dashboard-sections");
+        data.forEach(group => {
+          const section = document.createElement("section");
           const title = document.createElement("div");
-          title.className = "section-title";
-          title.innerText = section;
+          title.className = "group-title";
+          title.textContent = group.group;
+          section.appendChild(title);
 
-          const grid = document.createElement("div");
-          grid.className = "button-grid";
+          const buttonWrapper = document.createElement("div");
+          buttonWrapper.className = "button-container";
 
-          buttons.forEach(btn => {
+          group.buttons.forEach(btn => {
             if (btn.roles.includes(role)) {
-              const a = document.createElement("a");
-              a.href = btn.href;
-              a.className = "button-tile";
-              a.innerText = btn.label;
-              grid.appendChild(a);
+              const button = document.createElement("button");
+              button.className = "dash-button";
+              button.textContent = btn.label;
+              button.onclick = () => window.location.href = btn.href;
+              buttonWrapper.appendChild(button);
             }
           });
 
-          if (grid.children.length > 0) {
-            dashboard.appendChild(title);
-            dashboard.appendChild(grid);
-          }
-        }
+          section.appendChild(buttonWrapper);
+          container.appendChild(section);
+        });
       });
   </script>
-
 </body>
 </html>
