@@ -47,11 +47,10 @@
       gap: 1rem;
       justify-content: center;
       padding: 0 1rem 1rem;
-      margin: 0 auto;
     }
 
     .dash-button {
-      flex: 1 1 calc(33% - 1rem); /* Default: buttons take up 1/3 of width */
+      flex: 1 1 calc(33% - 1rem);
       padding: 1rem;
       background-color: #2563eb;
       color: white;
@@ -66,32 +65,17 @@
       background-color: #1e40af;
     }
 
-    /* Media Queries for Tablet and Larger Screens */
+    /* Media Queries for Tablets and Larger Screens */
     @media screen and (min-width: 768px) {
+      .dash-button {
+        flex: 1 1 calc(33% - 1rem); /* Buttons take up 1/3 of width on tablet */
+      }
+
       .button-container {
         max-width: 1200px;
         margin: 0 auto;
       }
-
-      .dash-button {
-        flex: 1 1 calc(33% - 1rem); /* Buttons take up 1/3 of width on tablet */
-      }
     }
-
-    /* Ensure Buttons are Correctly Displayed for Tablets and Larger Screens */
-    @media screen and (min-width: 768px) {
-      .button-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-      }
-
-      .dash-button {
-        flex: 1 1 calc(33% - 1rem); /* Ensure 3 buttons per row */
-      }
-    }
-
   </style>
 </head>
 
@@ -112,41 +96,106 @@
   </div>
 
   <script>
+    // Get username and role from localStorage
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
     document.getElementById("welcome").textContent = `Welcome ${username}`;
 
-    // Fetch the dashboard data from JSON file or SheetDB
-    fetch('dashboard.json')  // Update path if necessary
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById("dashboard-sections");
+    // Define the buttons data directly in the script
+    const dashboardData = [
+      {
+        "group": "CRM Tools",
+        "buttons": [
+          { "label": "Add Customer", "href": "addcustomer.html", "roles": ["Admin", "Sales"] },
+          { "label": "Store Database", "href": "storedatabase.html", "roles": ["Admin", "Sales"] },
+          { "label": "Email Database", "href": "emaildatabase.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Journey Planners", "href": "journeyplanners.html", "roles": ["Admin", "Sales"] },
+          { "label": "Reminders", "href": "reminders.html", "roles": ["Admin", "Sales"] },
+          { "label": "Asset Management", "href": "asset.html", "roles": ["Admin", "Warehouse"] }
+        ]
+      },
+      {
+        "group": "Orders & Visits",
+        "buttons": [
+          { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin", "Sales"] },
+          { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin", "Sales"] },
+          { "label": "Visit History / Logs", "href": "visits.html", "roles": ["Admin", "Sales"] },
+          { "label": "Route Planner", "href": "routes.html", "roles": ["Admin", "Sales"] },
+          { "label": "Suggested Next Visit", "href": "nextvisit.html", "roles": ["Admin", "Sales"] }
+        ]
+      },
+      {
+        "group": "Marketing and Promotions",
+        "buttons": [
+          { "label": "Email Campaign Manager", "href": "campaigns.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Promotions", "href": "promos.html", "roles": ["Admin", "Marketing"] }
+        ]
+      },
+      {
+        "group": "Data & Analytics",
+        "buttons": [
+          { "label": "Store Performance", "href": "performance.html", "roles": ["Admin"] },
+          { "label": "Gap Targets", "href": "gaps.html", "roles": ["Admin"] },
+          { "label": "Activation Targets", "href": "activations.html", "roles": ["Admin"] }
+        ]
+      },
+      {
+        "group": "Resources",
+        "buttons": [
+          { "label": "Portfolio", "href": "portfolio.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Trade Presenters", "href": "presenters.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Price Lists", "href": "prices.html", "roles": ["Admin", "Sales"] },
+          { "label": "Training", "href": "training.html", "roles": ["Admin", "Sales", "Marketing", "Warehouse"] }
+        ]
+      },
+      {
+        "group": "Warehouse",
+        "buttons": [
+          { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
+          { "label": "Outbound / Dispatch", "href": "outbound.html", "roles": ["Admin", "Warehouse"] },
+          { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
+          { "label": "View Stock Levels", "href": "stock.html", "roles": ["Admin", "Warehouse"] },
+          { "label": "Low Stock Alerts", "href": "lowstock.html", "roles": ["Admin", "Warehouse"] },
+          { "label": "Low Code Stock Alerts", "href": "lowcode.html", "roles": ["Admin", "Warehouse"] }
+        ]
+      },
+      {
+        "group": "Settings",
+        "buttons": [
+          { "label": "Add User", "href": "adduser.html", "roles": ["Admin"] },
+          { "label": "Delete User", "href": "deleteuser.html", "roles": ["Admin"] },
+          { "label": "Change User Password", "href": "changepass.html", "roles": ["Admin"] },
+          { "label": "Change User Role", "href": "changerole.html", "roles": ["Admin"] }
+        ]
+      }
+    ];
 
-        data.forEach(group => {
-          const section = document.createElement("section");
-          const title = document.createElement("div");
-          title.className = "group-title";
-          title.textContent = group.group;
-          section.appendChild(title);
+    // Populate the dashboard with buttons based on the user's role
+    const container = document.getElementById("dashboard-sections");
 
-          const buttonWrapper = document.createElement("div");
-          buttonWrapper.className = "button-container";
+    dashboardData.forEach(group => {
+      const section = document.createElement("section");
+      const title = document.createElement("div");
+      title.className = "group-title";
+      title.textContent = group.group;
+      section.appendChild(title);
 
-          group.buttons.forEach(btn => {
-            if (btn.roles.includes(role)) {
-              const button = document.createElement("button");
-              button.className = "dash-button";
-              button.textContent = btn.label;
-              button.onclick = () => window.location.href = btn.href;
-              buttonWrapper.appendChild(button);
-            }
-          });
+      const buttonWrapper = document.createElement("div");
+      buttonWrapper.className = "button-container";
 
-          section.appendChild(buttonWrapper);
-          container.appendChild(section);
-        });
-      })
-      .catch(error => console.log('Error loading dashboard data:', error));
+      group.buttons.forEach(btn => {
+        if (btn.roles.includes(role)) {
+          const button = document.createElement("button");
+          button.className = "dash-button";
+          button.textContent = btn.label;
+          button.onclick = () => window.location.href = btn.href;
+          buttonWrapper.appendChild(button);
+        }
+      });
+
+      section.appendChild(buttonWrapper);
+      container.appendChild(section);
+    });
   </script>
 </body>
 
