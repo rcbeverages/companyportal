@@ -43,7 +43,7 @@
 <body>
 
   <div class="login-container">
-    <h2>RC Beverages TEST Login</h2>
+    <h2>RC Beverages Login</h2>
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
     <button id="loginBtn">Login</button>
@@ -58,8 +58,6 @@
         const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=" + username + "&_nocache=" + Date.now());
         const users = await response.json();
 
-        console.log("Fetched:", users);
-
         if (users.length === 0) {
           alert("Username not found.");
           return;
@@ -69,12 +67,10 @@
         const fullName = users[0].FullName;
         const role = users[0].Role;
 
-
         if (correctPassword === password) {
           localStorage.setItem("username", username);
           localStorage.setItem("role", role);
           localStorage.setItem("fullname", fullName);
-          alert("Login successful!");
           window.location.href = "dashboard.html";
         } else {
           alert("Incorrect password.");
