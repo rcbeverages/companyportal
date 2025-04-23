@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<div style="margin-top: 1rem;">
- <img src="logo.png" alt="RC Beverages Logo"
-     class="logo-spin"
-     style="max-width: 160px; margin: 20px auto; display: block;">
-</div>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,26 +44,38 @@
     button:hover {
       background-color: #1e40af;
     }
-   @keyframes spinOnce {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 
-.logo-spin {
-  animation: spinOnce 1s ease-out 1;
-}
+    @keyframes spinOnce {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .logo-spin {
+      animation: spinOnce 1s ease-out 1;
+    }
   </style>
 </head>
 <body>
+
+  <div style="margin-top: 1rem;">
+    <img src="logo.png" alt="RC Beverages Logo"
+         class="logo-spin"
+         style="max-width: 160px; margin: 20px auto; display: block;">
+  </div>
+
   <h1>Welcome to RC Beverages</h1>
 
- <p style="margin-bottom: 1.5rem;">
-  Your central hub for managing customer visits and field activities.
-</p>
-  
- <p style="margin-bottom:.5rem;">
-  At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry 
-know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
-<button style="margin-top: 2rem;" onclick="location.href='login.html'">
-  Get Started
-</button>
+  <p style="margin-bottom: 1.5rem;">
+    Your central hub for managing customer visits and field activities.
+  </p>
+
+  <p style="margin-bottom: .5rem;">
+    At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.
+  </p>
+
+  <button style="margin-top: 2rem;" onclick="location.href='login.html'">
+    Get Started
+  </button>
+
+</body>
+</html>
