@@ -4,26 +4,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages Dashboard</title>
+  <title>Store Database - RC Beverages</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
       margin: 0;
       padding: 0;
+      background: #f4f4f4;
+      text-align: center;
     }
 
     header {
       background: #0057b7;
       color: white;
       padding: 1rem;
-      text-align: center;
     }
 
-    .welcome {
+    h1 {
+      margin: 0;
+    }
+
+    .sub-header {
       background: #cfe2ff;
-      padding: 2rem;
-      text-align: center;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
     }
 
     .btn {
@@ -31,122 +36,166 @@
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 6px;
       font-size: 16px;
+      cursor: pointer;
     }
 
     .btn:hover {
       background: #0042a5;
     }
 
-    .tiles {
+    .search-box {
+      padding: 0.5rem;
+      margin: 10px 0;
+      width: 80%;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .customer-tiles {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
+      margin: 2rem 0;
     }
 
-    .tile {
-      background: white;
+    .customer-tile {
+      background-color: #fff;
+      padding: 1rem;
+      margin: 0.5rem;
+      width: calc(33% - 1rem);
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      text-align: left;
     }
 
-    .tile h3 {
-      margin-top: 0;
+    .customer-tile h3 {
+      margin: 0 0 10px;
     }
 
-    #searchInput {
-      margin: 10px auto;
-      display: block;
-      padding: 8px;
-      width: 80%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
+    .visit-button {
+      background: #0057b7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
+
+    .visit-button:hover {
+      background: #0042a5;
+    }
+
+    /* Mobile Styling */
+    @media screen and (max-width: 768px) {
+      .customer-tile {
+        width: 100%;
+      }
+    }
+
   </style>
 </head>
 
 <body>
+  <!-- Dark Blue Header -->
   <header>
-    <h1>RC Beverages Dashboard</h1>
+    <h1>Store Database</h1>
   </header>
 
-  <div class="welcome">
-    <h2 id="welcomeText">Welcome</h2>
-    <div style="text-align: center; margin-top: 20px;">
-      <button class="btn" onclick="location.href='addcustomer.html'">Add New Customer</button><br>
-      <button class="btn" onclick="location.href='calendar.html'" style="margin-top: 10px;">Journey Plan Calendar</button>
-    </div>
+  <!-- Light Blue Sub Header with Back to Dashboard Button -->
+  <div class="sub-header">
+    <button onclick="location.href='dashboard.html'" class="btn">Back to Dashboard</button>
   </div>
 
-  <input type="text" id="searchInput" placeholder="Search customers..." oninput="filterTiles()" />
+  <!-- Search Bar -->
+  <div class="sub-header">
+    <input type="text" id="search-box" class="search-box" placeholder="Search by Store Name" />
+  </div>
 
-  <div class="tiles" id="customerTiles"></div>
+  <!-- Store List Tiles -->
+  <div class="customer-tiles" id="customer-tiles"></div>
 
   <script>
-    const username = localStorage.getItem("username");
-    const bdmMap = {
-      rhincksman: "Ryan Hincksman",
-      chawkins: "Chris Hawkins"
-    };
+    const loggedInBDM = localStorage.getItem("username"); // Getting logged-in BDM from localStorage
 
-    const bdmName = bdmMap[username];
+    let storeData = [];
+    let visitData = [];
 
-    let customerCache = [];
-    document.getElementById("welcomeText").textContent = `Welcome, ${bdmName}`;
-
-    async function loadCustomers() {
-      const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
-      const data = await res.json();
-      customerCache = data;
-      displayTiles(data);
-    }
-
-    function displayTiles(data) {
-      const filtered = data.filter(c => c.BDM === bdmName);
-      const container = document.getElementById("customerTiles");
-      container.innerHTML = "";
-      filtered.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "tile";
-        div.setAttribute("data-name", `${c["Customer Name"].toLowerCase()} ${c.Grade?.toLowerCase()} ${c["Key Account Group"]?.toLowerCase()} ${c["Sub Owner Group"]?.toLowerCase()}`);
-        div.innerHTML = `
-          <h3>${c["Customer Name"]}</h3>
-          <p><strong>Grade:</strong> ${c.Grade}</p>
-          <p><strong>Key Account Group:</strong> ${c["Key Account Group"]}</p>
-          <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "-"}</p>
-          <p><strong>State:</strong> ${c.State}</p>
-          <button class="btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
-        `;
-        container.appendChild(div);
+    // Fetch Store List Data
+    fetch('https://sheetdb.io/api/v1/8ba1eug88u4y1')
+      .then(response => response.json())
+      .then(data => {
+        storeData = data;
+        populateStoreList();
+      })
+      .catch(error => {
+        console.error('Error fetching store data:', error);
       });
-    }
 
-    function filterTiles() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      document.querySelectorAll(".tile").forEach(tile => {
-        tile.style.display = tile.dataset.name.includes(query) ? "block" : "none";
+    // Fetch Visit Log Data
+    fetch('https://sheetdb.io/api/v1/3jn3pg6hok7hj')
+      .then(response => response.json())
+      .then(data => {
+        visitData = data;
+        populateStoreList();
+      })
+      .catch(error => {
+        console.error('Error fetching visit log data:', error);
       });
-    }
 
-    function startCall(customerName) {
-      const customer = customerCache.find(c => c["Customer Name"] === customerName);
-      if (customer) {
-        localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-        window.location.href = "visit.html";
-      } else {
-        alert("Customer not found.");
+    function populateStoreList() {
+      // Ensure both store and visit data are fetched before populating
+      if (storeData.length > 0 && visitData.length > 0) {
+        const container = document.getElementById("customer-tiles");
+        container.innerHTML = '';
+
+        // Filter stores based on the logged-in BDM
+        const filteredStores = storeData.filter(store => store.BDM === loggedInBDM);
+
+        filteredStores.forEach(store => {
+          const storeTile = document.createElement('div');
+          storeTile.classList.add('customer-tile');
+
+          // Get last visit data for the store from visitData
+          const visit = visitData.find(v => v.storeName === store['Store Name']);
+          const lastVisit = visit ? visit['Last Visit'] : 'N/A';
+
+          storeTile.innerHTML = `
+            <h3>${store['Store Name']}</h3>
+            <p><strong>Sub Owner Group:</strong> ${store['Sub Owner Group']}</p>
+            <p><strong>Key Account Group:</strong> ${store['Key Account Group']}</p>
+            <p><strong>Grade:</strong> ${store['Grade']}</p>
+            <p><strong>Last Visit:</strong> ${lastVisit}</p>
+            <button class="visit-button" onclick="visitStore('${store['Store Name']}')">Visit</button>
+          `;
+
+          container.appendChild(storeTile);
+        });
       }
     }
 
-    window.onload = loadCustomers;
+    function filterStores() {
+      const query = document.getElementById("search-box").value.toLowerCase();
+      const tiles = document.querySelectorAll('.customer-tile');
+      tiles.forEach(tile => {
+        const storeName = tile.querySelector('h3').textContent.toLowerCase();
+        if (storeName.includes(query)) {
+          tile.style.display = 'block';
+        } else {
+          tile.style.display = 'none';
+        }
+      });
+    }
+
+    function visitStore(storeName) {
+      alert(`Visiting store: ${storeName}`);
+      // Redirect or open another page for detailed info
+    }
+
+    // Add event listener to the search box
+    document.getElementById('search-box').addEventListener('input', filterStores);
   </script>
 </body>
 
