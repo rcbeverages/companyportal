@@ -56,9 +56,9 @@
       color: white;
       padding: 0.5rem;
       margin-bottom: 0.5rem;
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
       font-size: 0.95rem;
     }
 
@@ -86,7 +86,7 @@
   <script>
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
-    document.getElementById("roleTitle").textContent = `Welcome ${username}`;
+    document.getElementById("roleTitle").textContent = `Welcome ${username} (${role})`;
 
     fetch("dashboard.json")
       .then(response => response.json())
@@ -104,11 +104,11 @@
           const allowed = buttons.filter(btn => btn.roles.includes(role));
           if (allowed.length > 0) {
             allowed.forEach(btn => {
-              const button = document.createElement("button");
-              button.className = "btn";
-              button.textContent = btn.label;
-              button.onclick = () => location.href = btn.href;
-              sectionTile.appendChild(button);
+              const link = document.createElement("a");
+              link.className = "btn";
+              link.textContent = btn.label;
+              link.href = btn.href;
+              sectionTile.appendChild(link);
             });
           } else {
             const emptyNote = document.createElement("div");
