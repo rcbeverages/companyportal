@@ -1,47 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RC Beverages Dashboard</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      background: #f4f4f4;
     }
+
     header {
       background: #0057b7;
       color: white;
       padding: 1rem;
       text-align: center;
     }
-    .section-block {
-      padding: 1rem;
-      background: #cfe2ff;
-      margin: 1rem;
-      border-radius: 8px;
+
+    #roleTitle {
+      font-size: 1rem;
+      margin-top: 0.25rem;
+      color: #e0e0e0;
     }
-    .section-block h3 {
-      margin-top: 0;
-    }
-    .button-row {
+
+    .dashboard-wrapper {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 1rem;
+      gap: 1rem;
     }
+
+    .section-tile {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1rem;
+      min-width: 220px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .section-tile h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: #0057b7;
+      text-align: center;
+    }
+
     .btn {
-      background-color: #2563eb;
+      display: block;
+      width: 100%;
+      background: #2563eb;
       color: white;
-      padding: 0.75rem 1.25rem;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
+
     .btn:hover {
       background-color: #1e40af;
     }
@@ -49,45 +68,45 @@
 </head>
 <body>
 
-<header>
-  <h1>RC Beverages Dashboard</h1>
-  <p id="roleTitle"></p>
-</header>
+  <header>
+    <h1>RC Beverages Dashboard</h1>
+    <p id="roleTitle"></p>
+  </header>
 
-<div id="dashboardContainer"></div>
+  <div class="dashboard-wrapper" id="dashboardContainer"></div>
 
-<script>
-const username = localStorage.getItem("username");
-const role = localStorage.getItem("role");
-document.getElementById("roleTitle").textContent = "Welcome " + username "
+  <script>
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
+    document.getElementById("roleTitle").textContent = `Welcome ${username} (${role})`;
 
-fetch("dashboard.json")
-  .then(response => response.json())
-  .then(layout => {
-    const container = document.getElementById("dashboardContainer");
-    for (const [section, buttons] of Object.entries(layout)) {
-      const sectionDiv = document.createElement("div");
-      sectionDiv.className = "section-block";
-      const heading = document.createElement("h3");
-      heading.textContent = section;
-      sectionDiv.appendChild(heading);
+    fetch("dashboard.json")
+      .then(response => response.json())
+      .then(layout => {
+        const container = document.getElementById("dashboardContainer");
 
-      const row = document.createElement("div");
-      row.className = "button-row";
+        for (const [section, buttons] of Object.entries(layout)) {
+          const sectionTile = document.createElement("div");
+          sectionTile.className = "section-tile";
 
-      buttons.filter(btn => btn.roles.includes(role)).forEach(btn => {
-        const button = document.createElement("button");
-        button.className = "btn";
-        button.textContent = btn.label;
-        button.onclick = () => location.href = btn.href;
-        row.appendChild(button);
+          const title = document.createElement("h3");
+          title.textContent = section;
+          sectionTile.appendChild(title);
+
+          buttons
+            .filter(btn => btn.roles.includes(role))
+            .forEach(btn => {
+              const button = document.createElement("button");
+              button.className = "btn";
+              button.textContent = btn.label;
+              button.onclick = () => location.href = btn.href;
+              sectionTile.appendChild(button);
+            });
+
+          container.appendChild(sectionTile);
+        }
       });
-
-      sectionDiv.appendChild(row);
-      container.appendChild(sectionDiv);
-    }
-  });
-</script>
+  </script>
 
 </body>
 </html>
