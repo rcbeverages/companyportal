@@ -65,9 +65,10 @@
           return;
         }
 
-        const correctPassword = users[0].Password;
+        const correctPassword = users[0].password;
         const fullName = users[0].FullName;
         const role = users[0].Role;
+
 
         if (correctPassword === password) {
           localStorage.setItem("username", username);
