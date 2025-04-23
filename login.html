@@ -55,7 +55,7 @@
       const password = document.getElementById("password").value.trim();
 
       try {
-        const response = await fetch("https://sheetdb.io/api/v1/0yexzpug2r0h7/search?Username=" + username + "&_nocache=" + Date.now());
+        const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=" + username + "&_nocache=" + Date.now());
         const users = await response.json();
 
         console.log("Fetched:", users);
@@ -79,8 +79,8 @@
           alert("Incorrect password.");
         }
       } catch (err) {
-        alert("Something went wrong.");
-        console.error(err);
+        alert("Something went wrong:\n" + err.message);
+        console.error("Error details:", err);
       }
     });
   </script>
