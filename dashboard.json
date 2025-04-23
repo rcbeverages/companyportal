@@ -1,46 +1,46 @@
 {
   "CRM Tools": [
-    { "label": "Add Customer", "href": "addcustomer.html", "role": ["Admin"] },
-    { "label": "Store Database", "href": "storedatabase.html", "role": ["Admin"] },
-    { "label": "Email Database", "href": "emaildatabase.html", "role": ["Admin"] },
-    { "label": "Journey Planners", "href": "journeyplanner.html", "role": ["Admin"] },
-    { "label": "Reminders", "href": "reminders.html", "role": ["Admin"] },
-    { "label": "Asset Management", "href": "asset.html", "role": ["Admin"] }
+    { "label": "Add Customer", "href": "addcustomer.html", "roles": ["Admin"] },
+    { "label": "Store Database", "href": "storedatabase.html", "roles": ["Admin"] },
+    { "label": "Email Database", "href": "emaildatabase.html", "roles": ["Admin"] },
+    { "label": "Journey Planners", "href": "journeyplanners.html", "roles": ["Admin"] },
+    { "label": "Reminders", "href": "reminders.html", "roles": ["Admin"] },
+    { "label": "Asset Management", "href": "asset.html", "roles": ["Admin"] }
   ],
   "Orders & Visits": [
-    { "label": "Wholesaler Portals", "href": "wholesalers.html", "role": ["Admin"] },
-    { "label": "Pre-Orders", "href": "preorders.html", "role": ["Admin"] },
-    { "label": "Visit History / Logs", "href": "visit_logs.html", "role": ["Admin"] },
-    { "label": "Route Planner", "href": "route_planner.html", "role": ["Admin"] },
-    { "label": "Suggested Next Visit", "href": "suggested_visits.html", "role": ["Admin"] }
+    { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin"] },
+    { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin"] },
+    { "label": "Visit History / Logs", "href": "visitlogs.html", "roles": ["Admin"] },
+    { "label": "Route Planner", "href": "routeplanner.html", "roles": ["Admin"] },
+    { "label": "Suggested Next Visit", "href": "suggestedvisit.html", "roles": ["Admin"] }
   ],
   "Marketing and Promotions": [
-    { "label": "Email Campaign Manager", "href": "email_campaigns.html", "role": ["Admin"] },
-    { "label": "Promotions", "href": "promotions.html", "role": ["Admin"] }
+    { "label": "Email Campaign Manager", "href": "emailcampaigns.html", "roles": ["Admin"] },
+    { "label": "Promotions", "href": "promotions.html", "roles": ["Admin"] }
   ],
   "Data & Analytics": [
-    { "label": "Store Performance", "href": "store_performance.html", "role": ["Admin"] },
-    { "label": "Gap Targets", "href": "gap_targets.html", "role": ["Admin"] },
-    { "label": "Activation Targets", "href": "activation_targets.html", "role": ["Admin"] }
+    { "label": "Store Performance", "href": "storeperformance.html", "roles": ["Admin"] },
+    { "label": "Gap Targets", "href": "gaptargets.html", "roles": ["Admin"] },
+    { "label": "Activation Targets", "href": "activationtargets.html", "roles": ["Admin"] }
   ],
   "Resources": [
-    { "label": "Portfolio", "href": "portfolio.html", "role": ["Admin"] },
-    { "label": "Trade Presenters", "href": "presenters.html", "role": ["Admin"] },
-    { "label": "Price Lists", "href": "price_lists.html", "role": ["Admin"] },
-    { "label": "Training", "href": "training.html", "role": ["Admin""] }
+    { "label": "Portfolio", "href": "portfolio.html", "roles": ["Admin"] },
+    { "label": "Trade Presenters", "href": "presenters.html", "roles": ["Admin"] },
+    { "label": "Price Lists", "href": "pricelists.html", "roles": ["Admin"] },
+    { "label": "Training", "href": "training.html", "roles": ["Admin"] }
   ],
   "Warehouse": [
-    { "label": "Inbound / Receiving", "href": "inbound.html", "role": ["Admin"] },
-    { "label": "Outbound / Dispatch", "href": "dispatch.html", "role": ["Admin"] },
-    { "label": "Returns / Waste", "href": "returns.html", "role": ["Admin"] },
-    { "label": "View Stock Levels", "href": "stock_levels.html", "role": ["Admin"] },
-    { "label": "Low Stock Alerts", "href": "low_stock.html", "role": ["Admin"] },
-    { "label": "Low Code Stock Alerts", "href": "low_code_stock.html", "role": ["Admin"] }
+    { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin"] },
+    { "label": "Outbound / Dispatch", "href": "dispatch.html", "roles": ["Admin"] },
+    { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin"] },
+    { "label": "View Stock Levels", "href": "stocklevels.html", "roles": ["Admin"] },
+    { "label": "Low Stock Alerts", "href": "lowstock.html", "roles": ["Admin"] },
+    { "label": "Low Code Stock Alerts", "href": "lowcodestock.html", "roles": ["Admin"] }
   ],
   "Settings": [
-    { "label": "Add User", "href": "add_user.html", "role": ["Admin"] },
-    { "label": "Delete User", "href": "delete_user.html", "role": ["Admin"] },
-    { "label": "Change User Password", "href": "change_password.html", "role": ["Admin"] },
-    { "label": "Change User Role", "href": "change_role.html", "role": ["Admin"] }
+    { "label": "Add User", "href": "adduser.html", "roles": ["Admin"] },
+    { "label": "Delete User", "href": "deleteuser.html", "roles": ["Admin"] },
+    { "label": "Change User Password", "href": "changepassword.html", "roles": ["Admin"] },
+    { "label": "Change User Role", "href": "changerole.html", "roles": ["Admin"] }
   ]
 }
