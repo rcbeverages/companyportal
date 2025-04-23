@@ -86,7 +86,7 @@
   <script>
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
-    document.getElementById("roleTitle").textContent = `Welcome ${username} (${role})`;
+    document.getElementById("roleTitle").textContent = `Welcome ${username}`;
 
     fetch("dashboard.json")
       .then(response => response.json())
