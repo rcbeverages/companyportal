@@ -84,9 +84,8 @@
   <div class="dashboard-wrapper" id="dashboardContainer"></div>
 
   <script>
-    const username = localStorage.getItem("username");
-    const role = localStorage.getItem("role");
-    document.getElementById("roleTitle").textContent = `Welcome ${username} (${role})`;
+  const fullName = localStorage.getItem("fullname") || "User";
+    document.getElementById("roleTitle").textContent = `Welcome ${fullName}`;
 
     fetch("dashboard.json")
       .then(response => response.json())
