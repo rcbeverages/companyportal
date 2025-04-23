@@ -50,7 +50,7 @@
     }
 
     .dash-button {
-      flex: 1 1 calc(33% - 1rem);
+      flex: 1 1 100%;  /* Ensures each button takes up full width on smaller devices */
       padding: 1rem;
       background-color: #2563eb;
       color: white;
@@ -59,16 +59,17 @@
       text-align: center;
       cursor: pointer;
       font-size: 1rem;
+      box-sizing: border-box;
     }
 
     .dash-button:hover {
       background-color: #1e40af;
     }
 
-    /* Media Queries for Tablets and Larger Screens */
+    /* Media Queries for Tablet and Larger Screens */
     @media screen and (min-width: 768px) {
       .dash-button {
-        flex: 1 1 calc(33% - 1rem); /* Buttons take up 1/3 of width on tablet */
+        flex: 1 1 calc(33% - 1rem); /* Buttons take up 1/3 of the width on tablet */
       }
 
       .button-container {
@@ -76,12 +77,19 @@
         margin: 0 auto;
       }
     }
+
+    @media screen and (min-width: 1024px) {
+      .dash-button {
+        flex: 1 1 calc(25% - 1rem); /* Buttons take up 1/4 of the width on desktop */
+      }
+    }
+
   </style>
 </head>
 
 <body>
   <header>
-    <h1>RC Beverages Dashboard</h1>
+    <h1>Dashboard</h1>
   </header>
 
   <!-- Sub Header with Welcome message -->
