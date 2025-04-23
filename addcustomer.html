@@ -5,65 +5,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Add Customer - RC Beverages</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-      text-align: center;
-    }
-
-    header {
-      background: #0057b7;
-      color: white;
-      padding: 1rem;
-    }
-
-    header img {
-      max-height: 60px;
-      display: block;
-      margin: 0 auto 10px;
-    }
-
-    h1 {
-      margin: 0;
-    }
-
-    .sub-header {
-      background: #cfe2ff;
-      padding: 1rem;
-    }
-
-    .btn {
-      background: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #0042a5;
-    }
-
-    /* Content styling */
-    .content {
-      margin-top: 3rem;
-      font-size: 1.2rem;
-      color: #333;
-    }
-  </style>
 </head>
 
 <body>
   <!-- The header will be injected dynamically by header.js -->
 
-  <!-- Remove the placeholder content section -->
-  <div class="content">
-    <!-- Content for the page will be added here later -->
+  <div class="form-container">
+    <h2>Add New Customer</h2>
+    <form id="customerForm">
+      <!-- Your form fields for Add Customer -->
+      <label for="storeName">Store Name</label>
+      <input type="text" id="storeName" name="storeName" required>
+      <!-- Other form fields here... -->
+    </form>
   </div>
 
   <!-- Link the header.js to inject the header dynamically -->
