@@ -1,0 +1,86 @@
+{
+  "Customer Tools": [
+    {
+      "label": "Add Customer",
+      "href": "add_customer.html",
+      "roles": [
+        "Admin",
+        "Sales"
+      ]
+    },
+    {
+      "label": "Store Database",
+      "href": "store_database.html",
+      "roles": [
+        "Admin",
+        "Sales"
+      ]
+    },
+    {
+      "label": "Email Database",
+      "href": "email_database.html",
+      "roles": [
+        "Admin",
+        "Marketing"
+      ]
+    },
+    {
+      "label": "Journey Planner",
+      "href": "calendar.html",
+      "roles": [
+        "Admin",
+        "Sales"
+      ]
+    },
+    {
+      "label": "Place Pre-Order",
+      "href": "preorder.html",
+      "roles": [
+        "Admin",
+        "Sales"
+      ]
+    },
+    {
+      "label": "Portfolio",
+      "href": "portfolio.html",
+      "roles": [
+        "Admin",
+        "Marketing"
+      ]
+    },
+    {
+      "label": "Rewinded Arcade Hub",
+      "href": "arcade.html",
+      "roles": [
+        "Admin",
+        "Marketing"
+      ]
+    },
+    {
+      "label": "Wholesaler Portals",
+      "href": "wholesalers.html",
+      "roles": [
+        "Admin",
+        "Sales"
+      ]
+    }
+  ],
+  "Warehouse Tools": [
+    {
+      "label": "View Stock",
+      "href": "warehouse.html",
+      "roles": [
+        "Admin",
+        "Warehouse"
+      ]
+    },
+    {
+      "label": "Returns",
+      "href": "returns.html",
+      "roles": [
+        "Admin",
+        "Warehouse"
+      ]
+    }
+  ]
+}
