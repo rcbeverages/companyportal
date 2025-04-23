@@ -1,204 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RC Beverages Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Customer - RC Beverages</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f0f4ff;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      text-align: center;
     }
-    .header {
-      background-color: #0353a4;
+
+    header {
+      background: #0057b7;
       color: white;
       padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
     }
+
+    header img {
+      max-height: 60px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
     .sub-header {
-      background-color: #d7e3fc;
-      padding: 0.75rem;
-      text-align: center;
-      font-weight: bold;
-    }
-    .group-title {
-      margin: 1rem 1rem 0.5rem;
-      font-size: 1.1rem;
-      color: #0353a4;
-      border-bottom: 2px solid #cce;
-      padding-bottom: 0.3rem;
-    }
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 0 1rem 1rem;
-    }
-    .dash-button {
-      flex: 1 1 calc(33% - 1rem);
+      background: #cfe2ff;
       padding: 1rem;
-      background-color: #2563eb;
+    }
+
+    .btn {
+      background: #0057b7;
       color: white;
       border: none;
-      border-radius: 8px;
-      text-align: center;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
-      font-size: 1rem;
     }
-    .dash-button:hover {
-      background-color: #1e40af;
+
+    .btn:hover {
+      background: #0042a5;
     }
-    @media screen and (max-width: 768px) {
-      .dash-button {
-        flex: 1 1 calc(50% - 1rem);
-      }
-    }
-    @media screen and (max-width: 480px) {
-      .dash-button {
-        flex: 1 1 100%;
-      }
+
+    /* Content styling */
+    .content {
+      margin-top: 3rem;
+      font-size: 1.2rem;
+      color: #333;
     }
   </style>
 </head>
-<body>
-
-  <div class="header">RC Beverages Dashboard</div>
-  <div id="dashboard-sections"></div>
 
 <body>
-<header>
-  <h1>Add Customer</h1>
-</header>
-<div class="sub-header">
-  <button onclick="location.href='dashboard.html'" class="btn">Back to Dashboard</button>
-</div>
-</body>
-</html>
-    <div class="container">
-        <div class="form-container">
-            <h2>Add New Customer</h2>
-            <form id="customerForm">
-                <label for="storeName">Store Name</label>
-                <input type="text" id="storeName" name="storeName" required>
+  <!-- The header will be injected dynamically by header.js -->
 
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
+  <!-- Remove the placeholder content section -->
+  <div class="content">
+    <!-- Content for the page will be added here later -->
+  </div>
 
-                <label for="suburb">Suburb</label>
-                <input type="text" id="suburb" name="suburb" required>
-
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" required>
-
-                <label for="postcode">Postcode</label>
-                <input type="text" id="postcode" name="postcode" required>
-
-                <label for="contactName">Contact Name</label>
-                <input type="text" id="contactName" name="contactName" required>
-
-                <label for="contactPhone">Contact Phone</label>
-                <input type="text" id="contactPhone" name="contactPhone" required>
-
-                <label for="contactEmail">Contact Email</label>
-                <input type="email" id="contactEmail" name="contactEmail" required>
-
-                <label for="segment">Segment</label>
-                <select id="segment" name="segment" required>
-                    <option value="">Select Segment</option>
-                </select>
-
-                <label for="keyAccountGroup">Key Account Group</label>
-                <select id="keyAccountGroup" name="keyAccountGroup" required>
-                    <option value="">Select Key Account Group</option>
-                </select>
-
-                <label for="storeType">Store Type</label>
-                <select id="storeType" name="storeType" required>
-                    <option value="">Select Store Type</option>
-                </select>
-
-                <label for="grade">Grade</label>
-                <select id="grade" name="grade" required>
-                    <option value="">Select Grade</option>
-                </select>
-
-                <label for="bdm">BDM</label>
-                <select id="bdm" name="bdm" required>
-                    <option value="">Select BDM</option>
-                </select>
-
-                <button type="submit">Add Customer</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        async function fetchDropdownData() {
-            try {
-                const segmentResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Segment");
-                const segments = await segmentResponse.json();
-                const segmentSelect = document.getElementById("segment");
-                segments.forEach(segment => {
-                    const option = document.createElement("option");
-                    option.value = segment.Segment;
-                    option.textContent = segment.Segment;
-                    segmentSelect.appendChild(option);
-                });
-
-                const keyAccountGroupResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=KeyAccountGroup");
-                const keyAccountGroups = await keyAccountGroupResponse.json();
-                const keyAccountGroupSelect = document.getElementById("keyAccountGroup");
-                keyAccountGroups.forEach(group => {
-                    const option = document.createElement("option");
-                    option.value = group.KeyAccountGroup;
-                    option.textContent = group.KeyAccountGroup;
-                    keyAccountGroupSelect.appendChild(option);
-                });
-
-                const storeTypeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=StoreType");
-                const storeTypes = await storeTypeResponse.json();
-                const storeTypeSelect = document.getElementById("storeType");
-                storeTypes.forEach(type => {
-                    const option = document.createElement("option");
-                    option.value = type.StoreType;
-                    option.textContent = type.StoreType;
-                    storeTypeSelect.appendChild(option);
-                });
-
-                const gradeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Grade");
-                const grades = await gradeResponse.json();
-                const gradeSelect = document.getElementById("grade");
-                grades.forEach(grade => {
-                    const option = document.createElement("option");
-                    option.value = grade.Grade;
-                    option.textContent = grade.Grade;
-                    gradeSelect.appendChild(option);
-                });
-
-                const bdmResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=BDM");
-                const bdms = await bdmResponse.json();
-                const bdmSelect = document.getElementById("bdm");
-                bdms.forEach(bdm => {
-                    const option = document.createElement("option");
-                    option.value = bdm.BDM;
-                    option.textContent = bdm.BDM;
-                    bdmSelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error("Error fetching dropdown data:", error);
-            }
-        }
-
-        // Call the function to fetch dropdown data when the page loads
-        fetchDropdownData();
-
-        // Get user from localStorage
-        const userFullName = localStorage.getItem("fullname");
-        const welcomeUserElement = document.getElementById("welcomeUser");
-        welcomeUserElement.textContent = userFullName || "Loading..."; // Default to "Loading..." if no user data found
-    </script>
-
+  <!-- Link the header.js to inject the header dynamically -->
+  <script src="header.js"></script> <!-- Ensure the path to header.js is correct -->
 </body>
 </html>
