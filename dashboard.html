@@ -87,34 +87,45 @@
   </div>
 
   <script>
-    // Set welcome message
+    // Get username and role from localStorage
     const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
     document.getElementById("welcome").textContent = `Welcome ${username}`;
 
-    // Fetch button data from the JSON file (Ensure this is the correct path to your JSON file)
-    fetch('dashboard.json')
-      .then(response => response.json())
+    // Fetch the JSON data for dashboard sections and buttons
+    fetch('dashboard.json')  // Adjust the path if needed
+      .then(res => res.json())
       .then(data => {
-        // Check if the data is correct
-        console.log('Fetched Data:', data);
+        const container = document.getElementById("dashboard-sections");
 
-        const buttonContainer = document.getElementById("dashboard-sections");
+        // Loop through each section in the JSON data
+        data.forEach(group => {
+          const section = document.createElement("section");
+          const title = document.createElement("div");
+          title.className = "group-title";
+          title.textContent = group.group;
+          section.appendChild(title);
 
-        if (data && data.buttons) {
-          data.buttons.forEach(btn => {
-            const button = document.createElement("button");
-            button.className = "dash-button";
-            button.textContent = btn.label;
-            button.onclick = () => window.location.href = btn.href;
-            buttonContainer.appendChild(button);
+          const buttonWrapper = document.createElement("div");
+          buttonWrapper.className = "button-container";
+
+          // Loop through each button within the section
+          group.buttons.forEach(btn => {
+            // Check if the button is available for the user's role
+            if (btn.roles.includes(role)) {
+              const button = document.createElement("button");
+              button.className = "dash-button";
+              button.textContent = btn.label;
+              button.onclick = () => window.location.href = btn.href;
+              buttonWrapper.appendChild(button);
+            }
           });
-        } else {
-          console.error('No buttons found in the JSON data.');
-        }
+
+          section.appendChild(buttonWrapper);
+          container.appendChild(section);
+        });
       })
-      .catch(error => {
-        console.error('Error fetching button data:', error);
-      });
+      .catch(err => console.log('Error loading JSON data:', err));
   </script>
 </body>
 
