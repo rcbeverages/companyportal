@@ -31,6 +31,8 @@
       width: 90%;
       max-width: 450px;
       text-align: center;
+      overflow-y: auto;  /* Enables scrolling */
+      max-height: 90vh;  /* Limits form height on mobile */
     }
     h2 {
       margin-bottom: 1rem;
@@ -69,7 +71,7 @@
       background-color: #0060b3;
     }
 
-    /* Responsive Design for Mobile */
+    /* Mobile specific styling */
     @media (max-width: 768px) {
       .form-container {
         padding: 1rem;
