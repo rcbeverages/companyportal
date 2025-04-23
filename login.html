@@ -67,14 +67,16 @@
       const fullName = users[0].FullName;
       const role = users[0].Role;
 
-      if (correctPassword === password) {
-        localStorage.setItem("username", username);
-        localStorage.setItem("role", role);
-        localStorage.setItem("fullname", fullName);
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Password is incorrect.");
-      }
+    if (correctPassword === password) {
+  localStorage.setItem("username", username);
+  localStorage.setItem("role", role);
+  localStorage.setItem("fullname", fullName);
+  alert("Login successful! Redirecting...");
+  window.location.href = "dashboard.html";
+} else {
+  alert("Password is incorrect.");
+}
+
     }
   </script>
 
