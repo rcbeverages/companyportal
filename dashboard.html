@@ -68,7 +68,7 @@
     /* Media Queries */
     @media screen and (max-width: 768px) {
       .dash-button {
-        flex: 1 1 calc(50% - 1rem); /* Buttons take up 50% of width */
+        flex: 1 1 calc(50% - 1rem); /* Buttons take up 50% of width for tablets */
       }
     }
 
@@ -77,12 +77,25 @@
         flex: 1 1 100%; /* Buttons take up 100% width on mobile */
       }
     }
+
+    @media screen and (min-width: 769px) {
+      /* For large screens (tablet and above) */
+      .button-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .dash-button {
+        flex: 1 1 calc(33% - 1rem); /* Keep 3 buttons per row on larger screens */
+      }
+    }
+
   </style>
 </head>
 
 <body>
   <header>
-    <h1>Dashboard</h1>
+    <h1>RC Beverages Dashboard</h1>
   </header>
 
   <!-- Sub Header with Welcome message -->
