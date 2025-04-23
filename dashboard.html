@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
   <style>
     body {
@@ -14,6 +14,7 @@
       text-align: center;
     }
 
+    /* Header Styling */
     header {
       background: #0057b7;
       color: white;
@@ -24,21 +25,27 @@
       margin: 0;
     }
 
+    /* Sub-header styling */
     .sub-header {
       background: #cfe2ff;
       padding: 1rem;
+      display: flex;
+      justify-content: center;
     }
 
+    /* Welcome Message Styling */
     .welcome-message {
       margin-top: 1rem;
       font-size: 1.5rem;
       color: #333;
     }
 
+    /* Button Container Layout */
     .button-container {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
+      justify-content: center;
       padding: 0 1rem 1rem;
     }
 
@@ -58,15 +65,16 @@
       background-color: #1e40af;
     }
 
+    /* Media Queries */
     @media screen and (max-width: 768px) {
       .dash-button {
-        flex: 1 1 calc(50% - 1rem);
+        flex: 1 1 calc(50% - 1rem); /* Buttons take up 50% of width */
       }
     }
 
     @media screen and (max-width: 480px) {
       .dash-button {
-        flex: 1 1 100%;
+        flex: 1 1 100%; /* Buttons take up 100% width on mobile */
       }
     }
   </style>
@@ -76,6 +84,7 @@
   <header>
     <h1>RC Beverages Dashboard</h1>
   </header>
+
   <div class="sub-header">
     <div class="welcome-message" id="welcome">
       <!-- Welcome message will be injected here -->
@@ -83,22 +92,52 @@
   </div>
 
   <div class="button-container" id="dashboard-sections">
-    <!-- Buttons will be dynamically generated here -->
+    <!-- Dashboard buttons will be dynamically populated here -->
   </div>
 
   <script>
-    // Get username and role from localStorage
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
     document.getElementById("welcome").textContent = `Welcome ${username}`;
 
-    // Fetch the JSON data for dashboard sections and buttons
-    fetch('dashboard.json')  // Adjust the path if needed
+    // Example JSON data for dashboard sections and buttons (this would be fetched from dashboard.json in a real scenario)
+    const dashboardData = [
+      {
+        "group": "CRM Tools",
+        "buttons": [
+          { "label": "Add Customer", "href": "addcustomer.html", "roles": ["Admin", "Sales"] },
+          { "label": "Store Database", "href": "storedatabase.html", "roles": ["Admin", "Sales"] },
+          { "label": "Email Database", "href": "emaildatabase.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Journey Planners", "href": "journeyplanners.html", "roles": ["Admin", "Sales"] },
+          { "label": "Reminders", "href": "reminders.html", "roles": ["Admin", "Sales"] },
+          { "label": "Asset Management", "href": "asset.html", "roles": ["Admin", "Warehouse"] }
+        ]
+      },
+      {
+        "group": "Orders & Visits",
+        "buttons": [
+          { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin", "Sales"] },
+          { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin", "Sales"] },
+          { "label": "Visit History / Logs", "href": "visits.html", "roles": ["Admin", "Sales"] },
+          { "label": "Route Planner", "href": "routes.html", "roles": ["Admin", "Sales"] },
+          { "label": "Suggested Next Visit", "href": "nextvisit.html", "roles": ["Admin", "Sales"] }
+        ]
+      },
+      {
+        "group": "Marketing and Promotions",
+        "buttons": [
+          { "label": "Email Campaign Manager", "href": "campaigns.html", "roles": ["Admin", "Marketing"] },
+          { "label": "Promotions", "href": "promos.html", "roles": ["Admin", "Marketing"] }
+        ]
+      }
+    ];
+
+    // Populate buttons based on roles
+    fetch('dashboard.json') // Adjust the path as needed
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById("dashboard-sections");
 
-        // Loop through each section in the JSON data
         data.forEach(group => {
           const section = document.createElement("section");
           const title = document.createElement("div");
@@ -109,9 +148,7 @@
           const buttonWrapper = document.createElement("div");
           buttonWrapper.className = "button-container";
 
-          // Loop through each button within the section
           group.buttons.forEach(btn => {
-            // Check if the button is available for the user's role
             if (btn.roles.includes(role)) {
               const button = document.createElement("button");
               button.className = "dash-button";
@@ -125,7 +162,7 @@
           container.appendChild(section);
         });
       })
-      .catch(err => console.log('Error loading JSON data:', err));
+      .catch(error => console.log('Error loading dashboard data:', error));
   </script>
 </body>
 
