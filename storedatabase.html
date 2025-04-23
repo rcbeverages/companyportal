@@ -31,6 +31,7 @@
       margin: 0;
     }
 
+    /* Lighter Blue Box Styling (Sub-Header) */
     .sub-header {
       background: #cfe2ff;
       padding: 1rem;
@@ -38,13 +39,36 @@
       justify-content: center;
     }
 
-    .search-bar {
-      padding: 10px;
-      margin: 10px 0;
-      width: 80%;
+    .btn {
+      background: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
       font-size: 16px;
+      cursor: pointer;
     }
 
+    .btn:hover {
+      background: #0042a5;
+    }
+
+    /* Search Bar below the blue section */
+    .search-bar-container {
+      padding: 10px;
+      width: 80%;
+      margin: 10px auto;
+    }
+
+    .search-bar {
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    /* Store Tiles */
     .tile-container {
       display: flex;
       flex-wrap: wrap;
@@ -67,20 +91,6 @@
       margin: 0 0 10px;
     }
 
-    .btn {
-      background: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #0042a5;
-    }
-
     /* Mobile Styling */
     @media screen and (max-width: 768px) {
       .store-tile {
@@ -97,8 +107,13 @@
     <h1>Store List</h1>
   </header>
 
-  <!-- Sub Header with Search bar -->
+  <!-- Sub Header with Back to Dashboard Button -->
   <div class="sub-header">
+    <button onclick="location.href='dashboard.html'" class="btn">Back to Dashboard</button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar-container">
     <input type="text" class="search-bar" id="searchInput" placeholder="Search stores..." onkeyup="filterStores()">
   </div>
 
