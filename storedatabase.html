@@ -1,78 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RC Beverages Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f4ff;
     }
-
-    header {
-      background: #0057b7;
+    .header {
+      background-color: #0353a4;
       color: white;
       padding: 1rem;
       text-align: center;
+      font-size: 1.5rem;
     }
-
-    .welcome {
-      background: #cfe2ff;
-      padding: 2rem;
+    .sub-header {
+      background-color: #d7e3fc;
+      padding: 0.75rem;
       text-align: center;
+      font-weight: bold;
     }
-
-    .btn {
-      background: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
+    .group-title {
+      margin: 1rem 1rem 0.5rem;
+      font-size: 1.1rem;
+      color: #0353a4;
+      border-bottom: 2px solid #cce;
+      padding-bottom: 0.3rem;
     }
-
-    .btn:hover {
-      background: #0042a5;
-    }
-
-    .tiles {
+    .button-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 1rem;
-      padding: 1rem;
+      padding: 0 1rem 1rem;
     }
-
-    .tile {
-      background: white;
+    .dash-button {
+      flex: 1 1 calc(33% - 1rem);
+      padding: 1rem;
+      background-color: #2563eb;
+      color: white;
+      border: none;
       border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 1rem;
     }
-
-    .tile h3 {
-      margin-top: 0;
+    .dash-button:hover {
+      background-color: #1e40af;
     }
-
-    #searchInput {
-      margin: 10px auto;
-      display: block;
-      padding: 8px;
-      width: 80%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
+    @media screen and (max-width: 768px) {
+      .dash-button {
+        flex: 1 1 calc(50% - 1rem);
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .dash-button {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
-
 <body>
   <header>
     <h1>Store Database</h1></h1>
@@ -81,8 +70,7 @@
   <div class="welcome">
     <h2 id="welcomeText">Welcome</h2>
     <div style="text-align: center; margin-top: 20px;">
-      <button class="btn" onclick="location.href='addcustomer.html'">Add New Customer</button><br>
-      <button class="btn" onclick="location.href='calendar.html'" style="margin-top: 10px;">Journey Plan Calendar</button>
+      <button class="btn" onclick="location.href='dashboard.html'">Back to Dashboard</button><br>
     </div>
   </div>
 
