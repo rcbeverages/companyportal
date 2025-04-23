@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RC Beverages Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background: #0057b7;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .sub-header {
+      background-color: #cfe2ff;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .section-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 1rem 0 0.5rem;
+      text-align: center;
+    }
+    .button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0 1rem 1rem;
+    }
+    .button-tile {
+      background-color: #2563eb;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      flex: 1 0 220px;
+      max-width: 220px;
+      text-align: center;
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .button-tile:hover {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>RC Beverages Dashboard</h1>
+  </header>
+
+  <div class="sub-header">
+    <span id="welcomeText">Welcome</span>
+  </div>
+
+  <div id="dashboard"></div>
+
+  <script>
+    const fullName = localStorage.getItem("fullname") || "Guest";
+    const role = localStorage.getItem("role") || "Guest";
+    document.getElementById("welcomeText").innerText = "Welcome " + fullName;
+
+    fetch("dashboard.json")
+      .then(res => res.json())
+      .then(data => {
+        const dashboard = document.getElementById("dashboard");
+
+        for (const section in data) {
+          const buttons = data[section];
+
+          const title = document.createElement("div");
+          title.className = "section-title";
+          title.innerText = section;
+
+          const grid = document.createElement("div");
+          grid.className = "button-grid";
+
+          buttons.forEach(btn => {
+            if (btn.roles.includes(role)) {
+              const a = document.createElement("a");
+              a.href = btn.href;
+              a.className = "button-tile";
+              a.innerText = btn.label;
+              grid.appendChild(a);
+            }
+          });
+
+          if (grid.children.length > 0) {
+            dashboard.appendChild(title);
+            dashboard.appendChild(grid);
+          }
+        }
+      });
+  </script>
+
+</body>
+</html>
