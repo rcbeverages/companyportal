@@ -1,86 +1,46 @@
 {
-  "Customer Tools": [
-    {
-      "label": "Add Customer",
-      "href": "add_customer.html",
-      "roles": [
-        "Admin",
-        "Sales"
-      ]
-    },
-    {
-      "label": "Store Database",
-      "href": "store_database.html",
-      "roles": [
-        "Admin",
-        "Sales"
-      ]
-    },
-    {
-      "label": "Email Database",
-      "href": "email_database.html",
-      "roles": [
-        "Admin",
-        "Marketing"
-      ]
-    },
-    {
-      "label": "Journey Planner",
-      "href": "calendar.html",
-      "roles": [
-        "Admin",
-        "Sales"
-      ]
-    },
-    {
-      "label": "Place Pre-Order",
-      "href": "preorder.html",
-      "roles": [
-        "Admin",
-        "Sales"
-      ]
-    },
-    {
-      "label": "Portfolio",
-      "href": "portfolio.html",
-      "roles": [
-        "Admin",
-        "Marketing"
-      ]
-    },
-    {
-      "label": "Rewinded Arcade Hub",
-      "href": "arcade.html",
-      "roles": [
-        "Admin",
-        "Marketing"
-      ]
-    },
-    {
-      "label": "Wholesaler Portals",
-      "href": "wholesalers.html",
-      "roles": [
-        "Admin",
-        "Sales"
-      ]
-    }
+  "CRM Tools": [
+    { "label": "Add Customer", "href": "add_customer.html", "roles": ["Admin"] },
+    { "label": "Store Database", "href": "store_database.html", "roles": ["Admin"] },
+    { "label": "Email Database", "href": "email_database.html", "roles": ["Admin", "Marketing"] },
+    { "label": "Journey Planners", "href": "journey_planners.html", "roles": ["Admin", "Sales"] },
+    { "label": "Reminders", "href": "reminders.html", "roles": ["Admin", "Sales"] },
+    { "label": "Asset Management", "href": "asset_management.html", "roles": ["Admin", "Warehouse"] }
   ],
-  "Warehouse Tools": [
-    {
-      "label": "View Stock",
-      "href": "warehouse.html",
-      "roles": [
-        "Admin",
-        "Warehouse"
-      ]
-    },
-    {
-      "label": "Returns",
-      "href": "returns.html",
-      "roles": [
-        "Admin",
-        "Warehouse"
-      ]
-    }
+  "Orders & Visits": [
+    { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin", "Sales"] },
+    { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin", "Sales"] },
+    { "label": "Visit History / Logs", "href": "visit_logs.html", "roles": ["Admin", "Sales"] },
+    { "label": "Route Planner", "href": "route_planner.html", "roles": ["Admin", "Sales"] },
+    { "label": "Suggested Next Visit", "href": "suggested_visits.html", "roles": ["Admin", "Sales"] }
+  ],
+  "Marketing and Promotions": [
+    { "label": "Email Campaign Manager", "href": "email_campaigns.html", "roles": ["Admin", "Marketing"] },
+    { "label": "Promotions", "href": "promotions.html", "roles": ["Admin", "Marketing"] }
+  ],
+  "Data & Analytics": [
+    { "label": "Store Performance", "href": "store_performance.html", "roles": ["Admin", "Sales"] },
+    { "label": "Gap Targets", "href": "gap_targets.html", "roles": ["Admin", "Sales"] },
+    { "label": "Activation Targets", "href": "activation_targets.html", "roles": ["Admin", "Sales"] }
+  ],
+  "Resources": [
+    { "label": "Portfolio", "href": "portfolio.html", "roles": ["Admin", "Marketing"] },
+    { "label": "Trade Presenters", "href": "presenters.html", "roles": ["Admin", "Marketing"] },
+    { "label": "Price Lists", "href": "price_lists.html", "roles": ["Admin", "Sales"] },
+    { "label": "Training", "href": "training.html", "roles": ["Admin", "Sales"] }
+  ],
+  "Warehouse": [
+    { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
+    { "label": "Outbound / Dispatch", "href": "dispatch.html", "roles": ["Admin", "Warehouse"] },
+    { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
+    { "label": "View Stock Levels", "href": "stock_levels.html", "roles": ["Admin", "Warehouse"] },
+    { "label": "Low Stock Alerts", "href": "low_stock.html", "roles": ["Admin", "Warehouse"] },
+    { "label": "Low Code Stock Alerts", "href": "low_code_stock.html", "roles": ["Admin", "Warehouse"] }
+  ],
+  "Settings": [
+    { "label": "Add User", "href": "add_user.html", "roles": ["Admin"] },
+    { "label": "Delete User", "href": "delete_user.html", "roles": ["Admin"] },
+    { "label": "Change User Password", "href": "change_password.html", "roles": ["Admin"] },
+    { "label": "Change User Role", "href": "change_role.html", "roles": ["Admin"] }
   ]
 }
