@@ -34,7 +34,7 @@
     h2 {
       margin-bottom: 1rem;
     }
-    input {
+    input, select {
       width: 100%;
       padding: 0.75rem;
       margin: 1rem 0;
@@ -67,6 +67,12 @@
     .back-button:hover {
       background-color: #0060b3;
     }
+    @media (max-width: 768px) {
+      .form-container {
+        width: 100%;
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -87,16 +93,85 @@
     <input type="text" id="contactName" placeholder="Contact Name" />
     <input type="text" id="contactPhone" placeholder="Contact Phone" />
     <input type="email" id="contactEmail" placeholder="Contact Email" />
-    <input type="text" id="segment" placeholder="Segment" />
-    <input type="text" id="keyAccountGroup" placeholder="Key Account Group" />
-    <input type="text" id="storeType" placeholder="Store Type" />
-    <input type="text" id="grade" placeholder="Grade" />
-    <input type="text" id="bdm" placeholder="BDM (Business Development Manager)" />
+
+    <!-- Dropdown fields dynamically populated -->
+    <select id="segment">
+      <option value="">Select Segment</option>
+    </select>
+    <select id="keyAccountGroup">
+      <option value="">Select Key Account Group</option>
+    </select>
+    <select id="storeType">
+      <option value="">Select Store Type</option>
+    </select>
+    <select id="grade">
+      <option value="">Select Grade</option>
+    </select>
+    <select id="bdm">
+      <option value="">Select BDM</option>
+    </select>
+
     <button onclick="addCustomer()">Add Customer</button>
     <button class="back-button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
   </div>
 
   <script>
+    // Fetch existing options from SheetDB to populate dropdowns
+    async function fetchDropdownData() {
+      const segmentsResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Segment");
+      const segments = await segmentsResponse.json();
+      const segmentSelect = document.getElementById("segment");
+      segments.forEach(segment => {
+        const option = document.createElement("option");
+        option.value = segment.Segment;
+        option.textContent = segment.Segment;
+        segmentSelect.appendChild(option);
+      });
+
+      const keyAccountGroupResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=KeyAccountGroup");
+      const keyAccountGroups = await keyAccountGroupResponse.json();
+      const keyAccountGroupSelect = document.getElementById("keyAccountGroup");
+      keyAccountGroups.forEach(group => {
+        const option = document.createElement("option");
+        option.value = group.KeyAccountGroup;
+        option.textContent = group.KeyAccountGroup;
+        keyAccountGroupSelect.appendChild(option);
+      });
+
+      const storeTypeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=StoreType");
+      const storeTypes = await storeTypeResponse.json();
+      const storeTypeSelect = document.getElementById("storeType");
+      storeTypes.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type.StoreType;
+        option.textContent = type.StoreType;
+        storeTypeSelect.appendChild(option);
+      });
+
+      const gradeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Grade");
+      const grades = await gradeResponse.json();
+      const gradeSelect = document.getElementById("grade");
+      grades.forEach(grade => {
+        const option = document.createElement("option");
+        option.value = grade.Grade;
+        option.textContent = grade.Grade;
+        gradeSelect.appendChild(option);
+      });
+
+      const bdmResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=BDM");
+      const bdms = await bdmResponse.json();
+      const bdmSelect = document.getElementById("bdm");
+      bdms.forEach(bdm => {
+        const option = document.createElement("option");
+        option.value = bdm.BDM;
+        option.textContent = bdm.BDM;
+        bdmSelect.appendChild(option);
+      });
+    }
+
+    // Call fetch function to populate dropdowns
+    fetchDropdownData();
+
     function addCustomer() {
       const storeName = document.getElementById("storeName").value.trim();
       const storeAddress = document.getElementById("storeAddress").value.trim();
