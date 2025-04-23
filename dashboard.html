@@ -91,19 +91,26 @@
     const username = localStorage.getItem("username");
     document.getElementById("welcome").textContent = `Welcome ${username}`;
 
-    // Fetch button data from the JSON file
+    // Fetch button data from the JSON file (Ensure this is the correct path to your JSON file)
     fetch('dashboard.json')
       .then(response => response.json())
       .then(data => {
+        // Check if the data is correct
+        console.log('Fetched Data:', data);
+
         const buttonContainer = document.getElementById("dashboard-sections");
 
-        data.buttons.forEach(btn => {
-          const button = document.createElement("button");
-          button.className = "dash-button";
-          button.textContent = btn.label;
-          button.onclick = () => window.location.href = btn.href;
-          buttonContainer.appendChild(button);
-        });
+        if (data && data.buttons) {
+          data.buttons.forEach(btn => {
+            const button = document.createElement("button");
+            button.className = "dash-button";
+            button.textContent = btn.label;
+            button.onclick = () => window.location.href = btn.href;
+            buttonContainer.appendChild(button);
+          });
+        } else {
+          console.error('No buttons found in the JSON data.');
+        }
       })
       .catch(error => {
         console.error('Error fetching button data:', error);
