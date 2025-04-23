@@ -84,7 +84,8 @@
   <div class="dashboard-wrapper" id="dashboardContainer"></div>
 
   <script>
-  const fullName = localStorage.getItem("fullname") || "User";
+    const role = localStorage.getItem("role");
+    const fullName = localStorage.getItem("fullname") || "User";
     document.getElementById("roleTitle").textContent = `Welcome ${fullName}`;
 
     fetch("dashboard.json")
@@ -100,9 +101,10 @@
           title.textContent = section;
           sectionTile.appendChild(title);
 
-          const allowed = buttons.filter(btn => btn.roles.includes(role));
-          if (allowed.length > 0) {
-            allowed.forEach(btn => {
+          const allowedButtons = buttons.filter(btn => btn.roles.includes(role));
+
+          if (allowedButtons.length > 0) {
+            allowedButtons.forEach(btn => {
               const link = document.createElement("a");
               link.className = "btn";
               link.textContent = btn.label;
