@@ -1,8 +1,8 @@
-8<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welcome to RC Beverages</title>
   <style>
     body {
@@ -16,18 +16,18 @@
       height: 100vh;
       flex-direction: column;
       color: #111827;
+      text-align: center;
     }
 
     h1 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      text-align: center;
     }
 
     p {
       font-size: 1.1rem;
-      margin-bottom: 2rem;
-      text-align: center;
+      margin-bottom: 1.5rem;
+      max-width: 90%;
     }
 
     button {
@@ -39,35 +39,36 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-top: 2rem;
     }
 
     button:hover {
       background-color: #1e40af;
     }
-    
+
+    img {
+      max-width: 160px;
+      margin: 20px auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
 
-  <div style="margin-top: 1rem;">
-    <img src="logo.png" alt="RC Beverages Logo"
-         class="logo-spin"
-         style="max-width: 160px; margin: 20px auto; display: block;">
-  </div>
+  <img src="logo.png" alt="RC Beverages Logo" />
 
   <h1>Welcome to RC Beverages</h1>
 
-  <p style="margin-bottom: 1.5rem;">
-    Your central hub for managing customer visits and field activities.
+  <p>Your central hub for managing customer visits and field activities.</p>
+
+  <p>
+    At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites.
+    Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast,
+    thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising
+    quality, and unforgettable branding that speaks to a new generation of drinkers.
   </p>
 
-  <p style="margin-bottom: .5rem;">
-    At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.
-  </p>
-
-  <button style="margin-top: 2rem;" onclick="location.href='login.html'">
-    Get Started
-  </button>
+  <button onclick="location.href='login.html'">Get Started</button>
 
 </body>
 </html>
