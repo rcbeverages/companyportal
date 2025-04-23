@@ -1,252 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Customer - RC Beverages</title>
-  <style>
-    body {
-      background-color: #e8f0ff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      flex-direction: column;
-    }
-    .header {
-      background-color: #0353a4;
-      color: white;
-      width: 100%;
-      text-align: center;
-      padding: 1rem;
-      font-size: 1.5rem;
-    }
-    .form-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-      width: 90%;
-      max-width: 450px;
-      text-align: center;
-      overflow-y: auto;
-      max-height: 90vh;
-    }
-    h2 {
-      margin-bottom: 1rem;
-    }
-    input, select {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.75rem 0;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    button:hover {
-      background-color: #1e40af;
-    }
-    .back-button {
-      margin-top: 10px;
-      padding: 0.75rem;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      width: 100%;
-    }
-    .back-button:hover {
-      background-color: #0060b3;
-    }
-
-    /* Mobile specific styling */
-    @media (max-width: 768px) {
-      .form-container {
-        padding: 1rem;
-        width: 90%;
-      }
-      .header {
-        font-size: 1.25rem;
-      }
-    }
-
-    /* Additional responsiveness for ultra tablets */
-    @media (max-width: 1024px) {
-      .form-container {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Beverages - Add Customer</title>
+    <style>
+        /* Make the layout responsive for both mobile and tablet */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #1e40af;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+        }
+        .form-container label {
+            font-weight: bold;
+            margin: 10px 0 5px;
+            display: block;
+        }
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #4a90e2;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Consistent header -->
-  <div class="header">
-    RC Beverages - Add Customer
-  </div>
+    <header>
+        <h1>RC Beverages - Add Customer</h1>
+    </header>
 
-  <!-- Add Customer Form -->
-  <div class="form-container">
-    <h2>Add Customer</h2>
-    <input type="text" id="storeName" placeholder="Store Name" />
-    <input type="text" id="storeAddress" placeholder="Address" />
-    <input type="text" id="storeSuburb" placeholder="Suburb" />
-    <input type="text" id="storeState" placeholder="State" />
-    <input type="text" id="storePostcode" placeholder="Postcode" />
-    <input type="text" id="contactName" placeholder="Contact Name" />
-    <input type="text" id="contactPhone" placeholder="Contact Phone" />
-    <input type="email" id="contactEmail" placeholder="Contact Email" />
+    <div class="container">
+        <div class="form-container">
+            <h2>Add New Customer</h2>
+            <form id="customerForm">
+                <label for="storeName">Store Name</label>
+                <input type="text" id="storeName" name="storeName" required>
 
-    <!-- Dropdown fields dynamically populated -->
-    <select id="segment">
-      <option value="">Select Segment</option>
-    </select>
-    <select id="keyAccountGroup">
-      <option value="">Select Key Account Group</option>
-    </select>
-    <select id="storeType">
-      <option value="">Select Store Type</option>
-    </select>
-    <select id="grade">
-      <option value="">Select Grade</option>
-    </select>
-    <select id="bdm">
-      <option value="">Select BDM</option>
-    </select>
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
 
-    <button onclick="addCustomer()">Add Customer</button>
-    <button class="back-button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
-  </div>
+                <label for="suburb">Suburb</label>
+                <input type="text" id="suburb" name="suburb" required>
 
-  <script>
-    // Fetch existing options from SheetDB to populate dropdowns
-    async function fetchDropdownData() {
-      const segmentsResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Segment");
-      const segments = await segmentsResponse.json();
-      const segmentSelect = document.getElementById("segment");
-      segments.forEach(segment => {
-        const option = document.createElement("option");
-        option.value = segment.Segment;
-        option.textContent = segment.Segment;
-        segmentSelect.appendChild(option);
-      });
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" required>
 
-      const keyAccountGroupResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=KeyAccountGroup");
-      const keyAccountGroups = await keyAccountGroupResponse.json();
-      const keyAccountGroupSelect = document.getElementById("keyAccountGroup");
-      keyAccountGroups.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group.KeyAccountGroup;
-        option.textContent = group.KeyAccountGroup;
-        keyAccountGroupSelect.appendChild(option);
-      });
+                <label for="postcode">Postcode</label>
+                <input type="text" id="postcode" name="postcode" required>
 
-      const storeTypeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=StoreType");
-      const storeTypes = await storeTypeResponse.json();
-      const storeTypeSelect = document.getElementById("storeType");
-      storeTypes.forEach(type => {
-        const option = document.createElement("option");
-        option.value = type.StoreType;
-        option.textContent = type.StoreType;
-        storeTypeSelect.appendChild(option);
-      });
+                <label for="contactName">Contact Name</label>
+                <input type="text" id="contactName" name="contactName" required>
 
-      const gradeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Grade");
-      const grades = await gradeResponse.json();
-      const gradeSelect = document.getElementById("grade");
-      grades.forEach(grade => {
-        const option = document.createElement("option");
-        option.value = grade.Grade;
-        option.textContent = grade.Grade;
-        gradeSelect.appendChild(option);
-      });
+                <label for="contactPhone">Contact Phone</label>
+                <input type="text" id="contactPhone" name="contactPhone" required>
 
-      const bdmResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=BDM");
-      const bdms = await bdmResponse.json();
-      const bdmSelect = document.getElementById("bdm");
-      bdms.forEach(bdm => {
-        const option = document.createElement("option");
-        option.value = bdm.BDM;
-        option.textContent = bdm.BDM;
-        bdmSelect.appendChild(option);
-      });
-    }
+                <label for="contactEmail">Contact Email</label>
+                <input type="email" id="contactEmail" name="contactEmail" required>
 
-    // Call fetch function to populate dropdowns
-    fetchDropdownData();
+                <label for="segment">Segment</label>
+                <select id="segment" name="segment" required>
+                    <option value="">Select Segment</option>
+                </select>
 
-    function addCustomer() {
-      const storeName = document.getElementById("storeName").value.trim();
-      const storeAddress = document.getElementById("storeAddress").value.trim();
-      const storeSuburb = document.getElementById("storeSuburb").value.trim();
-      const storeState = document.getElementById("storeState").value.trim();
-      const storePostcode = document.getElementById("storePostcode").value.trim();
-      const contactName = document.getElementById("contactName").value.trim();
-      const contactPhone = document.getElementById("contactPhone").value.trim();
-      const contactEmail = document.getElementById("contactEmail").value.trim();
-      const segment = document.getElementById("segment").value.trim();
-      const keyAccountGroup = document.getElementById("keyAccountGroup").value.trim();
-      const storeType = document.getElementById("storeType").value.trim();
-      const grade = document.getElementById("grade").value.trim();
-      const bdm = document.getElementById("bdm").value.trim();
+                <label for="keyAccountGroup">Key Account Group</label>
+                <select id="keyAccountGroup" name="keyAccountGroup" required>
+                    <option value="">Select Key Account Group</option>
+                </select>
 
-      if (!storeName || !storeAddress || !storeSuburb || !storeState || !storePostcode) {
-        alert("Please fill in all required fields.");
-        return;
-      }
+                <label for="storeType">Store Type</label>
+                <select id="storeType" name="storeType" required>
+                    <option value="">Select Store Type</option>
+                </select>
 
-      // Make a request to update the SheetDB
-      fetch("https://sheetdb.io/api/v1/abgzvmn3160g0", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          data: [
-            {
-              StoreName: storeName,
-              Address: storeAddress,
-              Suburb: storeSuburb,
-              State: storeState,
-              Postcode: storePostcode,
-              ContactName: contactName,
-              ContactPhone: contactPhone,
-              ContactEmail: contactEmail,
-              Segment: segment,
-              KeyAccountGroup: keyAccountGroup,
-              StoreType: storeType,
-              Grade: grade,
-              BDM: bdm
+                <label for="grade">Grade</label>
+                <select id="grade" name="grade" required>
+                    <option value="">Select Grade</option>
+                </select>
+
+                <label for="bdm">BDM</label>
+                <select id="bdm" name="bdm" required>
+                    <option value="">Select BDM</option>
+                </select>
+
+                <button type="submit">Add Customer</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function fetchDropdownData() {
+            try {
+                const segmentResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Segment");
+                const segments = await segmentResponse.json();
+                const segmentSelect = document.getElementById("segment");
+                segments.forEach(segment => {
+                    const option = document.createElement("option");
+                    option.value = segment.Segment;
+                    option.textContent = segment.Segment;
+                    segmentSelect.appendChild(option);
+                });
+
+                const keyAccountGroupResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=KeyAccountGroup");
+                const keyAccountGroups = await keyAccountGroupResponse.json();
+                const keyAccountGroupSelect = document.getElementById("keyAccountGroup");
+                keyAccountGroups.forEach(group => {
+                    const option = document.createElement("option");
+                    option.value = group.KeyAccountGroup;
+                    option.textContent = group.KeyAccountGroup;
+                    keyAccountGroupSelect.appendChild(option);
+                });
+
+                const storeTypeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=StoreType");
+                const storeTypes = await storeTypeResponse.json();
+                const storeTypeSelect = document.getElementById("storeType");
+                storeTypes.forEach(type => {
+                    const option = document.createElement("option");
+                    option.value = type.StoreType;
+                    option.textContent = type.StoreType;
+                    storeTypeSelect.appendChild(option);
+                });
+
+                const gradeResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=Grade");
+                const grades = await gradeResponse.json();
+                const gradeSelect = document.getElementById("grade");
+                grades.forEach(grade => {
+                    const option = document.createElement("option");
+                    option.value = grade.Grade;
+                    option.textContent = grade.Grade;
+                    gradeSelect.appendChild(option);
+                });
+
+                const bdmResponse = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Column=BDM");
+                const bdms = await bdmResponse.json();
+                const bdmSelect = document.getElementById("bdm");
+                bdms.forEach(bdm => {
+                    const option = document.createElement("option");
+                    option.value = bdm.BDM;
+                    option.textContent = bdm.BDM;
+                    bdmSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error fetching dropdown data:", error);
             }
-          ]
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert("Customer added successfully!");
-        // Reset form fields
-        document.querySelector("form").reset();
-      })
-      .catch(err => {
-        console.error("Error adding customer:", err);
-        alert("Something went wrong. Please try again.");
-      });
-    }
-  </script>
+        }
+
+        // Call the function to fetch dropdown data when the page loads
+        fetchDropdownData();
+    </script>
 
 </body>
 </html>
