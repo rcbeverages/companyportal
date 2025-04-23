@@ -55,7 +55,7 @@
       const password = document.getElementById("password").value.trim();
 
       try {
-       const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=" + encodeURIComponent(username) + "&_nocache=" + Date.now());
+       const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0/search_or?Username=" + encodeURIComponent(username) + "&_nocache=" + Date.now());
         const users = await response.json();
         console.log("Fetched users:", users);
 
