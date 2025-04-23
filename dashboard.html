@@ -32,7 +32,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
-      padding: 0 1rem 1rem;
+      padding: 0 1rem 1.5rem;
     }
     .button-tile {
       background-color: #2563eb;
@@ -64,9 +64,9 @@
   <div id="dashboard"></div>
 
   <script>
-    const fullName = localStorage.getItem("fullname") || "Guest";
+    const username = localStorage.getItem("username") || "Guest";
     const role = localStorage.getItem("role") || "Guest";
-    document.getElementById("welcomeText").innerText = "Welcome " + fullName;
+    document.getElementById("welcomeText").innerText = "Welcome " + username;
 
     fetch("dashboard.json")
       .then(res => res.json())
