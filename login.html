@@ -33,9 +33,10 @@
     }
 
     /* Logo styling */
-   header img {
-      max-width: 250px;
-      height: auto;
+   .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+
     }
 
     input[type="text"],
@@ -46,6 +47,7 @@
       border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 1rem;
+      box-sizing: border-box; /* Ensures padding and borders are included in the element's total width */
     }
 
     .btn {
@@ -60,6 +62,7 @@
       transition: background-color 0.3s ease-in-out;
       white-space: normal; /* Ensures the text wraps inside the button */
       word-wrap: break-word;
+      box-sizing: border-box; /* Ensures padding and borders are included in the element's total width */
     }
 
     .btn:hover {
