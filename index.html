@@ -4,92 +4,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages - Home</title>
+  <title>RC Beverages</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6cb1f2, #89b0d0);
+      color: #333;
       text-align: center;
+      padding: 20px;
     }
 
     /* Header Styling */
     header {
-      background: #0057b7;
-      color: white;
-      padding: 1rem;
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      max-width: 150px;
+      height: auto;
     }
 
     h1 {
-      margin: 0;
+      font-size: 2rem;
+      color: #ffffff;
+      font-weight: bold;
     }
 
-    /* Sub-header styling */
+    /* Sub-header Styling */
     .sub-header {
-      background: #cfe2ff;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      border-radius: 8px;
-      margin: 0 auto;
-      width: 95%;
-      max-width: 1200px;
+      background-color: #cfe2ff;
+      padding: 15px;
+      margin-bottom: 20px;
     }
 
-    /* Welcome Message Styling */
-    .welcome-message {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      color: #333;
+    /* Intro Section Styling */
+    .intro-text {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto 20px;
     }
 
-    /* Main Content */
-    .content {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      color: #333;
-      padding: 1rem;
+    .intro-text p {
+      line-height: 1.5;
+      color: #666;
+      font-size: 1rem;
+      margin: 10px 0;
     }
 
     /* Button Styling */
-    .get-started-btn {
-      background-color: #2563eb;
+    .btn {
+      background-color: #0057b7;
       color: white;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 8px;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      display: inline-block;
     }
 
-    .get-started-btn:hover {
-      background-color: #1e40af;
+    .btn:hover {
+      background-color: #00409a;
+    }
+
+    /* Media Queries for Mobile */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .intro-text {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>RC Beverages</h1>
+    <img src="logo.png" alt="RC Beverages Logo">
+    <h1>Welcome to RC Beverages</h1>
   </header>
 
-  <!-- Sub Header with Welcome message -->
   <div class="sub-header">
-    <div class="welcome-message" id="welcome">
-      <!-- Welcome message will be injected here -->
-      Welcome to RC Beverages
-    </div>
+    <p>Your central hub for managing customer visits and field activities.</p>
   </div>
 
-  <!-- Content Section -->
-  <div class="content">
-    <p>Your central hub for managing customer visits and field activities.</p>
-    <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in.</p>
-    <p>We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
-
-    <!-- Get Started Button -->
-    <button class="get-started-btn" onclick="window.location.href='login.html'">Get Started</button>
+  <div class="intro-text">
+    <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
+    <a href="dashboard.html" class="btn">Get Started</a>
   </div>
 </body>
 
