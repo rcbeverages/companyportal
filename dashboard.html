@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
-  <link rel="stylesheet" href="style.css" /> <!-- Link to the external CSS file -->
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,13 +36,13 @@
       margin-top: 10px;
     }
 
-    /* Button Container Layout */
-    .button-container {
+    /* Main container for Groups */
+    .group-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around; /* Distribute groups evenly */
+      justify-content: center;
       gap: 2rem;
-      padding: 1rem;
+      padding: 2rem 0;
     }
 
     /* Group Title Styling */
@@ -55,9 +55,10 @@
       border-radius: 5px;
       width: 100%;
       text-align: center;
+      flex: 1 1 calc(33% - 1rem); /* 3 items per row */
     }
 
-    /* Buttons Styling */
+    /* Button Styling */
     .btn {
       background-color: #2563eb;
       color: white;
@@ -75,22 +76,6 @@
 
     .btn:hover {
       background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .button-container {
-        justify-content: center;
-      }
-
-      .btn {
-        font-size: 1.1rem;
-      }
-
-      /* Stack the button titles vertically on smaller screens */
-      .group-title {
-        font-size: 1.25rem;
-      }
     }
 
     /* Footer Styling */
@@ -121,6 +106,29 @@
     footer .footer-btn:hover {
       background-color: #1e40af;
     }
+
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 768px) {
+      .group-title {
+        flex: 1 1 100%; /* Full width for small devices */
+      }
+
+      .btn {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Media Queries for Mobile */
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
   </style>
 </head>
 
@@ -135,8 +143,8 @@
     <!-- Welcome message will be injected here -->
   </div>
 
-  <!-- Button Container -->
-  <div class="button-container" id="dashboard-sections">
+  <!-- Main Group Container -->
+  <div class="group-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
   </div>
 
@@ -145,6 +153,7 @@
     <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
     <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
     <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+    <button class="footer-btn" onclick="location.href='rewindedarcade.html'">Rewinded Arcade</button>
   </footer>
 
   <script>
