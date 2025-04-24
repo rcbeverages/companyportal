@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     /* Basic Body Styling */
     body {
@@ -39,7 +38,7 @@
     /* Fixed Welcome Message */
     .welcome-message {
       position: fixed;
-      top: 70px;
+      top: 70px; /* Move the welcome message just below the header */
       left: 0;
       right: 0;
       background-color: #ffffff;
@@ -95,16 +94,50 @@
       background-color: #1e40af;
     }
 
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 1000;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
     /* Media Queries for Tablet and Mobile */
     @media screen and (max-width: 768px) {
       .tile {
-        width: 45%;
+        width: 45%; /* Two tiles per row on tablets */
       }
     }
 
     @media screen and (max-width: 600px) {
       .tile {
-        width: 90%;
+        width: 90%; /* One tile per row on mobile */
+      }
+
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
       }
     }
   </style>
@@ -121,6 +154,7 @@
     <!-- Welcome message will be injected here -->
   </div>
 
+  <!-- Store List Section -->
   <div id="customerTiles">
     <!-- Customer tiles will be dynamically populated here -->
   </div>
