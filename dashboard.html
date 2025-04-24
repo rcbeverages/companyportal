@@ -9,16 +9,17 @@
 </head>
 
 <body>
+  <!-- Header Section with Page Title -->
   <header>
     <h1>RC Beverages Dashboard</h1>
   </header>
 
-  <div class="sub-header">
-    <div id="welcome-message">
-      <!-- Welcome message will be injected here -->
-    </div>
+  <!-- Welcome Message Section -->
+  <div class="welcome-message" id="welcome">
+    <!-- Welcome message will be injected here -->
   </div>
 
+  <!-- Button Container -->
   <div class="button-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
   </div>
@@ -36,7 +37,7 @@
     const role = localStorage.getItem("role");
 
     // Display welcome message
-    document.getElementById("welcome-message").textContent = `Welcome ${username}`;
+    document.getElementById("welcome").textContent = `Welcome ${username}`;
 
     // Define button data with role assignment
     const buttonData = [
