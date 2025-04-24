@@ -1,90 +1,164 @@
-/* Global Styles */
+<!DOCTYPE html>
+<html lang="en">
 
-/* Body Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f4f4f4;
-  text-align: center;
-}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RC Beverages - Page Template</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6cb1f2, #89b0d0);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
 
-/* Header Styling */
-header {
-  background: #0057b7; /* RC Beverages color */
-  color: white;
-  padding: 1rem;
-}
+    /* Header Styling */
+    header {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
+    header img {
+      max-width: 290px;
+      height: auto;
+    }
 
-/* Sub-header Styling (Welcome Message) */
-.sub-header {
-  background: #cfe2ff;
-  padding: 1rem;
-}
+    h1 {
+      font-size: 2.5rem; /* Increased font size for the main title */
+      color: #ffffff;
+      font-weight: bold;
+    }
 
-.welcome-message {
-  font-size: 1.5rem;
-  color: #333;
-}
+    /* Sub-header Styling */
+    .sub-header {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto 20px;
+      word-wrap: break-word;
+      white-space: normal;
+    }
 
-/* Button Styling */
-.dash-button {
-  width: 150px;
-  height: 50px;
-  padding: 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  margin: 0.5rem;
-}
+    .sub-header p {
+      font-size: 1.25rem; /* Increased font size for sub-header text */
+      color: #080707;
+    }
 
-.dash-button:hover {
-  background-color: #1e40af;
-}
+    /* Intro Section Styling */
+    .intro-text {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto 20px;
+    }
 
-/* Input Fields */
-input, select, textarea {
-  font-size: 16px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 100%;
-  box-sizing: border-box;
-}
+    .intro-text p {
+      line-height: 1.7;
+      color: #080707;
+      font-size: 1.25rem; /* Increased font size for intro-text */
+      margin: 10px 0;
+    }
 
-/* Button Container (for dashboard buttons) */
-.button-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  padding: 0 1rem 1rem;
-}
+    /* Button Styling */
+    .btn {
+      background-color: #0057b7;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      display: inline-block;
+      margin-top: 20px;
+    }
 
-/* Responsive Layout */
-@media screen and (max-width: 768px) {
-  .dash-button {
-    width: 100%;  /* Buttons take full width on small devices */
-    height: 60px;
-  }
-}
+    .btn:hover {
+      background-color: #00409a;
+    }
 
-@media screen and (max-width: 480px) {
-  .dash-button {
-    width: 100%;  /* Full width on mobile devices */
-    height: 60px;
-  }
-}
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Media Queries for Mobile */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .intro-text {
+        padding: 20px;
+      }
+
+      .sub-header p {
+        font-size: 1.1rem; /* Adjusting font size for mobile */
+      }
+
+      .intro-text p {
+        font-size: 1.1rem; /* Adjusting font size for mobile */
+      }
+
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="logo.png" alt="RC Beverages Logo">
+    <h1>Welcome to RC Beverages</h1>
+  </header>
+
+  <div class="sub-header">
+    <p>Your central hub for managing customer visits and field activities.</p>
+  </div>
+
+  <div class="intro-text">
+    <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
+  </div>
+
+  <!-- Footer with Buttons -->
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>
+</body>
+
+</html>
