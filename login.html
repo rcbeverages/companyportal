@@ -89,13 +89,45 @@
     <img src="logo.png" alt="RC Beverages Logo" class="logo" />
 
     <h1>RC Beverages Login</h1>
-    <form action="dashboard.html" method="POST">
+    <form id="loginForm">
       <input type="text" id="username" placeholder="Username" required />
       <input type="password" id="password" placeholder="Password" required />
-      <button class="btn" type="submit">Login</button>
+      <button type="submit" class="btn">Login</button>
     </form>
+    <p id="error-message" style="color: red; display: none;">Invalid username or password.</p>
   </div>
 
+  <script>
+    // Simulate a simple database with stored user data (can be replaced with API calls)
+    const users = [
+      { username: "rhincksman", password: "2025", role: "Admin" },
+      { username: "chawkins", password: "2025", role: "Sales" }
+    ];
+
+    // Handle login form submission
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();  // Prevent form from submitting normally
+
+      // Get user input
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Validate user credentials
+      const user = users.find(user => user.username === username && user.password === password);
+
+      if (user) {
+        // If credentials are correct, store user data in localStorage
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("role", user.role);
+
+        // Redirect to the dashboard (or any other page)
+        window.location.href = "dashboard.html";
+      } else {
+        // If credentials are incorrect, show an error message
+        document.getElementById("error-message").style.display = "block";
+      }
+    });
+  </script>
 </body>
 
 </html>
