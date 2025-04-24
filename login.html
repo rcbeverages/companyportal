@@ -32,6 +32,12 @@
       color: #333;
     }
 
+    /* Logo styling */
+    .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
     input[type="text"],
     input[type="password"] {
       width: 100%;
@@ -52,6 +58,8 @@
       border: none;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
+      white-space: normal; /* Ensures the text wraps inside the button */
+      word-wrap: break-word;
     }
 
     .btn:hover {
@@ -74,6 +82,9 @@
 <body>
 
   <div class="login-container">
+    <!-- Logo Image -->
+    <img src="logo.png" alt="RC Beverages Logo" class="logo" />
+
     <h1>RC Beverages Login</h1>
     <form action="dashboard.html" method="POST">
       <input type="text" id="username" placeholder="Username" required />
