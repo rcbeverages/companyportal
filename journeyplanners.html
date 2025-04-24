@@ -1,260 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages Journey Planner</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Scheduled Calls</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Basic Body Styling */
     body {
       font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding-top: 150px; /* Added more padding to prevent content being hidden behind fixed header and welcome message */
     }
-
-    /* Fixed Header */
     header {
+      background-color: #0057b7;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+      gap: 1rem;
+    }
+    .slots {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 1rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    .slot {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      min-height: 80px;
+    }
+    .slot-header {
+      font-weight: bold;
+    }
+    .slot-buttons button {
+      margin-top: 0.5rem;
+      margin-right: 8px;
+      padding: 6px 10px;
+    }
+    .btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0045a0;
+    }
+    #addCallModal {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
+      justify-content: center;
+      align-items: center;
     }
-
-    /* Page Title Styling */
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-    /* Fixed Welcome Message */
-    .welcome-message {
-      position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background-color: #ffffff;
-      color: #0057b7;
-      padding: 15px;
-      font-size: 2rem;
-      margin-top: 10px;
-      z-index: 999;
-    }
-
-    /* Search Input Styling */
-    #searchInput {
-      width: 80%;
-      padding: 10px;
-      margin-top: 20px;
-      font-size: 1.2rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
-
-    /* Store List Styling */
-    #customerTiles {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      gap: 2rem;
-      padding: 2rem 0;
-    }
-
-    /* Individual Tile Styling */
-    .tile {
-      background-color: #ffffff;
+    #addCallModal .modal-content {
+      background: white;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      width: 30%; /* 3 tiles per row */
-      margin: 10px 0;
-      transition: transform 0.3s ease;
-    }
-
-    .tile h3 {
-      margin: 0;
-      font-size: 1.25rem;
-    }
-
-    .tile p {
-      margin: 5px 0;
-      font-size: 1.1rem;
-    }
-
-    .tile button {
-      margin-top: 10px;
-      background-color: #2563eb;
-      color: white;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .tile button:hover {
-      background-color: #1e40af;
-    }
-
-    /* Footer Styling */
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #cfe2ff;
-      padding: 10px 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 2px solid #ccc;
-      z-index: 1000;
-    }
-
-    footer .footer-btn {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
-
-    footer .footer-btn:hover {
-      background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 1024px) {
-      .tile {
-        width: 45%; /* Two tiles per row on larger tablets */
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .tile {
-        width: 45%; /* Two tiles per row on tablets */
-      }
-
-      #searchInput {
-        width: 90%;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      .tile {
-        width: 90%; /* One tile per row on mobile */
-      }
-
-      footer .footer-btn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
-
-      #searchInput {
-        width: 90%;
-      }
+      max-height: 90vh;
+      overflow-y: auto;
+      width: 90%;
+      max-width: 500px;
     }
   </style>
 </head>
-
 <body>
-  <!-- Header Section with Page Title -->
   <header>
-    <h1>Orders & Visits</h1>
+    <h1>Scheduled Calls</h1>
   </header>
 
-  <!-- Welcome Message Section -->
-  <div class="welcome-message" id="welcome">
-    <!-- Welcome message will be injected here -->
+  <div class="controls">
+    <button class="btn" onclick="setToday()">Today</button>
+    <input type="date" id="datePicker" onchange="loadDay(this.value)">
   </div>
 
-  <!-- Search Bar Section -->
-  <input type="text" id="searchInput" placeholder="Search Customers..." oninput="filterTiles()" />
-
-  <!-- Store List Section -->
-  <div id="customerTiles">
-    <!-- Customer tiles will be dynamically populated here -->
+  <div style="text-align:center;">
+    <button class="btn" onclick="openAddCalls()">+ Add Calls</button>
   </div>
 
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-    <button class="footer-btn" onclick="location.href='arcade_homepage.html'">Rewinded Arcade</button>
-  </footer>
+  <div id="dayTitle" style="text-align:center; font-size:1.3rem; margin-top: 10px;"></div>
+  <div id="slots" class="slots"></div>
 
-  <script>
-    const username = localStorage.getItem("username");
-    const bdmMap = {
-      rhincksman: "Ryan Hincksman",
-      chawkins: "Chris Hawkins"
-    };
+  <div id="addCallModal">
+    <div class="modal-content">
+      <h3>Add Calls for Selected Date</h3>
+      <input type="text" id="searchInput" placeholder="Search stores..." style="width: 100%; margin-bottom: 10px; padding: 6px;" oninput="filterCustomers()">
+      <div id="customerSelect" style="max-height:300px; overflow-y:auto; border:1px solid #ccc; margin:10px 0; padding:5px;"></div>
+      <button class="btn" onclick="submitCalls()">Add Calls</button>
+      <button class="btn" onclick="closeAddCalls()" style="margin-left:10px; background-color: gray;">Cancel</button>
+    </div>
+  </div>
 
-    const bdmName = bdmMap[username];
+<script>
+const sheetEndpoint = "https://sheetdb.io/api/v1/9envyaeemiz9h";
+const customerEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const username = localStorage.getItem("username");
+const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
+const bdmName = bdmMap[username];
+let currentDate = new Date().toISOString().split("T")[0];
+let currentCalls = [];
+let customerCache = [];
 
-    let customerCache = [];
-    document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
+function setToday() {
+  currentDate = new Date().toISOString().split("T")[0];
+  document.getElementById("datePicker").value = currentDate;
+  loadDay(currentDate);
+}
 
-    async function loadCustomers() {
-      const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
-      const data = await res.json();
-      customerCache = data;
-      displayTiles(data);
+function loadDay(date) {
+  currentDate = date;
+  document.getElementById("dayTitle").textContent = `Scheduled Calls for ${new Date(date).toDateString()}`;
+  fetch(sheetEndpoint)
+    .then(res => res.json())
+    .then(data => {
+      currentCalls = data
+        .filter(d => d.Date?.startsWith(date) && d.BDM === bdmName && d.Status !== "Deleted")
+        .sort((a, b) => Number(a.Order || 999) - Number(b.Order || 999));
+      renderSlots(currentCalls);
+    });
+}
+
+function renderSlots(calls) {
+  const container = document.getElementById("slots");
+  container.innerHTML = "";
+  for (let i = 0; i < 20; i++) {
+    const call = calls[i];
+    const slot = document.createElement("div");
+    slot.className = "slot";
+    if (call) {
+      slot.innerHTML = `
+        <div class="slot-header">${call["Customer Name"]}</div>
+        <div><strong>Sub Owner:</strong> ${call["Sub Owner Group"] || "-"}</div>
+        <div><strong>Key Account:</strong> ${call["Key Account Group"] || "-"}</div>
+        <div><strong>Grade:</strong> ${call["Grade"] || "-"}</div>
+        <div class="slot-buttons">
+          <button class="btn" onclick="startCall('${call["Customer Name"]}')">Start</button>
+          <button class="btn" onclick="removeCall('${call["Customer Name"]}')" style="background-color:#c0392b;">Remove</button>
+        </div>`;
+    } else {
+      slot.innerHTML = `<div class="slot-header">[Empty Slot]</div>`;
     }
+    container.appendChild(slot);
+  }
+}
 
-    function displayTiles(data) {
-      const filtered = data.filter(c => c.BDM === bdmName);
-      const container = document.getElementById("customerTiles");
-      container.innerHTML = "";
-      filtered.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "tile";
-        div.setAttribute("data-name", `${c["Customer Name"].toLowerCase()} ${c["Key Account Group"].toLowerCase()} ${c["Sub Owner Group"].toLowerCase()} ${c.Grade.toLowerCase()}`);
-        div.innerHTML = `
-          <h3>${c["Customer Name"]}</h3>
-          <p><strong>Key Account Group:</strong> ${c["Key Account Group"]}</p>
-          <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "-"}</p>
-          <p><strong>Grade:</strong> ${c.Grade}</p>
-          <button class="btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function filterTiles() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      document.querySelectorAll(".tile").forEach(tile => {
-        tile.style.display = tile.dataset.name.includes(query) ? "block" : "none";
-      });
-    }
-
-    function startCall(customerName) {
-      const customer = customerCache.find(c => c["Customer Name"] === customerName);
-      if (customer) {
-        localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+function startCall(customerName) {
+  fetch(customerEndpoint)
+    .then(res => res.json())
+    .then(data => {
+      const match = data.find(c => c["Customer Name"] === customerName);
+      if (match) {
+        localStorage.setItem("selectedCustomer", JSON.stringify(match));
         window.location.href = "visit.html";
       } else {
         alert("Customer not found.");
       }
-    }
+    });
+}
 
-    window.onload = loadCustomers;
-  </script>
+function removeCall(customerName) {
+  fetch(`${sheetEndpoint}/search?Customer%20Name=${encodeURIComponent(customerName)}&Date=${currentDate}`)
+    .then(res => res.json())
+    .then(data => {
+      const match = data.find(d => d.Date.startsWith(currentDate) && d.BDM === bdmName);
+      if (!match || !match.id) return alert("Matching call has no ID.");
+      return fetch(`${sheetEndpoint}/id/${match.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: { Status: "Deleted" } })
+      });
+    })
+    .then(() => loadDay(currentDate));
+}
+
+function openAddCalls() {
+  document.getElementById("addCallModal").style.display = "flex";
+  loadCustomers();
+}
+
+function closeAddCalls() {
+  document.getElementById("addCallModal").style.display = "none";
+}
+
+function loadCustomers() {
+  fetch(customerEndpoint)
+    .then(res => res.json())
+    .then(data => {
+      customerCache = data.filter(c => c.BDM === bdmName);
+      renderCustomerOptions(customerCache);
+    });
+}
+
+function filterCustomers() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = customerCache.filter(c =>
+    c["Customer Name"].toLowerCase().includes(query)
+  );
+  renderCustomerOptions(filtered);
+}
+
+function renderCustomerOptions(list) {
+  const container = document.getElementById("customerSelect");
+  container.innerHTML = list.map(c =>
+    `<label><input type="checkbox" value="${c['Customer Name']}" data-bdm="${c.BDM}" data-grade="${c.Grade}" data-key="${c['Key Account Group']}" data-sub="${c['Sub Owner Group']}" /> ${c['Customer Name']}</label><br/>`
+  ).join('');
+}
+
+function submitCalls() {
+  const selected = [...document.querySelectorAll("#customerSelect input:checked")];
+  if (selected.length === 0) return alert("Select at least one customer.");
+  fetch(sheetEndpoint)
+    .then(res => res.json())
+    .then(existing => {
+      const todays = existing.filter(c => c.Date?.startsWith(currentDate) && c.BDM === bdmName && c.Status !== "Deleted");
+      const maxOrder = Math.max(0, ...todays.map(c => Number(c.Order || 0)));
+      const newData = selected.map((el, i) => ({
+        "Customer Name": el.value,
+        "Date": currentDate,
+        "BDM": el.dataset.bdm,
+        "Grade": el.dataset.grade,
+        "Key Account Group": el.dataset.key,
+        "Sub Owner Group": el.dataset.sub,
+        "Order": maxOrder + i + 1
+      }));
+      return fetch(sheetEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: newData })
+      });
+    })
+    .then(() => {
+      closeAddCalls();
+      loadDay(currentDate);
+    });
+}
+
+window.onload = function () {
+  document.getElementById("datePicker").value = currentDate;
+  loadDay(currentDate);
+};
+</script>
 </body>
-
 </html>
