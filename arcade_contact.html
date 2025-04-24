@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us – Rewinded Arcade</title>
+  <style>
+    body {
+      background: black;
+      color: #0f0;
+      font-family: monospace;
+      padding: 40px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #0ff;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    input, textarea {
+      font-family: monospace;
+      padding: 8px;
+      font-size: 1rem;
+      border: 2px solid #0f0;
+      background: black;
+      color: #0f0;
+    }
+    textarea {
+      height: 150px;
+      resize: vertical;
+    }
+    button {
+      width: fit-content;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #0f0;
+      color: black;
+      border: none;
+      cursor: pointer;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      color: #0ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <form action="https://formspree.io/f/xdkgnnpk" method="POST">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="message" placeholder="Your message..." required></textarea>
+    <button type="submit">Send</button>
+  </form>
+  <a class="back-link" href="homepage.html">&larr; Back to Arcade</a>
+</body>
+</html>
