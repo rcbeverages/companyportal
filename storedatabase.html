@@ -14,7 +14,7 @@
       padding: 0;
       background-color: #f4f4f4;
       text-align: center;
-      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
+      padding-top: 150px; /* Added more padding to prevent content being hidden behind fixed header and welcome message */
     }
 
     /* Fixed Header */
@@ -56,14 +56,15 @@
       flex-wrap: wrap;
       justify-content: space-around;
       gap: 2rem;
-     padding: 6rem 0; /* Ensure the buttons are below the fixed header and welcome message */
-}
+      padding: 3rem 0;
+      margin-top: 70px; /* Add margin-top to push the container below the header */
+    }
 
     /* Button Styling */
     .btn {
       background-color: #2563eb;
       color: white;
-      padding: 50px;
+      padding: 25px;
       font-size: 1.5rem;
       border-radius: 6px;
       border: none;
@@ -109,19 +110,65 @@
       background-color: #1e40af;
     }
 
+    /* Store List Styling */
+    .tile {
+      background-color: #ffffff;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      max-width: 300px;
+      width: 100%;
+      margin: 0 auto;
+      color: #333;
+    }
+
+    .tile h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .tile p {
+      margin: 5px 0;
+      font-size: 1.1rem;
+    }
+
+    .tile button {
+      margin-top: 10px;
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tile button:hover {
+      background-color: #1e40af;
+    }
+
     /* Media Queries for Tablet and Mobile */
     @media screen and (max-width: 768px) {
       .btn {
         font-size: 1.2rem;
         padding: 20px;
       }
+
+      .tile {
+        max-width: 90%;
+      }
     }
 
-    /* Media Queries for Mobile */
     @media screen and (max-width: 600px) {
       footer .footer-btn {
         font-size: 1rem;
         padding: 10px 15px;
+      }
+
+      .tile {
+        max-width: 100%;
       }
     }
   </style>
@@ -130,7 +177,7 @@
 <body>
   <!-- Header Section with Page Title -->
   <header>
-    <h1>Orders & Visits.</h1>
+    <h1>Orders & Visits</h1>
   </header>
 
   <!-- Welcome Message Section -->
@@ -141,6 +188,10 @@
   <!-- Button Container for Groups -->
   <div class="button-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
+  </div>
+
+  <div id="customerTiles">
+    <!-- Customer tiles will be dynamically populated here -->
   </div>
 
   <footer>
@@ -162,7 +213,7 @@
     const bdmName = bdmMap[username];
 
     let customerCache = [];
-    document.getElementById("welcomeText").textContent = `Welcome, ${bdmName}`;
+    document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
     async function loadCustomers() {
       const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
