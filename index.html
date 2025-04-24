@@ -1,66 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to RC Beverages</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RC Beverages</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #ffffff, #dbeafe);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      flex-direction: column;
-      color: #111827;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6cb1f2, #89b0d0);
+      color: #333;
       text-align: center;
+      padding: 20px;
     }
+
+    header {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      max-width: 150px;
+      height: auto;
+    }
+
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #ffffff;
+      font-weight: bold;
     }
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      max-width: 90%;
+
+    .intro-text {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto 20px;
     }
-    button {
-      background-color: #2563eb;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 8px;
+
+    .intro-text p {
+      line-height: 1.5;
+      color: #666;
       font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .btn {
+      background-color: #0057b7;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease-in-out;
+      display: inline-block;
     }
-    button:hover {
-      background-color: #1e40af;
+
+    .btn:hover {
+      background-color: #00409a;
     }
-    img {
-      max-width: 160px;
-      margin: 20px auto;
-      display: block;
+
+    .sub-header {
+      background-color: #cfe2ff;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .intro-text {
+        padding: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
-<img src="logo.png" alt="RC Beverages Logo" style="max-width: 240px; margin: 30px auto; display: block;" />
-  <h1>Welcome to RC Beverages</h1>
+  <header>
+    <img src="logo.png" alt="RC Beverages Logo">
+    <h1>Welcome to RC Beverages</h1>
+  </header>
 
-  <p>Your central hub for managing customer visits and field activities.</p>
+  <div class="sub-header">
+    <p>Your central hub for managing customer visits and field activities.</p>
+  </div>
 
-  <p>
-    At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites.
-    Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast,
-    thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising
-    quality, and unforgettable branding that speaks to a new generation of drinkers.
-  </p>
-
-  <button onclick="location.href='login.html'">Get Started</button>
-
+  <div class="intro-text">
+    <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
+    <a href="dashboard.html" class="btn">Get Started</a>
+  </div>
 </body>
+
 </html>
