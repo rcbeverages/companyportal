@@ -36,39 +36,27 @@
       margin-top: 10px;
     }
 
-    /* Main container for Groups */
-    .group-container {
+    /* Button Container Layout */
+    .button-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-around; /* Align buttons in a row */
       gap: 2rem;
       padding: 2rem 0;
-    }
-
-    /* Group Title Styling */
-    .group-title {
-      background-color: #0057b7;
-      color: white;
-      padding: 15px;
-      margin-bottom: 10px;
-      font-size: 1.5rem;
-      border-radius: 5px;
-      width: 100%;
-      text-align: center;
-      flex: 1 1 calc(33% - 1rem); /* 3 items per row */
     }
 
     /* Button Styling */
     .btn {
       background-color: #2563eb;
       color: white;
-      padding: 15px;
-      font-size: 1.2rem;
+      padding: 25px;
+      font-size: 1.5rem; /* Larger font size */
       border-radius: 6px;
       border: none;
       text-decoration: none;
       display: block;
       width: 100%;
+      max-width: 300px; /* Max width to keep the buttons manageable */
       margin: 10px 0;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
@@ -76,6 +64,14 @@
 
     .btn:hover {
       background-color: #1e40af;
+    }
+
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 768px) {
+      .btn {
+        font-size: 1.2rem;
+        padding: 20px;
+      }
     }
 
     /* Footer Styling */
@@ -107,23 +103,8 @@
       background-color: #1e40af;
     }
 
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .group-title {
-        flex: 1 1 100%; /* Full width for small devices */
-      }
-
-      .btn {
-        font-size: 1.1rem;
-      }
-    }
-
-    /* Media Queries for Mobile */
+    /* Media Query for Mobile */
     @media screen and (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-
       footer .footer-btn {
         font-size: 1rem;
         padding: 10px 15px;
@@ -143,8 +124,8 @@
     <!-- Welcome message will be injected here -->
   </div>
 
-  <!-- Main Group Container -->
-  <div class="group-container" id="dashboard-sections">
+  <!-- Button Container for Groups -->
+  <div class="button-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
   </div>
 
@@ -153,7 +134,6 @@
     <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
     <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
     <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-    <button class="footer-btn" onclick="location.href='rewindedarcade.html'">Rewinded Arcade</button>
   </footer>
 
   <script>
@@ -164,48 +144,29 @@
     // Display welcome message
     document.getElementById("welcome").textContent = `Welcome ${username}`;
 
-    // Define button data with role assignment
+    // Define the button data (for each group)
     const buttonData = [
-      {
-        buttons: [
-          { label: "CRM Tools", href: "crmtools.html", roles: ["Admin"] },
-          { label: "Orders & Visits", href: "orders_visits.html", roles: ["Admin"] },
-          { label: "Marketing and Promotions", href: "marketing_promotions.html", roles: ["Admin"] },
-          { label: "Data & Analytics", href: "data_analytics.html", roles: ["Admin"] },
-          { label: "Resources", href: "resources.html", roles: ["Admin"] },
-          { label: "Warehouse", href: "warehouse.html", roles: ["Admin"] }
-          { label: "Settings", href: "settings.html", roles: ["Admin"] }
-        ]
-      },
+      { label: "CRM Tools", href: "crm_tools.html", roles: ["Admin", "Sales", "Marketing"] },
+      { label: "Orders & Visits", href: "orders_visits.html", roles: ["Admin", "Sales"] },
+      { label: "Marketing & Promotions", href: "marketing_promotions.html", roles: ["Admin", "Marketing"] },
+      { label: "Data & Analytics", href: "data_analytics.html", roles: ["Admin"] },
+      { label: "Resources", href: "resources.html", roles: ["Admin", "Marketing"] },
+      { label: "Warehouse", href: "warehouse.html", roles: ["Admin", "Warehouse"] },
+      { label: "Settings", href: "settings.html", roles: ["Admin"] }
     ];
-     
 
-    // Create buttons dynamically based on user role
+    // Create buttons dynamically based on the user role
     const buttonContainer = document.getElementById("dashboard-sections");
 
-    // Iterate through each group and add the buttons based on role
-    buttonData.forEach(group => {
-      const section = document.createElement("section");
-      const title = document.createElement("div");
-      title.className = "group-title";
-      title.textContent = group.group;
-      section.appendChild(title);
-
-      const buttonWrapper = document.createElement("div");
-      buttonWrapper.className = "button-container";
-
-      group.buttons.forEach(btn => {
-        if (btn.roles.includes(role)) {
-          const button = document.createElement("button");
-          button.className = "btn";
-          button.textContent = btn.label;
-          button.onclick = () => window.location.href = btn.href;
-          buttonWrapper.appendChild(button);
-        }
-      });
-
-      section.appendChild(buttonWrapper);
-      buttonContainer.appendChild(section);
+    buttonData.forEach(button => {
+      // Check if the user's role is allowed for the button
+      if (button.roles.includes(role)) {
+        const btnElement = document.createElement("a");
+        btnElement.classList.add("btn");
+        btnElement.textContent = button.label;
+        btnElement.href = button.href;
+        buttonContainer.appendChild(btnElement);
+      }
     });
   </script>
 </body>
