@@ -6,6 +6,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
   <link rel="stylesheet" href="style.css" /> <!-- Link to the external CSS file -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    /* Welcome Message Styling */
+    .welcome-message {
+      background-color: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      font-size: 1.25rem;
+      margin-top: 10px;
+    }
+
+    /* Button Container Layout */
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around; /* Distribute groups evenly */
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    /* Group Title Styling */
+    .group-title {
+      background-color: #0057b7;
+      color: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      border-radius: 5px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Buttons Styling */
+    .btn {
+      background-color: #2563eb;
+      color: white;
+      padding: 15px;
+      font-size: 1.2rem;
+      border-radius: 6px;
+      border: none;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 768px) {
+      .button-container {
+        justify-content: center;
+      }
+
+      .btn {
+        font-size: 1.1rem;
+      }
+
+      /* Stack the button titles vertically on smaller screens */
+      .group-title {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 100;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+  </style>
 </head>
 
 <body>
@@ -42,65 +158,98 @@
     // Define button data with role assignment
     const buttonData = [
       {
-  "CRM Tools": [
-    { "label": "Add Customer", "href": "add_customer.html", "roles": ["Admin"] },
-    { "label": "Store Database", "href": "store_database.html", "roles": ["Admin"] },
-    { "label": "Email Database", "href": "email_database.html", "roles": ["Admin", "Marketing"] },
-    { "label": "Journey Planners", "href": "journey_planners.html", "roles": ["Admin", "Sales"] },
-    { "label": "Reminders", "href": "reminders.html", "roles": ["Admin", "Sales"] },
-    { "label": "Asset Management", "href": "asset_management.html", "roles": ["Admin", "Warehouse"] }
-  ],
-  "Orders & Visits": [
-    { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin", "Sales"] },
-    { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin", "Sales"] },
-    { "label": "Visit History / Logs", "href": "visit_logs.html", "roles": ["Admin", "Sales"] },
-    { "label": "Route Planner", "href": "route_planner.html", "roles": ["Admin", "Sales"] },
-    { "label": "Suggested Next Visit", "href": "suggested_visits.html", "roles": ["Admin", "Sales"] }
-  ],
-  "Marketing and Promotions": [
-    { "label": "Email Campaign Manager", "href": "email_campaigns.html", "roles": ["Admin", "Marketing"] },
-    { "label": "Promotions", "href": "promotions.html", "roles": ["Admin", "Marketing"] }
-  ],
-  "Data & Analytics": [
-    { "label": "Store Performance", "href": "store_performance.html", "roles": ["Admin", "Sales"] },
-    { "label": "Gap Targets", "href": "gap_targets.html", "roles": ["Admin", "Sales"] },
-    { "label": "Activation Targets", "href": "activation_targets.html", "roles": ["Admin", "Sales"] }
-  ],
-  "Resources": [
-    { "label": "Portfolio", "href": "portfolio.html", "roles": ["Admin", "Marketing"] },
-    { "label": "Trade Presenters", "href": "presenters.html", "roles": ["Admin", "Marketing"] },
-    { "label": "Price Lists", "href": "price_lists.html", "roles": ["Admin", "Sales"] },
-    { "label": "Training", "href": "training.html", "roles": ["Admin", "Sales"] }
-  ],
-  "Warehouse": [
-    { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
-    { "label": "Outbound / Dispatch", "href": "dispatch.html", "roles": ["Admin", "Warehouse"] },
-    { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
-    { "label": "View Stock Levels", "href": "stock_levels.html", "roles": ["Admin", "Warehouse"] },
-    { "label": "Low Stock Alerts", "href": "low_stock.html", "roles": ["Admin", "Warehouse"] },
-    { "label": "Low Code Stock Alerts", "href": "low_code_stock.html", "roles": ["Admin", "Warehouse"] }
-  ],
-  "Settings": [
-    { "label": "Add User", "href": "add_user.html", "roles": ["Admin"] },
-    { "label": "Delete User", "href": "delete_user.html", "roles": ["Admin"] },
-    { "label": "Change User Password", "href": "change_password.html", "roles": ["Admin"] },
-    { "label": "Change User Role", "href": "change_role.html", "roles": ["Admin"] }
-  ]
-}
-
+        group: "CRM Tools",
+        buttons: [
+          { label: "Add Customer", href: "add_customer.html", roles: ["Admin"] },
+          { label: "Store Database", href: "store_database.html", roles: ["Admin"] },
+          { label: "Email Database", href: "email_database.html", roles: ["Admin", "Marketing"] },
+          { label: "Journey Planners", href: "journey_planners.html", roles: ["Admin", "Sales"] },
+          { label: "Reminders", href: "reminders.html", roles: ["Admin", "Sales"] },
+          { label: "Asset Management", href: "asset_management.html", roles: ["Admin", "Warehouse"] }
+        ]
+      },
+      {
+        group: "Orders & Visits",
+        buttons: [
+          { label: "Wholesaler Portals", href: "wholesalers.html", roles: ["Admin", "Sales"] },
+          { label: "Pre-Orders", href: "preorders.html", roles: ["Admin", "Sales"] },
+          { label: "Visit History / Logs", href: "visit_logs.html", roles: ["Admin", "Sales"] },
+          { label: "Route Planner", href: "route_planner.html", roles: ["Admin", "Sales"] },
+          { label: "Suggested Next Visit", href: "suggested_visits.html", roles: ["Admin", "Sales"] }
+        ]
+      },
+      {
+        group: "Marketing and Promotions",
+        buttons: [
+          { label: "Email Campaign Manager", href: "email_campaigns.html", roles: ["Admin", "Marketing"] },
+          { label: "Promotions", href: "promotions.html", roles: ["Admin", "Marketing"] }
+        ]
+      },
+      {
+        group: "Data & Analytics",
+        buttons: [
+          { label: "Store Performance", href: "store_performance.html", roles: ["Admin", "Sales"] },
+          { label: "Gap Targets", href: "gap_targets.html", roles: ["Admin", "Sales"] },
+          { label: "Activation Targets", href: "activation_targets.html", roles: ["Admin", "Sales"] }
+        ]
+      },
+      {
+        group: "Resources",
+        buttons: [
+          { label: "Portfolio", href: "portfolio.html", roles: ["Admin", "Marketing"] },
+          { label: "Trade Presenters", href: "presenters.html", roles: ["Admin", "Marketing"] },
+          { label: "Price Lists", href: "price_lists.html", roles: ["Admin", "Sales"] },
+          { label: "Training", href: "training.html", roles: ["Admin", "Sales"] }
+        ]
+      },
+      {
+        group: "Warehouse",
+        buttons: [
+          { label: "Inbound / Receiving", href: "inbound.html", roles: ["Admin", "Warehouse"] },
+          { label: "Outbound / Dispatch", href: "dispatch.html", roles: ["Admin", "Warehouse"] },
+          { label: "Returns / Waste", href: "returns.html", roles: ["Admin", "Warehouse"] },
+          { label: "View Stock Levels", href: "stock_levels.html", roles: ["Admin", "Warehouse"] },
+          { label: "Low Stock Alerts", href: "low_stock.html", roles: ["Admin", "Warehouse"] },
+          { label: "Low Code Stock Alerts", href: "low_code_stock.html", roles: ["Admin", "Warehouse"] }
+        ]
+      },
+      {
+        group: "Settings",
+        buttons: [
+          { label: "Add User", href: "add_user.html", roles: ["Admin"] },
+          { label: "Delete User", href: "delete_user.html", roles: ["Admin"] },
+          { label: "Change User Password", href: "change_password.html", roles: ["Admin"] },
+          { label: "Change User Role", href: "change_role.html", roles: ["Admin"] }
+        ]
+      }
+    ];
 
     // Create buttons dynamically based on user role
     const buttonContainer = document.getElementById("dashboard-sections");
 
-    buttonData.forEach(button => {
-      // Check if the user's role is allowed for the button
-      if (button.roles.includes(role)) {
-        const btnElement = document.createElement("a");
-        btnElement.classList.add("btn");
-        btnElement.textContent = button.label;
-        btnElement.href = button.href;
-        buttonContainer.appendChild(btnElement);
-      }
+    // Iterate through each group and add the buttons based on role
+    buttonData.forEach(group => {
+      const section = document.createElement("section");
+      const title = document.createElement("div");
+      title.className = "group-title";
+      title.textContent = group.group;
+      section.appendChild(title);
+
+      const buttonWrapper = document.createElement("div");
+      buttonWrapper.className = "button-container";
+
+      group.buttons.forEach(btn => {
+        if (btn.roles.includes(role)) {
+          const button = document.createElement("button");
+          button.className = "btn";
+          button.textContent = btn.label;
+          button.onclick = () => window.location.href = btn.href;
+          buttonWrapper.appendChild(button);
+        }
+      });
+
+      section.appendChild(buttonWrapper);
+      buttonContainer.appendChild(section);
     });
   </script>
 </body>
