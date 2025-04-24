@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RC Beverages Journey Planner</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Basic Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 150px; /* Added more padding to prevent content being hidden behind fixed header and welcome message */
+    }
+
+    /* Fixed Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    /* Page Title Styling */
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    /* Fixed Welcome Message */
+    .welcome-message {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      font-size: 2rem;
+      margin-top: 10px;
+      z-index: 999;
+    }
+
+    /* Search Input Styling */
+    #searchInput {
+      width: 80%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+
+    /* Store List Styling */
+    #customerTiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    /* Individual Tile Styling */
+    .tile {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      width: 30%; /* 3 tiles per row */
+      margin: 10px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .tile h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .tile p {
+      margin: 5px 0;
+      font-size: 1.1rem;
+    }
+
+    .tile button {
+      margin-top: 10px;
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tile button:hover {
+      background-color: #1e40af;
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 1000;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 1024px) {
+      .tile {
+        width: 45%; /* Two tiles per row on larger tablets */
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .tile {
+        width: 45%; /* Two tiles per row on smaller tablets */
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .tile {
+        width: 90%; /* One tile per row on mobile */
+      }
+
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section with Page Title -->
+  <header>
+    <h1>Orders & Visits</h1>
+  </header>
+
+  <!-- Welcome Message Section -->
+  <div class="welcome-message" id="welcome">
+    <!-- Welcome message will be injected here -->
+  </div>
+
+  <!-- Search Bar Section -->
+  <input type="text" id="searchInput" placeholder="Search Customers..." oninput="filterTiles()" />
+
+  <!-- Store List Section -->
+  <div id="customerTiles">
+    <!-- Customer tiles will be dynamically populated here -->
+  </div>
+
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+    <button class="footer-btn" onclick="location.href='arcade_homepage.html'">Rewinded Arcade</button>
+  </footer>
+
+  <script>
+    const username = localStorage.getItem("username");
+    const bdmMap = {
+      rhincksman: "Ryan Hincksman",
+      chawkins: "Chris Hawkins"
+    };
+
+    const bdmName = bdmMap[username];
+
+    let customerCache = [];
+    document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
+
+    async function loadCustomers() {
+      const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
+      const data = await res.json();
+      customerCache = data;
+      displayTiles(data);
+    }
+
+    function displayTiles(data) {
+      const filtered = data.filter(c => c.BDM === bdmName);
+      const container = document.getElementById("customerTiles");
+      container.innerHTML = "";
+      filtered.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "tile";
+        div.setAttribute("data-name", `${c["Customer Name"].toLowerCase()} ${c["Key Account Group"].toLowerCase()} ${c["Sub Owner Group"].toLowerCase()} ${c.Grade.toLowerCase()}`);
+        div.innerHTML = `
+          <h3>${c["Customer Name"]}</h3>
+          <p><strong>Key Account Group:</strong> ${c["Key Account Group"]}</p>
+          <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "-"}</p>
+          <p><strong>Grade:</strong> ${c.Grade}</p>
+          <button class="btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterTiles() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      document.querySelectorAll(".tile").forEach(tile => {
+        tile.style.display = tile.dataset.name.includes(query) ? "block" : "none";
+      });
+    }
+
+    function startCall(customerName) {
+      const customer = customerCache.find(c => c["Customer Name"] === customerName);
+      if (customer) {
+        localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+        window.location.href = "visit.html";
+      } else {
+        alert("Customer not found.");
+      }
+    }
+
+    window.onload = loadCustomers;
+  </script>
+</body>
+
+</html>
