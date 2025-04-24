@@ -7,15 +7,17 @@
   <title>RC Beverages Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* Basic Body Styling */
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
     }
 
-    /* Header Styling */
+    /* Fixed Header */
     header {
       position: fixed;
       top: 0;
@@ -25,30 +27,36 @@
       color: white;
       padding: 20px;
       text-align: center;
-      z-index: 1000; /* Ensures the header stays on top */
+      z-index: 1000; /* Keeps the header on top */
     }
 
+    /* Page Title Styling */
     h1 {
-      font-size: 2.5rem;
       margin: 0;
+      font-size: 2.5rem;
     }
 
-    /* Welcome Message Styling */
+    /* Fixed Welcome Message */
     .welcome-message {
+      position: fixed;
+      top: 70px; /* Move the welcome message just below the header */
+      left: 0;
+      right: 0;
       background-color: #ffffff;
       color: #0057b7;
       padding: 15px;
       font-size: 1.25rem;
       margin-top: 10px;
+      z-index: 999;
     }
 
     /* Button Container Layout */
     .button-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around; /* Align buttons in a row */
+      justify-content: space-around;
       gap: 2rem;
-      padding: 2rem 0;
+      padding: 3rem 0; /* Ensure the buttons are below the fixed header and welcome message */
     }
 
     /* Button Styling */
@@ -56,13 +64,13 @@
       background-color: #2563eb;
       color: white;
       padding: 25px;
-      font-size: 1.5rem; /* Larger font size */
+      font-size: 1.5rem;
       border-radius: 6px;
       border: none;
       text-decoration: none;
       display: block;
       width: 100%;
-      max-width: 300px; /* Max width to keep the buttons manageable */
+      max-width: 300px;
       margin: 10px 0;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
@@ -70,14 +78,6 @@
 
     .btn:hover {
       background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .btn {
-        font-size: 1.2rem;
-        padding: 20px;
-      }
     }
 
     /* Footer Styling */
@@ -91,7 +91,7 @@
       justify-content: space-around;
       align-items: center;
       border-top: 2px solid #ccc;
-      z-index: 100;
+      z-index: 1000;
     }
 
     footer .footer-btn {
@@ -109,7 +109,15 @@
       background-color: #1e40af;
     }
 
-    /* Media Query for Mobile */
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 768px) {
+      .btn {
+        font-size: 1.2rem;
+        padding: 20px;
+      }
+    }
+
+    /* Media Queries for Mobile */
     @media screen and (max-width: 600px) {
       footer .footer-btn {
         font-size: 1rem;
@@ -122,7 +130,7 @@
 <body>
   <!-- Header Section with Page Title -->
   <header>
-    <h1>Dashboard</h1>
+    <h1>RC Beverages Dashboard</h1>
   </header>
 
   <!-- Welcome Message Section -->
@@ -165,7 +173,6 @@
     const buttonContainer = document.getElementById("dashboard-sections");
 
     buttonData.forEach(button => {
-      // Check if the user's role is allowed for the button
       if (button.roles.includes(role)) {
         const btnElement = document.createElement("a");
         btnElement.classList.add("btn");
