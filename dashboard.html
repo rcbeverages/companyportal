@@ -4,78 +4,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages Dashboard</title>
-  <!-- Link to the external CSS file -->
-  <link rel="stylesheet" href="style.css"> <!-- Corrected -->
+  <title>Page Title</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Body styling - Uses the style.css from external file */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6cb1f2, #89b0d0);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Header Styling */
+    header {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      max-width: 290px;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 100;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Media Queries for Mobile */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <!-- Header Section -->
   <header>
-    <h1>RC Beverages Dashboard</h1>
+    <h1>Page Title</h1> <!-- You can change this text dynamically -->
   </header>
 
-  <!-- Sub Header with Welcome message -->
-  <div class="sub-header">
-    <div class="welcome-message" id="welcome">
-      <!-- Welcome message will be injected here -->
-    </div>
-  </div>
-
-  <!-- Button Container (for dashboard buttons) -->
-  <div class="button-container" id="dashboard-sections">
-    <!-- Buttons will be dynamically populated here -->
-  </div>
-
-  <script>
-    // Get username and role from localStorage
-    const username = localStorage.getItem("username");
-    const role = localStorage.getItem("role");
-    document.getElementById("welcome").textContent = `Welcome ${username}`;
-
-    // Define the buttons data directly in the script
-    const dashboardData = [
-      {
-        "group": "CRM Tools",
-        "buttons": [
-          { "label": "Add Customer", "href": "addcustomer.html", "roles": ["Admin", "Sales"] },
-          { "label": "Store Database", "href": "storedatabase.html", "roles": ["Admin", "Sales"] },
-          { "label": "Email Database", "href": "emaildatabase.html", "roles": ["Admin", "Marketing"] },
-          { "label": "Journey Planners", "href": "journeyplanners.html", "roles": ["Admin", "Sales"] },
-          { "label": "Reminders", "href": "reminders.html", "roles": ["Admin", "Sales"] },
-          { "label": "Asset Management", "href": "asset.html", "roles": ["Admin", "Warehouse"] }
-        ]
-      },
-      // More sections for other groups like "Orders & Visits", etc...
-    ];
-
-    // Populate the dashboard with buttons based on the user's role
-    const container = document.getElementById("dashboard-sections");
-
-    dashboardData.forEach(group => {
-      const section = document.createElement("section");
-      const title = document.createElement("div");
-      title.className = "group-title";
-      title.textContent = group.group;
-      section.appendChild(title);
-
-      const buttonWrapper = document.createElement("div");
-      buttonWrapper.className = "button-container";
-
-      group.buttons.forEach(btn => {
-        if (btn.roles.includes(role)) {
-          const button = document.createElement("button");
-          button.className = "dash-button";
-          button.textContent = btn.label;
-          button.onclick = () => window.location.href = btn.href;
-          buttonWrapper.appendChild(button);
-        }
-      });
-
-      section.appendChild(buttonWrapper);
-      container.appendChild(section);
-    });
-  </script>
+  <!-- Footer with Buttons -->
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>
 </body>
 
 </html>
