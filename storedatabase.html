@@ -1,82 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
+    /* Basic Body Styling */
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f0f4ff;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
     }
-    .header {
-      background-color: #0353a4;
+
+    /* Fixed Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #0057b7;
       color: white;
-      padding: 1rem;
+      padding: 20px;
       text-align: center;
-      font-size: 1.5rem;
+      z-index: 1000; /* Keeps the header on top */
     }
-    .sub-header {
-      background-color: #d7e3fc;
-      padding: 0.75rem;
-      text-align: center;
-      font-weight: bold;
+
+    /* Page Title Styling */
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
     }
-    .group-title {
-      margin: 1rem 1rem 0.5rem;
-      font-size: 1.1rem;
-      color: #0353a4;
-      border-bottom: 2px solid #cce;
-      padding-bottom: 0.3rem;
+
+    /* Fixed Welcome Message */
+    .welcome-message {
+      position: fixed;
+      top: 70px; /* Move the welcome message just below the header */
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      font-size: 2rem;
+      margin-top: 10px;
+      z-index: 999;
     }
+
+    /* Button Container Layout */
     .button-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      padding: 0 1rem 1rem;
+      justify-content: space-around;
+      gap: 2rem;
+     padding: 6rem 0; /* Ensure the buttons are below the fixed header and welcome message */
+}
+
+    /* Button Styling */
+    .btn {
+      background-color: #2563eb;
+      color: white;
+      padding: 50px;
+      font-size: 1.5rem;
+      border-radius: 6px;
+      border: none;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
     }
-    .dash-button {
-      flex: 1 1 calc(33% - 1rem);
-      padding: 1rem;
+
+    .btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 1000;
+    }
+
+    footer .footer-btn {
       background-color: #2563eb;
       color: white;
       border: none;
-      border-radius: 8px;
-      text-align: center;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
       cursor: pointer;
-      font-size: 1rem;
+      transition: background-color 0.3s ease-in-out;
     }
-    .dash-button:hover {
+
+    footer .footer-btn:hover {
       background-color: #1e40af;
     }
+
+    /* Media Queries for Tablet and Mobile */
     @media screen and (max-width: 768px) {
-      .dash-button {
-        flex: 1 1 calc(50% - 1rem);
+      .btn {
+        font-size: 1.2rem;
+        padding: 20px;
       }
     }
-    @media screen and (max-width: 480px) {
-      .dash-button {
-        flex: 1 1 100%;
+
+    /* Media Queries for Mobile */
+    @media screen and (max-width: 600px) {
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
       }
     }
   </style>
 </head>
+
 <body>
+  <!-- Header Section with Page Title -->
   <header>
-    <h1>Store Database</h1></h1>
+    <h1>Orders & Visits.</h1>
   </header>
 
-  <div class="welcome">
-    <h2 id="welcomeText">Welcome</h2>
-    <div style="text-align: center; margin-top: 20px;">
-      <button class="btn" onclick="location.href='dashboard.html'">Back to Dashboard</button><br>
-    </div>
+  <!-- Welcome Message Section -->
+  <div class="welcome-message" id="welcome">
+    <!-- Welcome message will be injected here -->
   </div>
 
-  <input type="text" id="searchInput" placeholder="Search customers..." oninput="filterTiles()" />
+  <!-- Button Container for Groups -->
+  <div class="button-container" id="dashboard-sections">
+    <!-- Buttons will be dynamically populated here -->
+  </div>
 
-  <div class="tiles" id="customerTiles"></div>
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+    <button class="footer-btn" onclick="location.href='arcade_homepage.html'">Rewinded Arcade</button>
+  </footer>
 
   <script>
     const username = localStorage.getItem("username");
