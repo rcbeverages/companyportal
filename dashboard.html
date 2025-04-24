@@ -5,91 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages Dashboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-      text-align: center;
-    }
-
-    /* Header Styling */
-    header {
-      background: #0057b7;
-      color: white;
-      padding: 1rem;
-    }
-
-    h1 {
-      margin: 0;
-    }
-
-    /* Sub-header styling */
-    .sub-header {
-      background: #cfe2ff;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Welcome Message Styling */
-    .welcome-message {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      color: #333;
-    }
-
-    /* Button Container Layout */
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      padding: 0 1rem 1rem;
-    }
-
-    .dash-button {
-      flex: 1 1 100%;  /* Ensures each button takes up full width on smaller devices */
-      padding: 1rem;
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-
-    .dash-button:hover {
-      background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Larger Screens */
-    @media screen and (min-width: 768px) {
-      .dash-button {
-        flex: 1 1 calc(33% - 1rem); /* Buttons take up 1/3 of the width on tablet */
-      }
-
-      .button-container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-    }
-
-    @media screen and (min-width: 1024px) {
-      .dash-button {
-        flex: 1 1 calc(25% - 1rem); /* Buttons take up 1/4 of the width on desktop */
-      }
-    }
-
-  </style>
+  <!-- Link to the external CSS file -->
+  <link rel="stylesheet" href="style.css"> <!-- Corrected -->
 </head>
 
 <body>
+  <!-- Header Section -->
   <header>
-    <h1>Dashboard</h1>
+    <h1>RC Beverages Dashboard</h1>
   </header>
 
   <!-- Sub Header with Welcome message -->
@@ -99,6 +22,7 @@
     </div>
   </div>
 
+  <!-- Button Container (for dashboard buttons) -->
   <div class="button-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
   </div>
@@ -122,60 +46,7 @@
           { "label": "Asset Management", "href": "asset.html", "roles": ["Admin", "Warehouse"] }
         ]
       },
-      {
-        "group": "Orders & Visits",
-        "buttons": [
-          { "label": "Wholesaler Portals", "href": "wholesalers.html", "roles": ["Admin", "Sales"] },
-          { "label": "Pre-Orders", "href": "preorders.html", "roles": ["Admin", "Sales"] },
-          { "label": "Visit History / Logs", "href": "visits.html", "roles": ["Admin", "Sales"] },
-          { "label": "Route Planner", "href": "routes.html", "roles": ["Admin", "Sales"] },
-          { "label": "Suggested Next Visit", "href": "nextvisit.html", "roles": ["Admin", "Sales"] }
-        ]
-      },
-      {
-        "group": "Marketing and Promotions",
-        "buttons": [
-          { "label": "Email Campaign Manager", "href": "campaigns.html", "roles": ["Admin", "Marketing"] },
-          { "label": "Promotions", "href": "promos.html", "roles": ["Admin", "Marketing"] }
-        ]
-      },
-      {
-        "group": "Data & Analytics",
-        "buttons": [
-          { "label": "Store Performance", "href": "performance.html", "roles": ["Admin"] },
-          { "label": "Gap Targets", "href": "gaps.html", "roles": ["Admin"] },
-          { "label": "Activation Targets", "href": "activations.html", "roles": ["Admin"] }
-        ]
-      },
-      {
-        "group": "Resources",
-        "buttons": [
-          { "label": "Portfolio", "href": "portfolio.html", "roles": ["Admin", "Marketing"] },
-          { "label": "Trade Presenters", "href": "presenters.html", "roles": ["Admin", "Marketing"] },
-          { "label": "Price Lists", "href": "prices.html", "roles": ["Admin", "Sales"] },
-          { "label": "Training", "href": "training.html", "roles": ["Admin", "Sales", "Marketing", "Warehouse"] }
-        ]
-      },
-      {
-        "group": "Warehouse",
-        "buttons": [
-          { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
-          { "label": "Outbound / Dispatch", "href": "outbound.html", "roles": ["Admin", "Warehouse"] },
-          { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
-          { "label": "View Stock Levels", "href": "stock.html", "roles": ["Admin", "Warehouse"] },
-          { "label": "Low Stock Alerts", "href": "lowstock.html", "roles": ["Admin", "Warehouse"] },
-          { "label": "Low Code Stock Alerts", "href": "lowcode.html", "roles": ["Admin", "Warehouse"] }
-        ]
-      },
-      {
-        "group": "Settings",
-        "buttons": [
-          { "label": "Add User", "href": "adduser.html", "roles": ["Admin"] },
-          { "label": "Delete User", "href": "deleteuser.html", "roles": ["Admin"] },
-          { "label": "Change User Password", "href": "changepass.html", "roles": ["Admin"] },
-          { "label": "Change User Role", "href": "changerole.html", "roles": ["Admin"] }
-        ]
-      }
+      // More sections for other groups like "Orders & Visits", etc...
     ];
 
     // Populate the dashboard with buttons based on the user's role
