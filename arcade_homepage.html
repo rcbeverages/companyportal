@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rewinded Arcade</title>
   <style>
     body {
@@ -59,27 +59,33 @@
   </style>
 </head>
 <body>
+
+  <!-- Age Gate -->
   <div id="age-gate" style="position:fixed;top:0;left:0;width:100%;height:100%;
     background:#000;z-index:9999;display:flex;flex-direction:column;justify-content:center;
-    align-items:center;color:#0f0;font-family:monospace;text-align:center;padding:20px;">
-    <h2 style="font-size:1.8rem;">18+ Only</h2>
-    <p>This arcade is part of a marketing campaign for Rewinded Soda Co's alcohol range. You must be 18+ to enter.</p>
-    <p>Please enter your date of birth to continue:</p>
-    <input type="date" id="dob" style="padding:8px;margin:10px 0;background:#111;border:1px solid #0f0;color:#0f0;">
-    <button onclick="verifyAge()" style="padding:10px 20px;background:#0f0;color:#000;
-      font-weight:bold;border:none;cursor:pointer;">Enter</button>
-    <p id="error" style="color:red;margin-top:10px;display:none;">You must be 18+ to access the arcade.</p>
+    align-items:center;color:#0f0;font-family:monospace;text-align:center;padding:20px;box-sizing:border-box;">
+    <div style="max-width:90%;width:300px;">
+      <h2 style="font-size:1.6rem;">18+ Only</h2>
+      <p style="margin: 10px 0;">This arcade is part of a marketing campaign for Rewinded Soda Co's alcohol range. You must be 18+ to enter.</p>
+      <p>Please enter your date of birth to continue:</p>
+      <input type="date" id="dob" style="width:100%;padding:8px;margin:10px 0;background:#111;border:1px solid #0f0;color:#0f0;">
+      <button onclick="verifyAge()" style="width:100%;padding:10px;background:#0f0;color:#000;
+        font-weight:bold;border:none;cursor:pointer;">Enter</button>
+      <p id="error" style="color:red;margin-top:10px;display:none;">You must be 18+ to access the arcade.</p>
+    </div>
   </div>
 
   <header>Rewinded Arcade</header>
+
   <main>
-    <a href="space-sips.html" class="game-tile">Space Sips</a>
+    <a href="arcade_spacesips.html" class="game-tile">Space Sips</a>
     <a href="#" class="game-tile">Snake (Coming Soon)</a>
     <a href="#" class="game-tile">Tetris (Coming Soon)</a>
     <a href="#" class="game-tile">Pong (Coming Soon)</a>
     <div class="game-tile">Coming Soon</div>
     <div class="game-tile">Coming Soon</div>
   </main>
+
   <footer>
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms & Conditions</a>
