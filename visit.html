@@ -480,6 +480,26 @@ function saveEverything() {
       body: JSON.stringify({ data: reminder })
     });
   })
+    // After all other saves
+.then(() => {
+  // Mark the Scheduled Call as Completed
+  const today = new Date().toISOString().split('T')[0];
+  return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/search?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}&Date=${encodeURIComponent(today)}`)
+    .then(res => res.json())
+    .then(results => {
+      if (results.length > 0) {
+        return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: { "Status": "Completed" } })
+        });
+      }
+    });
+})
+.then(() => {
+  showPopup("Save/End Call Completed");
+  setTimeout(() => window.location.href = "calendar.html", 1500);
+})
   .then(() => {
     if (shouldSaveAsset) {
       return fetch(assetSheet, {
