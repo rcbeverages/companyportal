@@ -50,7 +50,7 @@
       z-index: 999;
     }
 
-    /* Form Styling */
+    /* Form Container Styling */
     .form-container {
       background-color: #fff;
       padding: 20px;
@@ -58,6 +58,17 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       max-width: 600px;
       margin: 0 auto;
+      overflow-y: auto; /* Allow scrolling within form container */
+      height: 400px; /* Limit height to make form scrollable */
+      padding-bottom: 60px; /* Add space for the fixed button at the bottom */
+    }
+
+    /* Align form labels to the left */
+    label {
+      text-align: left;
+      display: block;
+      font-weight: bold;
+      margin: 10px 0 5px;
     }
 
     input, select, textarea {
@@ -78,13 +89,14 @@
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
       width: 100%;
+      position: absolute;
+      bottom: 20px;
     }
 
     button:hover {
       background-color: #1e40af;
     }
 
-    /* Footer Styling */
     footer {
       position: fixed;
       bottom: 0;
@@ -113,27 +125,6 @@
       background-color: #1e40af;
     }
 
-    /* Media Queries for Mobile and Tablet */
-    @media screen and (max-width: 768px) {
-      .tile {
-        width: 45%; /* Two tiles per row on larger tablets */
-      }
-
-      #searchInput {
-        width: 90%;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      footer .footer-btn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
-
-      #searchInput {
-        width: 90%;
-      }
-    }
   </style>
 </head>
 
@@ -180,6 +171,7 @@
         <option value="chawkins">Chris Hawkins</option>
       </select>
 
+      <!-- Button to submit form -->
       <button type="submit">Add Customer</button>
     </form>
   </div>
