@@ -46,18 +46,20 @@
       z-index: 999;
     }
 
-     /* Form Container (Scrollable Section) */
+     /* Form Container (Scrollable Section) *
     .form-container {
-      margin-top: 120px;  /* pushes it down from header + welcome */
-      padding: 20px;
+      position: absolute;
+      top: 140px; /* adjust this to just below header + welcome */
+      bottom: 90px; /* reserve space for the footer */
+      left: 0;
+      right: 0;
+      overflow-y: auto;
       max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+      padding: 20px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      height: calc(100vh - 400px);  /* fills the space between header + footer */
-      overflow-y: auto;
     }
 
     /* Align labels to the left */
