@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Space Sips – Rewinded Arcade</title>
@@ -56,18 +57,21 @@
 <body>
   <div id="age-gate" style="position:fixed;top:0;left:0;width:100%;height:100%;
     background:#000;z-index:9999;display:flex;flex-direction:column;justify-content:center;
-    align-items:center;color:#0f0;font-family:monospace;text-align:center;"><h2 style="font-size:1.8rem;">18+ Only</h2>
-<p>Please enter your date of birth to continue</p>
-<input type="date" id="dob" style="padding:8px;margin:10px 0;background:#111;border:1px solid #0f0;color:#0f0;">
-<button onclick="verifyAge()" style="padding:10px 20px;background:#0f0;color:#000;
-  font-weight:bold;border:none;cursor:pointer;">Enter</button>
-<p id="error" style="color:red;margin-top:10px;display:none;">You must be 18+ to access the arcade.</p>
-
+    align-items:center;color:#0f0;font-family:monospace;text-align:center;">
+    <h2 style="font-size:1.8rem;">18+ Only</h2>
+    <p>Please enter your date of birth to continue</p>
+    <input type="date" id="dob" style="padding:8px;margin:10px 0;background:#111;border:1px solid #0f0;color:#0f0;">
+    <button onclick="verifyAge()" style="padding:10px 20px;background:#0f0;color:#000;
+      font-weight:bold;border:none;cursor:pointer;">Enter</button>
+    <p id="error" style="color:red;margin-top:10px;display:none;">You must be 18+ to access the arcade.</p>
   </div>
+
   <div id="intro">
     <h1>Invade the invaders. Pop the boss. Sip with style.</h1>
     <button id="startBtn">Start Game</button>
-  </div>  <div id="gameWrapper">
+  </div>
+
+  <div id="gameWrapper">
     <h1 style="color:#0f0; margin:10px 0;">SPACE SIPS</h1>
     <div style="width:100%; max-width:360px; display:flex; justify-content:space-between; padding: 0 10px;">
       <div id="score">Score: 0</div>
@@ -79,33 +83,7 @@
       <div class="btn" id="fire">★</div>
       <div class="btn" id="right">▶</div>
     </div>
-  </div>  <script>
-    document.getElementById("startBtn").onclick = () => {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("gameWrapper").style.display = "flex";
-      window.startGame && startGame();
-    };
-  function showLevelPopup(callback) {
-  const popup = document.createElement('div');
-  popup.style.position = 'fixed';
-  popup.style.top = '50%';
-  popup.style.left = '50%';
-  popup.style.transform = 'translate(-50%, -50%)';
-  popup.style.background = '#000';
-  popup.style.color = '#0f0';
-  popup.style.border = '2px solid #0f0';
-  popup.style.padding = '20px';
-  popup.style.zIndex = '10000';
-  popup.textContent = `Level ${level + 1} Incoming...`;
-  document.body.appendChild(popup);
-  setTimeout(() => {
-    document.body.removeChild(popup);
-    callback();
-  }, 3000);
-}
-</script>  <!-- Full Game Logic Injected Below -->  <script>
-    // Full boss-enhanced gameplay logic will be inserted here
-
+  </div><script>
 const canvas = document.getElementById("game"), ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("score");
 const levelDisplay = document.getElementById("level");
@@ -152,8 +130,6 @@ function createInvaders() {
     boss = null;
   }
 }
-  }
-}
 
 function createShields() {
   shields = [50, 150, 250].map(x => ({ x, y: canvas.height - 100, w: 40, h: 20, health: 3 }));
@@ -176,7 +152,7 @@ function draw() {
   });
 
   if (boss && boss.health > 0) {
-    boss.color = boss.health <= 5 ? '#f88' : '#f0f';
+    boss.color = boss.health <= 10 ? '#f88' : '#f0f';
     drawAlien(boss.x, boss.y, 6, boss.color);
   }
 
@@ -203,51 +179,10 @@ function draw() {
     if (age > 300) explosions.splice(i, 1);
   });
 }
-
-function startGame() {
-  createInvaders();
-  createShields();
-  updateUI();
-  update();
-}
-
+  </script><script>
 function updateUI() {
   scoreDisplay.textContent = `Score: ${score}`;
   levelDisplay.textContent = `Level: ${level}`;
-}
-
-function update() {
-  if (boss && boss.health > 0) {
-    boss.x += boss.dx;
-    if (boss.x < 0 || boss.x + boss.w > canvas.width) boss.dx *= -1;
-  }
-  if (gameOver) return;
-  if (moveLeft) player.x -= player.speed;
-  if (moveRight) player.x += player.speed;
-  player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
-  invSpeed = Math.max(20, 100 - level * 5);
-  moveInvaders();
-  checkCollisions();
-  if (Date.now() - lastShotTime > 3000) {
-    shootFromInvaders();
-    lastShotTime = Date.now();
-  }
-  if (invaders.every(i => !i.alive) && (!boss || boss.health <= 0)) {
-    showLevelPopup(() => {
-      level++;
-      createInvaders();
-      createShields();
-      updateUI();
-    });
-    return;
-  }
-    level++;
-    createInvaders();
-    createShields();
-    updateUI();
-  }
-  draw();
-  requestAnimationFrame(update);
 }
 
 function moveInvaders() {
@@ -260,14 +195,9 @@ function moveInvaders() {
         if (inv.x < 0 || inv.x + inv.w > canvas.width) hitEdge = true;
       }
     });
-    if (boss && boss.health > 0) {
-      boss.x += 10 * invDirection;
-      if (boss.x < 0 || boss.x + boss.w > canvas.width) hitEdge = true;
-    }
     if (hitEdge) {
       invDirection *= -1;
       invaders.forEach(inv => inv.y += 20);
-      if (boss) boss.y += 20;
     }
     lastMove = now;
   }
@@ -307,6 +237,60 @@ function checkCollisions() {
       }
     }
   });
+
+  enemyBullets.forEach((b, bi) => {
+    if (b.x > player.x && b.x < player.x + player.w && b.y > player.y && b.y < player.y + player.h) endGame();
+    shields.forEach(s => {
+      if (s.health > 0 && b.x > s.x && b.x < s.x + s.w && b.y > s.y && b.y < s.y + s.h) {
+        s.health--;
+        enemyBullets.splice(bi, 1);
+      }
+    });
+  });
+
+  invaders.forEach(inv => {
+    if (inv.alive && inv.y + inv.h > player.y && inv.x < player.x + player.w && inv.x + inv.w > player.x) endGame();
+  });
+
+  if (boss && boss.health > 0 && boss.y + boss.h > player.y && boss.x < player.x + player.w && boss.x + boss.w > player.x) endGame();
+}
+
+function endGame() {
+  gameOver = true;
+  form.style.display = "block";
+}
+
+function update() {
+  if (gameOver) return;
+  if (moveLeft) player.x -= player.speed;
+  if (moveRight) player.x += player.speed;
+  player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+  invSpeed = Math.max(20, 100 - level * 5);
+  moveInvaders();
+  if (boss && boss.health > 0) {
+    boss.x += boss.dx;
+    if (boss.x < 0 || boss.x + boss.w > canvas.width) boss.dx *= -1;
+  }
+  checkCollisions();
+  if (Date.now() - lastShotTime > 3000) {
+    shootFromInvaders();
+    lastShotTime = Date.now();
+  }
+  if (invaders.every(i => !i.alive) && (!boss || boss.health <= 0)) {
+    level++;
+    createInvaders();
+    createShields();
+    updateUI();
+  }
+  draw();
+  requestAnimationFrame(update);
+}
+
+function startGame() {
+  createInvaders();
+  createShields();
+  updateUI();
+  update();
 }
 
 document.getElementById("left").addEventListener("touchstart", () => moveLeft = true);
@@ -316,8 +300,8 @@ document.getElementById("right").addEventListener("touchend", () => moveRight = 
 document.getElementById("fire").addEventListener("touchstart", () => {
   if (bullets.length < 5) bullets.push({ x: player.x + player.w / 2 - 2, y: player.y });
 });
-    }
-  </script><script>
+
+// Age verification
 function verifyAge() {
   const dobInput = document.getElementById("dob").value;
   const errorMsg = document.getElementById("error");
@@ -337,5 +321,6 @@ function verifyAge() {
     errorMsg.style.display = "block";
   }
 }
-</script></body>
+</script>
+</body>
 </html>
