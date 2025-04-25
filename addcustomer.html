@@ -5,86 +5,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RC Beverages - Add Customer</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" /> <!-- Link to the external CSS file -->
   <style>
-    /* Basic Body Styling */
+    /* Basic Styles for Form Layout */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
       text-align: center;
-      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
+      padding-top: 100px;
     }
 
-    /* Fixed Header */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
       background-color: #0057b7;
       color: white;
       padding: 20px;
       text-align: center;
-      z-index: 1000; /* Keeps the header on top */
     }
 
-    /* Welcome Message Styling */
-    .welcome-message {
-      position: fixed;
-      top: 70px; /* Move the welcome message just below the header */
-      left: 0;
-      right: 0;
-      background-color: #ffffff;
-      color: #0057b7;
-      padding: 15px;
-      font-size: 2rem;
-      margin-top: 10px;
-      z-index: 999;
+    h1 {
+      margin: 0;
     }
 
-    /* Main Form Window (Scrollable Section) */
-    .form-container {
-      max-width: 1000px;
-      margin: 120px auto; /* Start the form window below the welcome message */
+    /* Form Styling */
+    form {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
+      background-color: white;
+      border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      height: 80%; /* Ensures scrolling is available */
-      text-align: left; /* Align text to the left */
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Form Fields and Labels */
     label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin: 10px 0 5px;
       text-align: left;
     }
 
-    input[type="text"],
-    input[type="email"],
-    select {
+    input, select {
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
 
-    /* Button Styling */
     button {
-      background-color: #2563eb;
+      background-color: #0057b7;
       color: white;
-      padding: 12px 30px;
+      padding: 15px;
+      font-size: 1.2rem;
       border-radius: 30px;
-      font-size: 1.1rem;
+      border: none;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
-      display: inline-block;
     }
 
     button:hover {
@@ -102,7 +81,6 @@
       justify-content: space-around;
       align-items: center;
       border-top: 2px solid #ccc;
-      z-index: 1000;
     }
 
     footer .footer-btn {
@@ -119,28 +97,6 @@
     footer .footer-btn:hover {
       background-color: #1e40af;
     }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .form-container {
-        width: 90%; /* Adjust form container width for smaller screens */
-      }
-
-      .welcome-message {
-        font-size: 1.5rem;
-      }
-
-      button {
-        width: 100%;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      footer .footer-btn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
-    }
   </style>
 </head>
 
@@ -152,50 +108,94 @@
 
   <!-- Welcome Message Section -->
   <div class="welcome-message" id="welcome">
-    <!-- Welcome message will be injected here -->
+    Welcome, <span id="username"></span>
   </div>
 
-  <!-- Form Section for Adding a Customer -->
-  <div class="form-container">
-    <form id="customerForm">
-      <label for="storeName">Store Name:</label>
-      <input type="text" id="storeName" name="storeName" required />
+  <!-- Add Customer Form -->
+  <form id="addCustomerForm">
+    <!-- Store Name -->
+    <label for="customername">Customer Name:</label>
+    <input type="text" id="storeName" name="storeName" required>
 
-      <label for="segment">Segment:</label>
-      <select id="segment" name="segment" required>
-        <!-- Dynamically populated -->
-      </select>
+    <!-- Sub Owner Group -->
+    <label for="subOwnerGroup">Sub Owner Group:</label>
+    <select id="subOwnerGroup" name="subOwnerGroup" required>
+      <option value="">Select</option>
+      <!-- More options from the API -->
+    </select>
 
-      <label for="keyAccountGroup">Key Account Group:</label>
-      <select id="keyAccountGroup" name="keyAccountGroup" required>
-        <!-- Dynamically populated -->
-      </select>
+    <!-- Key Account Group -->
+    <label for="keyAccountGroup">Key Account Group:</label>
+    <select id="keyAccountGroup" name="keyAccountGroup" required>
+      <option value="ILG - Bottler">ILG - Bottler</option>
+      <option value="ILG - Retailer">ILG - Retailer</option>
+      <!-- More options from the API -->
+    </select>
 
-      <label for="subOwnerGroup">Sub Owner Group:</label>
-      <select id="subOwnerGroup" name="subOwnerGroup" required>
-        <!-- Dynamically populated -->
-      </select>
+    <!-- Grade -->
+    <label for="grade">Grade:</label>
+    <select id="grade" name="grade" required>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <!-- More options from the API -->
+    </select>
 
-      <label for="grade">Grade:</label>
-      <select id="grade" name="grade" required>
-        <option value="A">A</option>
-        <option value="B">B</option>
-      </select>
+    <!-- Store Type -->
+    <label for="storetype">Store Type:</label>
+    <select id="storetype" name="storetype" required>
+      <option value="Retail">Retail</option>
+      <option value="Wholesale">Wholesale</option>
+      <!-- More options can be added dynamically from API -->
+    </select>
 
-      <label for="contactName">Contact Name:</label>
-      <input type="text" id="contactName" name="contactName" required />
+    <!-- Segment -->
+    <label for="segment">Segment:</label>
+    <select id="segment" name="segment" required>
+      <option value="Retail">Retail</option>
+      <option value="Wholesale">Wholesale</option>
+      <!-- More options can be added dynamically from API -->
+    </select>
 
-      <label for="contactPhone">Contact Phone:</label>
-      <input type="text" id="contactPhone" name="contactPhone" required />
+    <!-- Contact Name -->
+    <label for="contactName">Contact Name:</label>
+    <input type="text" id="contactName" name="contactName" required>
 
-      <label for="contactEmail">Contact Email:</label>
-      <input type="email" id="contactEmail" name="contactEmail" required />
+    <!-- Contact Phone -->
+    <label for="contactPhone">Contact Phone:</label>
+    <input type="tel" id="contactPhone" name="contactPhone" required>
 
-      <button type="submit">Add Customer</button>
-    </form>
-  </div>
+    <!-- Contact Email -->
+    <label for="contactEmail">Contact Email:</label>
+    <input type="email" id="contactEmail" name="contactEmail" required>
 
-  <!-- Footer Section -->
+    <!-- Address -->
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" required>
+
+    <!-- Suburb -->
+    <label for="suburb">Suburb:</label>
+    <input type="text" id="suburb" name="suburb" required>
+
+    <!-- State -->
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state" required>
+
+    <!-- Postcode -->
+    <label for="postcode">Postcode:</label>
+    <input type="text" id="postcode" name="postcode" required>
+
+    <!-- BDM -->
+    <label for="bdm">BDM:</label>
+    <select id="bdm" name="bdm" required>
+      <option value="rhincksman">Ryan Hincksman</option>
+      <option value="chawkins">Chris Hawkins</option>
+      <!-- More BDMs -->
+    </select>
+
+    <button type="submit">Add Customer</button>
+  </form>
+
+  <!-- Footer with Navigation Buttons -->
   <footer>
     <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
     <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
@@ -204,40 +204,11 @@
   </footer>
 
   <script>
+    // Get username from localStorage
     const username = localStorage.getItem("username");
-    document.getElementById("welcome").textContent = `Welcome, ${username}`;
+    document.getElementById("username").textContent = username;
 
-    async function loadDropdownOptions() {
-      const storeListRes = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
-      const storeData = await storeListRes.json();
-
-      const segmentOptions = new Set();
-      const keyAccountOptions = new Set();
-      const subOwnerOptions = new Set();
-
-      storeData.forEach(store => {
-        segmentOptions.add(store.Segment);
-        keyAccountOptions.add(store["Key Account Group"]);
-        subOwnerOptions.add(store["Sub Owner Group"]);
-      });
-
-      populateDropdown("segment", segmentOptions);
-      populateDropdown("keyAccountGroup", keyAccountOptions);
-      populateDropdown("subOwnerGroup", subOwnerOptions);
-    }
-
-    function populateDropdown(id, options) {
-      const dropdown = document.getElementById(id);
-      options.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option;
-        optionElement.textContent = option;
-        dropdown.appendChild(optionElement);
-      });
-    }
-
-    // Load dropdown options when the page loads
-    window.onload = loadDropdownOptions;
+    // You can add the rest of the functionality for form submission, validation, and API calls
   </script>
 </body>
 
