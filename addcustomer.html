@@ -125,6 +125,27 @@
       background-color: #1e40af;
     }
 
+    /* Media Queries for Mobile and Tablet */
+    @media screen and (max-width: 768px) {
+      .tile {
+        width: 45%; /* Two tiles per row on larger tablets */
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 
