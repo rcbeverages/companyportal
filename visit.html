@@ -480,6 +480,20 @@ function saveEverything() {
       body: JSON.stringify({ data: reminder })
     });
   })
+    .then(() => {
+  const todayDate = new Date().toISOString().split('T')[0];
+  return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/search?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}&Date=${encodeURIComponent(todayDate)}`)
+    .then(res => res.json())
+    .then(results => {
+      if (results.length > 0 && results[0].id) {
+        return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/id/${results[0].id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: { "Status": "Completed" } })
+        });
+      }
+    });
+})
     // After all other saves
 .then(() => {
   // Mark the Scheduled Call as Completed
