@@ -53,9 +53,17 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       overflow-y: auto;
       height: 80%; /* Ensures scrolling is available */
+      text-align: left; /* Align text to the left */
     }
 
     /* Form Fields and Labels */
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      text-align: left;
+    }
+
     input[type="text"], input[type="email"], select {
       width: 100%;
       padding: 12px;
@@ -151,16 +159,28 @@
       <input type="text" id="storeName" name="storeName" required />
 
       <label for="segment">Segment:</label>
-      <input type="text" id="segment" name="segment" required />
+      <select id="segment" name="segment" required>
+        <option value="Retail">Retail</option>
+        <option value="Wholesale">Wholesale</option>
+      </select>
 
       <label for="keyAccountGroup">Key Account Group:</label>
-      <input type="text" id="keyAccountGroup" name="keyAccountGroup" required />
+      <select id="keyAccountGroup" name="keyAccountGroup" required>
+        <option value="ILG - Bottler">ILG - Bottler</option>
+        <option value="Super Cellars">Super Cellars</option>
+      </select>
 
       <label for="subOwnerGroup">Sub Owner Group:</label>
-      <input type="text" id="subOwnerGroup" name="subOwnerGroup" required />
+      <select id="subOwnerGroup" name="subOwnerGroup" required>
+        <option value="ILG - Sub Owner">ILG - Sub Owner</option>
+        <option value="Other">Other</option>
+      </select>
 
       <label for="grade">Grade:</label>
-      <input type="text" id="grade" name="grade" required />
+      <select id="grade" name="grade" required>
+        <option value="A">A</option>
+        <option value="B">B</option>
+      </select>
 
       <label for="contactName">Contact Name:</label>
       <input type="text" id="contactName" name="contactName" required />
