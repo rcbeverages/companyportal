@@ -46,20 +46,22 @@
       z-index: 999;
     }
 
-     /* Form Container (Scrollable Section) *
+     /* Form Container (Scrollable Section) 
     .form-container {
-      position: absolute;
-      top: 140px; /* adjust this to just below header + welcome */
-      bottom: 90px; /* reserve space for the footer */
-      left: 0;
-      right: 0;
-      overflow-y: auto;
-      max-width: 800px;
-      margin: 0 auto;
+      postion: absolute 
+      margin-top: 150px; /* Increase margin at the top to avoid overlap with the welcome message */
+      margin-bottom: 20px; /* Margin to separate it from footer */
       padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto;
       background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto; /* Allows scrolling if the form content is too tall */
+      height: calc(100vh - 240px); /* Adjust the height to fit between header and footer */
+      box-sizing: border-box;
+      padding-top: 20px; /* Give some extra space from the top *
     }
 
     /* Align labels to the left */
