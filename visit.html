@@ -76,8 +76,143 @@
   <header>
     <h1>Visit Log</h1>
   </header>  <div class="welcome-message">Welcome <span id="username"></span></div>  <div class="form-container">
-    <!-- INSERT FULL VISIT PAGE HTML AND SECTIONS HERE -->
-    <!-- This includes cards, collapsibles, inputs, and all relevant form fields -->
+    <div id="popupMessage">Save/End Call Completed</div>
+
+<!-- Customer Details -->
+<div class="card">
+  <h2>Customer Details</h2>
+  <div id="detailsContent">Loading...</div>
+</div>
+
+<!-- Contact Details -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('contactForm')">Edit Contact Details</button>
+  <div id="contactForm" class="hidden">
+    <div class="form-group"><label>Contact Name</label><input id="contactName" /></div>
+    <div class="form-group"><label>Phone</label><input id="contactPhone" /></div>
+    <div class="form-group"><label>Email</label><input id="contactEmail" /></div>
+  </div>
+</div>
+
+<!-- Address -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
+  <div id="addressForm" class="hidden">
+    <div class="form-group"><label>Address</label><input id="addr" /></div>
+    <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
+    <div class="form-group"><label>State</label><input id="state" /></div>
+    <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
+  </div>
+</div><!-- Classification -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
+  <div id="classificationForm" class="hidden">
+    <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
+    <div class="form-group"><label>Sub Owner Group</label><select id="ownerGroup"><option value="">—</option></select></div>
+    <div class="form-group"><label>Key Account Group</label><select id="keyGroup"></select></div>
+    <div class="form-group"><label>Grade</label><select id="grade"></select></div>
+    <div class="form-group"><label>Store Type</label><select id="storeType"></select></div>
+    <div class="form-group"><label>Segment</label><select id="segment"></select></div>
+    <div class="form-group"><label>BDM Assignment</label><select id="bdm"></select></div>
+  </div>
+</div>
+
+<!-- Store Range -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
+  <div id="storeRange" class="hidden">
+    <div class="form-group">
+      <label>Creamy Soda</label><select id="rewindedCreamy"><option>No</option><option>Yes</option></select>
+      <label>Sarsaparilla</label><select id="rewindedSars"><option>No</option><option>Yes</option></select>
+      <label>Blueberry Rasp</label><select id="rewindedBlue"><option>No</option><option>Yes</option></select>
+      <label>Portello</label><select id="rewindedPortello"><option>No</option><option>Yes</option></select>
+      <label>LLB</label><select id="rewindedLLB"><option>No</option><option>Yes</option></select>
+      <label>Rasp Lemonade</label><select id="rewindedRaspLem"><option>No</option><option>Yes</option></select>
+    </div>
+  </div>
+</div>
+
+<!-- Preorders -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
+  <div id="preorderForm" class="hidden">
+    <div class="form-group">
+      <label>Creamy Soda</label><select id="preCreamy" onchange="toggleQty('preCreamy','qtyCreamy')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtyCreamy" placeholder="QTY" style="display:none;" />
+      <label>Sarsaparilla</label><select id="preSars" onchange="toggleQty('preSars','qtySars')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtySars" placeholder="QTY" style="display:none;" />
+      <label>Blueberry Rasp</label><select id="preBlue" onchange="toggleQty('preBlue','qtyBlue')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtyBlue" placeholder="QTY" style="display:none;" />
+      <label>Portello</label><select id="prePortello" onchange="toggleQty('prePortello','qtyPortello')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtyPortello" placeholder="QTY" style="display:none;" />
+      <label>LLB</label><select id="preLLB" onchange="toggleQty('preLLB','qtyLLB')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtyLLB" placeholder="QTY" style="display:none;" />
+      <label>Rasp Lemonade</label><select id="preRaspLem" onchange="toggleQty('preRaspLem','qtyRaspLem')"><option>No</option><option>Yes</option></select>
+      <input type="number" id="qtyRaspLem" placeholder="QTY" style="display:none;" />
+    </div>
+  </div>
+</div>
+
+<!-- Asset Management -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
+  <div id="assetForm" class="hidden">
+    <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
+    <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
+    <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
+    <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
+    <div id="existingAssets" class="existing-assets">Loading existing assets...</div>
+  </div>
+</div>
+  <!-- Log Visit -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
+  <div id="logVisit" class="hidden">
+    <div class="form-group"><label>Visit Reason</label>
+      <select id="reason">
+        <option>Planned Visit</option>
+        <option>Ranging Update</option>
+        <option>Tasting</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Outcome</label>
+      <select id="outcome">
+        <option>Positive</option>
+        <option>Neutral</option>
+        <option>Negative</option>
+        <option>Follow-Up Required</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Notes</label>
+      <textarea id="notes" rows="3"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- Email Reminder -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
+  <div id="emailReminder" class="hidden">
+    <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
+    <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
+  </div>
+</div>
+
+<!-- Past Notes -->
+<div class="card">
+  <h2>Previous Visit Notes</h2>
+  <div id="pastNotes">Loading...</div>
+</div>
+
+<!-- Current Promos -->
+<div class="card" id="promoSection" style="display: none;">
+  <h2>Current Promos</h2>
+  <div id="promoList"></div>
+</div>
+
+<!-- Final Buttons -->
+<div class="card action-buttons">
+  <button onclick="saveEverything()">Save / End Call</button>
   </div>  <footer class="footer">
     <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
     <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
@@ -87,7 +222,295 @@
     const username = localStorage.getItem("username") || "User";
     document.getElementById("username").textContent = username;
 
-    // INSERT FULL JAVASCRIPT FUNCTIONS AND API LOGIC HERE
-    // Includes toggleSection, saveEverything, dropdown loaders, fetch calls, etc.
+    const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
+const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
+const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
+const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
+const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";
+const promoSheet = "https://sheetdb.io/api/v1/98o62avm5tgtx";
+
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("hidden");
+}
+
+function toggleQty(selectId, inputId) {
+  const show = document.getElementById(selectId).value === "Yes";
+  document.getElementById(inputId).style.display = show ? "block" : "none";
+}
+
+function showPopup(msg) {
+  const popup = document.getElementById("popupMessage");
+  popup.textContent = msg;
+  popup.style.display = "block";
+  setTimeout(() => { popup.style.display = "none"; }, 1500);
+}
+
+function saveEverything() {
+  const now = new Date();
+
+  const visitReason = document.getElementById("reason").value;
+  const notes = document.getElementById("notes").value.trim();
+  const shouldLogVisit = (visitReason === "Planned Visit" || visitReason === "Tasting") && notes !== "";
+
+  const reminder = {
+    "Date to Email": document.getElementById("reminderDate").value,
+    "Customer Name": customer["Customer Name"],
+    "BDM": customer["BDM"],
+    "Comments": document.getElementById("reminderNotes").value
+  };
+
+  const assetType = document.getElementById("assetType").value.trim();
+  const assetTag = document.getElementById("assetTag").value.trim();
+  const agreement = document.getElementById("assetAgreement").value.trim();
+  const comments = document.getElementById("assetComments").value.trim();
+  const shouldSaveAsset = assetType && assetTag && agreement && comments;
+
+  const asset = {
+    "Customer Name": customer["Customer Name"],
+    "Asset Type": assetType,
+    "Asset Tag Code": assetTag,
+    "Agreement": agreement,
+    "Asset Comments": comments
+  };
+
+  const preorders = {
+    "Customer Name": customer["Customer Name"],
+    "QTY - Creamy Soda": document.getElementById("qtyCreamy").value,
+    "QTY - Sarsaparilla": document.getElementById("qtySars").value,
+    "QTY - Blueberry Rasp": document.getElementById("qtyBlue").value,
+    "QTY - Portello": document.getElementById("qtyPortello").value,
+    "QTY - LLB": document.getElementById("qtyLLB").value,
+    "QTY - Rasp Lemonade": document.getElementById("qtyRaspLem").value
+  };
+
+  const update = {
+    "Customer Name": document.getElementById("editName").value,
+    "Sub Owner Group": document.getElementById("ownerGroup").value,
+    "Key Account Group": document.getElementById("keyGroup").value,
+    "Grade": document.getElementById("grade").value,
+    "Store Type": document.getElementById("storeType").value,
+    "Segment": document.getElementById("segment").value,
+    "BDM": document.getElementById("bdm").value,
+    "Contact Name": document.getElementById("contactName").value,
+    "Phone": document.getElementById("contactPhone").value,
+    "Email": document.getElementById("contactEmail").value,
+    "Address": document.getElementById("addr").value,
+    "Suburb": document.getElementById("suburb").value,
+    "State": document.getElementById("state").value,
+    "Postcode": document.getElementById("postcode").value,
+    "Rewinded - Creamy Soda": document.getElementById("rewindedCreamy").value,
+    "Rewinded - Sarsaparilla": document.getElementById("rewindedSars").value,
+    "Rewinded - Blueberry Rasp": document.getElementById("rewindedBlue").value,
+    "Rewinded - Portello": document.getElementById("rewindedPortello").value,
+    "Rewinded - LLB": document.getElementById("rewindedLLB").value,
+    "Rewinded - Rasp Lemonade": document.getElementById("rewindedRaspLem").value
+  };
+
+  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: update })
+  })
+  .then(() => {
+    if (shouldLogVisit) {
+      const visit = {
+        "Date": now.toISOString().split("T")[0],
+        "Timestamp": now.toLocaleString(),
+        "Customer Name": customer["Customer Name"],
+        "BDM": customer["BDM"],
+        "Visit Reason": visitReason,
+        "Outcome": document.getElementById("outcome").value,
+        "Notes": notes
+      };
+      return fetch(visitLogSheet, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: visit })
+      });
+    }
+  })
+  .then(() => fetch(reminderSheet, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: reminder })
+  }))
+  .then(() => {
+    if (shouldSaveAsset) {
+      return fetch(assetSheet, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: asset })
+      });
+    }
+  })
+  .then(() => {
+  const hasPreorder = Object.values(preorders).some((val, i) => i > 0 && val); // skip Customer Name at index 0
+  if (!hasPreorder) return Promise.resolve(); // skip sending if all preorders are blank
+
+  return fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
+    .then(res => res.json())
+    .then(data => {
+      const method = data.length ? "PATCH" : "POST";
+      const url = data.length
+        ? `${preorderSheet}/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`
+        : preorderSheet;
+
+      return fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: preorders })
+      });
+    });
+})
+  .then(() => {
+    showPopup("Save/End Call Completed");
+    setTimeout(() => window.location.href = "calendar.html", 1500);
+  })
+  .catch(() => alert("Something went wrong during save."));
+}
+
+function loadDropdown(id, col) {
+  fetch(sheetUrl)
+    .then(res => res.json())
+    .then(data => {
+      const values = [...new Set(data.map(r => r[col]).filter(Boolean))].sort();
+      document.getElementById(id).innerHTML = `<option value="">—</option>` +
+        values.map(v => `<option${customer[col] === v ? ' selected' : ''}>${v}</option>`).join('');
+    });
+}
+
+function loadPastNotes() {
+  fetch(visitLogSheet)
+    .then(res => res.json())
+    .then(data => {
+      const notes = data
+        .filter(entry => entry["Customer Name"] === customer["Customer Name"] && entry["Notes"]?.trim())
+        .sort((a, b) => new Date(b["Timestamp"]) - new Date(a["Timestamp"]))
+        .slice(0, 5)
+        .map(entry => `<div style="margin-bottom: 1rem;"><strong>${entry["Timestamp"]}:</strong><br/>${entry["Notes"]}</div>`)
+        .join('');
+      document.getElementById("pastNotes").innerHTML = notes || "No past notes.";
+    });
+}
+
+function loadStoreRange() {
+  const map = {
+    "rewindedCreamy": "Rewinded - Creamy Soda",
+    "rewindedSars": "Rewinded - Sarsaparilla",
+    "rewindedBlue": "Rewinded - Blueberry Rasp",
+    "rewindedPortello": "Rewinded - Portello",
+    "rewindedLLB": "Rewinded - LLB",
+    "rewindedRaspLem": "Rewinded - Rasp Lemonade"
+  };
+  for (const [id, col] of Object.entries(map)) {
+    if (customer[col]) document.getElementById(id).value = customer[col];
+  }
+}
+
+function loadPreorders() {
+  fetch(preorderSheet)
+    .then(res => res.json())
+    .then(data => {
+      const po = data.find(p => p["Customer Name"] === customer["Customer Name"]);
+      if (!po) return;
+      const skuKeys = {
+        "preCreamy": "QTY - Creamy Soda",
+        "preSars": "QTY - Sarsaparilla",
+        "preBlue": "QTY - Blueberry Rasp",
+        "prePortello": "QTY - Portello",
+        "preLLB": "QTY - LLB",
+        "preRaspLem": "QTY - Rasp Lemonade"
+      };
+      for (const [selectId, col] of Object.entries(skuKeys)) {
+        const qty = po[col];
+        if (qty && parseInt(qty) > 0) {
+          document.getElementById(selectId).value = "Yes";
+          const qtyId = "qty" + selectId.replace("pre", "");
+          document.getElementById(qtyId).value = qty;
+          document.getElementById(qtyId).style.display = "block";
+        }
+      }
+    });
+}
+
+function loadPromos(state, group) {
+  fetch(promoSheet)
+    .then(res => res.json())
+    .then(data => {
+      const promos = data.filter(p => p["Key Account Group"] === group && p["State"] === state);
+      if (promos.length > 0) {
+        document.getElementById("promoSection").style.display = "block";
+        document.getElementById("promoList").innerHTML = promos.map(p => `
+          <div class="promo">
+            <strong>${p["SKU"]}</strong><br/>
+            Discount: ${p["Discount"]}, RRP: ${p["RRP"]}<br/>
+            Buy: ${p["Buy Start Date"]} → ${p["Buy End Date"]}<br/>
+            Promo: ${p["Promo Start Date"]} → ${p["Promo End Date"]}
+          </div>
+        `).join('');
+      }
+    });
+}
+
+function loadExistingAssets() {
+  fetch(assetSheet)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("existingAssets");
+      const assets = data.filter(a => a["Customer Name"] === customer["Customer Name"]);
+      if (assets.length) {
+        container.innerHTML = assets.map(a => `
+          <div class="asset-row">
+            <div><strong>${a["Asset Type"]}</strong> - Tag: ${a["Asset Tag Code"]}<br>${a["Agreement"] || ""}<br>${a["Asset Comments"] || ""}</div>
+            <button class="delete-btn" onclick="deleteAsset('${a["Asset Tag Code"]}')">X</button>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = "No assets on file.";
+      }
+    });
+}
+
+function deleteAsset(tagCode) {
+  if (!confirm("Delete this asset?")) return;
+  fetch(`${assetSheet}/Asset Tag Code/${encodeURIComponent(tagCode)}`, { method: "DELETE" })
+    .then(() => loadExistingAssets())
+    .catch(() => alert("Failed to delete asset."));
+}
+
+window.onload = () => {
+  const fields = [
+    "Customer Name", "Sub Owner Group", "Key Account Group", "Grade",
+    "Store Type", "Segment", "Contact Name", "Phone", "Email",
+    "Address", "Suburb", "State", "Postcode", "BDM"
+  ];
+  document.getElementById("detailsContent").innerHTML = fields.map(k =>
+    `<strong>${k}:</strong> ${customer[k] || "—"}<br>`
+  ).join('');
+
+  document.getElementById("editName").value = customer["Customer Name"] || "";
+  document.getElementById("contactName").value = customer["Contact Name"] || "";
+  document.getElementById("contactPhone").value = customer["Phone"] || "";
+  document.getElementById("contactEmail").value = customer["Email"] || "";
+  document.getElementById("addr").value = customer["Address"] || "";
+  document.getElementById("suburb").value = customer["Suburb"] || "";
+  document.getElementById("state").value = customer["State"] || "";
+  document.getElementById("postcode").value = customer["Postcode"] || "";
+
+  loadDropdown("ownerGroup", "Sub Owner Group");
+  loadDropdown("keyGroup", "Key Account Group");
+  loadDropdown("grade", "Grade");
+  loadDropdown("storeType", "Store Type");
+  loadDropdown("segment", "Segment");
+  loadDropdown("bdm", "BDM");
+
+  loadStoreRange();
+  loadPreorders();
+  loadPastNotes();
+  loadPromos(customer["State"], customer["Key Account Group"]);
+  loadExistingAssets();
+};
   </script></body>
 </html>
