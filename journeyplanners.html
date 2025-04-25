@@ -1,98 +1,529 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Journey Planner - RC Beverages</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    header {
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
+    .calendar-container {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .week-header {
+      font-size: 1.3rem;
+      font-weight: bold;
       text-align: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }.welcome-message {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-  color: #0057b7;
-  padding: 15px;
-  font-size: 1.5rem;
-  z-index: 999;
-  text-align: center;
+      margin-top: 10px;
+      color: #0057b7;
+    }
+    .week-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .week-controls button {
+      background: #2563eb;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .days-row {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+    }
+    .day-column {
+      flex: 1;
+      min-width: 200px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .day-header {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .slot {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    .slot.completed {
+      background-color: #d1fae5;
+    }
+    .add-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Journey Planner</h1>
+  </header>
+  <div class="welcome-message">Welcome <span id="username"></span></div>  <div class="form-container">
+    <div class="calendar-container">
+      <div class="week-header" id="weekRange">Week of ...</div>
+      <div class="week-controls">
+        <button onclick="changeWeek(-7)">Previous Week</button>
+        <button onclick="changeWeek(7)">Next Week</button>
+      </div>
+      <div class="days-row" id="daysContainer"></div>
+    </div>
+  </div>  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='visit.html'">Visit Log</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>  <script>
+    const apiURL = "https://sheetdb.io/api/v1/9envyaeemiz9h";
+    const customerAPI = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+    let currentMonday = getMonday(new Date());
+    const bdm = localStorage.getItem("username");
+    document.getElementById("username").textContent = bdm || "BDM";
+
+    function getMonday(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
+
+    function formatDate(date) {
+      return date.toISOString().split("T")[0];
+    }
+
+    function formatWeekRange(start) {
+      const end = new Date(start);
+      end.setDate(start.getDate() + 4);
+      return `${formatDate(start)} to ${formatDate(end)}`;
+    }
+
+    function changeWeek(offset) {
+      currentMonday.setDate(currentMonday.getDate() + offset);
+      renderWeek();
+    }
+
+    async function renderWeek() {
+      document.getElementById("weekRange").textContent = formatWeekRange(currentMonday);
+      const container = document.getElementById("daysContainer");
+      container.innerHTML = "";
+      const calls = await fetch(apiURL).then(res => res.json());
+      const visits = JSON.parse(localStorage.getItem("visitLogs") || "[]");
+
+      for (let i = 0; i < 5; i++) {
+        const day = new Date(currentMonday);
+        day.setDate(day.getDate() + i);
+        const iso = formatDate(day);
+
+        const col = document.createElement("div");
+        col.className = "day-column";
+        const header = document.createElement("div");
+        header.className = "day-header";
+        header.textContent = day.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+        col.appendChild(header);
+
+        for (let j = 1; j <= 20; j++) {
+          const slot = document.createElement("div");
+          slot.className = "slot";
+
+          const call = calls.find(c => c.Date === iso && c.Order === String(j) && c.BDM === bdm && c.Status !== "Deleted");
+          const done = visits.some(v => v["Customer Name"] === call?.["Customer Name"] && v.Date === iso);
+
+          if (call) {
+            slot.innerHTML = `<strong>${call["Customer Name"]}</strong><br/>${call["Key Account Group"]}<br/>${call.Grade}`;
+            if (done) slot.classList.add("completed");
+            const btn = document.createElement("button");
+            btn.className = "add-btn";
+            btn.textContent = "Start Call";
+            btn.onclick = () => {
+              localStorage.setItem("selectedCustomer", JSON.stringify(call));
+              window.location.href = "visit.html";
+            };
+            slot.appendChild(btn);
+          } else {
+            const btn = document.createElement("button");
+            btn.className = "add-btn";
+            btn.textContent = "Add Visit";
+            btn.onclick = () => openAddCall(iso, j);
+            slot.appendChild(btn);
+          }
+          col.appendChild(slot);
+        }
+        container.appendChild(col);
+      }
+    }
+
+    async function openAddCall(date, order) {
+      const modal = document.createElement("div");
+      modal.style.position = "fixed";
+      modal.style.top = "0";
+      modal.style.left = "0";
+      modal.style.width = "100vw";
+      modal.style.height = "100vh";
+      modal.style.background = "rgba(0,0,0,0.6)";
+      modal.style.display = "flex";
+      modal.style.justifyContent = "center";
+      modal.style.alignItems = "center";
+
+      const box = document.createElement("div");
+      box.style.background = "white";
+      box.style.padding = "1rem";
+      box.style.borderRadius = "10px";
+      box.style.width = "90%";
+      box.style.maxWidth = "500px";
+      box.style.maxHeight = "80vh";
+      box.style.overflowY = "auto";
+
+      const title = document.createElement("h2");
+      title.textContent = `Select Store for ${date}`;
+      box.appendChild(title);
+
+      const input = document.createElement("input");
+      input.placeholder = "Search store...";
+      input.style.width = "100%";
+      input.style.marginBottom = "10px";
+      box.appendChild(input);
+
+      const storeList = document.createElement("div");
+      box.appendChild(storeList);
+
+      const data = await fetch(customerAPI).then(r => r.json());
+      const calls = await fetch(apiURL).then(r => r.json());
+
+      const plannedNames = calls.filter(c => c.Date === date).map(c => c["Customer Name"]);
+      const myStores = data.filter(d => d.BDM === bdm && !plannedNames.includes(d["Customer Name"]));
+
+      function renderStores(filter = "") {
+        storeList.innerHTML = "";
+        myStores.filter(s => s["Customer Name"].toLowerCase().includes(filter.toLowerCase())).forEach(s => {
+          const btn = document.createElement("button");
+          btn.className = "add-btn";
+          btn.textContent = s["Customer Name"];
+          btn.onclick = async () => {
+            await fetch(apiURL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                data: [{
+                  "Customer Name": s["Customer Name"],
+                  "Date": date,
+                  "Order": String(order),
+                  "Grade": s.Grade,
+                  "Key Account Group": s["Key Account Group"],
+                  "BDM": bdm,
+                  "Status": "Planned"
+                }]
+              })
+            });
+            modal.remove();
+            renderWeek();
+          };
+          storeList.appendChild(btn);
+        });
+      }
+
+      input.oninput = () => renderStores(input.value);
+      renderStores();
+      modal.appendChild(box);
+      document.body.appendChild(modal);
+    }
+
+    renderWeek();
+  </script></body>
+</html><div class="week-header">
+  <h2 id="weekRange"></h2>
+  <div class="week-nav">
+    <button onclick="changeWeek(-1)">Previous Week</button>
+    <button onclick="changeWeek(1)">Next Week</button>
+  </div>
+</div>
+
+<div class="week-container" id="calendarContainer">
+  <!-- Days and slots will be generated here dynamically -->
+</div>
+
+<!-- Add Visit Modal -->
+<div id="addVisitModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeAddVisitModal()">&times;</span>
+    <h2>Select Store(s) to Add</h2>
+    <input type="text" id="storeSearch" placeholder="Search stores..." oninput="filterStores()" />
+    <div id="storeListContainer"></div>
+    <button onclick="confirmAddVisits()">Add Selected Visits</button>
+  </div>
+</div>
+
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='visit.html'">Visit Log</button>
+</footer><script>
+let currentWeekStart = getMonday(new Date());
+let selectedDate = null;
+let allStores = [];
+const calendarApi = "https://sheetdb.io/api/v1/9envyaeemiz9h"; // Journey Planner API
+const customerApi = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Store Master API
+const loggedInBDM = localStorage.getItem("username");
+
+function getMonday(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
 }
 
-.week-controls {
-  margin-top: 140px;
-  text-align: center;
+function changeWeek(direction) {
+  currentWeekStart.setDate(currentWeekStart.getDate() + direction * 7);
+  loadWeek();
 }
 
-.week-controls button {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
+function formatDate(date) {
+  return date.toISOString().split('T')[0];
 }
 
-.planner-container {
-  margin-top: 20px;
-  padding: 10px;
+function loadWeek() {
+  const weekRange = document.getElementById("weekRange");
+  const monday = new Date(currentWeekStart);
+  const friday = new Date(monday);
+  friday.setDate(monday.getDate() + 4);
+  weekRange.textContent = `${monday.toLocaleDateString()} → ${friday.toLocaleDateString()}`;
+
+  document.getElementById("calendarContainer").innerHTML = "";
+
+  for (let i = 0; i < 5; i++) {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + i);
+
+    const daySection = document.createElement("div");
+    daySection.classList.add("day-column");
+
+    const dayHeader = document.createElement("h3");
+    dayHeader.textContent = day.toLocaleDateString('en-AU', { weekday: 'long', month: 'short', day: 'numeric' });
+    daySection.appendChild(dayHeader);
+
+    for (let slot = 1; slot <= 20; slot++) {
+      const slotDiv = document.createElement("div");
+      slotDiv.classList.add("slot");
+      slotDiv.innerHTML = `<button onclick="openAddVisit('${formatDate(day)}', ${slot})">Add Visit</button>`;
+      slotDiv.dataset.date = formatDate(day);
+      slotDiv.dataset.slot = slot;
+      daySection.appendChild(slotDiv);
+    }
+    document.getElementById("calendarContainer").appendChild(daySection);
+  }
+
+  loadScheduledCalls();
+}
+
+function openAddVisit(date, slot) {
+  selectedDate = { date, slot };
+  document.getElementById("storeSearch").value = "";
+  filterStores();
+  document.getElementById("addVisitModal").classList.remove("hidden");
+}
+
+function closeAddVisitModal() {
+  document.getElementById("addVisitModal").classList.add("hidden");
+}
+
+function confirmAddVisits() {
+  const selectedStores = Array.from(document.querySelectorAll(".store-checkbox:checked")).map(cb => cb.value);
+  if (selectedStores.length === 0) {
+    alert("Select at least one store");
+    return;
+  }
+
+  Promise.all(selectedStores.map((storeName, index) => {
+    return fetch(calendarApi, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: {
+          "Customer Name": storeName,
+          "Date": selectedDate.date,
+          "Order": selectedDate.slot + index,
+          "BDM": loggedInBDM,
+          "Status": "Planned"
+        }
+      })
+    });
+  })).then(() => {
+    closeAddVisitModal();
+    loadWeek();
+  });
+}
+
+function filterStores() {
+  const search = document.getElementById("storeSearch").value.toLowerCase();
+  const listContainer = document.getElementById("storeListContainer");
+
+  listContainer.innerHTML = allStores
+    .filter(store => store["BDM"] === loggedInBDM && (!search || store["Customer Name"].toLowerCase().includes(search)))
+    .map(store => `<div><label><input type="checkbox" class="store-checkbox" value="${store["Customer Name"]}"> ${store["Customer Name"]}</label></div>`)
+    .join('');
+}
+
+function loadScheduledCalls() {
+  fetch(calendarApi)
+    .then(res => res.json())
+    .then(data => {
+      data
+        .filter(call => call["BDM"] === loggedInBDM && call["Status"] !== "Deleted")
+        .forEach(call => {
+          const slot = document.querySelector(`.slot[data-date="${call["Date"]}"][data-slot="${call["Order"]}"]`);
+          if (slot) {
+            slot.innerHTML = `
+              <div class="call-tile ${call["Status"] === "Completed" ? 'completed' : ''}">
+                <strong>${call["Customer Name"]}</strong><br>
+                <small>${call["Key Account Group"] || ""} | ${call["Grade"] || ""}</small><br>
+                <button onclick="startVisit('${call["Customer Name"]}')">Start Visit</button>
+              </div>`;
+          }
+        });
+    });
+}
+
+function startVisit(storeName) {
+  localStorage.setItem("selectedCustomerName", storeName);
+  window.location.href = "visit.html";
+}
+
+function fetchStores() {
+  fetch(customerApi)
+    .then(res => res.json())
+    .then(data => {
+      allStores = data;
+    });
+}
+
+window.onload = function() {
+  fetchStores();
+  loadWeek();
+};
+</script><style>
+#calendarContainer {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.day-column {
-  background: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 18%;
-  min-width: 200px;
-  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   padding: 10px;
+  margin-top: 10px;
+  height: calc(100vh - 220px); /* full screen minus headers/footers */
   box-sizing: border-box;
 }
 
-.day-header {
-  font-weight: bold;
-  font-size: 1.2rem;
+.day-column {
+  flex: 0 0 20%;
+  background: #f9f9f9;
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 220px;
+}
+
+.day-column h3 {
   text-align: center;
+  color: #2563eb;
   margin-bottom: 10px;
 }
 
 .slot {
-  background: #e0e7ff;
-  margin: 5px 0;
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
+  background: #eef3fd;
+  border: 1px dashed #ccc;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
   text-align: center;
-  font-size: 0.95rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.slot.completed {
-  background-color: #4ade80;
+.call-tile {
+  background-color: #2563eb;
   color: white;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
-.slot.empty {
-  background-color: #dbeafe;
+.call-tile.completed {
+  background-color: #16a34a; /* green once visit completed */
+}
+
+.call-tile button {
+  margin-top: 5px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  background: white;
+  color: #2563eb;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.call-tile button:hover {
+  background: #cbd5e1;
+}
+
+.modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  z-index: 2000;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.modal h3 {
+  text-align: center;
+  color: #2563eb;
+}
+
+.modal input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.modal .store-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
 }
 
 footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #cfe2ff;
+  background: #cfe2ff;
   padding: 10px 0;
   display: flex;
   justify-content: space-around;
@@ -114,406 +545,4 @@ footer {
 .footer-btn:hover {
   background-color: #1e40af;
 }
-
-#addVisitModal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  width: 90%;
-  max-width: 400px;
-  z-index: 2000;
-}
-
-#modalOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  z-index: 1500;
-}
-
-#storeSearch {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  font-size: 1rem;
-}
-
-.store-list button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 8px;
-  width: 100%;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.store-list button:hover {
-  background: #1e40af;
-}
-
-  </style>
-</head>
-<body>function renderWeek() {
-      document.getElementById("weekRange").textContent = formatWeekRange(currentMonday);
-      const daysContainer = document.getElementById("daysContainer");
-      daysContainer.innerHTML = "";
-
-      const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-      for (let i = 0; i < 5; i++) {
-        const dayDate = new Date(currentMonday);
-        dayDate.setDate(currentMonday.getDate() + i);
-        const dayKey = dayDate.toISOString().split('T')[0];
-
-        const dayColumn = document.createElement("div");
-        dayColumn.className = "day-column";
-
-        const dayHeader = document.createElement("div");
-        dayHeader.className = "day-header";
-        dayHeader.textContent = `${daysOfWeek[i]} (${dayKey})`;
-        dayColumn.appendChild(dayHeader);
-
-        for (let slot = 1; slot <= 20; slot++) {
-          const slotData = callsData.find(call => call.Date === dayKey && call.Order == slot);
-
-          const callSlot = document.createElement("div");
-          callSlot.className = "call-slot";
-
-          if (slotData) {
-            callSlot.innerHTML = `
-              <div class="customer-name">${slotData["Customer Name"]}</div>
-              <div class="small">${slotData["Grade"] || ''} - ${slotData["Key Account Group"] || ''}</div>
-              <div class="small">${slotData["Sub Owner Group"] || ''}</div>
-              <button class="action-btn" onclick="startVisit('${slotData["Customer Name"]}')">Start Visit</button>
-              ${slotData.Completed === "Yes" ? '<div class="tick">&#10004;</div>' : ''}
-            `;
-            if (slotData.Completed === "Yes") {
-              callSlot.classList.add("completed");
-            }
-          } else {
-            const btn = document.createElement("button");
-            btn.textContent = "+ Add Visit";
-            btn.className = "add-visit-btn";
-            btn.onclick = () => openAddVisitModal(dayKey, slot);
-            callSlot.appendChild(btn);
-          }
-          dayColumn.appendChild(callSlot);
-        }
-        daysContainer.appendChild(dayColumn);
-      }
-    }
-
-    function loadCalls() {
-      fetch(callsApi)
-        .then(response => response.json())
-        .then(data => {
-          callsData = data.filter(d => d.BDM === username);
-          renderWeek();
-        });
-    }
-
-    function formatWeekRange(monday) {
-      const end = new Date(monday);
-      end.setDate(monday.getDate() + 4);
-      const options = { month: "short", day: "numeric" };
-      return `${monday.toLocaleDateString(undefined, options)} - ${end.toLocaleDateString(undefined, options)}`;
-    }
-
-    function prevWeek() {
-      currentMonday.setDate(currentMonday.getDate() - 7);
-      renderWeek();
-    }
-
-    function nextWeek() {
-      currentMonday.setDate(currentMonday.getDate() + 7);
-      renderWeek();
-    }
-
-    function openAddVisitModal(date, slot) {
-      document.getElementById("addVisitModal").classList.add("active");
-      document.getElementById("selectedDate").value = date;
-      document.getElementById("selectedSlot").value = slot;
-      loadStoreOptions(date);
-    }
-
-    function closeAddVisitModal() {
-      document.getElementById("addVisitModal").classList.remove("active");
-      document.getElementById("storeSearch").value = "";
-      document.getElementById("storeList").innerHTML = "";
-    }
-
-    function loadStoreOptions(date) {
-      fetch(storeListApi)
-        .then(response => response.json())
-        .then(stores => {
-          const existingForDate = callsData
-            .filter(call => call.Date === date)
-            .map(call => call["Customer Name"]);
-
-          const availableStores = stores
-            .filter(store => store.BDM === username && !existingForDate.includes(store["Customer Name"]));
-
-          const storeList = document.getElementById("storeList");
-          storeList.innerHTML = "";
-
-          availableStores.forEach(store => {
-            const div = document.createElement("div");
-            div.className = "store-option";
-            div.textContent = store["Customer Name"];
-            div.onclick = () => selectStore(store);
-            storeList.appendChild(div);
-          });
-
-          document.getElementById("storeSearch").oninput = function() {
-            const term = this.value.toLowerCase();
-            Array.from(storeList.children).forEach(child => {
-              child.style.display = child.textContent.toLowerCase().includes(term) ? "block" : "none";
-            });
-          };
-        });
-    }
-
-    function selectStore(store) {
-      const date = document.getElementById("selectedDate").value;
-      const slot = document.getElementById("selectedSlot").value;
-
-      const payload = {
-        "Customer Name": store["Customer Name"],
-        "Sub Owner Group": store["Sub Owner Group"],
-        "Key Account Group": store["Key Account Group"],
-        "Grade": store["Grade"],
-        "BDM": username,
-        "Date": date,
-        "Order": slot
-      };
-
-      fetch(callsApi, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [payload] })
-      }).then(() => {
-        closeAddVisitModal();
-        loadCalls();
-      });
-    }
-
-    function startVisit(customerName) {
-      const customer = callsData.find(call => call["Customer Name"] === customerName);
-      localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-      window.location.href = "visit.html";
-    }
-
-    loadCalls();
-  </script>
-</body>
-        </html><style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-    overflow-x: hidden;
-  }
-
-  header {
-    background-color: #0057b7;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  .week-header {
-    margin-top: 100px;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #0057b7;
-  }
-
-  .nav-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 10px;
-  }
-
-  .nav-buttons button {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 30px;
-    cursor: pointer;
-  }
-
-  .nav-buttons button:hover {
-    background-color: #1e40af;
-  }
-
-  .calendar-container {
-    display: flex;
-    margin: 20px;
-    gap: 10px;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-
-  .day-column {
-    background-color: white;
-    padding: 10px;
-    border-radius: 8px;
-    flex: 0 0 18%;
-    min-width: 250px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-
-  .day-header {
-    background-color: #cfe2ff;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-    color: #0057b7;
-    margin-bottom: 10px;
-  }
-
-  .call-slot {
-    background-color: #eef3fd;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 8px;
-    margin-bottom: 8px;
-    min-height: 80px;
-    position: relative;
-  }
-
-  .call-slot.completed {
-    background-color: #d1fae5;
-  }
-
-  .call-slot .tick {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 20px;
-    color: green;
-  }
-
-  .customer-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .small {
-    font-size: 0.9rem;
-    color: #555;
-  }
-
-  .add-visit-btn {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 8px 0;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .add-visit-btn:hover {
-    background-color: #1e40af;
-  }
-
-  #addVisitModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-  }
-
-  #addVisitModal.active {
-    display: flex;
-  }
-
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-  }
-
-  .modal-content h3 {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .store-option {
-    padding: 8px;
-    background: #eef3fd;
-    margin: 4px 0;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-
-  .store-option:hover {
-    background: #dbeafe;
-  }
-
-  #storeSearch {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #cfe2ff;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-around;
-    border-top: 2px solid #ccc;
-    z-index: 999;
-  }
-
-  .footer-btn {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1.1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-
-  .footer-btn:hover {
-    background-color: #1e40af;
-  }
-        </style>
+</style>
