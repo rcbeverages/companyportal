@@ -9,9 +9,11 @@
   <style>
     /* Basic Body Styling */
     body {
-      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       text-align: center;
     }
@@ -48,7 +50,7 @@
 
     /* Form Container */
     .form-container {
-      margin-top: 170px; /* Add margin to avoid overlap with header and welcome message */
+      flex-grow: 1; /* This will make the form container take up remaining space */
       padding: 20px;
       max-width: 800px;
       margin: 0 auto;
@@ -56,7 +58,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       overflow-y: auto;
-      max-height: 70vh; /* Adjust based on screen size */
+      max-height: calc(100vh - 230px); /* Adjust height dynamically to fit between header and footer */
     }
 
     form {
@@ -89,6 +91,8 @@
       text-decoration: none;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
+      display: inline-block;
+      margin-top: 20px;
       width: 100%;
       max-width: 300px;
       margin: 20px auto;
@@ -98,7 +102,7 @@
       background-color: #00409a;
     }
 
-    /* Footer */
+    /* Footer Styling */
     footer {
       position: fixed;
       bottom: 0;
@@ -127,10 +131,27 @@
       background-color: #1e40af;
     }
 
-    /* Scrollable content */
-    .scrollable-content {
-      overflow-y: auto;
-      max-height: calc(100vh - 280px); /* Ensures the form remains scrollable */
+    /* Media Queries for Tablet and Mobile */
+    @media screen and (max-width: 768px) {
+      .form-container {
+        padding: 15px;
+      }
+
+      .form-container label {
+        font-size: 1rem;
+      }
+
+      .form-container select,
+      .form-container input[type="text"] {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
     }
   </style>
 </head>
@@ -147,7 +168,7 @@
   </div>
 
   <!-- Form for Adding Customer -->
-  <div class="form-container scrollable-content">
+  <div class="form-container">
     <form id="addCustomerForm">
       <label for="storeName">Store Name</label>
       <input type="text" id="storeName" name="storeName" required />
