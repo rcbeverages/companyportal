@@ -6,35 +6,55 @@
   <title>Journey Planner - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-    header {
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      top: 0; width: 100%; z-index: 1000;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
     }
-    .week-header {
+    header {
+      background: #0057b7;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .welcome-message {
       background: #ffffff;
       color: #0057b7;
-      font-size: 1.2rem;
-      padding: 10px;
-      margin-top: 80px;
+      padding: 15px;
       text-align: center;
+      font-size: 1.8rem;
+      position: fixed;
+      width: 100%;
+      top: 70px;
+      z-index: 999;
+    }
+    .content {
+      margin-top: 140px;
+      margin-bottom: 80px;
+      padding: 20px;
+    }
+    .week-header {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
       font-weight: bold;
     }
     .calendar {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      padding: 20px;
-      margin-bottom: 100px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .day-column {
+      flex: 1;
+      min-width: 250px;
       background: white;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -43,371 +63,282 @@
       background: #2563eb;
       color: white;
       padding: 10px;
-      font-weight: bold;
       text-align: center;
+      font-weight: bold;
     }
     .slots {
       flex-grow: 1;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      padding: 10px;
-      gap: 5px;
+      gap: 8px;
     }
     .slot {
       background: #eef3fd;
-      border: 1px dashed #ccc;
-      padding: 8px;
       border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
       text-align: center;
-      font-size: 0.9rem;
-      min-height: 50px;
-      position: relative;
-    }
-    .slot.complete {
-      background: #a7f3d0;
-      position: relative;
-    }
-    .slot.complete::after {
-      content: "✓";
-      color: green;
       font-weight: bold;
-      position: absolute;
-      top: 5px;
-      right: 8px;
+      font-size: 0.95rem;
     }
-    .add-visit-btn {
-      background-color: #2563eb;
+    .slot.completed {
+      background: #d1f7d6;
+    }
+    .slot button {
+      background: #2563eb;
       color: white;
       border: none;
-      padding: 8px 10px;
-      font-size: 0.8rem;
-      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      border-radius: 20px;
       cursor: pointer;
+    }
+    .navigation {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .navigation button {
+      margin: 0 10px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .navigation button:hover {
+      background: #1e40af;
+    }
+    #addVisitModal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      display: none;
+      z-index: 2000;
+      width: 90%;
+      max-width: 400px;
+    }
+    #addVisitModal input {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    #addVisitModal button {
+      margin-top: 10px;
       width: 100%;
     }
-    .add-visit-btn:hover { background-color: #1e40af; }
     footer {
       position: fixed;
       bottom: 0;
+      background: #cfe2ff;
       width: 100%;
-      background-color: #cfe2ff;
-      padding: 10px 0;
+      padding: 10px;
       display: flex;
       justify-content: space-around;
       border-top: 2px solid #ccc;
-      z-index: 999;
     }
     .footer-btn {
       background-color: #2563eb;
       color: white;
       border: none;
       padding: 12px 20px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border-radius: 30px;
       cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
     }
-    .footer-btn:hover { background-color: #1e40af; }
-
-    /* Modal styles */
-    .modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 10px;
-      max-height: 80%;
-      overflow-y: auto;
-    }
-    .modal-header {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .store-list {
-      margin-top: 10px;
-    }
-    .store-item {
-      padding: 8px;
-      background: #eef3fd;
-      margin-bottom: 5px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .store-item:hover {
-      background: #cfe2ff;
-    }
-    .search-input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    .footer-btn:hover {
+      background-color: #1e40af;
     }
   </style>
 </head>
+
 <body>
-<header>
-  <h1>Journey Planner</h1>
-</header>
-<div class="week-header" id="weekHeader">Week of ...</div>
-<div class="calendar" id="calendar"></div>
+  <header>
+    <h1>Journey Planner</h1>
+  </header>
+  <div class="welcome-message">Welcome <span id="username"></span></div>
 
-<!-- Modal for Add Visit -->
-<div class="modal" id="addVisitModal">
-  <div class="modal-content">
-    <div class="modal-header">Select Store to Add Visit</div>
-    <input type="text" id="searchStore" class="search-input" placeholder="Search Store...">
-    <div class="store-list" id="storeList"></div>
+  <div class="content">
+    <div class="navigation">
+      <button onclick="previousWeek()">Previous Week</button>
+      <span class="week-header" id="weekRange"></span>
+      <button onclick="nextWeek()">Next Week</button>
+    </div>
+
+    <div class="calendar" id="calendar"></div>
   </div>
-</div>
 
-<footer>
-  <button class="footer-btn" onclick="location.href='dashboard.html'">Dashboard</button>
-  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-</footer><script>
+  <div id="addVisitModal">
+    <h3>Select Store</h3>
+    <input type="text" id="storeSearch" placeholder="Search stores..." oninput="filterStores()" />
+    <div id="storeList" style="max-height:300px; overflow-y:auto; margin-top:10px;"></div>
+    <button onclick="closeAddVisit()">Cancel</button>
+  </div>
+
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='visit.html'">Visit Log</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>
+
+<script>
+const sheetAPI = "https://sheetdb.io/api/v1/9envyaeemiz9h"; // Scheduled Calls
+const masterAPI = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Master Store List
+const username = localStorage.getItem('username') || 'User';
+document.getElementById("username").innerText = username;
+
 let currentMonday = getMonday(new Date());
-const calendarContainer = document.getElementById("calendar");
-const weekHeader = document.getElementById("weekHeader");
-const modal = document.getElementById("addVisitModal");
-const storeListContainer = document.getElementById("storeList");
-const searchInput = document.getElementById("searchStore");
-let selectedSlot = null;
-
-const username = localStorage.getItem("username");
-const sheetDBUrl = "https://sheetdb.io/api/v1/9envyaeemiz9h";
-const customerSheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
-let stores = [];
-let plannedVisits = [];
+let selectedDay = '';
+let storeData = [];
+let calendarData = [];
 
 function getMonday(d) {
   d = new Date(d);
-  let day = d.getDay(),
-      diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(d.setDate(diff));
 }
 
-function formatDate(date) {
-  return date.toISOString().split("T")[0];
+function formatDate(d) {
+  return d.toISOString().split('T')[0];
 }
 
-function formatWeekRange(date) {
-  const monday = new Date(date);
-  const friday = new Date(monday);
-  friday.setDate(monday.getDate() + 4);
-  return `${monday.toLocaleDateString()} - ${friday.toLocaleDateString()}`;
-}
-
-function updateWeekHeader() {
-  weekHeader.textContent = `Week of ${formatWeekRange(currentMonday)}`;
-}
-
-function fetchStoresAndVisits() {
-  Promise.all([
-    fetch(customerSheetUrl).then(res => res.json()),
-    fetch(sheetDBUrl).then(res => res.json())
-  ])
-  .then(([storeData, visitData]) => {
-    stores = storeData.filter(s => s.BDM === username);
-    plannedVisits = visitData.filter(v => v.BDM === username);
-    renderCalendar();
-  });
+function loadCalendar() {
+  fetch(sheetAPI)
+    .then(res => res.json())
+    .then(data => {
+      calendarData = data.filter(c => c.BDM === username);
+      renderCalendar();
+    });
 }
 
 function renderCalendar() {
-  calendarContainer.innerHTML = "";
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  days.forEach((day, i) => {
-    const date = new Date(currentMonday);
-    date.setDate(date.getDate() + i);
-    const dayDate = formatDate(date);
+  const weekDates = [];
+  for (let i = 0; i < 5; i++) {
+    let d = new Date(currentMonday);
+    d.setDate(d.getDate() + i);
+    weekDates.push(d);
+  }
 
-    const dayColumn = document.createElement("div");
+  const start = formatDate(weekDates[0]);
+  const end = formatDate(weekDates[4]);
+  document.getElementById('weekRange').innerText = `${start} → ${end}`;
+
+  const calendar = document.getElementById('calendar');
+  calendar.innerHTML = '';
+
+  weekDates.forEach(date => {
+    const dayColumn = document.createElement('div');
     dayColumn.className = "day-column";
-    dayColumn.innerHTML = `<div class="day-header">${day}</div><div class="slots" id="slots-${dayDate}"></div>`;
-    calendarContainer.appendChild(dayColumn);
 
-    const slotsContainer = document.getElementById(`slots-${dayDate}`);
+    const header = document.createElement('div');
+    header.className = "day-header";
+    header.innerText = date.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
+    dayColumn.appendChild(header);
 
-    const dayVisits = plannedVisits
-      .filter(v => v.Date === dayDate && v.Status !== "Deleted")
-      .sort((a, b) => a.Order - b.Order);
+    const slots = document.createElement('div');
+    slots.className = "slots";
 
-    for (let j = 1; j <= 20; j++) {
-      const existing = dayVisits.find(v => parseInt(v.Order) === j);
-      const slot = document.createElement("div");
-      slot.className = existing ? "slot complete" : "slot";
-      if (existing) {
-        slot.innerHTML = `
-          <strong>${existing["Customer Name"]}</strong><br>${existing["Grade"]} - ${existing["Key Account Group"]}
-          <br><button onclick="startVisit('${existing["Customer Name"]}')">Start Visit</button>
-        `;
+    const dayCalls = calendarData.filter(c => c.Date === formatDate(date));
+
+    for (let i = 1; i <= 20; i++) {
+      const slot = document.createElement('div');
+      slot.className = "slot";
+
+      const call = dayCalls.find(c => c.Order == i);
+      if (call) {
+        slot.innerHTML = `<div>${call["Customer Name"]} ${call.Status === "Completed" ? "✅" : ""}</div>`;
+        slot.style.background = call.Status === "Completed" ? "#d1f7d6" : "#eef3fd";
+        slot.onclick = () => {
+          localStorage.setItem("selectedCustomer", JSON.stringify(call));
+          window.location.href = "visit.html";
+        };
       } else {
-        slot.innerHTML = `<button class="add-visit-btn" onclick="openAddVisit('${dayDate}', ${j})">Add Visit</button>`;
+        slot.innerHTML = `<button onclick="openAddVisit('${formatDate(date)}',${i})">Add Visit</button>`;
       }
-      slotsContainer.appendChild(slot);
+      slots.appendChild(slot);
     }
+    dayColumn.appendChild(slots);
+    calendar.appendChild(dayColumn);
   });
-}function openAddVisit(date, order) {
-  selectedSlot = { date, order };
-  document.getElementById("storeSearchModal").style.display = "block";
-  renderStoreList();
+}
+
+function previousWeek() {
+  currentMonday.setDate(currentMonday.getDate() - 7);
+  loadCalendar();
+}
+
+function nextWeek() {
+  currentMonday.setDate(currentMonday.getDate() + 7);
+  loadCalendar();
+}
+
+function openAddVisit(day, slot) {
+  selectedDay = { day, slot };
+  document.getElementById("addVisitModal").style.display = "block";
+  fetch(masterAPI)
+    .then(res => res.json())
+    .then(data => {
+      storeData = data.filter(s => s.BDM === username);
+      filterStores();
+    });
+}
+
+function filterStores() {
+  const keyword = document.getElementById("storeSearch").value.toLowerCase();
+  const list = document.getElementById("storeList");
+  list.innerHTML = '';
+
+  const plannedStores = calendarData
+    .filter(c => c.Date === selectedDay.day)
+    .map(c => c["Customer Name"]);
+
+  storeData
+    .filter(s => !plannedStores.includes(s["Customer Name"]) && s["Customer Name"].toLowerCase().includes(keyword))
+    .forEach(store => {
+      const btn = document.createElement('button');
+      btn.innerText = store["Customer Name"];
+      btn.style.display = 'block';
+      btn.style.marginBottom = '5px';
+      btn.onclick = () => addVisit(store["Customer Name"]);
+      list.appendChild(btn);
+    });
+}
+
+function addVisit(storeName) {
+  const payload = {
+    "Date": selectedDay.day,
+    "Customer Name": storeName,
+    "BDM": username,
+    "Order": selectedDay.slot,
+    "Status": "Planned"
+  };
+
+  fetch(sheetAPI, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: payload })
+  }).then(() => {
+    document.getElementById("addVisitModal").style.display = "none";
+    loadCalendar();
+  });
 }
 
 function closeAddVisit() {
-  document.getElementById("storeSearchModal").style.display = "none";
-  selectedSlot = null;
+  document.getElementById("addVisitModal").style.display = "none";
 }
 
-function renderStoreList() {
-  const list = storeListContainer;
-  list.innerHTML = "";
-
-  const alreadyPlanned = plannedVisits
-    .filter(v => v.Date === selectedSlot.date)
-    .map(v => v["Customer Name"]);
-
-  const filteredStores = stores.filter(store => !alreadyPlanned.includes(store["Customer Name"]));
-
-  filteredStores.forEach(store => {
-    const item = document.createElement("div");
-    item.className = "store-item";
-    item.innerHTML = `
-      <strong>${store["Customer Name"]}</strong> - ${store["Grade"]} - ${store["Key Account Group"]}
-      <button onclick="confirmAddVisit('${store["Customer Name"]}', '${store["Grade"]}', '${store["Key Account Group"]}')">Add</button>
-    `;
-    list.appendChild(item);
-  });
-}
-
-function confirmAddVisit(customerName, grade, keyGroup) {
-  const visit = {
-    "Date": selectedSlot.date,
-    "Order": selectedSlot.order,
-    "Customer Name": customerName,
-    "BDM": username,
-    "Grade": grade,
-    "Key Account Group": keyGroup,
-    "Status": ""
-  };
-
-  fetch(sheetDBUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: visit })
-  })
-  .then(() => {
-    closeAddVisit();
-    fetchStoresAndVisits();
-  });
-}
-
-function startVisit(customerName) {
-  localStorage.setItem("selectedCustomerName", customerName);
-  window.location.href = "visit.html";
-}
-
-searchInput.addEventListener("input", function() {
-  const value = this.value.toLowerCase();
-  const items = storeListContainer.querySelectorAll(".store-item");
-  items.forEach(item => {
-    item.style.display = item.textContent.toLowerCase().includes(value) ? "block" : "none";
-  });
-});
-
-document.getElementById("prevWeekBtn").addEventListener("click", () => {
-  currentMonday.setDate(currentMonday.getDate() - 7);
-  updateWeekHeader();
-  fetchStoresAndVisits();
-});
-
-document.getElementById("nextWeekBtn").addEventListener("click", () => {
-  currentMonday.setDate(currentMonday.getDate() + 7);
-  updateWeekHeader();
-  fetchStoresAndVisits();
-});
-
-// Initialize
-updateWeekHeader();
-fetchStoresAndVisits();
-</script><!-- Store Search Modal -->
-<div id="storeSearchModal" class="modal hidden">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Select a Store</h3>
-      <button onclick="closeAddVisit()">Close</button>
-    </div>
-    <input type="text" id="storeSearchInput" placeholder="Search stores..." />
-    <div id="storeList"></div>
-  </div>
-</div>
-
-<style>
-.modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 2000;
-}
-
-.modal-content {
-  background: white;
-  width: 90%;
-  max-width: 500px;
-  padding: 20px;
-  border-radius: 10px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#storeSearchInput {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0 20px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.store-item {
-  margin-bottom: 10px;
-  padding: 10px;
-  background: #eef3fd;
-  border-radius: 5px;
-}
-
-.store-item button {
-  margin-top: 5px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.store-item button:hover {
-  background: #1e40af;
-}
-</style>
-
+window.onload = loadCalendar;
+</script>
 </body>
 </html>
