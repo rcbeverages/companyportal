@@ -47,18 +47,21 @@
     }
 
     /* Form Container (Scrollable Section) */
-    .form-container {
-      margin-top: 200px; /* Ensure form is below header & welcome message */
-      padding: 20px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      height: calc(100vh - 120px); /* Adjust the height to fit between header and footer */
-    }
+.form-container {
+  margin-top: 20px; /* Adjust the space between the top and form */
+  margin-bottom: 20px; /* Add space between the form and the footer */
+  padding: 20px;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  height: calc(100vh - 180px); /* Adjust height between header and footer */
+  /* Ensure form is between header and footer */
+  box-sizing: border-box; /* Ensures padding does not break the layout */
+}
 
     .form-container label {
       font-size: 1.1rem;
