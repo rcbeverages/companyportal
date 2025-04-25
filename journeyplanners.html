@@ -1,262 +1,336 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Scheduled Calls</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Journey Planner - RC Beverages</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      background: #f4f4f4;
     }
     header {
       background-color: #0057b7;
       color: white;
+      padding: 20px;
       text-align: center;
-      padding: 1rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
     }
-    .controls {
+    .welcome-message {
+      position: fixed;
+      top: 70px;
+      width: 100%;
+      background: #ffffff;
+      color: #0057b7;
+      text-align: center;
+      padding: 10px;
+      font-size: 1.6rem;
+      z-index: 999;
+    }
+    .week-controls {
+      margin-top: 140px;
+      text-align: center;
+      padding: 10px;
+    }
+    .week-controls button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 30px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .week-controls button:hover {
+      background-color: #1e40af;
+    }
+    .week-range {
+      font-size: 1.3rem;
+      margin-top: 10px;
+      color: #0057b7;
+      font-weight: bold;
+    }
+    .planner-container {
+      margin: 20px;
+      margin-top: 200px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    .day-column {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      height: calc(100vh - 250px);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .day-header {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #0057b7;
+    }
+    .visit-slot {
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      padding: 10px;
+      background: #eef3fd;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 1rem;
-      gap: 1rem;
+      min-height: 50px;
     }
-    .slots {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      padding: 1rem;
-      max-width: 700px;
-      margin: auto;
-    }
-    .slot {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      position: relative;
-      min-height: 80px;
-    }
-    .slot-header {
-      font-weight: bold;
-    }
-    .slot-buttons button {
-      margin-top: 0.5rem;
-      margin-right: 8px;
-      padding: 6px 10px;
-    }
-    .btn {
-      background-color: #0057b7;
+    .visit-tile {
+      background: #2563eb;
       color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 4px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-align: center;
       cursor: pointer;
     }
-    .btn:hover {
-      background-color: #0045a0;
+    .add-visit-btn {
+      background: #10b981;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
-    #addCallModal {
-      display: none;
+    .add-visit-btn:hover {
+      background: #059669;
+    }
+    footer {
       position: fixed;
-      top: 0;
-      left: 0;
+      bottom: 0;
       width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 2px solid #ccc;
+      z-index: 999;
     }
-    #addCallModal .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      max-height: 90vh;
-      overflow-y: auto;
-      width: 90%;
-      max-width: 500px;
+    .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .footer-btn:hover {
+      background-color: #1e40af;
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Scheduled Calls</h1>
-  </header>
+<header>
+  <h1>Journey Planner</h1>
+</header>
 
-  <div class="controls">
-    <button class="btn" onclick="setToday()">Today</button>
-    <input type="date" id="datePicker" onchange="loadDay(this.value)">
-  </div>
+<div class="welcome-message">
+  Welcome <span id="username"></span>
+</div>
 
-  <div style="text-align:center;">
-    <button class="btn" onclick="openAddCalls()">+ Add Calls</button>
-  </div>
+<div class="week-controls">
+  <button id="prevWeekBtn">Previous Week</button>
+  <button id="nextWeekBtn">Next Week</button>
+  <div class="week-range" id="weekRange">Loading...</div>
+</div>
 
-  <div id="dayTitle" style="text-align:center; font-size:1.3rem; margin-top: 10px;"></div>
-  <div id="slots" class="slots"></div>
+<div class="planner-container" id="plannerContainer">
+  <!-- Days will be dynamically inserted here -->
+</div>
 
-  <div id="addCallModal">
-    <div class="modal-content">
-      <h3>Add Calls for Selected Date</h3>
-      <input type="text" id="searchInput" placeholder="Search stores..." style="width: 100%; margin-bottom: 10px; padding: 6px;" oninput="filterCustomers()">
-      <div id="customerSelect" style="max-height:300px; overflow-y:auto; border:1px solid #ccc; margin:10px 0; padding:5px;"></div>
-      <button class="btn" onclick="submitCalls()">Add Calls</button>
-      <button class="btn" onclick="closeAddCalls()" style="margin-left:10px; background-color: gray;">Cancel</button>
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='addcustomer.html'">Add Customer</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer><script>
+const username = localStorage.getItem("username") || "User";
+document.getElementById("username").textContent = username;
+
+const apiUrl = "https://sheetdb.io/api/v1/9envyaeemiz9h";
+let currentMonday = getMonday(new Date());
+
+function getMonday(d) {
+  d = new Date(d);
+  const day = d.getDay(),
+        diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
+}
+
+function formatDate(d) {
+  return d.toISOString().split('T')[0];
+}
+
+function updateWeekRange() {
+  const start = new Date(currentMonday);
+  const end = new Date(currentMonday);
+  end.setDate(start.getDate() + 4);
+  document.getElementById("weekRange").textContent =
+    `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
+}
+
+function loadPlanner() {
+  updateWeekRange();
+  const planner = document.getElementById("plannerContainer");
+  planner.innerHTML = "";
+
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const dates = [];
+
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(currentMonday);
+    d.setDate(d.getDate() + i);
+    dates.push(formatDate(d));
+  }
+
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      days.forEach((dayName, idx) => {
+        const column = document.createElement("div");
+        column.className = "day-column";
+
+        const header = document.createElement("div");
+        header.className = "day-header";
+        header.textContent = dayName;
+        column.appendChild(header);
+
+        const dayCalls = data
+          .filter(call => call.Date === dates[idx] && call.Status !== "Deleted")
+          .sort((a, b) => (a.Order || 0) - (b.Order || 0));
+
+        let callCount = 0;
+
+        dayCalls.forEach(call => {
+          const tile = document.createElement("div");
+          tile.className = "visit-slot";
+          tile.innerHTML = `
+            <div class="visit-tile">
+              ${call["Customer Name"]}<br/>
+              ${call["Key Account Group"] || ""} - ${call["Grade"] || ""}
+            </div>
+          `;
+          column.appendChild(tile);
+          callCount++;
+        });
+
+        for (let j = callCount; j < 20; j++) {
+          const emptySlot = document.createElement("div");
+          emptySlot.className = "visit-slot";
+          const btn = document.createElement("button");
+          btn.className = "add-visit-btn";
+          btn.textContent = "Add Visit";
+          btn.onclick = () => openAddVisit(dates[idx]);
+          emptySlot.appendChild(btn);
+          column.appendChild(emptySlot);
+        }
+
+        planner.appendChild(column);
+      });
+    });
+}
+
+function openAddVisit(date) {
+  localStorage.setItem("selectedDate", date);
+  window.location.href = "addvisit.html";
+}
+
+document.getElementById("prevWeekBtn").addEventListener("click", () => {
+  currentMonday.setDate(currentMonday.getDate() - 7);
+  loadPlanner();
+});
+
+document.getElementById("nextWeekBtn").addEventListener("click", () => {
+  currentMonday.setDate(currentMonday.getDate() + 7);
+  loadPlanner();
+});
+
+window.onload = loadPlanner;
+</script><!-- Add Visit Modal -->
+<div id="addVisitModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:2rem; box-shadow:0 2px 10px rgba(0,0,0,0.2); border-radius:10px; z-index:2000;">
+  <h2>Add Visit</h2>
+  <form id="addVisitForm">
+    <div style="margin-bottom:1rem;">
+      <label>Customer Name:</label>
+      <input type="text" id="customerName" required />
     </div>
-  </div>
+    <div style="margin-bottom:1rem;">
+      <label>Sub Owner Group:</label>
+      <input type="text" id="subOwnerGroup" />
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label>Key Account Group:</label>
+      <input type="text" id="keyAccountGroup" />
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label>Grade:</label>
+      <input type="text" id="grade" />
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button type="submit" style="background:#2563eb; color:white; padding:0.7rem 2rem; border:none; border-radius:6px; font-size:1rem;">Submit</button>
+      <button type="button" onclick="closeAddVisit()" style="margin-left:1rem; background:#ccc; padding:0.7rem 2rem; border:none; border-radius:6px; font-size:1rem;">Cancel</button>
+    </div>
+  </form>
+</div>
 
 <script>
-const sheetEndpoint = "https://sheetdb.io/api/v1/9envyaeemiz9h";
-const customerEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
-const username = localStorage.getItem("username");
-const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
-const bdmName = bdmMap[username];
-let currentDate = new Date().toISOString().split("T")[0];
-let currentCalls = [];
-let customerCache = [];
-
-function setToday() {
-  currentDate = new Date().toISOString().split("T")[0];
-  document.getElementById("datePicker").value = currentDate;
-  loadDay(currentDate);
+function openAddVisit(date) {
+  document.getElementById("addVisitModal").style.display = "block";
+  document.getElementById("addVisitForm").dataset.date = date;
 }
 
-function loadDay(date) {
-  currentDate = date;
-  document.getElementById("dayTitle").textContent = `Scheduled Calls for ${new Date(date).toDateString()}`;
-  fetch(sheetEndpoint)
-    .then(res => res.json())
-    .then(data => {
-      currentCalls = data
-        .filter(d => d.Date?.startsWith(date) && d.BDM === bdmName && d.Status !== "Deleted")
-        .sort((a, b) => Number(a.Order || 999) - Number(b.Order || 999));
-      renderSlots(currentCalls);
-    });
+function closeAddVisit() {
+  document.getElementById("addVisitModal").style.display = "none";
 }
 
-function renderSlots(calls) {
-  const container = document.getElementById("slots");
-  container.innerHTML = "";
-  for (let i = 0; i < 20; i++) {
-    const call = calls[i];
-    const slot = document.createElement("div");
-    slot.className = "slot";
-    if (call) {
-      slot.innerHTML = `
-        <div class="slot-header">${call["Customer Name"]}</div>
-        <div><strong>Sub Owner:</strong> ${call["Sub Owner Group"] || "-"}</div>
-        <div><strong>Key Account:</strong> ${call["Key Account Group"] || "-"}</div>
-        <div><strong>Grade:</strong> ${call["Grade"] || "-"}</div>
-        <div class="slot-buttons">
-          <button class="btn" onclick="startCall('${call["Customer Name"]}')">Start</button>
-          <button class="btn" onclick="removeCall('${call["Customer Name"]}')" style="background-color:#c0392b;">Remove</button>
-        </div>`;
-    } else {
-      slot.innerHTML = `<div class="slot-header">[Empty Slot]</div>`;
-    }
-    container.appendChild(slot);
-  }
-}
+document.getElementById("addVisitForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const date = this.dataset.date;
 
-function startCall(customerName) {
-  fetch(customerEndpoint)
-    .then(res => res.json())
-    .then(data => {
-      const match = data.find(c => c["Customer Name"] === customerName);
-      if (match) {
-        localStorage.setItem("selectedCustomer", JSON.stringify(match));
-        window.location.href = "visit.html";
-      } else {
-        alert("Customer not found.");
-      }
-    });
-}
+  // Fetch existing visits for that date
+  const res = await fetch(apiUrl);
+  const visits = await res.json();
+  const todayVisits = visits.filter(v => v.Date === date && v.Status !== "Deleted");
+  const nextOrder = todayVisits.length + 1;
 
-function removeCall(customerName) {
-  fetch(`${sheetEndpoint}/search?Customer%20Name=${encodeURIComponent(customerName)}&Date=${currentDate}`)
-    .then(res => res.json())
-    .then(data => {
-      const match = data.find(d => d.Date.startsWith(currentDate) && d.BDM === bdmName);
-      if (!match || !match.id) return alert("Matching call has no ID.");
-      return fetch(`${sheetEndpoint}/id/${match.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: { Status: "Deleted" } })
-      });
-    })
-    .then(() => loadDay(currentDate));
-}
+  const visitData = {
+    "Date": date,
+    "Customer Name": document.getElementById("customerName").value,
+    "Sub Owner Group": document.getElementById("subOwnerGroup").value,
+    "Key Account Group": document.getElementById("keyAccountGroup").value,
+    "Grade": document.getElementById("grade").value,
+    "Status": "",
+    "Order": nextOrder
+  };
 
-function openAddCalls() {
-  document.getElementById("addCallModal").style.display = "flex";
-  loadCustomers();
-}
+  await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: visitData })
+  });
 
-function closeAddCalls() {
-  document.getElementById("addCallModal").style.display = "none";
-}
-
-function loadCustomers() {
-  fetch(customerEndpoint)
-    .then(res => res.json())
-    .then(data => {
-      customerCache = data.filter(c => c.BDM === bdmName);
-      renderCustomerOptions(customerCache);
-    });
-}
-
-function filterCustomers() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = customerCache.filter(c =>
-    c["Customer Name"].toLowerCase().includes(query)
-  );
-  renderCustomerOptions(filtered);
-}
-
-function renderCustomerOptions(list) {
-  const container = document.getElementById("customerSelect");
-  container.innerHTML = list.map(c =>
-    `<label><input type="checkbox" value="${c['Customer Name']}" data-bdm="${c.BDM}" data-grade="${c.Grade}" data-key="${c['Key Account Group']}" data-sub="${c['Sub Owner Group']}" /> ${c['Customer Name']}</label><br/>`
-  ).join('');
-}
-
-function submitCalls() {
-  const selected = [...document.querySelectorAll("#customerSelect input:checked")];
-  if (selected.length === 0) return alert("Select at least one customer.");
-  fetch(sheetEndpoint)
-    .then(res => res.json())
-    .then(existing => {
-      const todays = existing.filter(c => c.Date?.startsWith(currentDate) && c.BDM === bdmName && c.Status !== "Deleted");
-      const maxOrder = Math.max(0, ...todays.map(c => Number(c.Order || 0)));
-      const newData = selected.map((el, i) => ({
-        "Customer Name": el.value,
-        "Date": currentDate,
-        "BDM": el.dataset.bdm,
-        "Grade": el.dataset.grade,
-        "Key Account Group": el.dataset.key,
-        "Sub Owner Group": el.dataset.sub,
-        "Order": maxOrder + i + 1
-      }));
-      return fetch(sheetEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: newData })
-      });
-    })
-    .then(() => {
-      closeAddCalls();
-      loadDay(currentDate);
-    });
-}
-
-window.onload = function () {
-  document.getElementById("datePicker").value = currentDate;
-  loadDay(currentDate);
-};
+  closeAddVisit();
+  loadPlanner();
+});
 </script>
-</body>
-</html>
