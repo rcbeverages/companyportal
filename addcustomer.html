@@ -221,6 +221,54 @@
     }
 
     window.onload = fetchOptions;
+    <script>
+  // Fetch dropdown options
+  async function fetchOptions() {
+    ...
+  }
+
+  window.onload = fetchOptions;
+
+  // NEW: Add Customer form submission
+  document.getElementById("addCustomerForm").addEventListener("submit", async function(event) {
+    event.preventDefault(); // Stops the form's default behavior
+
+    const formData = {
+      "Store Name": document.getElementById("storeName").value,
+      "Segment": document.getElementById("segment").value,
+      "Key Account Group": document.getElementById("keyAccountGroup").value,
+      "Sub Owner Group": document.getElementById("subOwnerGroup").value,
+      "Grade": document.getElementById("grade").value,
+      "Store Type": document.getElementById("storeType").value,
+      "Contact Name": document.getElementById("contactName").value,
+      "Phone": document.getElementById("contactPhone").value,
+      "Email": document.getElementById("contactEmail").value,
+      "Address": document.getElementById("address").value,
+      "Suburb": document.getElementById("suburb").value,
+      "State": document.getElementById("state").value,
+      "Postcode": document.getElementById("postcode").value,
+      "BDM": document.getElementById("bdm").value
+    };
+
+    try {
+      const response = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [formData] })
+      });
+
+      if (response.ok) {
+        alert("Customer added successfully!");
+        document.getElementById("addCustomerForm").reset();
+      } else {
+        alert("Failed to add customer.");
+      }
+    } catch (error) {
+      console.error('Error adding customer:', error);
+      alert("An error occurred.");
+    }
+  });
+</script>
   </script>
 </body>
 </html>
