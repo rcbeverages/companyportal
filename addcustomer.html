@@ -6,6 +6,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Customer - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Basic Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    /* Fixed Header */
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    /* Fixed Welcome Message */
+    .welcome-message {
+      position: fixed;
+      top: 80px; /* Move the welcome message just below the header */
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      font-size: 1.5rem;
+      z-index: 999;
+    }
+
+    /* Form Container */
+    .form-container {
+      margin-top: 170px; /* Add margin to avoid overlap with header and welcome message */
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: 70vh; /* Adjust based on screen size */
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #0057b7;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      width: 100%;
+      max-width: 300px;
+      margin: 20px auto;
+    }
+
+    button:hover {
+      background-color: #00409a;
+    }
+
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 1000;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Scrollable content */
+    .scrollable-content {
+      overflow-y: auto;
+      max-height: calc(100vh - 280px); /* Ensures the form remains scrollable */
+    }
+  </style>
 </head>
 
 <body>
@@ -20,7 +147,7 @@
   </div>
 
   <!-- Form for Adding Customer -->
-  <div class="form-container">
+  <div class="form-container scrollable-content">
     <form id="addCustomerForm">
       <label for="storeName">Store Name</label>
       <input type="text" id="storeName" name="storeName" required />
