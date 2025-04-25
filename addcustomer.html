@@ -187,51 +187,44 @@
   </footer>
 
   <script>
-    // Display logged in username
-    const username = localStorage.getItem("username");
-    document.getElementById("username").textContent = username;
+  // Display logged in username
+  const username = localStorage.getItem("username");
+  document.getElementById("username").textContent = username;
 
-    // Fetch live dropdown data
-    async function fetchOptions() {
-      try {
-        const response = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
-        const data = await response.json();
-
-        const fillDropdown = (id, field) => {
-          const dropdown = document.getElementById(id);
-          const options = [...new Set(data.map(item => item[field]))];
-          options.filter(o => o).forEach(option => {
-            const opt = document.createElement("option");
-            opt.value = option;
-            opt.textContent = option;
-            dropdown.appendChild(opt);
-          });
-        };
-
-        fillDropdown("segment", "Segment");
-        fillDropdown("keyAccountGroup", "Key Account Group");
-        fillDropdown("subOwnerGroup", "Sub Owner Group");
-        fillDropdown("grade", "Grade");
-        fillDropdown("storeType", "Store Type");
-        fillDropdown("bdm", "BDM");
-
-      } catch (error) {
-        console.error('Error fetching dropdowns:', error);
-      }
-    }
-
-    window.onload = fetchOptions;
-    <script>
-  // Fetch dropdown options
+  // Fetch live dropdown data
   async function fetchOptions() {
-    ...
+    try {
+      const response = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
+      const data = await response.json();
+
+      const fillDropdown = (id, field) => {
+        const dropdown = document.getElementById(id);
+        const options = [...new Set(data.map(item => item[field]))];
+        options.filter(o => o).forEach(option => {
+          const opt = document.createElement("option");
+          opt.value = option;
+          opt.textContent = option;
+          dropdown.appendChild(opt);
+        });
+      };
+
+      fillDropdown("segment", "Segment");
+      fillDropdown("keyAccountGroup", "Key Account Group");
+      fillDropdown("subOwnerGroup", "Sub Owner Group");
+      fillDropdown("grade", "Grade");
+      fillDropdown("storeType", "Store Type");
+      fillDropdown("bdm", "BDM");
+
+    } catch (error) {
+      console.error('Error fetching dropdowns:', error);
+    }
   }
 
   window.onload = fetchOptions;
 
-  // NEW: Add Customer form submission
+  // Handle Add Customer form submission
   document.getElementById("addCustomerForm").addEventListener("submit", async function(event) {
-    event.preventDefault(); // Stops the form's default behavior
+    event.preventDefault();
 
     const formData = {
       "Store Name": document.getElementById("storeName").value,
@@ -269,6 +262,5 @@
     }
   });
 </script>
-  </script>
 </body>
 </html>
