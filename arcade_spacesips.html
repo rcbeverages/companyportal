@@ -68,11 +68,13 @@
     <p id="error" style="color:red;margin-top:10px;display:none;">You must be 18+ to access the arcade.</p>
   </div>
 
+  <!-- Game Intro -->
   <div id="intro">
     <h1>Invade the invaders. Pop the boss. Sip with style.</h1>
     <button id="startBtn">Start Game</button>
   </div>
 
+  <!-- Game Area -->
   <div id="gameWrapper">
     <h1 style="color:#0f0; margin:10px 0;">SPACE SIPS</h1>
     <div style="width:100%; max-width:360px; display:flex; justify-content:space-between; padding: 0 10px;">
@@ -267,7 +269,7 @@ function checkCollisions() {
 
 function endGame() {
   gameOver = true;
-  alert("Game Over! Final Score: " + score);
+  document.getElementById("scoreForm").style.display = "block";
 }
 
 function update() {
@@ -332,5 +334,44 @@ function verifyAge() {
   }
 }
 </script>
+
+<!-- High Score Form -->
+<div id="scoreForm" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#000;border:2px solid #0f0;padding:20px;color:#0f0;z-index:9999;">
+  <h3>Top 10 Score! Submit to Leaderboard</h3>
+  <form onsubmit="submitScore(); return false;">
+    <input type="text" id="hsName" placeholder="Name" required style="margin:5px;"><br>
+    <input type="text" id="hsMobile" placeholder="Mobile" required style="margin:5px;"><br>
+    <input type="email" id="hsEmail" placeholder="Email" required style="margin:5px;"><br>
+    <input type="number" id="hsAge" placeholder="Age" required style="margin:5px;"><br>
+    <p style="font-size:0.8rem;max-width:260px;margin:10px auto;">
+      <strong>Note:</strong> Any potential winners must be 18+ and provide valid ID matching the details submitted above. This is required to comply with current Rewinded promotions and responsible service of alcohol.
+    </p>
+    <button type="submit">Submit Score</button>
+  </form>
+</div>
+
+<script>
+function submitScore() {
+  const name = document.getElementById("hsName").value;
+  const mobile = document.getElementById("hsMobile").value;
+  const email = document.getElementById("hsEmail").value;
+  const age = document.getElementById("hsAge").value;
+
+  fetch("https://sheetdb.io/api/v1/m2stlpl38zxyx", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      data: [{
+        name, mobile, email, age, score, level, timestamp: new Date().toISOString()
+      }]
+    })
+  }).then(() => {
+    alert("Score submitted!");
+    location.reload();
+  });
+}
+</script>
+
 </body>
 </html>
