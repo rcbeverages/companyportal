@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Customer - RC Beverages</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Basic Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 150px; /* Added padding to prevent content being hidden behind fixed header */
+    }
+
+    /* Fixed Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    /* Page Title Styling */
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    /* Fixed Welcome Message */
+    .welcome-message {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      font-size: 2rem;
+      margin-top: 10px;
+      z-index: 999;
+    }
+
+    /* Form Styling */
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #1e40af;
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #cfe2ff;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #ccc;
+      z-index: 1000;
+    }
+
+    footer .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    footer .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    /* Media Queries for Mobile and Tablet */
+    @media screen and (max-width: 768px) {
+      .tile {
+        width: 45%; /* Two tiles per row on larger tablets */
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      footer .footer-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section with Page Title -->
+  <header>
+    <h1>Add Customer</h1>
+  </header>
+
+  <!-- Welcome Message Section -->
+  <div class="welcome-message" id="welcome">
+    <!-- Welcome message will be injected here -->
+  </div>
+
+  <!-- Customer Form Section -->
+  <div class="form-container">
+    <form id="customerForm">
+      <label for="storeName">Store Name:</label>
+      <input type="text" id="storeName" required />
+
+      <label for="segment">Segment:</label>
+      <select id="segment" required>
+        <option value="Retail">Retail</option>
+        <option value="Wholesale">Wholesale</option>
+      </select>
+
+      <label for="keyAccountGroup">Key Account Group:</label>
+      <select id="keyAccountGroup" required>
+        <!-- Options will be populated from Google Sheets -->
+      </select>
+
+      <label for="subOwnerGroup">Sub Owner Group:</label>
+      <input type="text" id="subOwnerGroup" required />
+
+      <label for="grade">Grade:</label>
+      <select id="grade" required>
+        <option value="A">A</option>
+        <option value="B">B</option>
+      </select>
+
+      <label for="bdm">BDM:</label>
+      <select id="bdm" required>
+        <option value="rhincksman">Ryan Hincksman</option>
+        <option value="chawkins">Chris Hawkins</option>
+      </select>
+
+      <button type="submit">Add Customer</button>
+    </form>
+  </div>
+
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>
+
+  <script>
+    // Fetch and populate dropdowns with data from SheetDB
+    async function loadDropdowns() {
+      const keyAccountGroupRes = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
+      const keyAccountGroupData = await keyAccountGroupRes.json();
+      const keyAccountGroupSelect = document.getElementById("keyAccountGroup");
+
+      keyAccountGroupData.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item["Key Account Group"];
+        option.textContent = item["Key Account Group"];
+        keyAccountGroupSelect.appendChild(option);
+      });
+    }
+
+    // Handle form submission
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const storeName = document.getElementById("storeName").value;
+      const segment = document.getElementById("segment").value;
+      const keyAccountGroup = document.getElementById("keyAccountGroup").value;
+      const subOwnerGroup = document.getElementById("subOwnerGroup").value;
+      const grade = document.getElementById("grade").value;
+      const bdm = document.getElementById("bdm").value;
+
+      const customerData = {
+        "Store Name": storeName,
+        "Segment": segment,
+        "Key Account Group": keyAccountGroup,
+        "Sub Owner Group": subOwnerGroup,
+        "Grade": grade,
+        "BDM": bdm,
+      };
+
+      await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([customerData]),
+      });
+
+      alert("Customer added successfully!");
+      window.location.href = "dashboard.html"; // Redirect to dashboard
+    }
+
+    // Initialize page
+    window.onload = () => {
+      loadDropdowns();
+      document.getElementById("customerForm").addEventListener("submit", handleFormSubmit);
+    };
+  </script>
+</body>
+
+</html>
