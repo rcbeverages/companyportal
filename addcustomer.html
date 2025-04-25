@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -64,7 +65,9 @@
       text-align: left;
     }
 
-    input[type="text"], input[type="email"], select {
+    input[type="text"],
+    input[type="email"],
+    select {
       width: 100%;
       padding: 12px;
       margin: 8px 0;
@@ -160,20 +163,17 @@
 
       <label for="segment">Segment:</label>
       <select id="segment" name="segment" required>
-        <option value="Retail">Retail</option>
-        <option value="Wholesale">Wholesale</option>
+        <!-- Dynamically populated -->
       </select>
 
       <label for="keyAccountGroup">Key Account Group:</label>
       <select id="keyAccountGroup" name="keyAccountGroup" required>
-        <option value="ILG - Bottler">ILG - Bottler</option>
-        <option value="Super Cellars">Super Cellars</option>
+        <!-- Dynamically populated -->
       </select>
 
       <label for="subOwnerGroup">Sub Owner Group:</label>
       <select id="subOwnerGroup" name="subOwnerGroup" required>
-        <option value="ILG - Sub Owner">ILG - Sub Owner</option>
-        <option value="Other">Other</option>
+        <!-- Dynamically populated -->
       </select>
 
       <label for="grade">Grade:</label>
@@ -206,6 +206,39 @@
   <script>
     const username = localStorage.getItem("username");
     document.getElementById("welcome").textContent = `Welcome, ${username}`;
+
+    async function loadDropdownOptions() {
+      const storeListRes = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
+      const storeData = await storeListRes.json();
+
+      const segmentOptions = new Set();
+      const keyAccountOptions = new Set();
+      const subOwnerOptions = new Set();
+
+      storeData.forEach(store => {
+        segmentOptions.add(store.Segment);
+        keyAccountOptions.add(store["Key Account Group"]);
+        subOwnerOptions.add(store["Sub Owner Group"]);
+      });
+
+      populateDropdown("segment", segmentOptions);
+      populateDropdown("keyAccountGroup", keyAccountOptions);
+      populateDropdown("subOwnerGroup", subOwnerOptions);
+    }
+
+    function populateDropdown(id, options) {
+      const dropdown = document.getElementById(id);
+      options.forEach(option => {
+        const optionElement = document.createElement("option");
+        optionElement.value = option;
+        optionElement.textContent = option;
+        dropdown.appendChild(optionElement);
+      });
+    }
+
+    // Load dropdown options when the page loads
+    window.onload = loadDropdownOptions;
   </script>
 </body>
+
 </html>
