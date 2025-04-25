@@ -286,10 +286,11 @@ function nextWeek() {
 function openAddVisit(day, slot) {
   selectedDay = { day, slot };
   document.getElementById("addVisitModal").style.display = "block";
+
   fetch(masterAPI)
     .then(res => res.json())
     .then(data => {
-      storeData = data.filter(s => s.BDM === username);
+      storeData = data.filter(s => s.BDM === username); // Only stores for current BDM
       filterStores();
     });
 }
@@ -302,6 +303,24 @@ function filterStores() {
   const plannedStores = calendarData
     .filter(c => c.Date === selectedDay.day)
     .map(c => c["Customer Name"]);
+
+  storeData
+    .filter(s => s["Customer Name"] && !plannedStores.includes(s["Customer Name"]))
+    .filter(s => s["Customer Name"].toLowerCase().includes(keyword))
+    .forEach(store => {
+      const btn = document.createElement('button');
+      btn.innerText = store["Customer Name"];
+      btn.style.display = 'block';
+      btn.style.marginBottom = '5px';
+      btn.style.width = '100%';
+      btn.onclick = () => addVisit(store["Customer Name"]);
+      list.appendChild(btn);
+    });
+
+  if (list.innerHTML === '') {
+    list.innerHTML = "<em>No stores match your search.</em>";
+  }
+}
 
   storeData
     .filter(s => !plannedStores.includes(s["Customer Name"]) && s["Customer Name"].toLowerCase().includes(keyword))
