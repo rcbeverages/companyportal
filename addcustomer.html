@@ -46,38 +46,39 @@
       z-index: 999;
     }
 
-    /* Form Container (Scrollable Section) */
+     /* Form Container (Scrollable Section) */
     .form-container {
-     margin-top: 50px; /* Adjust the space between the top and form */
-     margin-bottom: 20px; /* Add space between the form and the footer */
-     padding: 20px;
-     width: 90%;
-     max-width: 900px;
-     margin: 0 auto;
-     background-color: white;
-     border-radius: 8px;
-     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-     overflow-y: auto;
-     height: calc(100vh - 120px); /* Adjust height between header and footer */
-     box-sizing: border-box; /* Ensures padding does not break the layout */
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      height: calc(100vh - 180px);
+      box-sizing: border-box;
     }
 
+    /* Align labels to the left */
     .form-container label {
-     display: block; /* Make label block-level so it takes the full width */
-     margin-bottom: 5px; /* Optional: Space between label and input */
-     font-weight: bold; /* Optional: Make the label text bold */
-    }
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+      font-weight: bold;
     }
 
+    /* Make input fields fill available space */
     .form-container input,
     .form-container select {
       width: 100%;
-      padding: 12px;
-      font-size: 1rem;
+      padding: 10px;
       margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
     }
 
     .form-container button {
