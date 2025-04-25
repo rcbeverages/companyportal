@@ -509,6 +509,14 @@ function saveEverything() {
         });
       });
   })
+    .then(() => {
+  const todayDate = new Date().toISOString().split('T')[0];
+  return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h?Date=${encodeURIComponent(todayDate)}&Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: { Status: "Completed" } })
+  });
+})
   .then(() => {
     showPopup("Save/End Call Completed");
     setTimeout(() => window.location.href = "dashboard.html", 1500);
