@@ -3,240 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Customer - RC Beverages</title>
-  <link rel="stylesheet" href="style.css" /> <!-- External CSS file -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      text-align: center;
-    }
-
-    header {
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    h1 {
-      margin: 0;
-    }
-
-       /* Search Input Styling */
-    #searchInput {
-      width: 80%;
-      padding: 10px;
-      margin-top: 100px;
-      font-size: 1.2rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
-
-    /* Store List Styling */
-    #customerTiles {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      gap: 2rem;
-      padding: 2rem 0;
-    }
-
-    /* Individual Tile Styling */
-    .tile {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      width: 25%; /* Adjust width so that 3 tiles fit across on large screens */
-      margin: 5px 0;
-      transition: transform 0.3s ease;
-    }
-
-    .tile h3 {
-      margin: 0;
-      font-size: 1.1rem; /* Reduced font size for store name */
-    }
-
-    .tile p {
-      margin: 5px 0;
-      font-size: 1rem;
-    }
-
-    .tile button {
-      margin-top: 10px;
-      background-color: #2563eb;
-      color: white;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .tile button:hover {
-      background-color: #1e40af;
-    }
-
-    /* Footer Styling */
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #cfe2ff;
-      padding: 10px 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 2px solid #ccc;
-      z-index: 1000;
-    }
-
-    footer .footer-btn {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
-
-    footer .footer-btn:hover {
-      background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 1024px) {
-      .tile {
-        width: 32%; /* Two tiles per row on larger tablets */
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .tile {
-        width: 45%; /* Two tiles per row on tablets */
-      }
-
-      #searchInput {
-        width: 90%;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      .tile {
-        width: 90%; /* One tile per row on mobile */
-      }
-
-      footer .footer-btn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
-
-      #searchInput {
-        width: 90%;
-      }
-    }
-  </style>
+  <title>Store Database - RC Beverages</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 
 <body>
-  <!-- Header Section with Page Title -->
-  <header>
-    <h1>Store Database</h1>
-  </header>
 
-  <!-- Search Bar Section -->
-  <input type="text" id="searchInput" placeholder="Search Customers..." oninput="filterTiles()" />
+<header>
+  <h1>Store Database</h1>
+</header>
 
-  <!-- Store List Section -->
+<input type="text" id="searchInput" placeholder="Search Customers..." />
+
+<div class="menu-container">
   <div id="customerTiles">
-    <!-- Customer tiles will be dynamically populated here -->
+    <!-- Customer tiles populate here -->
   </div>
+</div>
 
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-  </footer>
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-  <script>
-    const username = localStorage.getItem("username");
-
-const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // <-- ✅ ADD THIS LINE!
-
-const bdmMap = {
-  rhincksman: "Ryan Hincksman",
-  chawkins: "Chris Hawkins"
-};
-
-const bdmName = bdmMap[username];
-
-    let customerCache = [];
-
-function loadCustomers() {
-  fetch(customerSheet)
-    .then(res => res.json())
-    .then(data => {
-      customerCache = data; // ✅ save everything globally
-      const filtered = data.filter(c => c["BDM"] === bdmName); // ✅ filter here!
-      displayTiles(filtered);
-    });
-}
-
-   function displayTiles(data) {
-  const container = document.getElementById("customerTiles");
-  container.innerHTML = "";
-
-  data.forEach(c => {
-    const div = document.createElement("div");
-    div.className = "tile";
-
-    div.innerHTML = `
-  <h3>${c["Customer Name"]}</h3>
-  <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "N/A"}</p>
-  <p><strong>Key Account Group:</strong> ${c["Key Account Group"] || "N/A"}</p>
-  <p><strong>Grade:</strong> ${c["Grade"] || "N/A"}</p>
-  <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
-`;
-
-    container.appendChild(div);
-  });
-}
-
-    function filterTiles() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      document.querySelectorAll(".tile").forEach(tile => {
-        tile.style.display = tile.dataset.name.includes(query) ? "block" : "none";
-      });
-    }
-
-    function startCall(customerName) {
-  const cleanName = customerName.trim().toLowerCase();
-  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
-
-  if (customer) {
-    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-    window.location.href = "visit.html";
-  } else {
-    alert("Customer not found: " + customerName);
-  }
-}
-
-    window.onload = loadCustomers;
-  </script>
+<script src="../js/api.js"></script> <!-- Shared API code -->
+<script src="../js/storedatabase.js"></script> <!-- 👈 New clean external file -->
 </body>
 
 </html>
