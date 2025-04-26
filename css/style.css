@@ -162,8 +162,8 @@ footer {
    ========================= */
 .form-container {
   position: absolute;
-  top: 80px;    /* Was 100px, now closer to header */
-  bottom: 60px; /* Was 80px, now closer to footer */
+  top: 60px;    /* Was 100px, now closer to header */
+  bottom: 40px; /* Was 80px, now closer to footer */
   left: 20px;
   right: 20px;
   margin: auto;
