@@ -31,22 +31,23 @@
   <button id="selectAllButton" class="main-button">Select All</button>
 </div>
 
-<!-- Store List Header -->
-<div class="store-list-header">
-  <div class="header-item">Customer Name</div>
-  <div class="header-item">Sub Owner Group</div>
-  <div class="header-item">Key Account Group</div>
-  <div class="header-item">Grade</div>
-  <div class="header-item">Store Type</div>
-  <div class="header-item">Email</div>
-</div>
-
-<!-- Store List Container -->
-<div class="menu-container">
-  <div id="storeList" class="store-list">
+<!-- Table for Store List -->
+<table id="storeListTable" class="store-list-table">
+  <thead>
+    <tr>
+      <th>Select</th>
+      <th>Customer Name</th>
+      <th>Sub Owner Group</th>
+      <th>Key Account Group</th>
+      <th>Grade</th>
+      <th>Store Type</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody id="storeList">
     <!-- Store list will populate dynamically here -->
-  </div>
-</div>
+  </tbody>
+</table>
 
 <!-- Fixed Footer with Navigation Buttons -->
 <footer>
