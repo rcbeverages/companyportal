@@ -290,36 +290,34 @@ textarea {
 }
 
 /* =========================
-   Table Store List Layout
+   Store List Header Styling
    ========================= */
 .store-list-header {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
+  display: flex;
   font-weight: bold;
   background-color: #f2f2f2;
   padding: 10px 15px;
   border-radius: 8px;
   margin-bottom: 15px;
-  padding-left: 20px; /* Add left padding for alignment */
+  justify-content: space-between;
 }
 
 .header-item {
   text-align: center;
-  padding: 10px 0; /* Adjust vertical alignment */
+  flex: 1;
 }
 
 /* =========================
-   Store List Styling (Grid) 
+   Store List Container (List Format)
    ========================= */
 .menu-container {
   margin-top: 20px;
-  padding-left: 20px;
 }
 
 .store-list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
-  gap: 10px; /* Adds space between items */
+  display: flex;
+  flex-direction: column; /* Stack each store item vertically */
+  gap: 15px; /* Adds space between store items */
 }
 
 .store-item {
@@ -327,16 +325,14 @@ textarea {
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #ddd;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Ensure 6 columns */
-  gap: 10px;
-  align-items: center; /* Ensure all content is centered */
+  display: flex;
+  justify-content: space-between;
 }
 
 .store-item span {
   text-align: center;
+  flex: 1; /* Ensures all columns take equal width */
   padding: 5px;
-  word-wrap: break-word; /* Allows long text to wrap */
 }
 
 .store-item a {
@@ -350,4 +346,65 @@ textarea {
 
 .store-item input[type="checkbox"] {
   margin-right: 10px;
+}
+
+/* =========================
+   Select All Button Styling
+   ========================= */
+.select-all-container {
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.select-all-container .main-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* =========================
+   Search and Send Email Button Container
+   ========================= */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.search-box {
+  flex-grow: 1;  /* Allows the search bar to take most of the space */
+}
+
+.search-btn-box {
+  margin-left: 10px; /* Adds some space between the search bar and the button */
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.search-container .main-button {
+  background-color: #0057b7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-container .main-button:disabled {
+  background-color: #ccc;  /* Disabled state */
+  cursor: not-allowed;
 }
