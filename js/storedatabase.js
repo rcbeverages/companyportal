@@ -37,9 +37,8 @@ function displayTiles(data) {
   <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "N/A"}</p>
   <p><strong>Key Account Group:</strong> ${c["Key Account Group"] || "N/A"}</p>
   <p><strong>Grade:</strong> ${c["Grade"] || "N/A"}</p>
-  <button class="dashboard-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
+  <button class="footer-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
 `;
-
 
     container.appendChild(div);
   });
