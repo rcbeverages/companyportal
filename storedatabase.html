@@ -218,6 +218,7 @@
 
     function displayTiles(data) {
       const filtered = data.filter(c => c.BDM === bdmName);
+      customerCache = filtered;
       const container = document.getElementById("customerTiles");
       container.innerHTML = "";
       filtered.forEach(c => {
@@ -243,14 +244,15 @@
     }
 
     function startCall(customerName) {
-  const customer = customerCache.find(c => c["Customer Name"] === customerName);
-  if (customer) {
-    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+      const customer = customerCache.find(c => c["Customer Name"] === customerName);
+      if (customer) {
+      localStorage.setItem("selectedCustomer", JSON.stringify(customer));
     window.location.href = "visit.html";
   } else {
     alert("Customer not found.");
   }
 }
+
 
     window.onload = loadCustomers;
   </script>
