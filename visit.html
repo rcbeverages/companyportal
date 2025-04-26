@@ -35,12 +35,13 @@
 
 .right-column {
   flex: 1;
-  height: auto;
-  overflow: visible;
+  max-height: 500px; /* 👈 Try 500px or lower */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 
     .left-column {
       width: 30%;
