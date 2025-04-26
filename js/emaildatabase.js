@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
               <td>${store["Key Account Group"]}</td>
               <td>${store["Grade"]}</td>
               <td>${store["Store Type"]}</td>
+              <td>${store["Email"]}</td>
             `;
             storeListContainer.appendChild(storeRow);
           });
