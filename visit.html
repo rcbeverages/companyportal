@@ -5,7 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visit Log - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .page-layout {
+      display: flex;
+      height: calc(100vh - 140px);
+      padding: 0 10px;
+      gap: 20px;
+      box-sizing: border-box;
+    }
+
+    .left-column {
+      width: 30%;
+      min-width: 280px;
+      background: #eef3fd;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .right-column {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      background: #eef3fd;
+      border-radius: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
 <header>
@@ -16,199 +43,149 @@
   Welcome <span id="username"></span>
 </div>
 
-<div class="content-container">
+<div class="page-layout">
 
-  <!-- Customer Details (Static Section) -->
-  <div class="card">
-    <h2>Customer Details</h2>
-    <div id="detailsContent">
-      <p><strong>Customer Name:</strong> <span id="custName">Loading...</span></p>
-      <p><strong>Sub Owner Group:</strong> <span id="subOwnerGroup">Loading...</span></p>
-      <p><strong>Key Account Group:</strong> <span id="keyAccountGroup">Loading...</span></p>
-      <p><strong>Grade:</strong> <span id="grade">Loading...</span></p>
-      <p><strong>Store Type:</strong> <span id="storeType">Loading...</span></p>
-      <p><strong>Segment:</strong> <span id="segment">Loading...</span></p>
-      <p><strong>Contact Name:</strong> <span id="contactNameView">Loading...</span></p>
-      <p><strong>Phone:</strong> <span id="contactPhoneView">Loading...</span></p>
-      <p><strong>Email:</strong> <span id="contactEmailView">Loading...</span></p>
-      <p><strong>Address:</strong> <span id="address">Loading...</span></p>
-      <p><strong>Suburb:</strong> <span id="suburb">Loading...</span></p>
-      <p><strong>State:</strong> <span id="state">Loading...</span></p>
-      <p><strong>Postcode:</strong> <span id="postcode">Loading...</span></p>
-      <p><strong>BDM:</strong> <span id="bdmView">Loading...</span></p>
-    </div>
-  </div>
-
-  <!-- Log Visit (Static Section) -->
-  <div class="card">
-    <h2>Log Visit</h2>
-    <div class="form-group">
-      <label>Visit Reason</label>
-      <select id="reason">
-        <option>Planned Visit</option>
-        <option>Ranging Update</option>
-        <option>Tasting</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Outcome</label>
-      <select id="outcome">
-        <option>Positive</option>
-        <option>Neutral</option>
-        <option>Negative</option>
-        <option>Follow-Up Required</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="notes" rows="4"></textarea>
-    </div>
-  </div>
-  <!-- Edit Contact Details -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('contactForm')">Edit Contact Details</button>
-    <div id="contactForm" class="hidden">
-      <div class="form-group">
-        <label>Contact Name</label>
-        <input id="contactNameEdit" />
-      </div>
-      <div class="form-group">
-        <label>Phone</label>
-        <input id="contactPhoneEdit" />
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input id="contactEmailEdit" />
+  <!-- LEFT COLUMN (Customer Details) -->
+  <div class="left-column">
+    <div class="card">
+      <h2>Customer Details</h2>
+      <div id="detailsContent">
+        <p><strong>Customer Name:</strong> <span id="custName">Loading...</span></p>
+        <p><strong>Sub Owner Group:</strong> <span id="subOwnerGroup">Loading...</span></p>
+        <p><strong>Key Account Group:</strong> <span id="keyAccountGroup">Loading...</span></p>
+        <p><strong>Grade:</strong> <span id="grade">Loading...</span></p>
+        <p><strong>Store Type:</strong> <span id="storeType">Loading...</span></p>
+        <p><strong>Segment:</strong> <span id="segment">Loading...</span></p>
+        <p><strong>Contact Name:</strong> <span id="contactNameView">Loading...</span></p>
+        <p><strong>Phone:</strong> <span id="contactPhoneView">Loading...</span></p>
+        <p><strong>Email:</strong> <span id="contactEmailView">Loading...</span></p>
+        <p><strong>Address:</strong> <span id="address">Loading...</span></p>
+        <p><strong>Suburb:</strong> <span id="suburb">Loading...</span></p>
+        <p><strong>State:</strong> <span id="state">Loading...</span></p>
+        <p><strong>Postcode:</strong> <span id="postcode">Loading...</span></p>
+        <p><strong>BDM:</strong> <span id="bdmView">Loading...</span></p>
       </div>
     </div>
   </div>
 
-  <!-- Edit Address -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
-    <div id="addressForm" class="hidden">
+  <!-- RIGHT COLUMN START -->
+  <div class="right-column">
+    <!-- Log Visit -->
+    <div class="card">
+      <h2>Log Visit</h2>
       <div class="form-group">
-        <label>Address</label>
-        <input id="addressEdit" />
+        <label>Visit Reason</label>
+        <select id="reason">
+          <option>Planned Visit</option>
+          <option>Ranging Update</option>
+          <option>Tasting</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>Suburb</label>
-        <input id="suburbEdit" />
+        <label>Outcome</label>
+        <select id="outcome">
+          <option>Positive</option>
+          <option>Neutral</option>
+          <option>Negative</option>
+          <option>Follow-Up Required</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>State</label>
-        <input id="stateEdit" />
-      </div>
-      <div class="form-group">
-        <label>Postcode</label>
-        <input id="postcodeEdit" />
-      </div>
-    </div>
-  </div>
-
-  <!-- Edit Classification -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
-    <div id="classificationForm" class="hidden">
-      <div class="form-group">
-        <label>Sub Owner Group</label>
-        <select id="subOwnerGroupEdit"></select>
-      </div>
-      <div class="form-group">
-        <label>Key Account Group</label>
-        <select id="keyAccountGroupEdit"></select>
-      </div>
-      <div class="form-group">
-        <label>Grade</label>
-        <select id="gradeEdit"></select>
-      </div>
-      <div class="form-group">
-        <label>Store Type</label>
-        <select id="storeTypeEdit"></select>
-      </div>
-      <div class="form-group">
-        <label>Segment</label>
-        <select id="segmentEdit"></select>
-      </div>
-      <div class="form-group">
-        <label>BDM Assignment</label>
-        <select id="bdmEdit"></select>
+        <label>Notes</label>
+        <textarea id="notes" rows="4"></textarea>
       </div>
     </div>
-  </div>
 
-  <!-- Store Range -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
-    <div id="storeRange" class="hidden">
-      <div id="rangeContainer">Loading store range...</div>
-    </div>
-  </div>
-
-  <!-- Preorders -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
-    <div id="preorderForm" class="hidden">
-      <div id="preorderContainer">Loading preorders...</div>
-    </div>
-  </div>
-
-  <!-- Asset Management -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
-    <div id="assetForm" class="hidden">
-      <div class="form-group">
-        <label>Asset Type</label>
-        <input id="assetType" />
-      </div>
-      <div class="form-group">
-        <label>Asset Tag Code</label>
-        <input id="assetTag" />
-      </div>
-      <div class="form-group">
-        <label>Agreement</label>
-        <input id="assetAgreement" />
-      </div>
-      <div class="form-group">
-        <label>Comments</label>
-        <textarea id="assetComments" rows="4"></textarea>
-      </div>
-      <div id="existingAssets">Loading existing assets...</div>
-    </div>
-  </div>
-
-  <!-- Email Reminder -->
-  <div class="card">
-    <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
-    <div id="emailReminder" class="hidden">
-      <div class="form-group">
-        <label>Date to Email</label>
-        <input type="date" id="reminderDate" />
-      </div>
-      <div class="form-group">
-        <label>Reminder Comments</label>
-        <textarea id="reminderNotes" rows="2"></textarea>
+    <!-- Edit Contact -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('contactForm')">Edit Contact Details</button>
+      <div id="contactForm" class="hidden">
+        <div class="form-group"><label>Contact Name</label><input id="contactNameEdit" /></div>
+        <div class="form-group"><label>Phone</label><input id="contactPhoneEdit" /></div>
+        <div class="form-group"><label>Email</label><input id="contactEmailEdit" /></div>
       </div>
     </div>
-  </div>
-  <!-- Past Visit Notes -->
-  <div class="card">
-    <h2>Previous Visit Notes</h2>
-    <div id="pastNotes">Loading previous notes...</div>
-  </div>
 
-  <!-- Current Promos -->
-  <div class="card" id="promoSection" style="display: none;">
-    <h2>Current Promos</h2>
-    <div id="promoList">Loading current promos...</div>
-  </div>
+    <!-- Edit Address -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
+      <div id="addressForm" class="hidden">
+        <div class="form-group"><label>Address</label><input id="addressEdit" /></div>
+        <div class="form-group"><label>Suburb</label><input id="suburbEdit" /></div>
+        <div class="form-group"><label>State</label><input id="stateEdit" /></div>
+        <div class="form-group"><label>Postcode</label><input id="postcodeEdit" /></div>
+      </div>
+    </div>
 
-  <!-- Save Button -->
-  <div class="card action-buttons">
-    <button onclick="saveEverything()">Save / End Call</button>
-  </div>
+    <!-- Edit Classification -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
+      <div id="classificationForm" class="hidden">
+        <div class="form-group"><label>Sub Owner Group</label><select id="subOwnerGroupEdit"></select></div>
+        <div class="form-group"><label>Key Account Group</label><select id="keyAccountGroupEdit"></select></div>
+        <div class="form-group"><label>Grade</label><select id="gradeEdit"></select></div>
+        <div class="form-group"><label>Store Type</label><select id="storeTypeEdit"></select></div>
+        <div class="form-group"><label>Segment</label><select id="segmentEdit"></select></div>
+        <div class="form-group"><label>BDM Assignment</label><select id="bdmEdit"></select></div>
+      </div>
+    </div>
 
-</div> <!-- Close .form-container -->
+    <!-- Store Range -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
+      <div id="storeRange" class="hidden">
+        <div id="rangeContainer">Loading store range...</div>
+      </div>
+    </div>
+
+    <!-- Preorders -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
+      <div id="preorderForm" class="hidden">
+        <div id="preorderContainer">Loading preorders...</div>
+      </div>
+    </div>
+
+    <!-- Asset Management -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
+      <div id="assetForm" class="hidden">
+        <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
+        <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
+        <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
+        <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
+        <div id="existingAssets">Loading existing assets...</div>
+      </div>
+    </div>
+
+    <!-- Email Reminder -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
+      <div id="emailReminder" class="hidden">
+        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
+        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
+      </div>
+    </div>
+    <!-- Previous Visit Notes -->
+    <div class="card">
+      <h2>Previous Visit Notes</h2>
+      <div id="pastNotes">Loading previous notes...</div>
+    </div>
+
+    <!-- Current Promos -->
+    <div class="card" id="promoSection" style="display: none;">
+      <h2>Current Promos</h2>
+      <div id="promoList">Loading current promos...</div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="card action-buttons">
+      <button onclick="saveEverything()">Save / End Call</button>
+    </div>
+
+  </div> <!-- Close .right-column -->
+
+</div> <!-- Close .page-layout -->
 
 <!-- Footer -->
 <footer>
@@ -217,64 +194,20 @@
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
+
 <script>
-  // API Endpoints
-const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1";      
-const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
-const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
-const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
-const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
-const preorderSheet = "https://sheetdb.io/api/v1/uqusqqcob1vdg";
+// Fetch Customer data (already covered earlier in our steps)
 
-// Selected Customer Name from Local Storage
-const selectedCustomer = JSON.parse(localStorage.getItem("selectedCustomer"));
-
-// Global Customer Object
-let customer = {};
-
-// Toggle collapsible sections
+// Function to toggle collapsible sections
 function toggleSection(id) {
   const section = document.getElementById(id);
   section.classList.toggle('hidden');
 }
 
-// Show popup confirmation
-function showPopup(message) {
-  alert(message);
-}
-  const customerSheet = "https://sheetdb.io/api/v1/your-sheetdb-endpoint"; // <-- update this
-
-function loadCustomerDetails(customerName) {
-  fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customerName)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.length > 0) {
-        customer = data[0]; // <-- Correct now
-
-        document.getElementById("custName").textContent = customer["Customer Name"] || "";
-        document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
-        document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
-        document.getElementById("grade").textContent = customer["Grade"] || "";
-        document.getElementById("storeType").textContent = customer["Store Type"] || "";
-        document.getElementById("segment").textContent = customer["Segment"] || "";
-        document.getElementById("contactNameView").textContent = customer["Contact Name"] || "";
-        document.getElementById("contactPhoneView").textContent = customer["Phone"] || "";
-        document.getElementById("contactEmailView").textContent = customer["Email"] || "";
-        document.getElementById("address").textContent = customer["Address"] || "";
-        document.getElementById("suburb").textContent = customer["Suburb"] || "";
-        document.getElementById("state").textContent = customer["State"] || "";
-        document.getElementById("postcode").textContent = customer["Postcode"] || "";
-        document.getElementById("bdmView").textContent = customer["BDM"] || "";
-      }
-    })
-    .catch(err => console.error("Failed to load customer details", err));
-}
-
-
-// Save Everything Function
+// Save / End Call function
 function saveEverything() {
   const now = new Date();
-
+  
   const visitReason = document.getElementById("reason").value;
   const outcome = document.getElementById("outcome").value;
   const notes = document.getElementById("notes").value.trim();
@@ -386,10 +319,7 @@ function saveEverything() {
   })
   .catch(() => alert("Something went wrong during save."));
 }
-
-if (selectedCustomer) {
-  loadCustomerDetails(selectedCustomer);
-} else {
-  window.location.href = "dashboard.html";
-}
 </script>
+
+</body>
+</html>
