@@ -195,29 +195,37 @@
     </div>
 
     <div class="card">
-      <button class="edit-btn" onclick="openEditModal()">Edit Details</button>
+      <button class="edit-btn" onclick="openStoreModal()">Edit Store</button>
+      <button class="edit-btn" onclick="openContactModal()">Edit Contact</button>
+      <button class="edit-btn" onclick="openAddressModal()">Edit Address</button>
       <!-- Edit Details Modal -->
-<div id="editModal" class="modal">
+<!-- Edit Store Modal -->
+<div id="storeModal" class="modal">
   <div class="modal-content">
-    <span class="close-btn" onclick="closeEditModal()">&times;</span>
-    <h2>Edit Customer Details</h2>
+    <span class="close-btn" onclick="closeModal('storeModal')">&times;</span>
+    <h2>Edit Store Info</h2>
+    <!-- Form groups: Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type, Segment, BDM -->
+    <!-- Save button triggers saveStoreInfo() -->
+  </div>
+</div>
 
-    <div class="form-group"><label>Customer Name</label><input id="editCustomerName" required /></div>
-    <div class="form-group"><label>Sub Owner Group</label><select id="editSubOwnerGroup" required></select></div>
-    <div class="form-group"><label>Key Account Group</label><select id="editKeyAccountGroup" required></select></div>
-    <div class="form-group"><label>Grade</label><select id="editGrade" required></select></div>
-    <div class="form-group"><label>Store Type</label><select id="editStoreType" required></select></div>
-    <div class="form-group"><label>Segment</label><select id="editSegment" required></select></div>
-    <div class="form-group"><label>BDM</label><select id="editBDM" required></select></div>
-    <div class="form-group"><label>Contact Name</label><input id="editContactName" /></div>
-    <div class="form-group"><label>Phone</label><input id="editPhone" /></div>
-    <div class="form-group"><label>Email</label><input id="editEmail" /></div>
-    <div class="form-group"><label>Address</label><input id="editAddress" required /></div>
-    <div class="form-group"><label>Suburb</label><input id="editSuburb" required /></div>
-    <div class="form-group"><label>State</label><input id="editState" required /></div>
-    <div class="form-group"><label>Postcode</label><input id="editPostcode" required /></div>
+<!-- Edit Contact Modal -->
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
+    <h2>Edit Contact Info</h2>
+    <!-- Form groups: Contact Name, Phone, Email -->
+    <!-- Save button triggers saveContactInfo() -->
+  </div>
+</div>
 
-    <button onclick="saveEditDetails()">Save Changes</button>
+<!-- Edit Address Modal -->
+<div id="addressModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('addressModal')">&times;</span>
+    <h2>Edit Address</h2>
+    <!-- Form groups: Address, Suburb, State, Postcode -->
+    <!-- Save button triggers saveAddressInfo() -->
   </div>
 </div>
 
@@ -552,71 +560,25 @@ if (selectedCustomer) {
 }
 
 // === Open Edit Modal ===
-function openEditModal() {
-  populateEditFields();
-  document.getElementById("editModal").style.display = "block";
+function openStoreModal() {
+  populateStoreFields();
+  document.getElementById("storeModal").style.display = "block";
 }
 
-// === Close Edit Modal ===
-function closeEditModal() {
-  document.getElementById("editModal").style.display = "none";
+function openContactModal() {
+  populateContactFields();
+  document.getElementById("contactModal").style.display = "block";
 }
 
-// === Populate Fields with Current Customer Data ===
-function populateEditFields() {
-  document.getElementById("editCustomerName").value = customer["Customer Name"] || "";
-  document.getElementById("editContactName").value = customer["Contact Name"] || "";
-  document.getElementById("editPhone").value = customer["Phone"] || "";
-  document.getElementById("editEmail").value = customer["Email"] || "";
-  document.getElementById("editAddress").value = customer["Address"] || "";
-  document.getElementById("editSuburb").value = customer["Suburb"] || "";
-  document.getElementById("editState").value = customer["State"] || "";
-  document.getElementById("editPostcode").value = customer["Postcode"] || "";
-
-  populateDropdown('editSubOwnerGroup', 'Sub Owner Group', customer["Sub Owner Group"]);
-  populateDropdown('editKeyAccountGroup', 'Key Account Group', customer["Key Account Group"]);
-  populateDropdown('editGrade', 'Grade', customer["Grade"]);
-  populateDropdown('editStoreType', 'Store Type', customer["Store Type"]);
-  populateDropdown('editSegment', 'Segment', customer["Segment"]);
-  populateDropdown('editBDM', 'BDM', customer["BDM"]);
+function openAddressModal() {
+  populateAddressFields();
+  document.getElementById("addressModal").style.display = "block";
 }
 
-// === Populate Dropdown from SheetDB Column ===
-function populateDropdown(selectId, columnName, selectedValue) {
-  fetch(`${customerSheet}?limit=1000`)
-    .then(res => res.json())
-    .then(data => {
-      const uniqueOptions = [...new Set(data.map(row => row[columnName]).filter(Boolean))];
-      const select = document.getElementById(selectId);
-      select.innerHTML = "";
-      uniqueOptions.sort().forEach(option => {
-        const opt = document.createElement("option");
-        opt.value = option;
-        opt.textContent = option;
-        if (option === selectedValue) opt.selected = true;
-        select.appendChild(opt);
-      });
-    });
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
 }
 
-// === Save and PATCH Updated Details ===
-function saveEditDetails() {
-  const updatedCustomer = {
-    "Customer Name": document.getElementById("editCustomerName").value.trim(),
-    "Contact Name": document.getElementById("editContactName").value.trim(),
-    "Phone": document.getElementById("editPhone").value.trim(),
-    "Email": document.getElementById("editEmail").value.trim(),
-    "Address": document.getElementById("editAddress").value.trim(),
-    "Suburb": document.getElementById("editSuburb").value.trim(),
-    "State": document.getElementById("editState").value.trim(),
-    "Postcode": document.getElementById("editPostcode").value.trim(),
-    "Sub Owner Group": document.getElementById("editSubOwnerGroup").value,
-    "Key Account Group": document.getElementById("editKeyAccountGroup").value,
-    "Grade": document.getElementById("editGrade").value,
-    "Store Type": document.getElementById("editStoreType").value,
-    "Segment": document.getElementById("editSegment").value,
-    "BDM": document.getElementById("editBDM").value
-  };
 
   fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
     method: "PATCH",
