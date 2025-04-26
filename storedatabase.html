@@ -227,11 +227,10 @@
         div.setAttribute("data-name", `${c["Customer Name"].toLowerCase()} ${c["Key Account Group"].toLowerCase()} ${c["Sub Owner Group"].toLowerCase()} ${c.Grade.toLowerCase()}`);
         div.innerHTML = `
           <h3>${c["Customer Name"]}</h3>
-          <p><strong>Key Account Group:</strong> ${c["Key Account Group"]}</p>
-          <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "-"}</p>
-          <p><strong>Grade:</strong> ${c.Grade}</p>
-          <button class="btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
+          <p>Grade: ${c["Grade"] || "N/A"} | Suburb: ${c["Suburb"] || "N/A"}</p>
+          <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
         `;
+
         container.appendChild(div);
       });
     }
@@ -244,15 +243,16 @@
     }
 
     function startCall(customerName) {
-      const customer = customerCache.find(c => c["Customer Name"] === customerName);
-      if (customer) {
-      localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+  const cleanName = customerName.trim().toLowerCase();
+  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
+
+  if (customer) {
+    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
     window.location.href = "visit.html";
   } else {
-    alert("Customer not found.");
+    alert("Customer not found: " + customerName);
   }
 }
-
 
     window.onload = loadCustomers;
   </script>
