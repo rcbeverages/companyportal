@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
           storeDiv.innerHTML = `
             <label>
               <input type="checkbox" class="selectStoreCheckbox">
-              ${store.Customer_Name} | ${store.Sub_Owner_Group} | ${store.Key_Account_Group} | ${store.Grade} | ${store.Store_Type} | <a href="mailto:${store.Email}">${store.Email}</a>
+              ${store.Customer Name} | ${store.Sub Owner Group} | ${store.Key Account Group} | ${store.Grade} | ${store.Store Type} | <a href="mailto:${store.Email}">${store.Email}</a>
             </label>
           `;
           storeListContainer.appendChild(storeDiv);
