@@ -13,19 +13,20 @@
   <h1>Email Database</h1>
 </header>
 
-<!-- Search Container -->
+<!-- Search Container and Send Email Button (Inline) -->
 <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
-  <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
-  <div>
-    <input type="checkbox" id="selectAllCheckbox"> Select All
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
+  </div>
+  <div class="send-email-box">
+    <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
   </div>
 </div>
 
-<!-- Menu Container for Store List -->
+<!-- Store List Container -->
 <div class="menu-container">
-  <div id="storeList">
-    <!-- Store list populated dynamically -->
+  <div id="storeList" class="store-list">
+    <!-- Store list will populate dynamically here -->
   </div>
 </div>
 
