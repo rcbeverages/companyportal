@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visit Log - RC Beverages</title>
+
+  <!-- Link to Global Styles -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- Page Specific Styles -->
   <style>
- /* Fixed Welcome Message */
+    /* Welcome Bar */
     .welcome-message {
       position: fixed;
-      top: 70px; /* Move the welcome message just below the header */
+      top: 70px;
       left: 0;
       right: 0;
       background-color: #ffffff;
@@ -18,11 +21,11 @@
       padding: 15px;
       font-size: 2rem;
       margin-top: 10px;
+      text-align: center;
       z-index: 999;
-}
-</style>
+    }
 
-  <style>
+    /* Page Layout */
     .page-layout {
       display: flex;
       height: calc(100vh - 140px);
@@ -31,37 +34,92 @@
       box-sizing: border-box;
     }
 
+    .left-column, .right-column {
+      background: #eef3fd;
+      border-radius: 15px;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
     .left-column {
       width: 30%;
       min-width: 280px;
-      background: #eef3fd;
-      padding: 15px;
-      border-radius: 10px;
     }
 
     .right-column {
       flex: 1;
       overflow-y: auto;
-      padding: 15px;
-      background: #eef3fd;
+    }
+
+    /* Modal Popup for Edit Details */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
       border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #0057b7;
+    }
+
+    .close-btn:hover {
+      color: darkred;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
-
 <body>
 
+<!-- Header -->
 <header>
   <h1>Visit Log</h1>
 </header>
 
+<!-- Welcome Message -->
 <div class="welcome-message" id="welcome">
-  <!-- Welcome will be injected -->
+  <!-- Will be filled dynamically -->
 </div>
 
+<!-- Page Layout: Left and Right Columns -->
 <div class="page-layout">
 
-  <!-- LEFT COLUMN (Customer Details) -->
+  <!-- Left Column (Customer Details + Edit Button) -->
   <div class="left-column">
     <div class="card">
       <h2>Customer Details</h2>
@@ -82,10 +140,96 @@
         <p><strong>BDM:</strong> <span id="bdmView">Loading...</span></p>
       </div>
     </div>
-  </div>
 
-  <!-- RIGHT COLUMN START -->
+    <!-- Edit Details Button -->
+    <div class="card">
+      <button onclick="openEditModal()">Edit Details</button>
+    </div>
+  </div> <!-- End of Left Column -->
+
+  <!-- Right Column opens here (continues in Part 4) -->
   <div class="right-column">
+<!-- Edit Details Modal Popup -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeEditModal()">&times;</span>
+    <h2>Edit Customer Details</h2>
+
+    <div class="form-group">
+      <label>Customer Name</label>
+      <input id="editCustomerName" required />
+    </div>
+
+    <div class="form-group">
+      <label>Sub Owner Group</label>
+      <select id="editSubOwnerGroup" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>Key Account Group</label>
+      <select id="editKeyAccountGroup" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>Grade</label>
+      <select id="editGrade" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>Store Type</label>
+      <select id="editStoreType" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>Segment</label>
+      <select id="editSegment" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>BDM Assignment</label>
+      <select id="editBDM" required></select>
+    </div>
+
+    <div class="form-group">
+      <label>Contact Name (Optional)</label>
+      <input id="editContactName" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone (Optional)</label>
+      <input id="editPhone" />
+    </div>
+
+    <div class="form-group">
+      <label>Email (Optional)</label>
+      <input id="editEmail" />
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <input id="editAddress" required />
+    </div>
+
+    <div class="form-group">
+      <label>Suburb</label>
+      <input id="editSuburb" required />
+    </div>
+
+    <div class="form-group">
+      <label>State</label>
+      <input id="editState" required />
+    </div>
+
+    <div class="form-group">
+      <label>Postcode</label>
+      <input id="editPostcode" required />
+    </div>
+
+    <button onclick="saveEditDetails()">Save Changes</button>
+  </div>
+</div> <!-- End of Modal -->
+    <!-- Right Column Sections -->
+
     <!-- Log Visit -->
     <div class="card">
       <h2>Log Visit</h2>
@@ -112,48 +256,6 @@
       </div>
     </div>
 
-    <!-- Edit Contact -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('contactForm')">Edit Contact Details</button>
-      <div id="contactForm" class="hidden">
-        <div class="form-group"><label>Contact Name</label><input id="contactNameEdit" /></div>
-        <div class="form-group"><label>Phone</label><input id="contactPhoneEdit" /></div>
-        <div class="form-group"><label>Email</label><input id="contactEmailEdit" /></div>
-      </div>
-    </div>
-
-    <!-- Edit Address -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
-      <div id="addressForm" class="hidden">
-        <div class="form-group"><label>Address</label><input id="addressEdit" /></div>
-        <div class="form-group"><label>Suburb</label><input id="suburbEdit" /></div>
-        <div class="form-group"><label>State</label><input id="stateEdit" /></div>
-        <div class="form-group"><label>Postcode</label><input id="postcodeEdit" /></div>
-      </div>
-    </div>
-
-    <!-- Edit Classification -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
-      <div id="classificationForm" class="hidden">
-        <div class="form-group"><label>Sub Owner Group</label><select id="subOwnerGroupEdit"></select></div>
-        <div class="form-group"><label>Key Account Group</label><select id="keyAccountGroupEdit"></select></div>
-        <div class="form-group"><label>Grade</label><select id="gradeEdit"></select></div>
-        <div class="form-group"><label>Store Type</label><select id="storeTypeEdit"></select></div>
-        <div class="form-group"><label>Segment</label><select id="segmentEdit"></select></div>
-        <div class="form-group"><label>BDM Assignment</label><select id="bdmEdit"></select></div>
-      </div>
-    </div>
-
-    <!-- Store Range -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
-      <div id="storeRange" class="hidden">
-        <div id="rangeContainer">Loading store range...</div>
-      </div>
-    </div>
-
     <!-- Preorders -->
     <div class="card">
       <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
@@ -174,7 +276,7 @@
       </div>
     </div>
 
-    <!-- Email Reminder -->
+    <!-- Email Reminders -->
     <div class="card">
       <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
       <div id="emailReminder" class="hidden">
@@ -182,6 +284,7 @@
         <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
       </div>
     </div>
+
     <!-- Previous Visit Notes -->
     <div class="card">
       <h2>Previous Visit Notes</h2>
@@ -194,14 +297,14 @@
       <div id="promoList">Loading current promos...</div>
     </div>
 
-    <!-- Save Button -->
+    <!-- Save / End Call -->
     <div class="card action-buttons">
       <button onclick="saveEverything()">Save / End Call</button>
     </div>
 
-  </div> <!-- Close .right-column -->
+  </div> <!-- End of Right Column -->
 
-</div> <!-- Close .page-layout -->
+</div> <!-- End of Page Layout -->
 
 <!-- Footer -->
 <footer>
@@ -210,144 +313,239 @@
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
-
 <script>
-// Fetch Customer data (already covered earlier in our steps)
+// === API Endpoints ===
+const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Master Store List
+const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";      // Same for PATCH updates
+const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";  // Visit logs
+const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";  // Email reminders
+const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";     // Assets
+const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";  // Preorders
 
-// Username Welcome Logic
+// === Welcome Message Logic ===
 const username = localStorage.getItem("username");
 const bdmMap = {
   rhincksman: "Ryan Hincksman",
   chawkins: "Chris Hawkins"
 };
-
 const bdmName = bdmMap[username] || "BDM";
-
 document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
-// (then your existing other functions like toggleSection() and saveEverything())
-</script>
+// === Customer Data Variables ===
+const selectedCustomer = JSON.parse(localStorage.getItem("selectedCustomer"));
+let customer = {};
 
-// Function to toggle collapsible sections
+// === Load Customer Details from API ===
+function loadCustomerDetails(customerName) {
+  fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customerName)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.length > 0) {
+        customer = data[0];
+
+        document.getElementById("custName").textContent = customer["Customer Name"] || "";
+        document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
+        document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
+        document.getElementById("grade").textContent = customer["Grade"] || "";
+        document.getElementById("storeType").textContent = customer["Store Type"] || "";
+        document.getElementById("segment").textContent = customer["Segment"] || "";
+        document.getElementById("contactNameView").textContent = customer["Contact Name"] || "";
+        document.getElementById("contactPhoneView").textContent = customer["Phone"] || "";
+        document.getElementById("contactEmailView").textContent = customer["Email"] || "";
+        document.getElementById("address").textContent = customer["Address"] || "";
+        document.getElementById("suburb").textContent = customer["Suburb"] || "";
+        document.getElementById("state").textContent = customer["State"] || "";
+        document.getElementById("postcode").textContent = customer["Postcode"] || "";
+        document.getElementById("bdmView").textContent = customer["BDM"] || "";
+      }
+    });
+}
+
+// === Open/Close Modal ===
+function openEditModal() {
+  populateEditFields();
+  document.getElementById("editModal").style.display = "block";
+}
+
+function closeEditModal() {
+  document.getElementById("editModal").style.display = "none";
+}
+
+// === Populate Modal Fields with Existing Data ===
+function populateEditFields() {
+  document.getElementById("editCustomerName").value = customer["Customer Name"] || "";
+  document.getElementById("editContactName").value = customer["Contact Name"] || "";
+  document.getElementById("editPhone").value = customer["Phone"] || "";
+  document.getElementById("editEmail").value = customer["Email"] || "";
+  document.getElementById("editAddress").value = customer["Address"] || "";
+  document.getElementById("editSuburb").value = customer["Suburb"] || "";
+  document.getElementById("editState").value = customer["State"] || "";
+  document.getElementById("editPostcode").value = customer["Postcode"] || "";
+
+  populateDropdown('editSubOwnerGroup', 'Sub Owner Group', customer["Sub Owner Group"]);
+  populateDropdown('editKeyAccountGroup', 'Key Account Group', customer["Key Account Group"]);
+  populateDropdown('editGrade', 'Grade', customer["Grade"]);
+  populateDropdown('editStoreType', 'Store Type', customer["Store Type"]);
+  populateDropdown('editSegment', 'Segment', customer["Segment"]);
+  populateDropdown('editBDM', 'BDM', customer["BDM"]);
+}
+
+// === Dynamic Dropdown Population ===
+function populateDropdown(selectId, columnName, selectedValue) {
+  fetch(`${customerSheet}?limit=1000`)
+    .then(res => res.json())
+    .then(data => {
+      const uniqueOptions = [...new Set(data.map(row => row[columnName]).filter(Boolean))];
+      const select = document.getElementById(selectId);
+      select.innerHTML = ""; // clear
+      uniqueOptions.sort().forEach(option => {
+        const opt = document.createElement("option");
+        opt.value = option;
+        opt.textContent = option;
+        if (option === selectedValue) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    });
+}
+
+// === Save Edited Customer Details ===
+function saveEditDetails() {
+  const updatedCustomer = {
+    "Customer Name": document.getElementById("editCustomerName").value.trim(),
+    "Contact Name": document.getElementById("editContactName").value.trim(),
+    "Phone": document.getElementById("editPhone").value.trim(),
+    "Email": document.getElementById("editEmail").value.trim(),
+    "Address": document.getElementById("editAddress").value.trim(),
+    "Suburb": document.getElementById("editSuburb").value.trim(),
+    "State": document.getElementById("editState").value.trim(),
+    "Postcode": document.getElementById("editPostcode").value.trim(),
+    "Sub Owner Group": document.getElementById("editSubOwnerGroup").value,
+    "Key Account Group": document.getElementById("editKeyAccountGroup").value,
+    "Grade": document.getElementById("editGrade").value,
+    "Store Type": document.getElementById("editStoreType").value,
+    "Segment": document.getElementById("editSegment").value,
+    "BDM": document.getElementById("editBDM").value
+  };
+
+  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: updatedCustomer })
+  })
+  .then(() => {
+    closeEditModal();
+    window.location.reload();
+  });
+}
+
+// === Toggle Section Visibility ===
 function toggleSection(id) {
   const section = document.getElementById(id);
   section.classList.toggle('hidden');
 }
 
-// Save / End Call function
+// === Save Everything Logic ===
 function saveEverything() {
   const now = new Date();
   
   const visitReason = document.getElementById("reason").value;
   const outcome = document.getElementById("outcome").value;
   const notes = document.getElementById("notes").value.trim();
-  const shouldLogVisit = (visitReason === "Planned Visit" || visitReason === "Tasting") && notes !== "";
 
-  const reminder = {
-    "Date to Email": document.getElementById("reminderDate").value,
-    "Customer Name": customer["Customer Name"],
-    "BDM": customer["BDM"],
-    "Comments": document.getElementById("reminderNotes").value
-  };
+  const reminderDate = document.getElementById("reminderDate").value;
+  const reminderNotes = document.getElementById("reminderNotes").value.trim();
 
   const assetType = document.getElementById("assetType").value.trim();
   const assetTag = document.getElementById("assetTag").value.trim();
   const agreement = document.getElementById("assetAgreement").value.trim();
-  const comments = document.getElementById("assetComments").value.trim();
-  const shouldSaveAsset = assetType && assetTag && agreement && comments;
+  const assetComments = document.getElementById("assetComments").value.trim();
 
-  const asset = {
-    "Customer Name": customer["Customer Name"],
-    "Asset Type": assetType,
-    "Asset Tag Code": assetTag,
-    "Agreement": agreement,
-    "Asset Comments": comments
-  };
+  // --- Update Customer Visit if Reason is Planned Visit or Tasting
+  if (visitReason && notes && (visitReason === "Planned Visit" || visitReason === "Tasting")) {
+    const visit = {
+      "Date": now.toISOString().split("T")[0],
+      "Timestamp": now.toLocaleString(),
+      "Customer Name": customer["Customer Name"],
+      "BDM": customer["BDM"],
+      "Visit Reason": visitReason,
+      "Outcome": outcome,
+      "Notes": notes,
+      "Status": "Completed"
+    };
+    fetch(visitLogSheet, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: visit })
+    });
+  }
 
-  const preorders = {
-    "Customer Name": customer["Customer Name"],
-    "QTY - Creamy Soda": document.getElementById("qtyCreamy")?.value || "",
-    "QTY - Sarsaparilla": document.getElementById("qtySars")?.value || "",
-    "QTY - Blueberry Rasp": document.getElementById("qtyBlue")?.value || "",
-    "QTY - Portello": document.getElementById("qtyPortello")?.value || "",
-    "QTY - LLB": document.getElementById("qtyLLB")?.value || "",
-    "QTY - Rasp Lemonade": document.getElementById("qtyRaspLem")?.value || ""
-  };
+  // --- Save Reminder if Date Exists
+  if (reminderDate) {
+    const reminder = {
+      "Date to Email": reminderDate,
+      "Customer Name": customer["Customer Name"],
+      "BDM": customer["BDM"],
+      "Comments": reminderNotes
+    };
+    fetch(reminderSheet, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: reminder })
+    });
+  }
 
-  const update = {
-    "Contact Name": document.getElementById("contactNameEdit")?.value || "",
-    "Phone": document.getElementById("contactPhoneEdit")?.value || "",
-    "Email": document.getElementById("contactEmailEdit")?.value || "",
-    "Address": document.getElementById("addressEdit")?.value || "",
-    "Suburb": document.getElementById("suburbEdit")?.value || "",
-    "State": document.getElementById("stateEdit")?.value || "",
-    "Postcode": document.getElementById("postcodeEdit")?.value || "",
-    "Sub Owner Group": document.getElementById("subOwnerGroupEdit")?.value || "",
-    "Key Account Group": document.getElementById("keyAccountGroupEdit")?.value || "",
-    "Grade": document.getElementById("gradeEdit")?.value || "",
-    "Store Type": document.getElementById("storeTypeEdit")?.value || "",
-    "Segment": document.getElementById("segmentEdit")?.value || "",
-    "BDM": document.getElementById("bdmEdit")?.value || ""
-  };
+  // --- Save Asset if Filled
+  if (assetType && assetTag && agreement && assetComments) {
+    const asset = {
+      "Customer Name": customer["Customer Name"],
+      "Asset Type": assetType,
+      "Asset Tag Code": assetTag,
+      "Agreement": agreement,
+      "Asset Comments": assetComments
+    };
+    fetch(assetSheet, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: asset })
+    });
+  }
 
-  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: update })
-  })
-  .then(() => {
-    if (shouldLogVisit) {
-      const visit = {
-        "Date": now.toISOString().split("T")[0],
-        "Timestamp": now.toLocaleString(),
+  // --- Save Preorders (if any QTY entered)
+  fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
+    .then(res => res.json())
+    .then(data => {
+      const preorders = {
         "Customer Name": customer["Customer Name"],
-        "BDM": customer["BDM"],
-        "Visit Reason": visitReason,
-        "Outcome": outcome,
-        "Notes": notes,
-        "Status": "Completed"
+        "QTY - Creamy Soda": document.getElementById("qtyCreamy")?.value || "",
+        "QTY - Sarsaparilla": document.getElementById("qtySars")?.value || "",
+        "QTY - Blueberry Rasp": document.getElementById("qtyBlue")?.value || "",
+        "QTY - Portello": document.getElementById("qtyPortello")?.value || "",
+        "QTY - LLB": document.getElementById("qtyLLB")?.value || "",
+        "QTY - Rasp Lemonade": document.getElementById("qtyRaspLem")?.value || ""
       };
-      return fetch(visitLogSheet, {
-        method: "POST",
+      const method = data.length ? "PATCH" : "POST";
+      const url = data.length
+        ? `${preorderSheet}/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`
+        : preorderSheet;
+      return fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: visit })
+        body: JSON.stringify({ data: preorders })
       });
-    }
-  })
-  .then(() => fetch(reminderSheet, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: reminder })
-  }))
-  .then(() => {
-    if (shouldSaveAsset) {
-      return fetch(assetSheet, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: asset })
-      });
-    }
-  })
-  .then(() =>
-    fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
-      .then(res => res.json())
-      .then(data => {
-        const method = data.length ? "PATCH" : "POST";
-        const url = data.length
-          ? `${preorderSheet}/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`
-          : preorderSheet;
-        return fetch(url, {
-          method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: preorders })
-        });
-      })
-  )
-  .then(() => {
-    showPopup("Save/End Call Completed");
-    setTimeout(() => window.location.href = "dashboard.html", 1500);
-  })
-  .catch(() => alert("Something went wrong during save."));
+    })
+    .finally(() => {
+      alert("Save / End Call Completed");
+      window.location.href = "dashboard.html";
+    });
+}
+
+// --- Load Customer on Page Load
+if (selectedCustomer) {
+  loadCustomerDetails(selectedCustomer["Customer Name"]);
+} else {
+  window.location.href = "dashboard.html";
 }
 </script>
 
