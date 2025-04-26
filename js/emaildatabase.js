@@ -23,15 +23,21 @@ document.addEventListener("DOMContentLoaded", function() {
           stores.forEach(store => {
             const storeRow = document.createElement("tr");
             storeRow.innerHTML = `
-              <td><input type="checkbox" class="selectStoreCheckbox" data-email="${store["Email"]}"></td>
+              <td><button class="visit-btn" data-store="${store["Customer Name"]}" data-store-id="${store["Store ID"]}" data-store-email="${store["Email"]}">Visit</button></td>
               <td>${store["Customer Name"]}</td>
               <td>${store["Sub Owner Group"]}</td>
               <td>${store["Key Account Group"]}</td>
               <td>${store["Grade"]}</td>
               <td>${store["Store Type"]}</td>
-              <td><a href="mailto:${store["Email"]}">${store["Email"]}</a></td>
             `;
             storeListContainer.appendChild(storeRow);
+
+            // Add event listener to the Visit button
+            const visitButton = storeRow.querySelector(".visit-btn");
+            visitButton.addEventListener("click", function() {
+              const storeId = visitButton.getAttribute("data-store-id"); // Assuming you have Store ID to pass
+              window.location.href = `visit.html?storeId=${storeId}`; // Redirect to visit.html with the store's ID
+            });
           });
         }
       }
@@ -52,40 +58,38 @@ document.addEventListener("DOMContentLoaded", function() {
           );
         });
         displayStores(filteredStores);
+      });
 
-        // Select All Button functionality
-          selectAllButton.addEventListener("click", function() {
-            const visitButtons = document.querySelectorAll(".visit-btn");
-            const allVisited = Array.from(visitButtons).every(button => button.disabled);
-            visitButtons.forEach(button => button.disabled = !allVisited);
-          });
+      // Select All Button functionality
+      selectAllButton.addEventListener("click", function() {
+        const visitButtons = document.querySelectorAll(".visit-btn");
+        const allVisited = Array.from(visitButtons).every(button => button.disabled);
+        visitButtons.forEach(button => button.disabled = !allVisited);
+      });
 
-          // Send Email Button functionality
-          sendEmailButton.addEventListener("click", function() {
-            // Get all selected stores (those with disabled visit buttons)
-            const selectedStores = document.querySelectorAll(".visit-btn:disabled");
-            
-            // Collect the emails of the selected stores
-            const storeEmails = Array.from(selectedStores).map(button => button.getAttribute('data-store-email'));
+      // Send Email Button functionality
+      sendEmailButton.addEventListener("click", function() {
+        // Get all selected stores (those with disabled visit buttons)
+        const selectedStores = document.querySelectorAll(".visit-btn:disabled");
+        
+        // Collect the emails of the selected stores
+        const storeEmails = Array.from(selectedStores).map(button => button.getAttribute('data-store-email'));
 
-            // Join emails to create the BCC string
-            const bccEmails = storeEmails.join(',');
+        // Join emails to create the BCC string
+        const bccEmails = storeEmails.join(',');
 
-            // Check if there are any emails to send
-            if (bccEmails) {
-              // Create the mailto link with BCC field
-              const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
+        // Check if there are any emails to send
+        if (bccEmails) {
+          // Create the mailto link with BCC field
+          const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
 
-              // Open the default email client (Outlook or others)
-              window.location.href = mailtoLink;
-            } else {
-              // Show a message or do nothing if no stores are selected
-              alert("Please select at least one store to send an email.");
-            }
-          });
-
-        })
-        .catch(error => console.error("Error fetching store data:", error));
+          // Open the default email client (Outlook or others)
+          window.location.href = mailtoLink;
+        } else {
+          // Show a message or do nothing if no stores are selected
+          alert("Please select at least one store to send an email.");
+        }
+      });
     })
-    .catch(error => console.error("Error fetching BDM data:", error));
+    .catch(error => console.error("Error fetching store data:", error));
 });
