@@ -169,15 +169,15 @@ footer {
    ========================= */
 .form-container {
   position: absolute;
-  top: 80px;
-  bottom: 60px;
+  top: 100px;
+  bottom: 80px;
   left: 20px;
   right: 20px;
   margin: auto;
   width: 90%;
   max-width: 900px;
-  min-height: 500px; /* 👈 NEW LINE HERE */
-  padding: 20px;
+  min-height: 600px; /* 👈 NEW LINE HERE */
+  padding: 30px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
