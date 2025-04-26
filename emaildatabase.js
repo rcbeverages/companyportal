@@ -31,15 +31,15 @@ function renderStores(storeArray) {
     storeItem.className = 'store-item';
 
     storeItem.innerHTML = `
-      <input type="checkbox" class="store-checkbox" data-email="${store.Email}" id="store-${index}">
-      <label for="store-${index}">
-        <strong>${store['Store Name']}</strong> | 
-        ${store['Sub Owner Group']} | 
-        ${store['Key Account Group']} | 
-        ${store['Grade']} | 
-        ${store['Retail / On Premise']}
-      </label>
-    `;
+  <input type="checkbox" class="store-checkbox" data-email="${store.Email}" id="store-${index}">
+  <label for="store-${index}">
+    <strong>${store['Customer Name']}</strong> | 
+    ${store['Sub Owner Group']} | 
+    ${store['Key Account Group']} | 
+    ${store['Grade']} | 
+    ${store['Store Type']}
+  </label>
+`;
 
     storeList.appendChild(storeItem);
   });
@@ -51,12 +51,13 @@ function renderStores(storeArray) {
 document.getElementById('searchInput').addEventListener('input', function(e) {
   const searchTerm = e.target.value.toLowerCase();
   const filteredStores = stores.filter(store =>
-    (store['Store Name'] && store['Store Name'].toLowerCase().includes(searchTerm)) ||
-    (store['Sub Owner Group'] && store['Sub Owner Group'].toLowerCase().includes(searchTerm)) ||
-    (store['Key Account Group'] && store['Key Account Group'].toLowerCase().includes(searchTerm)) ||
-    (store['Grade'] && store['Grade'].toLowerCase().includes(searchTerm)) ||
-    (store['Retail / On Premise'] && store['Retail / On Premise'].toLowerCase().includes(searchTerm))
-  );
+  (store['Customer Name'] && store['Customer Name'].toLowerCase().includes(searchTerm)) ||
+  (store['Sub Owner Group'] && store['Sub Owner Group'].toLowerCase().includes(searchTerm)) ||
+  (store['Key Account Group'] && store['Key Account Group'].toLowerCase().includes(searchTerm)) ||
+  (store['Grade'] && store['Grade'].toLowerCase().includes(searchTerm)) ||
+  (store['Store Type'] && store['Store Type'].toLowerCase().includes(searchTerm))
+);
+
   renderStores(filteredStores);
 });
 
