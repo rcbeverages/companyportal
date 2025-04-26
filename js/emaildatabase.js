@@ -53,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function() {
           );
         });
         displayStores(filteredStores);
+
+        // Enable/Disable Send Email button
+        sendEmailButton.disabled = filteredStores.length === 0;
       });
 
       // Manually trigger search when the "Search" button is clicked
@@ -68,6 +71,18 @@ document.addEventListener("DOMContentLoaded", function() {
           );
         });
         displayStores(filteredStores);
+      });
+
+      // Collect selected emails and open mailto link for Send Email
+      sendEmailButton.addEventListener("click", function() {
+        const selectedCheckboxes = document.querySelectorAll(".selectStoreCheckbox:checked");
+        const selectedEmails = Array.from(selectedCheckboxes).map(checkbox => checkbox.getAttribute('data-email'));
+        const bccEmails = selectedEmails.join(',');
+
+        if (bccEmails) {
+          // Open the default email client with the selected emails in BCC
+          window.location.href = `mailto:?bcc=${bccEmails}`;
+        }
       });
 
       // Select All Button functionality
