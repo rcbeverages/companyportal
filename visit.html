@@ -6,279 +6,404 @@
   <title>Visit Log - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; }
-    header, footer { background: #0057b7; color: white; padding: 20px; text-align: center; position: fixed; width: 100%; z-index: 1000; }
-    .welcome-message { margin-top: 80px; text-align: center; font-size: 1.5rem; color: #0057b7; }
-    .form-container { margin-top: 120px; padding: 20px; }
-    .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .card-header { background: #2563eb; color: white; padding: 10px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 1.2rem; }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #f4f4f4; }
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .welcome-message {
+      background: #ffffff;
+      color: #0057b7;
+      padding: 15px;
+      text-align: center;
+      font-size: 2rem;
+      position: fixed;
+      top: 70px;
+      width: 100%;
+      z-index: 999;
+    }
+    .form-container {
+      position: absolute;
+      top: 150px;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 1000px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow-y: auto;
+    }
+    .card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
     .form-group { margin-bottom: 1rem; }
-    label { display: block; margin-bottom: 4px; font-weight: bold; }
-    input, select, textarea { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; background: #eef3fd; }
-    .action-buttons { text-align: center; margin-top: 20px; }
-    .action-buttons button { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 1rem; cursor: pointer; }
-    .action-buttons button:hover { background: #1e40af; }
-    footer { bottom: 0; }
+    label {
+      display: block;
+      margin: 10px 0 4px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #eef3fd;
+      color: black;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    button:hover { background-color: #1e40af; }
+    .collapsible {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+    .hidden { display: none; }
+    .promo {
+      margin-bottom: 1rem;
+      border-left: 4px solid #2563eb;
+      padding-left: 1rem;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      background: #cfe2ff;
+      width: 100%;
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      border-top: 2px solid #ccc;
+    }
+    .footer-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .footer-btn:hover { background-color: #1e40af; }
   </style>
 </head>
+
 <body>
+  <header>
+    <h1>Visit Log</h1>
+  </header>
+  <div class="welcome-message">Welcome <span id="username"></span></div>
 
-<header>
-  <h1>Visit Log</h1>
-</header>
-
-<div class="welcome-message">Welcome <span id="username"></span></div>
-
-<div class="form-container">
-
-  <div class="card">
-    <div class="card-header">Customer Details</div>
-    <div class="form-group"><label>Customer Name</label><input id="customerName" /></div>
+  <div class="form-container">
+    <!-- Customer Details -->
+<div class="card">
+  <h2>Customer Details</h2>
+  <div id="detailsContent">
+    <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
     <div class="form-group"><label>Sub Owner Group</label><input id="subOwnerGroup" /></div>
     <div class="form-group"><label>Key Account Group</label><input id="keyAccountGroup" /></div>
     <div class="form-group"><label>Grade</label><input id="grade" /></div>
     <div class="form-group"><label>Store Type</label><input id="storeType" /></div>
     <div class="form-group"><label>Segment</label><input id="segment" /></div>
     <div class="form-group"><label>Contact Name</label><input id="contactName" /></div>
-    <div class="form-group"><label>Phone</label><input id="phone" /></div>
-    <div class="form-group"><label>Email</label><input id="email" /></div>
-    <div class="form-group"><label>Address</label><input id="address" /></div>
+    <div class="form-group"><label>Phone</label><input id="contactPhone" /></div>
+    <div class="form-group"><label>Email</label><input id="contactEmail" /></div>
+    <div class="form-group"><label>Address</label><input id="addr" /></div>
     <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
     <div class="form-group"><label>State</label><input id="state" /></div>
     <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
-    <div class="form-group"><label>BDM</label><input id="bdm" /></div>
+    <div class="form-group"><label>BDM Assignment</label><input id="bdm" /></div>
   </div>
-
-  <!-- Visit Log Section -->
+</div>
+    <!-- Log Visit -->
 <div class="card">
-  <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
+  <button class="static-header">Log Visit</button>
   <div id="logVisit" class="hidden">
-    <div class="form-group">
-      <label>Visit Reason</label>
-      <select id="reason">
+    <div class="form-group"><label>Visit Reason</label>
+      <select id="visitReason">
         <option>Planned Visit</option>
         <option>Ranging Update</option>
         <option>Tasting</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>Outcome</label>
-      <select id="outcome">
+    <div class="form-group"><label>Outcome</label>
+      <select id="visitOutcome">
         <option>Positive</option>
         <option>Neutral</option>
         <option>Negative</option>
         <option>Follow-Up Required</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="notes" rows="3"></textarea>
-    </div>
+    <div class="form-group"><label>Notes</label><textarea id="visitNotes" rows="3"></textarea></div>
   </div>
 </div>
-
-<!-- Store Range Section -->
+    
+    <!-- Email Reminder -->
 <div class="card">
-  <button class="collapsible" onclick="toggleSection('storeRangeContent')">Edit Store Range</button>
-  <div id="storeRangeContent" class="hidden"></div>
-</div>
-
-   <!-- Preorders -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
-      <div id="preorderForm" class="hidden">
-        <div class="form-group">
-          <label>Creamy Soda</label><select id="preCreamy" onchange="toggleQty('preCreamy','qtyCreamy')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtyCreamy" placeholder="QTY" style="display:none;" />
-          <label>Sarsaparilla</label><select id="preSars" onchange="toggleQty('preSars','qtySars')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtySars" placeholder="QTY" style="display:none;" />
-          <label>Blueberry Rasp</label><select id="preBlue" onchange="toggleQty('preBlue','qtyBlue')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtyBlue" placeholder="QTY" style="display:none;" />
-          <label>Portello</label><select id="prePortello" onchange="toggleQty('prePortello','qtyPortello')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtyPortello" placeholder="QTY" style="display:none;" />
-          <label>LLB</label><select id="preLLB" onchange="toggleQty('preLLB','qtyLLB')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtyLLB" placeholder="QTY" style="display:none;" />
-          <label>Rasp Lemonade</label><select id="preRaspLem" onchange="toggleQty('preRaspLem','qtyRaspLem')"><option>No</option><option>Yes</option></select>
-          <input type="number" id="qtyRaspLem" placeholder="QTY" style="display:none;" />
-        </div>
-      </div>
-    </div>
-
-
-     <!-- Email Reminder -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('emailReminder')">Reminders</button>
-      <div id="emailReminder" class="hidden">
-        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
-        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
-      </div>
-    </div>
-
-    <!-- Address -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
-      <div id="addressForm" class="hidden">
-        <div class="form-group"><label>Address</label><input id="addr" /></div>
-        <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
-        <div class="form-group"><label>State</label><input id="state" /></div>
-        <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
-      </div>
-    </div>
-
-    <!-- Classification -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
-      <div id="classificationForm" class="hidden">
-        <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
-        <div class="form-group"><label>Sub Owner Group</label><select id="ownerGroup"><option value="">—</option></select></div>
-        <div class="form-group"><label>Key Account Group</label><select id="keyGroup"></select></div>
-        <div class="form-group"><label>Grade</label><select id="grade"></select></div>
-        <div class="form-group"><label>Store Type</label><select id="storeType"></select></div>
-        <div class="form-group"><label>Segment</label><select id="segment"></select></div>
-        <div class="form-group"><label>BDM Assignment</label><select id="bdm"></select></div>
-      </div>
-    </div>
-
-
-    <!-- Asset Management -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
-      <div id="assetForm" class="hidden">
-        <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
-        <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
-        <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
-        <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
-        <div id="existingAssets" class="existing-assets">Loading existing assets...</div>
-      </div>
-    </div>
-
-
-    <!-- Past Notes -->
-    <div class="card">
-      <h2>Previous Visit Notes</h2>
-      <div id="pastNotes">Loading...</div>
-    </div>
-
-    <!-- Current Promos -->
-    <div class="card" id="promoSection" style="display: none;">
-      <h2>Current Promos</h2>
-      <div id="promoList"></div>
-    </div>
-
-   <div class="action-buttons">
-    <button onclick="saveEverything()">Save / End Call</button>
+  <button class="collapsible" onclick="toggleSection('emailReminder')">Reminders</button>
+  <div id="emailReminder" class="hidden">
+    <div class="form-group"><label>Date to Remind</label><input type="date" id="reminderDate" /></div>
+    <div class="form-group"><label>Reminder Comments</label><textarea id="reminderComments" rows="2"></textarea></div>
   </div>
-
 </div>
 
+    <!-- Store Range -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
+  <div id="storeRange" class="hidden">
+    <div id="storeRangeList">Loading store range...</div>
+  </div>
+</div>
+
+<!-- Preorders -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
+  <div id="preorderForm" class="hidden">
+    <div id="preorderList">Loading preorder SKUs...</div>
+  </div>
+</div>
+
+    <!-- Contact Details -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('contactForm')">Edit Contact Details</button>
+  <div id="contactForm" class="hidden">
+    <div class="form-group"><label>Contact Name</label><input id="editContactName" /></div>
+    <div class="form-group"><label>Phone</label><input id="editPhone" /></div>
+    <div class="form-group"><label>Email</label><input id="editEmail" /></div>
+  </div>
+</div>
+
+<!-- Address -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
+  <div id="addressForm" class="hidden">
+    <div class="form-group"><label>Address</label><input id="editAddress" /></div>
+    <div class="form-group"><label>Suburb</label><input id="editSuburb" /></div>
+    <div class="form-group"><label>State</label><input id="editState" /></div>
+    <div class="form-group"><label>Postcode</label><input id="editPostcode" /></div>
+  </div>
+</div>
+
+<!-- Classification -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
+  <div id="classificationForm" class="hidden">
+    <div class="form-group"><label>Sub Owner Group</label><input id="editSubOwnerGroup" /></div>
+    <div class="form-group"><label>Key Account Group</label><input id="editKeyAccountGroup" /></div>
+    <div class="form-group"><label>Grade</label><input id="editGrade" /></div>
+    <div class="form-group"><label>Store Type</label><input id="editStoreType" /></div>
+    <div class="form-group"><label>Segment</label><input id="editSegment" /></div>
+    <div class="form-group"><label>BDM Assignment</label><input id="editBDM" /></div>
+  </div>
+</div>
+
+<!-- Asset Management -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
+  <div id="assetForm" class="hidden">
+    <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
+    <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
+    <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
+    <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
+    <div id="existingAssets" class="existing-assets">Loading existing assets...</div>
+  </div>
+</div>
+
+<!-- Past Notes -->
+<div class="card">
+  <h2>Previous Visit Notes</h2>
+  <div id="pastNotes">Loading notes...</div>
+</div>
+
+<!-- Current Promos -->
+<div class="card" id="promoSection" style="display: none;">
+  <h2>Current Promos</h2>
+  <div id="promoList">Loading promos...</div>
+</div>
+
+<!-- Save Buttons -->
+<div class="card action-buttons">
+  <button onclick="saveEverything()">Save / End Call</button>
+</div>
 <footer>
   <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  <button class="footer-btn" onclick="location.href='visit.html'">Visit Log</button>
+  <button class="footer-btn" onclick="location.href='journeyplanner.html'">Journey Planner</button>
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
 
 <script>
-  document.getElementById("username").textContent = localStorage.getItem("username") || "User";
-
-  function saveEverything() {
-    // save function logic here (already in your other script)
-  }
-</script>
-// API Endpoints
 const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
-const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
-const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
-const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
-const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
-const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";
-const promoSheet = "https://sheetdb.io/api/v1/98o62avm5tgtx";
+const masterAPI = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Customer Master
+const visitLogAPI = "https://sheetdb.io/api/v1/3jn3pg6hok7hj"; // Visit Logs
+const reminderAPI = "https://sheetdb.io/api/v1/lkhkbez8p8el9"; // Reminders
+const assetAPI = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Assets
+const storeRangeAPI = "https://sheetdb.io/api/v1/2p0phuvm9dz42"; // Store Range
 
 function toggleSection(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle("hidden");
+  document.getElementById(id).classList.toggle("hidden");
 }
 
-function showPopup(msg) {
-  const popup = document.getElementById("popupMessage");
-  popup.textContent = msg;
-  popup.style.display = "block";
-  setTimeout(() => { popup.style.display = "none"; }, 1500);
+function loadCustomerDetails() {
+  const fields = [
+    "Customer Name", "Sub Owner Group", "Key Account Group", "Grade",
+    "Store Type", "Segment", "Contact Name", "Phone", "Email",
+    "Address", "Suburb", "State", "Postcode", "BDM"
+  ];
+  document.getElementById("customerDetails").innerHTML = fields.map(k => 
+    `<strong>${k}:</strong> ${customer[k] || "—"}<br/>`
+  ).join('');
+  
+  document.getElementById("editCustomerName").value = customer["Customer Name"] || "";
+  document.getElementById("editSubOwnerGroup").value = customer["Sub Owner Group"] || "";
+  document.getElementById("editKeyAccountGroup").value = customer["Key Account Group"] || "";
+  document.getElementById("editGrade").value = customer["Grade"] || "";
+  document.getElementById("editStoreType").value = customer["Store Type"] || "";
+  document.getElementById("editSegment").value = customer["Segment"] || "";
+  document.getElementById("editBDM").value = customer["BDM"] || "";
+  document.getElementById("editContactName").value = customer["Contact Name"] || "";
+  document.getElementById("editPhone").value = customer["Phone"] || "";
+  document.getElementById("editEmail").value = customer["Email"] || "";
+  document.getElementById("editAddress").value = customer["Address"] || "";
+  document.getElementById("editSuburb").value = customer["Suburb"] || "";
+  document.getElementById("editState").value = customer["State"] || "";
+  document.getElementById("editPostcode").value = customer["Postcode"] || "";
 }
 
 function saveEverything() {
   const now = new Date();
-  const reason = document.getElementById("reason").value;
-  const notes = document.getElementById("notes").value.trim();
-  const outcome = document.getElementById("outcome").value;
-  const shouldLog = (reason === "Planned Visit" || reason === "Tasting") && notes;
-
-  const storeRangeData = {};
-  document.querySelectorAll("#storeRangeContent select").forEach(select => {
-    const name = "Store - " + select.id.replace("storeRange_", "").replace(/([A-Z])/g, ' $1').trim();
-    storeRangeData[name] = select.value;
-  });
-
-  const update = {
+  
+  const visitLog = {
+    "Date": now.toISOString().split('T')[0],
+    "Timestamp": now.toLocaleString(),
     "Customer Name": customer["Customer Name"],
-    ...storeRangeData
+    "BDM": customer["BDM"],
+    "Visit Reason": document.getElementById("visitReason").value,
+    "Outcome": document.getElementById("visitOutcome").value,
+    "Notes": document.getElementById("visitNotes").value.trim()
+  };
+  
+  const reminder = {
+    "Date to Email": document.getElementById("reminderDate").value,
+    "Customer Name": customer["Customer Name"],
+    "BDM": customer["BDM"],
+    "Comments": document.getElementById("reminderComments").value
+  };
+  
+  const asset = {
+    "Customer Name": customer["Customer Name"],
+    "Asset Type": document.getElementById("assetType").value,
+    "Asset Tag Code": document.getElementById("assetTag").value,
+    "Agreement": document.getElementById("assetAgreement").value,
+    "Asset Comments": document.getElementById("assetComments").value
   };
 
-  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: update })
-  })
+  Promise.all([
+    fetch(visitLogAPI, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: visitLog })
+    }),
+    fetch(reminderAPI, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: reminder })
+    }),
+    fetch(assetAPI, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: asset })
+    })
+  ])
+  .then(() => markCallCompleted(customer["Customer Name"], visitLog["Date"]))
   .then(() => {
-    if (shouldLog) {
-      const visitLog = {
-        "Date": now.toISOString().split("T")[0],
-        "Timestamp": now.toLocaleString(),
-        "Customer Name": customer["Customer Name"],
-        "BDM": customer["BDM"],
-        "Visit Reason": reason,
-        "Outcome": outcome,
-        "Notes": notes,
-        "Status": "Completed"
-      };
-      return fetch(visitLogSheet, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: visitLog })
-      });
-    }
+    alert('Save/End Call Completed');
+    window.location.href = "dashboard.html";
   })
-  .then(() => {
-    showPopup("Save/End Call Completed");
-    setTimeout(() => location.href = "dashboard.html", 2000);
-  })
-  .catch(() => alert("Error during save."));
+  .catch(() => alert('Error saving visit details.'));
 }
 
-window.onload = () => {
-  document.getElementById("username").textContent = localStorage.getItem("username") || "User";
-  const fields = ["Customer Name", "Contact Name", "Phone", "Email", "Address", "Suburb", "State", "Postcode", "BDM"];
-  document.getElementById("detailsContent").innerHTML = fields.map(k => `<strong>${k}:</strong> ${customer[k] || "-"}<br>`).join('');
-  loadStoreRange();
-};
-
-function loadStoreRange() {
-  fetch("https://sheetdb.io/api/v1/2p0phuvm9dz42")
+function markCallCompleted(customerName, date) {
+  return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/search?Customer%20Name=${encodeURIComponent(customerName)}&Date=${encodeURIComponent(date)}`)
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById("storeRangeContent");
-      container.innerHTML = '';
-      data.columns.slice(1).forEach(sku => {
-        const label = document.createElement("label");
-        label.textContent = sku;
-        const select = document.createElement("select");
-        select.id = "storeRange_" + sku.replace(/\s/g, '');
-        select.innerHTML = "<option>No</option><option>Yes</option>";
-        container.appendChild(label);
-        container.appendChild(select);
-      });
+      if (data.length > 0) {
+        const id = data[0].id;
+        return fetch(`https://sheetdb.io/api/v1/9envyaeemiz9h/id/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: { "Status": "Completed" } })
+        });
+      }
     });
 }
+
+function loadStoreRange() {
+  fetch(storeRangeAPI)
+    .then(res => res.json())
+    .then(data => {
+      const storeRange = data.find(d => d["Customer Name"] === customer["Customer Name"]);
+      const list = document.getElementById("storeRangeList");
+      if (!storeRange) {
+        list.innerHTML = "No range available.";
+        return;
+      }
+      list.innerHTML = Object.entries(storeRange).map(([k, v]) => 
+        `<div><strong>${k}:</strong> ${v}</div>`
+      ).join('');
+    });
+}
+
+function loadPastNotes() {
+  fetch(visitLogAPI)
+    .then(res => res.json())
+    .then(data => {
+      const notes = data
+        .filter(entry => entry["Customer Name"] === customer["Customer Name"])
+        .sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp))
+        .slice(0, 5)
+        .map(entry => `<div><strong>${entry.Timestamp}:</strong><br>${entry.Notes}</div>`)
+        .join('');
+      document.getElementById("pastNotes").innerHTML = notes || "No notes found.";
+    });
+}
+
+window.onload = function() {
+  loadCustomerDetails();
+  loadStoreRange();
+  loadPastNotes();
+};
 </script>
+
 </body>
 </html>
+
+
