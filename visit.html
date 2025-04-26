@@ -216,32 +216,32 @@
       </div>
     </div>
 
-    <!-- Address -->
+     <!-- Log Visit -->
     <div class="card">
-      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
-      <div id="addressForm" class="hidden">
-        <div class="form-group"><label>Address</label><input id="addr" /></div>
-        <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
-        <div class="form-group"><label>State</label><input id="state" /></div>
-        <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
+      <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
+      <div id="logVisit" class="hidden">
+        <div class="form-group"><label>Visit Reason</label>
+          <select id="reason">
+            <option>Planned Visit</option>
+            <option>Ranging Update</option>
+            <option>Tasting</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Outcome</label>
+          <select id="outcome">
+            <option>Positive</option>
+            <option>Neutral</option>
+            <option>Negative</option>
+            <option>Follow-Up Required</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Notes</label>
+          <textarea id="notes" rows="3"></textarea>
+        </div>
       </div>
     </div>
 
-    <!-- Classification -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
-      <div id="classificationForm" class="hidden">
-        <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
-        <div class="form-group"><label>Sub Owner Group</label><select id="ownerGroup"><option value="">—</option></select></div>
-        <div class="form-group"><label>Key Account Group</label><select id="keyGroup"></select></div>
-        <div class="form-group"><label>Grade</label><select id="grade"></select></div>
-        <div class="form-group"><label>Store Type</label><select id="storeType"></select></div>
-        <div class="form-group"><label>Segment</label><select id="segment"></select></div>
-        <div class="form-group"><label>BDM Assignment</label><select id="bdm"></select></div>
-      </div>
-    </div>
-
-  <!-- Store Range -->
+    <!-- Store Range -->
 <div class="card">
   <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
   <div id="storeRange" class="hidden">
@@ -270,6 +270,41 @@
       </div>
     </div>
 
+     <!-- Email Reminder -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('emailReminder')">Reminders</button>
+      <div id="emailReminder" class="hidden">
+        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
+        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
+      <div id="addressForm" class="hidden">
+        <div class="form-group"><label>Address</label><input id="addr" /></div>
+        <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
+        <div class="form-group"><label>State</label><input id="state" /></div>
+        <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
+      </div>
+    </div>
+
+    <!-- Classification -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
+      <div id="classificationForm" class="hidden">
+        <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
+        <div class="form-group"><label>Sub Owner Group</label><select id="ownerGroup"><option value="">—</option></select></div>
+        <div class="form-group"><label>Key Account Group</label><select id="keyGroup"></select></div>
+        <div class="form-group"><label>Grade</label><select id="grade"></select></div>
+        <div class="form-group"><label>Store Type</label><select id="storeType"></select></div>
+        <div class="form-group"><label>Segment</label><select id="segment"></select></div>
+        <div class="form-group"><label>BDM Assignment</label><select id="bdm"></select></div>
+      </div>
+    </div>
+
+
     <!-- Asset Management -->
     <div class="card">
       <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
@@ -282,39 +317,6 @@
       </div>
     </div>
 
-    <!-- Log Visit -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
-      <div id="logVisit" class="hidden">
-        <div class="form-group"><label>Visit Reason</label>
-          <select id="reason">
-            <option>Planned Visit</option>
-            <option>Ranging Update</option>
-            <option>Tasting</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Outcome</label>
-          <select id="outcome">
-            <option>Positive</option>
-            <option>Neutral</option>
-            <option>Negative</option>
-            <option>Follow-Up Required</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Notes</label>
-          <textarea id="notes" rows="3"></textarea>
-        </div>
-      </div>
-    </div>
-
-    <!-- Email Reminder -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
-      <div id="emailReminder" class="hidden">
-        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
-        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
-      </div>
-    </div>
 
     <!-- Past Notes -->
     <div class="card">
