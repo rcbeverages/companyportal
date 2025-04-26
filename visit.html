@@ -4,8 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visit Log - RC Beverages</title>
+
+  <!-- Global styles -->
   <link rel="stylesheet" href="style.css" />
-    <style>
+
+  <!-- Visit.html-specific styles -->
+  <style>
+    /* Layout containers */
     .page-layout {
       display: flex;
       height: calc(100vh - 140px);
@@ -31,6 +36,7 @@
       overflow-y: auto;
     }
 
+    /* Edit Details button style (matches footer buttons) */
     .edit-btn {
       background-color: #0057b7;
       color: white;
@@ -46,8 +52,41 @@
     .edit-btn:hover {
       background-color: #0041a3;
     }
-  </style>
 
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #0057b7;
+    }
+
+    .close-btn:hover {
+      color: darkred;
+    }
+  </style>
 </head>
 
 <body>
@@ -89,6 +128,31 @@
 
     <div class="card">
       <button class="edit-btn" onclick="openEditModal()">Edit Details</button>
+      <!-- Edit Details Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeEditModal()">&times;</span>
+    <h2>Edit Customer Details</h2>
+
+    <div class="form-group"><label>Customer Name</label><input id="editCustomerName" required /></div>
+    <div class="form-group"><label>Sub Owner Group</label><select id="editSubOwnerGroup" required></select></div>
+    <div class="form-group"><label>Key Account Group</label><select id="editKeyAccountGroup" required></select></div>
+    <div class="form-group"><label>Grade</label><select id="editGrade" required></select></div>
+    <div class="form-group"><label>Store Type</label><select id="editStoreType" required></select></div>
+    <div class="form-group"><label>Segment</label><select id="editSegment" required></select></div>
+    <div class="form-group"><label>BDM</label><select id="editBDM" required></select></div>
+    <div class="form-group"><label>Contact Name</label><input id="editContactName" /></div>
+    <div class="form-group"><label>Phone</label><input id="editPhone" /></div>
+    <div class="form-group"><label>Email</label><input id="editEmail" /></div>
+    <div class="form-group"><label>Address</label><input id="editAddress" required /></div>
+    <div class="form-group"><label>Suburb</label><input id="editSuburb" required /></div>
+    <div class="form-group"><label>State</label><input id="editState" required /></div>
+    <div class="form-group"><label>Postcode</label><input id="editPostcode" required /></div>
+
+    <button onclick="saveEditDetails()">Save Changes</button>
+  </div>
+</div>
+
     </div>
   </div>
 
@@ -415,7 +479,83 @@ if (selectedCustomer) {
   loadCustomerDetails(selectedCustomer["Customer Name"]);
 } else {
   window.location.href = "dashboard.html";
+  // === Open Edit Modal ===
+function openEditModal() {
+  populateEditFields();
+  document.getElementById("editModal").style.display = "block";
 }
+
+// === Close Edit Modal ===
+function closeEditModal() {
+  document.getElementById("editModal").style.display = "none";
+}
+
+// === Populate Fields with Current Customer Data ===
+function populateEditFields() {
+  document.getElementById("editCustomerName").value = customer["Customer Name"] || "";
+  document.getElementById("editContactName").value = customer["Contact Name"] || "";
+  document.getElementById("editPhone").value = customer["Phone"] || "";
+  document.getElementById("editEmail").value = customer["Email"] || "";
+  document.getElementById("editAddress").value = customer["Address"] || "";
+  document.getElementById("editSuburb").value = customer["Suburb"] || "";
+  document.getElementById("editState").value = customer["State"] || "";
+  document.getElementById("editPostcode").value = customer["Postcode"] || "";
+
+  populateDropdown('editSubOwnerGroup', 'Sub Owner Group', customer["Sub Owner Group"]);
+  populateDropdown('editKeyAccountGroup', 'Key Account Group', customer["Key Account Group"]);
+  populateDropdown('editGrade', 'Grade', customer["Grade"]);
+  populateDropdown('editStoreType', 'Store Type', customer["Store Type"]);
+  populateDropdown('editSegment', 'Segment', customer["Segment"]);
+  populateDropdown('editBDM', 'BDM', customer["BDM"]);
+}
+
+// === Populate Dropdown from SheetDB Column ===
+function populateDropdown(selectId, columnName, selectedValue) {
+  fetch(`${customerSheet}?limit=1000`)
+    .then(res => res.json())
+    .then(data => {
+      const uniqueOptions = [...new Set(data.map(row => row[columnName]).filter(Boolean))];
+      const select = document.getElementById(selectId);
+      select.innerHTML = "";
+      uniqueOptions.sort().forEach(option => {
+        const opt = document.createElement("option");
+        opt.value = option;
+        opt.textContent = option;
+        if (option === selectedValue) opt.selected = true;
+        select.appendChild(opt);
+      });
+    });
+}
+
+// === Save and PATCH Updated Details ===
+function saveEditDetails() {
+  const updatedCustomer = {
+    "Customer Name": document.getElementById("editCustomerName").value.trim(),
+    "Contact Name": document.getElementById("editContactName").value.trim(),
+    "Phone": document.getElementById("editPhone").value.trim(),
+    "Email": document.getElementById("editEmail").value.trim(),
+    "Address": document.getElementById("editAddress").value.trim(),
+    "Suburb": document.getElementById("editSuburb").value.trim(),
+    "State": document.getElementById("editState").value.trim(),
+    "Postcode": document.getElementById("editPostcode").value.trim(),
+    "Sub Owner Group": document.getElementById("editSubOwnerGroup").value,
+    "Key Account Group": document.getElementById("editKeyAccountGroup").value,
+    "Grade": document.getElementById("editGrade").value,
+    "Store Type": document.getElementById("editStoreType").value,
+    "Segment": document.getElementById("editSegment").value,
+    "BDM": document.getElementById("editBDM").value
+  };
+
+  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: updatedCustomer })
+  }).then(() => {
+    closeEditModal();
+    window.location.reload();
+  });
+}
+
 </script>
 </body>
 </html>
