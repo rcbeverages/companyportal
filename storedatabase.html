@@ -207,34 +207,33 @@
     const bdmName = bdmMap[username];
 
     let customerCache = [];
-    document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
-    async function loadCustomers() {
-      const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
-      const data = await res.json();
-      customerCache = data;
-      displayTiles(data);
-    }
+function loadCustomers() {
+  fetch(customerSheet)
+    .then(res => res.json())
+    .then(data => {
+      customerCache = data; // ✅ Store everything once globally
+      displayTiles(customerCache); // ✅ Build the visible tiles
+    });
+}
 
-    function displayTiles(data) {
-      const filtered = data.filter(c => c.BDM === bdmName);
-      customerCache = filtered;
-      const container = document.getElementById("customerTiles");
-      container.innerHTML = "";
-      filtered.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "tile";
-        div.setAttribute("data-name", `${c["Customer Name"].toLowerCase()} ${c["Key Account Group"].toLowerCase()} ${c["Sub Owner Group"].toLowerCase()} ${c.Grade.toLowerCase()}`);
-        div.innerHTML = `
-          <h3>${c["Customer Name"]}</h3>
-          <p>Grade: ${c["Grade"] || "N/A"} | Suburb: ${c["Suburb"] || "N/A"}</p>
-          <button class="visit-btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
-        `;
+   function displayTiles(data) {
+  const container = document.getElementById("customerTiles");
+  container.innerHTML = "";
 
+  data.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "tile";
 
-        container.appendChild(div);
-      });
-    }
+    div.innerHTML = `
+      <h3>${c["Customer Name"]}</h3>
+      <p>Grade: ${c["Grade"] || "N/A"} | Suburb: ${c["Suburb"] || "N/A"}</p>
+      <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
 
     function filterTiles() {
       const query = document.getElementById("searchInput").value.toLowerCase();
