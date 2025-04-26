@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
           stores.forEach(store => {
             const storeRow = document.createElement("tr");
             storeRow.innerHTML = `
-              <td><input type="checkbox" class="selectStoreCheckbox"></td>
+              <td><input type="checkbox" class="selectStoreCheckbox" data-email="${store["Email"]}"></td>
               <td>${store["Customer Name"]}</td>
               <td>${store["Sub Owner Group"]}</td>
               <td>${store["Key Account Group"]}</td>
@@ -75,6 +75,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Enable/Disable Send Email button
         sendEmailButton.disabled = searchTerm.length === 0;
+      });
+
+      // Collect selected emails and open mailto link for Send Email
+      sendEmailButton.addEventListener("click", function() {
+        const selectedCheckboxes = document.querySelectorAll(".selectStoreCheckbox:checked");
+        const selectedEmails = Array.from(selectedCheckboxes).map(checkbox => checkbox.getAttribute('data-email'));
+        const bccEmails = selectedEmails.join(',');
+
+        if (bccEmails) {
+          // Open the default email client with the selected emails in BCC
+          window.location.href = `mailto:?bcc=${bccEmails}`;
+        }
       });
 
       // Select All Button functionality
