@@ -20,7 +20,7 @@
     /* =========================
        Header Styling
        ========================= */
-   header {
+    header {
       background-color: #0057b7;
       color: white;
       padding: 20px;
@@ -39,7 +39,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 20px 20px; /* Adds space between search bar and content */
+      margin: 20px 20px 10px 20px; /* Adds space between search bar and content */
+      margin-top: 80px; /* Ensure space for fixed header */
     }
 
     .search-box {
@@ -76,6 +77,27 @@
     }
 
     /* =========================
+       Button Row Styling (Search, Select All, Send Email)
+       ========================= */
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px; /* Adds space between the buttons */
+      margin: 20px 20px;
+    }
+
+    .button-row .main-button {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      flex: 1;
+    }
+
+    /* =========================
        Table Store List Layout
        ========================= */
     .store-list-table {
@@ -96,56 +118,36 @@
     }
 
     /* =========================
-       Select All Button Styling
-       ========================= */
-    .select-all-container {
-      margin: 10px 0;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 10px;
-    }
-
-    .select-all-container .main-button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    /* =========================
        Footer Styling
        ========================= */
     footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #cfe2ff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px;
-  z-index: 1000;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-}
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #cfe2ff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
 
-.footer-btn {
-  background-color: #0057b7;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  font-size: 1rem;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
+    .footer-btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
 
-.footer-btn:hover {
-  background-color: #1e40af;
-
-}
+    .footer-btn:hover {
+      background-color: #1e40af;
+    }
   </style>
 </head>
 
@@ -165,13 +167,10 @@
   </div>
 </div>
 
-<!-- Select All Button -->
-<div class="select-all-container">
+<!-- Buttons Row (Search, Select All, Send Email) -->
+<div class="button-row">
+  <button id="searchButtonEmail" class="main-button">Search</button>
   <button id="selectAllButton" class="main-button">Select All</button>
-</div>
-
-<!-- Send Email Button -->
-<div class="send-email-box">
   <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
 </div>
 
@@ -205,6 +204,6 @@
 <!-- External JavaScript Files -->
 <script src="../js/api.js"></script> <!-- Shared API code -->
 <script src="../js/emaildatabase.js"></script> <!-- Email database JS -->
-</body>
 
+</body>
 </html>
