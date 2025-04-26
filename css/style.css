@@ -297,7 +297,7 @@ textarea {
   margin: 10px 0;
   display: flex;
   justify-content: flex-end;
-  padding-right: 10px; /* Adds padding to right to align with content */
+  padding-right: 10px;
 }
 
 .select-all-container .main-button {
@@ -316,7 +316,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 20px;  /* Add space on the right side */
+  margin: 20px 20px;
 }
 
 .search-box {
@@ -348,6 +348,6 @@ textarea {
 }
 
 .search-container .main-button:disabled {
-  background-color: #ccc;  /* Disabled state */
+  background-color: #ccc;
   cursor: not-allowed;
 }
