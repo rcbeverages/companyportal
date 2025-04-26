@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
   const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
 
-  let bdmUsername = ""; // To store the logged-in BDM username
-
   // Fetch the logged-in BDM data
   fetch(bdmApiEndpoint)
     .then(response => response.json())
