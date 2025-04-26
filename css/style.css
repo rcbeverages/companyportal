@@ -290,6 +290,25 @@ textarea {
 }
 
 /* =========================
+   Table Store List Layout
+   ========================= */
+.store-list-header {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
+  font-weight: bold;
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding-left: 20px; /* Add left padding for alignment */
+}
+
+.header-item {
+  text-align: center;
+  padding: 10px 0; /* Adjust vertical alignment */
+}
+
+/* =========================
    Store List Styling (Grid) 
    ========================= */
 .menu-container {
@@ -311,11 +330,13 @@ textarea {
   display: grid;
   grid-template-columns: repeat(6, 1fr); /* Ensure 6 columns */
   gap: 10px;
+  align-items: center; /* Ensure all content is centered */
 }
 
 .store-item span {
   text-align: center;
   padding: 5px;
+  word-wrap: break-word; /* Allows long text to wrap */
 }
 
 .store-item a {
