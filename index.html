@@ -9,10 +9,12 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #6cb1f2, #89b0d0);
+      background: linear-gradient(135deg, #007BFF, #00BFFF); /* Updated blues */
       color: #333;
       text-align: center;
       padding: 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     /* Header Styling */
@@ -22,13 +24,13 @@
     }
 
     header img {
-      max-width: 250px;
+      max-width: 200px;
       height: auto;
     }
 
     h1 {
-      font-size: 3rem; /* Increased font size for the main title */
-      color: #ffffff;
+      font-size: 3rem;
+      color: white;
       font-weight: bold;
     }
 
@@ -40,12 +42,12 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       max-width: 900px;
       margin: 0 auto 20px;
-      word-wrap: break-word;  /* Ensures that long words or text wrap onto the next line */
-      white-space: normal;    /* Ensures that the text can break and wrap normally */
+      word-wrap: break-word;
+      white-space: normal;
     }
 
     .sub-header p {
-      font-size: 1.25rem; /* Increased font size for sub-header text */
+      font-size: 1.25rem;
       color: #080707;
     }
 
@@ -62,30 +64,29 @@
     .intro-text p {
       line-height: 1.7;
       color: #080707;
-      font-size: 1.25rem; /* Increased font size for intro-text */
+      font-size: 1.25rem;
       margin: 10px 0;
     }
 
-  /* Button Styling */
-    .btn-container {
+    /* Button Styling matching CRM */
+    .main-button {
+      display: inline-block;
+      background-color: #007BFF;
+      color: white;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
       text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
       margin-top: 20px;
     }
 
-  .btn {
-      background-color: #0057b7;
-      color: white;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background-color: #00409a;
+    .main-button:hover {
+      background-color: #0056b3;
     }
 
     /* Media Queries for Mobile */
@@ -94,16 +95,14 @@
         font-size: 2rem;
       }
 
-      .intro-text {
+      .intro-text,
+      .sub-header {
         padding: 20px;
       }
 
-      .sub-header p {
-        font-size: 1.1rem; /* Adjusting font size for mobile */
-      }
-
+      .sub-header p,
       .intro-text p {
-        font-size: 1.1rem; /* Adjusting font size for mobile */
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -111,7 +110,7 @@
 
 <body>
   <header>
-    <img src="../assets/logo.png" alt="RC Beverages Logo" class="logo">
+    <img src="assets/logo.png" alt="RC Beverages Logo" class="logo">
     <h1>Welcome to RC Beverages</h1>
   </header>
 
@@ -121,8 +120,8 @@
 
   <div class="intro-text">
     <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
-    <a href="html/login.html" class="get-started-btn">Get Started</a>
+    <a href="html/login.html" class="main-button">Get Started</a>
   </div>
-</body>
 
+</body>
 </html>
