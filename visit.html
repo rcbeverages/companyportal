@@ -505,7 +505,9 @@ if (selectedCustomer) {
   loadCustomerDetails(selectedCustomer["Customer Name"]);
 } else {
   window.location.href = "dashboard.html";
-  // === Open Edit Modal ===
+}
+
+// === Open Edit Modal ===
 function openEditModal() {
   populateEditFields();
   document.getElementById("editModal").style.display = "block";
@@ -581,6 +583,7 @@ function saveEditDetails() {
     window.location.reload();
   });
 }
+
 
 </script>
 </body>
