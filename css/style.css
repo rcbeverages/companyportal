@@ -110,6 +110,12 @@ footer {
   background-color: #1e40af;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
 
 /* =========================
    Form Container
