@@ -293,13 +293,6 @@ textarea {
 /* =========================
    Select All Button Styling
    ========================= */
-.select-all-container {
-  margin: 10px 0;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 10px;
-}
-
 .select-all-container .main-button {
   background-color: #007bff;
   color: white;
@@ -310,13 +303,15 @@ textarea {
 }
 
 /* =========================
-   Search and Send Email Button Container
+   Search Container Styling
    ========================= */
 .search-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 20px;
+  margin: 20px 20px 20px 20px;  /* Add space to avoid overlap with the header */
+  z-index: 1;
+  position: relative;
 }
 
 .search-box {
@@ -335,6 +330,7 @@ textarea {
   border-radius: 5px;
   box-sizing: border-box;
   margin-right: 10px;
+  z-index: 1;
 }
 
 .search-container .main-button {
