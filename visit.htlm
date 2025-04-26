@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visit Log - RC Beverages</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; }
+    header { background: #0057b7; color: white; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .welcome-message { background: #ffffff; color: #0057b7; padding: 15px; text-align: center; font-size: 1.8rem; position: fixed; width: 100%; top: 70px; z-index: 999; }
+    .form-container { margin-top: 140px; margin-bottom: 80px; padding: 20px; }
+    .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin: 10px 0 4px; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 5px; background: #eef3fd; color: black; }
+    button { background: #2563eb; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #1e40af; }
+    .collapsible { background: #2563eb; color: white; padding: 0.6rem 1rem; border-radius: 6px; font-weight: bold; font-size: 1.1rem; border: none; width: 100%; text-align: left; margin-bottom: 1rem; }
+    .hidden { display: none; }
+    .action-buttons { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; justify-content: center; }
+    footer { position: fixed; bottom: 0; background: #cfe2ff; width: 100%; padding: 10px; display: flex; justify-content: space-around; border-top: 2px solid #ccc; }
+    .footer-btn { background: #2563eb; color: white; border: none; padding: 12px 20px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; }
+    .footer-btn:hover { background: #1e40af; }
+  </style>
+</head>
+<body>
+<header><h1>Visit Log</h1></header>
+<div class="welcome-message">Welcome <span id="username"></span></div>
+<div class="form-container">
+
+<!-- Page Content Here -->
+<div id="popupMessage" style="display:none;">Save/End Call Completed</div>
+
+<!-- Customer Details Section -->
+<div class="card">
+  <h2>Customer Details</h2>
+  <div id="detailsContent">Loading...</div>
+</div>
+
+<!-- Store Range Section -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('storeRangeContent')">Edit Store Range</button>
+  <div id="storeRangeContent" class="hidden"></div>
+</div>
+
+<!-- Visit Log Section -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
+  <div id="logVisit" class="hidden">
+    <div class="form-group">
+      <label>Visit Reason</label>
+      <select id="reason">
+        <option>Planned Visit</option>
+        <option>Ranging Update</option>
+        <option>Tasting</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Outcome</label>
+      <select id="outcome">
+        <option>Positive</option>
+        <option>Neutral</option>
+        <option>Negative</option>
+        <option>Follow-Up Required</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="notes" rows="3"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="card action-buttons">
+  <button onclick="saveEverything()">Save / End Call</button>
+</div>
+
+</div>
+
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='journeyplanner.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
+
+<script>
+const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
+const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
+
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("hidden");
+}
+
+function showPopup(msg) {
+  const popup = document.getElementById("popupMessage");
+  popup.textContent = msg;
+  popup.style.display = "block";
+  setTimeout(() => { popup.style.display = "none"; }, 1500);
+}
+
+function saveEverything() {
+  const now = new Date();
+  const reason = document.getElementById("reason").value;
+  const notes = document.getElementById("notes").value.trim();
+  const outcome = document.getElementById("outcome").value;
+  const shouldLog = (reason === "Planned Visit" || reason === "Tasting") && notes;
+
+  const storeRangeData = {};
+  document.querySelectorAll("#storeRangeContent select").forEach(select => {
+    const name = "Store - " + select.id.replace("storeRange_", "").replace(/([A-Z])/g, ' $1').trim();
+    storeRangeData[name] = select.value;
+  });
+
+  const update = {
+    "Customer Name": customer["Customer Name"],
+    ...storeRangeData
+  };
+
+  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: update })
+  })
+  .then(() => {
+    if (shouldLog) {
+      const visitLog = {
+        "Date": now.toISOString().split("T")[0],
+        "Timestamp": now.toLocaleString(),
+        "Customer Name": customer["Customer Name"],
+        "BDM": customer["BDM"],
+        "Visit Reason": reason,
+        "Outcome": outcome,
+        "Notes": notes,
+        "Status": "Completed"
+      };
+      return fetch(visitLogSheet, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: visitLog })
+      });
+    }
+  })
+  .then(() => {
+    showPopup("Save/End Call Completed");
+    setTimeout(() => location.href = "dashboard.html", 2000);
+  })
+  .catch(() => alert("Error during save."));
+}
+
+window.onload = () => {
+  document.getElementById("username").textContent = localStorage.getItem("username") || "User";
+  const fields = ["Customer Name", "Contact Name", "Phone", "Email", "Address", "Suburb", "State", "Postcode", "BDM"];
+  document.getElementById("detailsContent").innerHTML = fields.map(k => `<strong>${k}:</strong> ${customer[k] || "-"}<br>`).join('');
+  loadStoreRange();
+};
+
+function loadStoreRange() {
+  fetch("https://sheetdb.io/api/v1/2p0phuvm9dz42")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("storeRangeContent");
+      container.innerHTML = '';
+      data.columns.slice(1).forEach(sku => {
+        const label = document.createElement("label");
+        label.textContent = sku;
+        const select = document.createElement("select");
+        select.id = "storeRange_" + sku.replace(/\s/g, '');
+        select.innerHTML = "<option>No</option><option>Yes</option>";
+        container.appendChild(label);
+        container.appendChild(select);
+      });
+    });
+}
+</script>
+</body>
+</html>
