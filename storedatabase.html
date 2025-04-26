@@ -246,7 +246,7 @@
       const customer = customerCache.find(c => c["Customer Name"] === customerName);
       if (customer) {
         localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-        window.location.href = "visit.html";
+        <button onclick="startCall('1770 Beach Hotel - DBS Agnes Waters')">Visit Store</button>
       } else {
         alert("Customer not found.");
       }
