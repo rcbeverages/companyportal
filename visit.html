@@ -7,37 +7,47 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; }
-    header { background: #0057b7; color: white; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 1000; }
-    .welcome-message { background: #ffffff; color: #0057b7; padding: 15px; text-align: center; font-size: 1.8rem; position: fixed; width: 100%; top: 70px; z-index: 999; }
-    .form-container { margin-top: 140px; margin-bottom: 80px; padding: 20px; }
-    .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    header, footer { background: #0057b7; color: white; padding: 20px; text-align: center; position: fixed; width: 100%; z-index: 1000; }
+    .welcome-message { margin-top: 80px; text-align: center; font-size: 1.5rem; color: #0057b7; }
+    .form-container { margin-top: 120px; padding: 20px; }
+    .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .card-header { background: #2563eb; color: white; padding: 10px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 1.2rem; }
     .form-group { margin-bottom: 1rem; }
-    label { display: block; margin: 10px 0 4px; font-weight: bold; }
-    input, select, textarea { width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 5px; background: #eef3fd; color: black; }
-    button { background: #2563eb; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
-    button:hover { background: #1e40af; }
-    .collapsible { background: #2563eb; color: white; padding: 0.6rem 1rem; border-radius: 6px; font-weight: bold; font-size: 1.1rem; border: none; width: 100%; text-align: left; margin-bottom: 1rem; }
-    .hidden { display: none; }
-    .action-buttons { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; justify-content: center; }
-    footer { position: fixed; bottom: 0; background: #cfe2ff; width: 100%; padding: 10px; display: flex; justify-content: space-around; border-top: 2px solid #ccc; }
-    .footer-btn { background: #2563eb; color: white; border: none; padding: 12px 20px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; }
-    .footer-btn:hover { background: #1e40af; }
+    label { display: block; margin-bottom: 4px; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; background: #eef3fd; }
+    .action-buttons { text-align: center; margin-top: 20px; }
+    .action-buttons button { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    .action-buttons button:hover { background: #1e40af; }
+    footer { bottom: 0; }
   </style>
 </head>
 <body>
-<header><h1>Visit Log</h1></header>
+
+<header>
+  <h1>Visit Log</h1>
+</header>
+
 <div class="welcome-message">Welcome <span id="username"></span></div>
-<div class="form-container">
-
-<!-- Page Content Here -->
-<div id="popupMessage" style="display:none;">Save/End Call Completed</div>
 
 <div class="form-container">
-    <div id="popupMessage">Save/End Call Completed</div><!-- Customer Details -->
-    <div class="card">
-      <h2>Customer Details</h2>
-      <div id="detailsContent">Loading...</div>
-    </div>
+
+  <div class="card">
+    <div class="card-header">Customer Details</div>
+    <div class="form-group"><label>Customer Name</label><input id="customerName" /></div>
+    <div class="form-group"><label>Sub Owner Group</label><input id="subOwnerGroup" /></div>
+    <div class="form-group"><label>Key Account Group</label><input id="keyAccountGroup" /></div>
+    <div class="form-group"><label>Grade</label><input id="grade" /></div>
+    <div class="form-group"><label>Store Type</label><input id="storeType" /></div>
+    <div class="form-group"><label>Segment</label><input id="segment" /></div>
+    <div class="form-group"><label>Contact Name</label><input id="contactName" /></div>
+    <div class="form-group"><label>Phone</label><input id="phone" /></div>
+    <div class="form-group"><label>Email</label><input id="email" /></div>
+    <div class="form-group"><label>Address</label><input id="address" /></div>
+    <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
+    <div class="form-group"><label>State</label><input id="state" /></div>
+    <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
+    <div class="form-group"><label>BDM</label><input id="bdm" /></div>
+  </div>
 
   <!-- Visit Log Section -->
 <div class="card">
@@ -155,24 +165,26 @@
       <div id="promoList"></div>
     </div>
 
-    <!-- Final Buttons -->
-    <div class="card action-buttons">
-      <button onclick="saveEverything()">Save / End Call</button>
-    </div>
+   <div class="action-buttons">
+    <button onclick="saveEverything()">Save / End Call</button>
+  </div>
 
-  </div> <!-- Close form-container -->
-
+</div>
 
 <footer>
   <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-
+  <button class="footer-btn" onclick="location.href='visit.html'">Visit Log</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
 
 <script>
+  document.getElementById("username").textContent = localStorage.getItem("username") || "User";
+
+  function saveEverything() {
+    // save function logic here (already in your other script)
+  }
+</script>
 // API Endpoints
 const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
 const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
