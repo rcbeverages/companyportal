@@ -2,38 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store Database - RC CRM</title>
+  <title>Add Customer - RC CRM</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
 <header>
-  <h1>Store Database</h1>
+  <h1>Add Customer</h1>
 </header>
 
-<!-- ✅ ADD THIS BACK -->
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search Customer Name..." />
-</div>
+<div class="form-container">
+  <form id="add-customer-form">
+    <label>Customer Name</label>
+    <input type="text" name="Customer Name" required>
 
-<div class="menu-container">
-  <div id="customerTiles">
-    <!-- Store tiles will be drawn here -->
-  </div>
+    <label>Address</label>
+    <input type="text" name="Address" required>
+
+    <label>Suburb</label>
+    <input type="text" name="Suburb" required>
+
+    <label>State</label>
+    <input type="text" name="State" required>
+
+    <label>Postcode</label>
+    <input type="text" name="Postcode" required>
+
+    <label>Contact Name</label>
+    <input type="text" name="Contact Name">
+
+    <label>Phone</label>
+    <input type="text" name="Phone">
+
+    <label>Email</label>
+    <input type="email" name="Email">
+
+    <label>Segment</label>
+    <input type="text" name="Segment" required>
+
+    <label>Key Account Group</label>
+    <input type="text" name="Key Account Group" required>
+
+    <label>Store Type</label>
+    <input type="text" name="Store Type" required>
+
+    <label>Grade</label>
+    <input type="text" name="Grade" required>
+
+    <label>BDM</label>
+    <input type="text" name="BDM" required>
+
+    <button class="footer-btn" type="submit">Add Customer</button>
+  </form>
 </div>
 
 <footer>
   <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
 
-<script src="../js/api.js"></script>
-<script src="../js/storedatabase.js"></script>
+<script src="../js/addcustomer.js"></script>
 
 </body>
 </html>
