@@ -112,10 +112,10 @@ footer {
 
 .button-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   justify-items: center;
-  padding-top: 40px; /* <--- Add this! */
+  padding-top: 40px;
 }
 
 /* For main menu full-page spacing */
