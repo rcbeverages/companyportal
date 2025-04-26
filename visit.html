@@ -280,6 +280,17 @@ window.onload = () => {
 </div>
 
 <script>
+   const username = localStorage.getItem("username");
+    const bdmMap = {
+      rhincksman: "Ryan Hincksman",
+      chawkins: "Chris Hawkins"
+    };
+
+    const bdmName = bdmMap[username];
+
+    let customerCache = [];
+    document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
+
 const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
 const masterAPI = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Customer Master
 const visitLogAPI = "https://sheetdb.io/api/v1/3jn3pg6hok7hj"; // Visit Logs
