@@ -90,22 +90,23 @@ footer {
    
 }
 .dashboard-btn {
-  background-color: #0057b7;
+  background-color: #2563eb;
   color: white;
-  padding: 50px;
+  width: 280px; /* FIXED width */
+  height: 180px; /* FIXED height */
   font-size: 1.5rem;
   border-radius: 10px;
   border: none;
   text-decoration: none;
-  width: 280px; /* <-- Force fixed width */
-  max-width: 90%;
-  margin: 10px auto;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  transition: background-color 0.3s ease-in-out;
+  margin: 10px;
   box-sizing: border-box;
 }
-
 
 .dashboard-btn:hover {
   background-color: #1e40af;
