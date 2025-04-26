@@ -232,10 +232,10 @@ textarea {
    ========================= */
 #customerTiles {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 👈 300px to fit 4 across nicely */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 👈 300px to fit 4 across nicely */
   gap: 20px;
   padding: 20px;
-  max-width: 1300px; /* 👈 Slightly tighter so 4 across fits nicely */
+  max-width: 1400px; /* 👈 Slightly tighter so 4 across fits nicely */
   margin: 0 auto;
   box-sizing: border-box;
 }
