@@ -4,47 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Email Database - RC Beverages</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 
 <body>
-  <!-- Fixed Header -->
-  <header>
-    <h1>Email Database</h1>
-  </header>
 
-  <!-- Scrollable Form Container -->
-  <div class="form-container">
-    <!-- White Box Container -->
-    <div class="white-box">
-      <!-- Section Header -->
-      <div class="section-header">
-        <h2>Email Database</h2>
-      </div>
+<header>
+  <h1>Email Database</h1>
+</header>
 
-      <!-- Search + Send Email -->
-      <div class="search-controls">
-        <input type="text" id="searchInput" placeholder="Search by Store, Sub Owner, Key Account, Grade, Store Type">
-        <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
-      </div>
+<!-- Search Container -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search by Store, Sub Owner, Key Account, Grade, Store Type" />
+</div>
 
-      <!-- Store List -->
-      <div id="storeList" class="store-list">
-        <!-- List populated dynamically -->
-      </div>
-    </div>
+<!-- Menu Container for Store List -->
+<div class="menu-container">
+  <div id="storeList">
+    <!-- Email Store List will populate here -->
   </div>
+</div>
 
-  <!-- Fixed Footer -->
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-  </footer>
+<!-- Fixed Footer with Navigation Buttons -->
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-  <!-- Link to the JS -->
-  <script src="emaildatabase.js"></script>
+<!-- External JavaScript Files -->
+<script src="../js/api.js"></script> <!-- Shared API code -->
+<script src="../js/emaildatabase.js"></script> <!-- Email database JS -->
 </body>
+
 </html>
