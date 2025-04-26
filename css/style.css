@@ -115,10 +115,10 @@ footer {
 
 .button-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Match button size */
   gap: 20px;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 10px; /* Close to Welcome */
 }
 
 
@@ -129,36 +129,29 @@ footer {
   bottom: 80px;
   left: 20px;
   right: 20px;
-  overflow-y: hidden; /* important: hide scrolling! */
+  overflow-y: hidden; /* No scrolling */
   padding: 10px;
   box-sizing: border-box;
 }
 
-/* For left-to-right flex button layout */
-.button-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  justify-content: center;
-  padding-top: 10px; /* not too much */
-}
-
 /* Big chunky buttons for dashboard and menus */
 .dashboard-btn {
-  background-color: #0057b7;
+  background-color: #2563eb;
   color: white;
-  padding: 50px;
-  font-size: 1.5rem;
+  width: 260px; /* fixed width for button */
+  height: 160px; /* fixed height for button */
+  font-size: 1.3rem;
   border-radius: 10px;
   border: none;
   text-decoration: none;
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  text-align: center;
+  margin: 10px;
+  box-sizing: border-box;
 }
 
 .dashboard-btn:hover {
