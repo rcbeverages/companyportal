@@ -21,13 +21,14 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   background-color: #0057b7;
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 15px; /* 👈 SLIMMER! */
+  font-size: 1.5rem; /* 👈 SLIGHTLY smaller text */
+  font-weight: bold;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo {
