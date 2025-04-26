@@ -364,7 +364,10 @@ function confirmAddVisit() {
   // Handled inline already
 }
 
-window.onload = loadCalendar;
+window.onload = () => {
+  loadCalendar();
+};
+
 </script>
 </body>
 </html>
