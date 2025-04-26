@@ -23,20 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
           storeListContainer.innerHTML = "<p>No stores found for this BDM.</p>";
         } else {
           stores.forEach(store => {
-            const storeDiv = document.createElement("div");
-            storeDiv.className = "store-item";
-            storeDiv.innerHTML = `
-              <label>
-                <input type="checkbox" class="selectStoreCheckbox">
-                <span>${store["Customer Name"]}</span> |
-                <span>${store["Sub Owner Group"]}</span> |
-                <span>${store["Key Account Group"]}</span> |
-                <span>${store["Grade"]}</span> |
-                <span>${store["Store Type"]}</span> |
-                <a href="mailto:${store["Email"]}">${store["Email"]}</a>
-              </label>
+            const storeRow = document.createElement("tr");
+            storeRow.innerHTML = `
+              <td><input type="checkbox" class="selectStoreCheckbox"></td>
+              <td>${store["Customer Name"]}</td>
+              <td>${store["Sub Owner Group"]}</td>
+              <td>${store["Key Account Group"]}</td>
+              <td>${store["Grade"]}</td>
+              <td>${store["Store Type"]}</td>
+              <td><a href="mailto:${store["Email"]}">${store["Email"]}</a></td>
             `;
-            storeListContainer.appendChild(storeDiv);
+            storeListContainer.appendChild(storeRow);
           });
         }
       }
