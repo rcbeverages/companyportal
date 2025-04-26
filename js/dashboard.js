@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       container.innerHTML = "<p style='color: red;'>User not found. Please log in again.</p>";
       return;
     }
+    const welcomeMessage = document.getElementById("welcome-message");
+
+    if (username) {
+      welcomeMessage.textContent = `Welcome, ${username}!`;
+    }
+
+    
 
     const role = user.Role;
 
