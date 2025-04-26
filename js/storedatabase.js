@@ -32,13 +32,14 @@ function displayTiles(data) {
     const div = document.createElement("div");
     div.className = "tile";
 
-    div.innerHTML = `
-      <h3>${c["Customer Name"]}</h3>
-      <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "N/A"}</p>
-      <p><strong>Key Account Group:</strong> ${c["Key Account Group"] || "N/A"}</p>
-      <p><strong>Grade:</strong> ${c["Grade"] || "N/A"}</p>
-      <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
-    `;
+   div.innerHTML = `
+  <h3>${c["Customer Name"]}</h3>
+  <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "N/A"}</p>
+  <p><strong>Key Account Group:</strong> ${c["Key Account Group"] || "N/A"}</p>
+  <p><strong>Grade:</strong> ${c["Grade"] || "N/A"}</p>
+  <button class="dashboard-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
+`;
+
 
     container.appendChild(div);
   });
