@@ -21,14 +21,15 @@
        Header Styling
        ========================= */
     header {
-      padding: 20px;
       background-color: #0057b7;
       color: white;
+      padding: 20px;
       text-align: center;
-      font-size: 1.5rem;
-      position: relative;
-      z-index: 10;
-      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
 
     /* =========================
@@ -36,17 +37,15 @@
        ========================= */
     .search-container {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: left;
+      justify-content: flex-start;
       margin: 20px 20px;
+      margin-top: 140px; /* Ensure space for fixed header */
+      width: 40%;
     }
 
     .search-box {
-      flex-grow: 1; /* Ensures the search bar takes the majority of space */
-    }
-
-    .search-btn-box {
-      margin-left: 10px;
+      flex-grow: 1;
     }
 
     .search-container input[type="text"] {
@@ -59,7 +58,17 @@
       margin-right: 10px;
     }
 
-    .search-container .main-button {
+    /* =========================
+       Button Row Styling
+       ========================= */
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 20px 20px;
+    }
+
+    .button-row .main-button {
       background-color: #0057b7;
       color: white;
       border: none;
@@ -67,11 +76,7 @@
       font-size: 1rem;
       cursor: pointer;
       border-radius: 5px;
-    }
-
-    .search-container .main-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
+      flex: 1;
     }
 
     /* =========================
@@ -95,22 +100,20 @@
     }
 
     /* =========================
-       Select All Button Styling
+       Visit Button Styling
        ========================= */
-    .select-all-container {
-      margin: 10px 0;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 10px;
-    }
-
-    .select-all-container .main-button {
+    .visit-btn {
       background-color: #007bff;
       color: white;
       padding: 10px 20px;
       font-size: 1rem;
       cursor: pointer;
       border-radius: 5px;
+      text-align: center;
+    }
+
+    .visit-btn:hover {
+      background-color: #0056b3;
     }
 
     /* =========================
@@ -119,29 +122,30 @@
     footer {
       position: fixed;
       bottom: 0;
-      width: 100%;
-      background-color: #0057b7;
-      padding: 15px 0;
-      text-align: center;
+      left: 0;
+      right: 0;
+      background-color: #cfe2ff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
     }
 
     .footer-btn {
-      background-color: #007bff;
+      background-color: #0057b7;
       color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      margin: 0 10px;
       border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 30px;
       cursor: pointer;
-      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
     }
 
     .footer-btn:hover {
-      background-color: #0057b7;
-    }
-
-    .footer-btn:focus {
-      outline: none;
+      background-color: #1e40af;
     }
   </style>
 </head>
@@ -154,30 +158,26 @@
 
 <!-- Search Container for Store Database -->
 <div class="search-container">
-  <div class="search-box">
-    <input type="text" id="searchInputStore" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
-  </div>
-  <div class="search-btn-box">
-    <button id="searchButtonStore" class="main-button">Search</button>
-  </div>
+    <input type="text" id="searchInputStore" placeholder="Search by Store Name, Segment, Visit Status, etc." />
 </div>
 
-<!-- Select All Button -->
-<div class="select-all-container">
+<!-- Buttons Row -->
+<div class="button-row">
   <button id="selectAllButton" class="main-button">Select All</button>
+  <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
 </div>
 
 <!-- Table for Store List -->
 <table id="storeListTable" class="store-list-table">
   <thead>
     <tr>
-      <th>Select</th>
-      <th>Customer Name</th>
-      <th>Sub Owner Group</th>
+      <th>Visit</th>
+      <th>Store Name</th>
+      <th>Segment</th>
       <th>Key Account Group</th>
       <th>Grade</th>
       <th>Store Type</th>
-      <th>Email</th>
+      <th>Visit Status</th>
     </tr>
   </thead>
   <tbody id="storeList">
@@ -197,6 +197,7 @@
 <!-- External JavaScript Files -->
 <script src="../js/api.js"></script> <!-- Shared API code -->
 <script src="../js/storedatabase.js"></script> <!-- Store database JS -->
+
 </body>
 
 </html>
