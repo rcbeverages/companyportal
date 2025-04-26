@@ -1,80 +1,76 @@
-const username = localStorage.getItem("username");
+document.addEventListener("DOMContentLoaded", function() {
+  const storeListContainer = document.getElementById("storeList");
+  const selectAllButton = document.getElementById("selectAllButton");
+  const searchInput = document.getElementById("searchInputStore");
+  const sendEmailButton = document.getElementById("sendEmailButton");
 
-const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // SheetDB API URL
+  const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
+  const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
 
-const bdmMap = {
-  rhincksman: "rhincksman",
-  chawkins: "chawkins"
-};
-
-const bdmName = bdmMap[username];
-let customerCache = [];
-
-function loadCustomers() {
-  fetch(customerSheet)
-    .then(res => res.json())
+  // Fetch data from the Master Store List API
+  fetch(apiEndpoint)
+    .then(response => response.json())
     .then(data => {
-      customerCache = data;
-      const filtered = data.filter(c => c["BDM"] === bdmName);
-      displayTiles(filtered);
+      // Filter stores that belong to the logged-in BDM
+      const storesForBDM = data.filter(store => store["BDM"] === bdmUsername);
+
+      function displayStores(stores) {
+        storeListContainer.innerHTML = ""; // Clear previous results
+
+        if (stores.length === 0) {
+          storeListContainer.innerHTML = "<p>No stores found for this BDM.</p>";
+        } else {
+          stores.forEach(store => {
+            const storeRow = document.createElement("tr");
+            storeRow.innerHTML = `
+              <td><button class="visit-btn" data-store="${store["Store Name"]}">Visit</button></td>
+              <td>${store["Store Name"]}</td>
+              <td>${store["Segment"]}</td>
+              <td>${store["Key Account Group"]}</td>
+              <td>${store["Grade"]}</td>
+              <td>${store["Store Type"]}</td>
+              <td>${store["Visit Status"]}</td>
+            `;
+            storeListContainer.appendChild(storeRow);
+          });
+        }
+      }
+
+      // Display all stores initially for the BDM
+      displayStores(storesForBDM);
+
+      // Search functionality (applies on input event of the search field)
+      searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredStores = storesForBDM.filter(store => {
+          return (
+            store["Store Name"].toLowerCase().includes(searchTerm) ||
+            store["Segment"].toLowerCase().includes(searchTerm) ||
+            store["Key Account Group"].toLowerCase().includes(searchTerm) ||
+            store["Grade"].toLowerCase().includes(searchTerm) ||
+            store["Store Type"].toLowerCase().includes(searchTerm)
+          );
+        });
+        displayStores(filteredStores);
+      });
+
+      // Select All Button functionality
+      selectAllButton.addEventListener("click", function() {
+        const visitButtons = document.querySelectorAll(".visit-btn");
+        const allVisited = Array.from(visitButtons).every(button => button.disabled);
+        visitButtons.forEach(button => button.disabled = !allVisited);
+      });
+
+      // Send Email Button functionality
+      sendEmailButton.addEventListener("click", function() {
+        const selectedStores = document.querySelectorAll(".visit-btn:disabled");
+        const storeNames = Array.from(selectedStores).map(button => button.getAttribute('data-store'));
+        const emailBody = storeNames.join("\n");
+
+        if (storeNames.length) {
+          window.location.href = `mailto:?subject=Store Visits&body=${encodeURIComponent(emailBody)}`;
+        }
+      });
     })
-    .catch(error => {
-      console.error("Error loading customers:", error);
-      document.getElementById("customerTiles").innerHTML = "<p>Error loading store database.</p>";
-    });
-}
-
-function displayTiles(data) {
-  const container = document.getElementById("customerTiles");
-  container.innerHTML = "";
-
-  data.forEach(c => {
-    const div = document.createElement("div");
-    div.className = "tile";
-
-   div.innerHTML = `
-  <h3>${c["Customer Name"]}</h3>
-  <p><strong>Sub Owner Group:</strong> ${c["Sub Owner Group"] || "N/A"}</p>
-  <p><strong>Key Account Group:</strong> ${c["Key Account Group"] || "N/A"}</p>
-  <p><strong>Grade:</strong> ${c["Grade"] || "N/A"}</p>
-  <button class="footer-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
-`;
-
-    container.appendChild(div);
-  });
-}
-
-function filterTiles() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const tiles = document.querySelectorAll(".tile");
-
-  tiles.forEach(tile => {
-    const customerName = tile.querySelector("h3").textContent.toLowerCase();
-    const subOwnerGroup = tile.querySelector("p:nth-of-type(1)").textContent.toLowerCase();
-    const keyAccountGroup = tile.querySelector("p:nth-of-type(2)").textContent.toLowerCase();
-    const grade = tile.querySelector("p:nth-of-type(3)").textContent.toLowerCase();
-
-    const fullText = customerName + " " + subOwnerGroup + " " + keyAccountGroup + " " + grade;
-
-    if (fullText.includes(query)) {
-      tile.style.display = "block";
-    } else {
-      tile.style.display = "none";
-    }
-  });
-}
-
-function startCall(customerName) {
-  const cleanName = customerName.trim().toLowerCase();
-  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
-
-  if (customer) {
-    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-    window.location.href = "visit.html";
-  } else {
-    alert("Customer not found: " + customerName);
-  }
-}
-
-window.onload = loadCustomers;
-document.getElementById("searchInput").addEventListener("input", filterTiles);
+    .catch(error => console.error("Error fetching store data:", error));
+});
