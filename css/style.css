@@ -151,16 +151,21 @@ footer {
    Form Container Action Menues
    ========================= */
 .form-container {
-  width: 90%;
-  max-width: 900px;
-  margin: 160px auto 0 auto; /* 👈 Pushed down 160px from top */
-  padding: 30px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  overflow-y: auto;
-  box-sizing: border-box;
-}
+      position: absolute;
+      top: 100px; /* anchors below header + welcome */
+      bottom: 80px; /* anchors above footer */
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 900px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      box-sizing: border-box;
+
 
 /* =========================
    Input Fields
