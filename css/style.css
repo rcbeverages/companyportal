@@ -162,14 +162,14 @@ footer {
    ========================= */
 .form-container {
   position: absolute;
-  top: 100px; /* below header */
-  bottom: 80px; /* above footer */
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+  top: 80px;    /* Was 100px, now closer to header */
+  bottom: 60px; /* Was 80px, now closer to footer */
+  left: 20px;
+  right: 20px;
+  margin: auto;
   width: 90%;
   max-width: 900px;
-  padding: 20px;
+  padding: 30px; /* Slightly bigger padding */
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
