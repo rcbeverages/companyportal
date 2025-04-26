@@ -20,38 +20,33 @@
   align-items: flex-start;
 }
 
-.left-column, .right-column {
-  background: #eef3fd;
-  border-radius: 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  min-height: fit-content;
-}
-
 .left-column {
+  position: absolute;
+  top: 160px;
+  bottom: 80px;
+  left: 5%;
   width: 30%;
-  min-width: 280px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .right-column {
-  flex: 1;
-  max-height: 500px; /* 👈 Try 500px or lower */
+  position: absolute;
+  top: 160px;
+  bottom: 80px;
+  right: 5%;
+  width: 60%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  box-sizing: border-box;
 }
-
-
-    .left-column {
-      width: 30%;
-      min-width: 280px;
-    }
-
-    .right-column {
-      flex: 1;
-      overflow-y: auto;
-    }
 
     /* Edit Details button style (matches footer buttons) */
     .edit-btn {
