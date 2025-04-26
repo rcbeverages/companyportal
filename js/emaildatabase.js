@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         displayStores(filteredStores);
 
         // Enable/Disable Send Email button based on search results
-        sendEmailButton.disabled = filteredStores.length === 0;
+        sendEmailButton.disabled = filteredStores.length === 0 || !Array.from(document.querySelectorAll(".selectStoreCheckbox:checked")).length;
       });
 
       // Select All Button functionality
@@ -62,6 +62,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
         const selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
         checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
+
+        // Enable/Disable Send Email button based on selected checkboxes
+        sendEmailButton.disabled = !Array.from(document.querySelectorAll(".selectStoreCheckbox:checked")).length;
       });
 
       // Send Email Button functionality
