@@ -199,12 +199,15 @@
 
   <script>
     const username = localStorage.getItem("username");
-    const bdmMap = {
-      rhincksman: "Ryan Hincksman",
-      chawkins: "Chris Hawkins"
-    };
 
-    const bdmName = bdmMap[username];
+const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // <-- ✅ ADD THIS LINE!
+
+const bdmMap = {
+  rhincksman: "Ryan Hincksman",
+  chawkins: "Chris Hawkins"
+};
+
+const bdmName = bdmMap[username];
 
     let customerCache = [];
 
