@@ -3,8 +3,8 @@ const username = localStorage.getItem("username");
 const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // SheetDB API URL
 
 const bdmMap = {
-  rhincksman: "Ryan Hincksman",
-  chawkins: "Chris Hawkins"
+  rhincksman: "rhincksman",
+  chawkins: "chawkins"
 };
 
 const bdmName = bdmMap[username];
