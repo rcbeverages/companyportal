@@ -6,7 +6,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   const usernameInput = document.getElementById("username").value.trim();
   const passwordInput = document.getElementById("password").value.trim();
 
-  const users = await fetchUsers();
+  const users = await fetchUsers(); // <-- pulls from live SheetDB
 
   const user = users.find(u => 
     u.Username === usernameInput && u.Password === passwordInput
@@ -16,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     localStorage.setItem("username", user.Username);
     localStorage.setItem("role", user.Role);
 
-    window.location.href = "dashboard.html"; // Redirect to dashboard
+    window.location.href = "dashboard.html";
   } else {
     document.getElementById("error-message").style.display = "block";
   }
