@@ -4,7 +4,136 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Email Database - RC Beverages</title>
-  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Embedded CSS -->
+  <style>
+    /* =========================
+       Header Styling
+       ========================= */
+    header {
+      padding: 20px;
+      background-color: #0057b7;
+      color: white;
+      text-align: center;
+      font-size: 1.5rem;
+      position: relative;
+      z-index: 10;
+      margin-bottom: 20px;
+    }
+
+    /* =========================
+       Search Container Styling
+       ========================= */
+    .search-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px 20px; /* Adds space between search bar and content */
+    }
+
+    .search-box {
+      flex-grow: 1; /* Ensures the search bar takes the majority of space */
+    }
+
+    .search-btn-box {
+      margin-left: 10px;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
+
+    .search-container .main-button {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .search-container .main-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       Table Store List Layout
+       ========================= */
+    .store-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .store-list-table th, .store-list-table td {
+      padding: 12px 20px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .store-list-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    /* =========================
+       Select All Button Styling
+       ========================= */
+    .select-all-container {
+      margin: 10px 0;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+
+    .select-all-container .main-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* =========================
+       Footer Button Styling
+       ========================= */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #0057b7;
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    .footer-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 0 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .footer-btn:hover {
+      background-color: #0057b7;
+    }
+
+    .footer-btn:focus {
+      outline: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -13,16 +142,13 @@
   <h1>Email Database</h1>
 </header>
 
-<!-- Search Container and Send Email Button (Inline) -->
+<!-- Search Container for Email Database -->
 <div class="search-container">
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
+    <input type="text" id="searchInputEmail" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
   </div>
   <div class="search-btn-box">
-    <button id="searchButton" class="main-button">Search</button>
-  </div>
-  <div class="send-email-box">
-    <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
+    <button id="searchButtonEmail" class="main-button">Search</button>
   </div>
 </div>
 
