@@ -261,7 +261,15 @@ function renderCalendar() {
       if (call) {
         slot.innerHTML = `<div>${call["Customer Name"]} ${call.Status === "Completed" ? "✅" : ""}</div>`;
         slot.style.background = call.Status === "Completed" ? "#d1f7d6" : "#eef3fd";
-        slot.onclick = () => window.location.href = "visit.html";
+        slot.onclick = () => {
+  const customer = storeData.find(s => s["Customer Name"] === call["Customer Name"]);
+  if (customer) {
+    localStorage.setItem('selectedCustomer', JSON.stringify(customer));
+    window.location.href = "visit.html";
+  } else {
+    alert("Customer not found in Master List!");
+  }
+};
       } else {
         slot.innerHTML = `<button onclick="openAddVisit('${formatDate(date)}',${i})">Add Visit</button>`;
       }
