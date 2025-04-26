@@ -228,8 +228,9 @@
         div.innerHTML = `
           <h3>${c["Customer Name"]}</h3>
           <p>Grade: ${c["Grade"] || "N/A"} | Suburb: ${c["Suburb"] || "N/A"}</p>
-          <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
+          <button class="visit-btn" onclick="startCall('${c["Customer Name"]}')">Visit</button>
         `;
+
 
         container.appendChild(div);
       });
