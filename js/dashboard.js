@@ -2,16 +2,16 @@
 
 document.addEventListener("DOMContentLoaded", async function () {
   const username = localStorage.getItem("username");
-  const container = document.getElementById("dashboard-sections");
-  const welcomeMessage = document.getElementById("welcome-message");
+const container = document.getElementById("dashboard-sections");
+const welcomeMessage = document.getElementById("welcome-message");
 
-  if (!username) {
-    container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
-    return;
-  }
+if (!username) {
+  container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
+  return;
+}
 
-  // Set the Welcome message with username
-  welcomeMessage.textContent = `Welcome, ${username}!`;
+// Update Welcome Heading
+welcomeMessage.textContent = `Welcome, ${username}!`;
 
   try {
     const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0"); // Your Users API
