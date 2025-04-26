@@ -1,109 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Visit Log - RC Beverages</title>
-
-  <!-- Link to Global Styles -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Page Specific Styles -->
-  <style>
-    /* Welcome Bar */
-    .welcome-message {
-      position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background-color: #ffffff;
-      color: #0057b7;
-      padding: 15px;
-      font-size: 2rem;
-      margin-top: 10px;
-      text-align: center;
-      z-index: 999;
-    }
-
-    /* Page Layout */
-    .page-layout {
-      display: flex;
-      height: calc(100vh - 140px);
-      padding: 0 10px;
-      gap: 20px;
-      box-sizing: border-box;
-    }
-
-    .left-column, .right-column {
-      background: #eef3fd;
-      border-radius: 15px;
-      padding: 15px;
-      box-sizing: border-box;
-    }
-
-    .left-column {
-      width: 30%;
-      min-width: 280px;
-    }
-
-    .right-column {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    /* Modal Popup for Edit Details */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-    }
-
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      box-sizing: border-box;
-    }
-
-    .close-btn {
-      float: right;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #0057b7;
-    }
-
-    .close-btn:hover {
-      color: darkred;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-  </style>
-</head>
 <body>
 
 <!-- Header -->
@@ -116,13 +10,14 @@
   <!-- Will be filled dynamically -->
 </div>
 
-<!-- Page Layout: Left and Right Columns -->
+<!-- Page Layout Start -->
 <div class="page-layout">
 
-  <!-- Left Column (Customer Details + Edit Button) -->
+  <!-- Left Column -->
   <div class="left-column">
+    <h2>Customer Details</h2> <!-- Subheader -->
+
     <div class="card">
-      <h2>Customer Details</h2>
       <div id="detailsContent">
         <p><strong>Customer Name:</strong> <span id="custName">Loading...</span></p>
         <p><strong>Sub Owner Group:</strong> <span id="subOwnerGroup">Loading...</span></p>
@@ -141,98 +36,18 @@
       </div>
     </div>
 
-    <!-- Edit Details Button -->
     <div class="card">
       <button onclick="openEditModal()">Edit Details</button>
     </div>
-  </div> <!-- End of Left Column -->
-
-  <!-- Right Column opens here (continues in Part 4) -->
-  <div class="right-column">
-<!-- Edit Details Modal Popup -->
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeEditModal()">&times;</span>
-    <h2>Edit Customer Details</h2>
-
-    <div class="form-group">
-      <label>Customer Name</label>
-      <input id="editCustomerName" required />
-    </div>
-
-    <div class="form-group">
-      <label>Sub Owner Group</label>
-      <select id="editSubOwnerGroup" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>Key Account Group</label>
-      <select id="editKeyAccountGroup" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>Grade</label>
-      <select id="editGrade" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>Store Type</label>
-      <select id="editStoreType" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>Segment</label>
-      <select id="editSegment" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>BDM Assignment</label>
-      <select id="editBDM" required></select>
-    </div>
-
-    <div class="form-group">
-      <label>Contact Name (Optional)</label>
-      <input id="editContactName" />
-    </div>
-
-    <div class="form-group">
-      <label>Phone (Optional)</label>
-      <input id="editPhone" />
-    </div>
-
-    <div class="form-group">
-      <label>Email (Optional)</label>
-      <input id="editEmail" />
-    </div>
-
-    <div class="form-group">
-      <label>Address</label>
-      <input id="editAddress" required />
-    </div>
-
-    <div class="form-group">
-      <label>Suburb</label>
-      <input id="editSuburb" required />
-    </div>
-
-    <div class="form-group">
-      <label>State</label>
-      <input id="editState" required />
-    </div>
-
-    <div class="form-group">
-      <label>Postcode</label>
-      <input id="editPostcode" required />
-    </div>
-
-    <button onclick="saveEditDetails()">Save Changes</button>
   </div>
-</div> <!-- End of Modal -->
-    <!-- Right Column Sections -->
 
-    <!-- Log Visit -->
+  <!-- Right Column -->
+  <div class="right-column">
+    <h2>Store Visit</h2> <!-- Subheader -->
+
+    <!-- Store Visit Section -->
     <div class="card">
-      <h2>Log Visit</h2>
+      <h3>Store Visit</h3>
       <div class="form-group">
         <label>Visit Reason</label>
         <select id="reason">
@@ -258,12 +73,16 @@
 
     <!-- Preorders -->
     <div class="card">
-      <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
-      <div id="preorderForm" class="hidden">
-        <div id="preorderContainer">Loading preorders...</div>
+      <h3>Preorders</h3>
+      <div id="preorderContainer">Loading preorders...</div>
+    </div>
+    <!-- Store Range -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
+      <div id="storeRange" class="hidden">
+        <div id="storeRangeContainer">Loading store range...</div>
       </div>
     </div>
-
     <!-- Asset Management -->
     <div class="card">
       <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
@@ -276,7 +95,7 @@
       </div>
     </div>
 
-    <!-- Email Reminders -->
+    <!-- Email Reminder -->
     <div class="card">
       <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
       <div id="emailReminder" class="hidden">
@@ -284,27 +103,26 @@
         <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
       </div>
     </div>
-
     <!-- Previous Visit Notes -->
     <div class="card">
-      <h2>Previous Visit Notes</h2>
+      <h3>Previous Visit Notes</h3>
       <div id="pastNotes">Loading previous notes...</div>
     </div>
 
     <!-- Current Promos -->
-    <div class="card" id="promoSection" style="display: none;">
-      <h2>Current Promos</h2>
+    <div class="card">
+      <h3>Current Promos</h3>
       <div id="promoList">Loading current promos...</div>
     </div>
 
-    <!-- Save / End Call -->
+    <!-- Save / End Call Button -->
     <div class="card action-buttons">
       <button onclick="saveEverything()">Save / End Call</button>
     </div>
 
-  </div> <!-- End of Right Column -->
+  </div> <!-- End Right Column -->
 
-</div> <!-- End of Page Layout -->
+</div> <!-- End Page Layout -->
 
 <!-- Footer -->
 <footer>
@@ -315,19 +133,16 @@
 </footer>
 <script>
 // === API Endpoints ===
-const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Master Store List
-const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";      // Same for PATCH updates
-const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";  // Visit logs
-const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";  // Email reminders
-const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";     // Assets
-const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";  // Preorders
+const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
+const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
+const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
+const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
+const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";
 
 // === Welcome Message Logic ===
 const username = localStorage.getItem("username");
-const bdmMap = {
-  rhincksman: "Ryan Hincksman",
-  chawkins: "Chris Hawkins"
-};
+const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
 const bdmName = bdmMap[username] || "BDM";
 document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
@@ -335,14 +150,13 @@ document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 const selectedCustomer = JSON.parse(localStorage.getItem("selectedCustomer"));
 let customer = {};
 
-// === Load Customer Details from API ===
+// === Load Customer Details ===
 function loadCustomerDetails(customerName) {
   fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customerName)}`)
     .then(res => res.json())
     .then(data => {
       if (data.length > 0) {
         customer = data[0];
-
         document.getElementById("custName").textContent = customer["Customer Name"] || "";
         document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
         document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
@@ -357,112 +171,111 @@ function loadCustomerDetails(customerName) {
         document.getElementById("state").textContent = customer["State"] || "";
         document.getElementById("postcode").textContent = customer["Postcode"] || "";
         document.getElementById("bdmView").textContent = customer["BDM"] || "";
+
+        loadPreorders();
+        loadStoreRange();
       }
     });
 }
 
-// === Open/Close Modal ===
-function openEditModal() {
-  populateEditFields();
-  document.getElementById("editModal").style.display = "block";
-}
-
-function closeEditModal() {
-  document.getElementById("editModal").style.display = "none";
-}
-
-// === Populate Modal Fields with Existing Data ===
-function populateEditFields() {
-  document.getElementById("editCustomerName").value = customer["Customer Name"] || "";
-  document.getElementById("editContactName").value = customer["Contact Name"] || "";
-  document.getElementById("editPhone").value = customer["Phone"] || "";
-  document.getElementById("editEmail").value = customer["Email"] || "";
-  document.getElementById("editAddress").value = customer["Address"] || "";
-  document.getElementById("editSuburb").value = customer["Suburb"] || "";
-  document.getElementById("editState").value = customer["State"] || "";
-  document.getElementById("editPostcode").value = customer["Postcode"] || "";
-
-  populateDropdown('editSubOwnerGroup', 'Sub Owner Group', customer["Sub Owner Group"]);
-  populateDropdown('editKeyAccountGroup', 'Key Account Group', customer["Key Account Group"]);
-  populateDropdown('editGrade', 'Grade', customer["Grade"]);
-  populateDropdown('editStoreType', 'Store Type', customer["Store Type"]);
-  populateDropdown('editSegment', 'Segment', customer["Segment"]);
-  populateDropdown('editBDM', 'BDM', customer["BDM"]);
-}
-
-// === Dynamic Dropdown Population ===
-function populateDropdown(selectId, columnName, selectedValue) {
-  fetch(`${customerSheet}?limit=1000`)
-    .then(res => res.json())
-    .then(data => {
-      const uniqueOptions = [...new Set(data.map(row => row[columnName]).filter(Boolean))];
-      const select = document.getElementById(selectId);
-      select.innerHTML = ""; // clear
-      uniqueOptions.sort().forEach(option => {
-        const opt = document.createElement("option");
-        opt.value = option;
-        opt.textContent = option;
-        if (option === selectedValue) {
-          opt.selected = true;
-        }
-        select.appendChild(opt);
-      });
-    });
-}
-
-// === Save Edited Customer Details ===
-function saveEditDetails() {
-  const updatedCustomer = {
-    "Customer Name": document.getElementById("editCustomerName").value.trim(),
-    "Contact Name": document.getElementById("editContactName").value.trim(),
-    "Phone": document.getElementById("editPhone").value.trim(),
-    "Email": document.getElementById("editEmail").value.trim(),
-    "Address": document.getElementById("editAddress").value.trim(),
-    "Suburb": document.getElementById("editSuburb").value.trim(),
-    "State": document.getElementById("editState").value.trim(),
-    "Postcode": document.getElementById("editPostcode").value.trim(),
-    "Sub Owner Group": document.getElementById("editSubOwnerGroup").value,
-    "Key Account Group": document.getElementById("editKeyAccountGroup").value,
-    "Grade": document.getElementById("editGrade").value,
-    "Store Type": document.getElementById("editStoreType").value,
-    "Segment": document.getElementById("editSegment").value,
-    "BDM": document.getElementById("editBDM").value
-  };
-
-  fetch(`${sheetUrl}/Customer Name/${encodeURIComponent(customer["Customer Name"])}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: updatedCustomer })
-  })
-  .then(() => {
-    closeEditModal();
-    window.location.reload();
-  });
-}
-
-// === Toggle Section Visibility ===
+// === Toggle Collapsibles ===
 function toggleSection(id) {
   const section = document.getElementById(id);
   section.classList.toggle('hidden');
 }
 
-// === Save Everything Logic ===
+// === Load Preorders ===
+function loadPreorders() {
+  fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
+    .then(res => res.json())
+    .then(data => {
+      const preorderContainer = document.getElementById("preorderContainer");
+      preorderContainer.innerHTML = "";
+
+      const skus = ["Creamy Soda", "Sarsaparilla", "Blueberry Rasp", "Portello", "LLB", "Rasp Lemonade"];
+
+      skus.forEach(sku => {
+        const div = document.createElement("div");
+        div.className = "form-group";
+        div.innerHTML = `
+          <label>${sku}</label>
+          <select id="yesno_${sku.replace(/\s+/g, '')}" onchange="toggleQTY('${sku}')">
+            <option>No</option>
+            <option>Yes</option>
+          </select>
+          <input type="number" id="qty_${sku.replace(/\s+/g, '')}" placeholder="QTY" style="display:none;margin-top:5px;" />
+        `;
+        preorderContainer.appendChild(div);
+      });
+
+      if (data.length > 0) {
+        skus.forEach(sku => {
+          const cleanSku = sku.replace(/\s+/g, '');
+          if (data[0][`QTY - ${sku}`]) {
+            document.getElementById(`yesno_${cleanSku}`).value = "Yes";
+            document.getElementById(`qty_${cleanSku}`).style.display = "block";
+            document.getElementById(`qty_${cleanSku}`).value = data[0][`QTY - ${sku}`];
+          }
+        });
+      }
+    });
+}
+
+// === Show/Hide QTY Input Based on YES/NO ===
+function toggleQTY(sku) {
+  const cleanSku = sku.replace(/\s+/g, '');
+  const yesno = document.getElementById(`yesno_${cleanSku}`).value;
+  const qty = document.getElementById(`qty_${cleanSku}`);
+  qty.style.display = (yesno === "Yes") ? "block" : "none";
+}
+
+// === Load Store Range (Grouped by Brand + Tickboxes) ===
+function loadStoreRange() {
+  fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
+    .then(res => res.json())
+    .then(data => {
+      const storeRangeContainer = document.getElementById("storeRangeContainer");
+      storeRangeContainer.innerHTML = "";
+
+      const brandGroups = {};
+
+      if (data.length > 0) {
+        const range = JSON.parse(data[0]["Store Range"] || "{}");
+
+        Object.keys(range).forEach(product => {
+          const [brand, sku] = product.split(" - ");
+          if (!brandGroups[brand]) brandGroups[brand] = [];
+          brandGroups[brand].push({ sku, ranged: range[product] === "Yes" });
+        });
+
+        Object.keys(brandGroups).forEach(brand => {
+          const brandDiv = document.createElement("div");
+          brandDiv.innerHTML = `<h4>${brand}</h4>`;
+          storeRangeContainer.appendChild(brandDiv);
+
+          brandGroups[brand].forEach(item => {
+            const div = document.createElement("div");
+            div.className = "form-group";
+            div.innerHTML = `
+              <label>
+                <input type="checkbox" ${item.ranged ? "checked" : ""} id="range_${brand}_${item.sku.replace(/\s+/g, '')}" />
+                ${item.sku}
+              </label>
+            `;
+            storeRangeContainer.appendChild(div);
+          });
+        });
+      }
+    });
+}
+
+// === Save Everything (Visit, Preorders, Range, Asset, Reminder) ===
 function saveEverything() {
   const now = new Date();
-  
   const visitReason = document.getElementById("reason").value;
   const outcome = document.getElementById("outcome").value;
   const notes = document.getElementById("notes").value.trim();
 
-  const reminderDate = document.getElementById("reminderDate").value;
-  const reminderNotes = document.getElementById("reminderNotes").value.trim();
-
-  const assetType = document.getElementById("assetType").value.trim();
-  const assetTag = document.getElementById("assetTag").value.trim();
-  const agreement = document.getElementById("assetAgreement").value.trim();
-  const assetComments = document.getElementById("assetComments").value.trim();
-
-  // --- Update Customer Visit if Reason is Planned Visit or Tasting
   if (visitReason && notes && (visitReason === "Planned Visit" || visitReason === "Tasting")) {
     const visit = {
       "Date": now.toISOString().split("T")[0],
@@ -481,73 +294,77 @@ function saveEverything() {
     });
   }
 
-  // --- Save Reminder if Date Exists
+  // Reminder
+  const reminderDate = document.getElementById("reminderDate").value;
+  const reminderNotes = document.getElementById("reminderNotes").value.trim();
   if (reminderDate) {
-    const reminder = {
-      "Date to Email": reminderDate,
-      "Customer Name": customer["Customer Name"],
-      "BDM": customer["BDM"],
-      "Comments": reminderNotes
-    };
     fetch(reminderSheet, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: reminder })
+      body: JSON.stringify({ data: {
+        "Date to Email": reminderDate,
+        "Customer Name": customer["Customer Name"],
+        "BDM": customer["BDM"],
+        "Comments": reminderNotes
+      } })
     });
   }
 
-  // --- Save Asset if Filled
+  // Assets
+  const assetType = document.getElementById("assetType").value.trim();
+  const assetTag = document.getElementById("assetTag").value.trim();
+  const agreement = document.getElementById("assetAgreement").value.trim();
+  const assetComments = document.getElementById("assetComments").value.trim();
   if (assetType && assetTag && agreement && assetComments) {
-    const asset = {
-      "Customer Name": customer["Customer Name"],
-      "Asset Type": assetType,
-      "Asset Tag Code": assetTag,
-      "Agreement": agreement,
-      "Asset Comments": assetComments
-    };
     fetch(assetSheet, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: asset })
+      body: JSON.stringify({ data: {
+        "Customer Name": customer["Customer Name"],
+        "Asset Type": assetType,
+        "Asset Tag Code": assetTag,
+        "Agreement": agreement,
+        "Asset Comments": assetComments
+      } })
     });
   }
 
-  // --- Save Preorders (if any QTY entered)
-  fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
-    .then(res => res.json())
-    .then(data => {
-      const preorders = {
-        "Customer Name": customer["Customer Name"],
-        "QTY - Creamy Soda": document.getElementById("qtyCreamy")?.value || "",
-        "QTY - Sarsaparilla": document.getElementById("qtySars")?.value || "",
-        "QTY - Blueberry Rasp": document.getElementById("qtyBlue")?.value || "",
-        "QTY - Portello": document.getElementById("qtyPortello")?.value || "",
-        "QTY - LLB": document.getElementById("qtyLLB")?.value || "",
-        "QTY - Rasp Lemonade": document.getElementById("qtyRaspLem")?.value || ""
-      };
-      const method = data.length ? "PATCH" : "POST";
-      const url = data.length
-        ? `${preorderSheet}/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`
-        : preorderSheet;
-      return fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: preorders })
+  // Preorders
+  const preorderData = {};
+  const skus = ["Creamy Soda", "Sarsaparilla", "Blueberry Rasp", "Portello", "LLB", "Rasp Lemonade"];
+  skus.forEach(sku => {
+    const cleanSku = sku.replace(/\s+/g, '');
+    if (document.getElementById(`yesno_${cleanSku}`).value === "Yes") {
+      preorderData[`QTY - ${sku}`] = document.getElementById(`qty_${cleanSku}`).value || "1";
+    }
+  });
+
+  if (Object.keys(preorderData).length > 0) {
+    fetch(`${preorderSheet}?Customer%20Name=${encodeURIComponent(customer["Customer Name"])}`)
+      .then(res => res.json())
+      .then(existing => {
+        const method = existing.length ? "PATCH" : "POST";
+        const url = existing.length
+          ? `${preorderSheet}/Customer%20Name/${encodeURIComponent(customer["Customer Name"])}`
+          : preorderSheet;
+        fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: { "Customer Name": customer["Customer Name"], ...preorderData } })
+        });
       });
-    })
-    .finally(() => {
-      alert("Save / End Call Completed");
-      window.location.href = "dashboard.html";
-    });
+  }
+
+  alert("Save / End Call Completed");
+  window.location.href = "dashboard.html";
 }
 
-// --- Load Customer on Page Load
+// Load on Page Ready
 if (selectedCustomer) {
   loadCustomerDetails(selectedCustomer["Customer Name"]);
 } else {
   window.location.href = "dashboard.html";
 }
 </script>
-
 </body>
 </html>
