@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visit Log - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
+    <style>
+    .page-layout {
+      display: flex;
+      height: calc(100vh - 140px);
+      padding: 0 10px;
+      gap: 20px;
+      box-sizing: border-box;
+    }
+
+    .left-column, .right-column {
+      background: #eef3fd;
+      border-radius: 15px;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .left-column {
+      width: 30%;
+      min-width: 280px;
+    }
+
+    .right-column {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .edit-btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background-color: #0041a3;
+    }
+  </style>
+
 </head>
 
 <body>
