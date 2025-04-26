@@ -31,15 +31,16 @@ function renderStores(storeArray) {
     storeItem.className = 'store-item';
 
     storeItem.innerHTML = `
-  <input type="checkbox" class="store-checkbox" data-email="${store.Email}" id="store-${index}">
-  <label for="store-${index}">
-    <strong>${store['Customer Name']}</strong> | 
-    ${store['Sub Owner Group']} | 
-    ${store['Key Account Group']} | 
-    ${store['Grade']} | 
-    ${store['Store Type']}
-  </label>
-`;
+      <input type="checkbox" class="store-checkbox" data-email="${store.Email}" id="store-${index}">
+      <label for="store-${index}">
+        <strong>${store['Customer Name']}</strong> | 
+        ${store['Sub Owner Group']} | 
+        ${store['Key Account Group']} | 
+        ${store['Grade']} | 
+        ${store['Store Type']} | 
+        ${store['Email']}
+      </label>
+    `;
 
     storeList.appendChild(storeItem);
   });
