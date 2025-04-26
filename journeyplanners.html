@@ -262,32 +262,17 @@ function renderCalendar() {
       if (call) {
         slot.innerHTML = `<div>${call["Customer Name"]} ${call.Status === "Completed" ? "✅" : ""}</div>`;
         slot.style.background = call.Status === "Completed" ? "#d1f7d6" : "#eef3fd";
-       slot.onclick = () => {
-  fetch(masterAPI)
-    .then(res => res.json())
-    .then(data => {
-      const customer = data.find(c => 
-        c["Customer Name"].trim().toLowerCase() === call["Customer Name"].trim().toLowerCase()
-      );
-      if (customer) {
-        localStorage.setItem('selectedCustomer', JSON.stringify(customer));
-        window.location.href = "visit.html";
-      } else {
-        alert("Customer not found in Master Store List!");
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching Master Store List", error);
-      alert("Failed to load Master Store List.");
-    });
+        slot.onclick = () => {
+  const customer = storeData.find(s =>
+  s["Customer Name"].toLowerCase().trim() === call["Customer Name"].toLowerCase().trim()
+);
+  if (customer) {
+    localStorage.setItem('selectedCustomer', JSON.stringify(customer));
+    window.location.href = "visit.html";
+  } else {
+    alert("Customer not found in Master List!");
+  }
 };
-
-        .catch(error => {
-      console.error("Failed to fetch master store list", error);
-      alert("Could not load master store list.");
-    });
-};
-
       } else {
         slot.innerHTML = `<button onclick="openAddVisit('${formatDate(date)}',${i})">Add Visit</button>`;
       }
