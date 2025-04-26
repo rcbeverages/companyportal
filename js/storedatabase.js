@@ -46,8 +46,9 @@ function displayTiles(data) {
 
 function filterTiles() {
   const query = document.getElementById("searchInput").value.toLowerCase();
-  document.querySelectorAll(".tile").forEach(tile => {
-    const name = tile.querySelector('h3').textContent.toLowerCase();
+  const tiles = document.querySelectorAll(".tile");
+  tiles.forEach(tile => {
+    const name = tile.querySelector("h3").textContent.toLowerCase();
     tile.style.display = name.includes(query) ? "block" : "none";
   });
 }
