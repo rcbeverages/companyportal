@@ -15,10 +15,8 @@
 </header>
 
 <div class="menu-container">
-  <div class="button-container">
-    <button class="dashboard-btn">Sales Reports</button>
-    <button class="dashboard-btn">Visit Analytics</button>
-    <button class="dashboard-btn">Order Statistics</button>
+  <div class="button-container" id="dashboard-sections">
+    <!-- Dynamic buttons based on Role will load here -->
   </div>
 </div>
 
@@ -29,6 +27,53 @@
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
+
+<!-- Scripts -->
+<script src="../js/api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const username = localStorage.getItem("username");
+  const container = document.getElementById("dashboard-sections");
+
+  if (!username) {
+    container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
+    return;
+  }
+
+  try {
+    const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0");
+    const users = await response.json();
+    const user = users.find(u => u.Username === username);
+
+    if (!user) {
+      container.innerHTML = "<p style='color: red;'>User not found. Please log in again.</p>";
+      return;
+    }
+
+    const role = user.Role;
+
+    const allButtons = [
+      { label: "Store Performance", href: "store_performance.html", roles: ["Admin"] },
+      { label: "Gap Targets", href: "gap_targets.html", roles: ["Admin"] },
+      { label: "Activation Targets", href: "activation_targets.html", roles: ["Admin"] }
+    ];
+
+    allButtons.forEach(button => {
+      if (button.roles.includes(role)) {
+        const btn = document.createElement("button");
+        btn.className = "dashboard-btn";
+        btn.textContent = button.label;
+        btn.onclick = () => location.href = button.href;
+        container.appendChild(btn);
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    container.innerHTML = "<p style='color: red;'>Error loading buttons. Please try again later.</p>";
+  }
+});
+</script>
 
 </body>
 
