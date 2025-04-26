@@ -61,29 +61,31 @@ document.addEventListener("DOMContentLoaded", function() {
         checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
       });
 
-      // Send Email Button functionality
       sendEmailButton.addEventListener("click", function() {
-        // Get all selected stores (those with checked checkboxes)
-        const selectedStores = document.querySelectorAll(".select-store:checked");
+    console.log("Send Email Button clicked");  // Add this line to check if the event is firing
+    // Get all selected stores (those with checked checkboxes)
+    const selectedStores = document.querySelectorAll(".select-store:checked");
 
-        // Collect the emails of the selected stores
-        const storeEmails = Array.from(selectedStores).map(checkbox => checkbox.getAttribute('data-store-email'));
+    // Collect the emails of the selected stores
+    const storeEmails = Array.from(selectedStores).map(checkbox => checkbox.getAttribute('data-store-email'));
 
-        // Join emails to create the BCC string
-        const bccEmails = storeEmails.join(',');
+    // Join emails to create the BCC string
+    const bccEmails = storeEmails.join(',');
 
-        // Check if there are any emails to send
-        if (bccEmails) {
-          // Create the mailto link with BCC field
-          const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
+    // Check if there are any emails to send
+    if (bccEmails) {
+        // Create the mailto link with BCC field
+        const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
 
-          // Open the default email client (Outlook or others)
-          window.location.href = mailtoLink;
-        } else {
-          // Show a message or do nothing if no stores are selected
-          alert("Please select at least one store to send an email.");
-        }
-      });
+        console.log(mailtoLink);  // Check the mailto link in the console
+        // Open the default email client (Outlook or others)
+        window.location.href = mailtoLink;
+    } else {
+        // Show a message or do nothing if no stores are selected
+        alert("Please select at least one store to send an email.");
+    }
+});
+
     })
     .catch(error => console.error("Error fetching store data:", error));
 });
