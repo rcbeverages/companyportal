@@ -150,11 +150,6 @@
     <h1>Visit Log</h1>
   </header>
 
-<!-- Welcome Message -->
-<div class="welcome-message" id="welcome">
-  <!-- Will be filled dynamically -->
-</div>
-
 <!-- Page Layout Start -->
 <div class="page-layout">
 
@@ -226,7 +221,6 @@
     <button onclick="saveAddressInfo()">Save Changes</button>
   </div>
 </div>
-
 
     </div>
   </div>
@@ -427,12 +421,6 @@ const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
 const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
 const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
 const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";
-
-// === Welcome Message Logic ===
-const username = localStorage.getItem("username");
-const bdmMap = { rhincksman: "Ryan Hincksman", chawkins: "Chris Hawkins" };
-const bdmName = bdmMap[username] || "BDM";
-document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
 // === Customer Data Variables ===
 const selectedCustomer = JSON.parse(localStorage.getItem("selectedCustomer"));
