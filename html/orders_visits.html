@@ -15,10 +15,8 @@
 </header>
 
 <div class="menu-container">
-  <div class="button-container">
-    <button class="dashboard-btn">Create Order</button>
-    <button class="dashboard-btn">View Orders</button>
-    <button class="dashboard-btn">Log Store Visit</button>
+  <div class="button-container" id="dashboard-sections">
+    <!-- Dynamic buttons based on Role will load here -->
   </div>
 </div>
 
@@ -29,6 +27,55 @@
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
+
+<!-- Scripts -->
+<script src="../js/api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const username = localStorage.getItem("username");
+  const container = document.getElementById("dashboard-sections");
+
+  if (!username) {
+    container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
+    return;
+  }
+
+  try {
+    const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0");
+    const users = await response.json();
+    const user = users.find(u => u.Username === username);
+
+    if (!user) {
+      container.innerHTML = "<p style='color: red;'>User not found. Please log in again.</p>";
+      return;
+    }
+
+    const role = user.Role;
+
+    const allButtons = [
+      { label: "Wholesaler Portals", href: "wholesalers.html", roles: ["Admin"] },
+      { label: "Pre-Orders", href: "preorders.html", roles: ["Admin"] },
+      { label: "Visit History / Logs", href: "visit_logs.html", roles: ["Admin"] },
+      { label: "Route Planner", href: "route_planner.html", roles: ["Admin"] },
+      { label: "Suggested Next Visit", href: "suggested_visits.html", roles: ["Admin"] }
+    ];
+
+    allButtons.forEach(button => {
+      if (button.roles.includes(role)) {
+        const btn = document.createElement("button");
+        btn.className = "dashboard-btn";
+        btn.textContent = button.label;
+        btn.onclick = () => location.href = button.href;
+        container.appendChild(btn);
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    container.innerHTML = "<p style='color: red;'>Error loading buttons. Please try again later.</p>";
+  }
+});
+</script>
 
 </body>
 
