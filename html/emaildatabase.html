@@ -7,148 +7,168 @@
 
   <!-- Embedded CSS -->
   <style>
-    /* =========================
-       General Page Styling
-       ========================= */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
+  /* =========================
+     General Page Styling
+     ========================= */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
 
-    /* =========================
-       Header Styling
-       ========================= */
-    header {
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
+  /* =========================
+     Header Styling
+     ========================= */
+  header {
+    background-color: #0057b7;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
 
-    /* =========================
-       Search Container Styling
-       ========================= */
-    .search-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 20px 20px 10px 20px; /* Adds space between search bar and content */
-      margin-top: 80px; /* Ensure space for fixed header */
-    }
+  /* =========================
+     Search Container Styling
+     ========================= */
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 20px;
+    margin-top: 80px; /* Pushes the search bar below the fixed header */
+  }
 
-    .search-box {
-      flex-grow: 1; /* Ensures the search bar takes the majority of space */
-    }
+  .search-box {
+    flex-grow: 1; /* Ensures the search bar takes the majority of space */
+  }
 
-    .search-btn-box {
-      margin-left: 10px;
-    }
+  .search-btn-box {
+    margin-left: 10px;
+  }
 
-    .search-container input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      margin-right: 10px;
-    }
+  .search-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 10px;
+  }
 
-    .search-container .main-button {
-      background-color: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+  .search-container .main-button {
+    background-color: #0057b7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
 
-    .search-container .main-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
+  .search-container .main-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 
-    /* =========================
-       Button Row Styling (Search, Select All, Send Email)
-       ========================= */
-    .button-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px; /* Adds space between the buttons */
-      margin: 20px 20px;
-    }
+  /* =========================
+     Button Row Styling (Search, Select All, Send Email)
+     ========================= */
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Adds space between the buttons */
+    margin: 20px 20px;
+  }
 
-    .button-row .main-button {
-      background-color: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      flex: 1;
-    }
+  .button-row .main-button {
+    background-color: #0057b7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    flex: 1;
+  }
 
-    /* =========================
-       Table Store List Layout
-       ========================= */
-    .store-list-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+  /* =========================
+     Table Store List Layout
+     ========================= */
+  .store-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
 
-    .store-list-table th, .store-list-table td {
-      padding: 12px 20px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
+  .store-list-table th, .store-list-table td {
+    padding: 12px 20px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
 
-    .store-list-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
+  .store-list-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
 
-    /* =========================
-       Footer Styling
-       ========================= */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: #cfe2ff;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px;
-      z-index: 1000;
-      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-    }
+  /* =========================
+     Select All Button Styling
+     ========================= */
+  .select-all-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
 
-    .footer-btn {
-      background-color: #0057b7;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      font-size: 1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
+  .select-all-container .main-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
 
-    .footer-btn:hover {
-      background-color: #1e40af;
-    }
-  </style>
+  /* =========================
+     Footer Styling
+     ========================= */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #cfe2ff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  }
+
+  .footer-btn {
+    background-color: #0057b7;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .footer-btn:hover {
+    background-color: #1e40af;
+  }
+</style>
+
 </head>
 
 <body>
