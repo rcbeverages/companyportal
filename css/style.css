@@ -116,6 +116,47 @@ footer {
   justify-content: center;
   gap: 20px;
 }
+/* For main menu full-page spacing */
+.menu-container {
+  position: absolute;
+  top: 100px;
+  bottom: 80px;
+  left: 20px;
+  right: 20px;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* For left-to-right flex button layout */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Big chunky buttons for dashboard and menus */
+.dashboard-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 50px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: none;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  text-align: center;
+}
+
+.dashboard-btn:hover {
+  background-color: #1e40af;
+}
 
 /* =========================
    Form Container
