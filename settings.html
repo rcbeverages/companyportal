@@ -119,11 +119,6 @@
     <h1>Settings</h1>
   </header>
 
-  <!-- Welcome Message Section -->
-  <div class="welcome-message" id="welcome">
-    <!-- Welcome message will be injected here -->
-  </div>
-
   <!-- Button Container for Groups -->
   <div class="button-container" id="dashboard-sections">
     <!-- Buttons will be dynamically populated here -->
@@ -142,10 +137,7 @@
     const username = localStorage.getItem("username");
     const role = localStorage.getItem("role");
 
-    // Display welcome message
-    document.getElementById("welcome").textContent = `Welcome ${username}`;
-
-    // Define the button data (for each group)
+      // Define the button data (for each group)
     const buttonData = [
       { "label": "Add User", "href": "add_user.html", "roles": ["Admin"] },
       { "label": "Delete User", "href": "delete_user.html", "roles": ["Admin"] },
