@@ -218,6 +218,20 @@
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
 <script>
+  // API Endpoints
+const customerSheet = "https://sheetdb.io/api/v1/YOUR_CUSTOMER_SHEET_ID";  // <-- Update this
+const sheetUrl = "https://sheetdb.io/api/v1/YOUR_CUSTOMER_SHEET_ID";        // <-- Update
+const visitLogSheet = "https://sheetdb.io/api/v1/YOUR_VISIT_LOG_SHEET_ID";  // <-- Update
+const reminderSheet = "https://sheetdb.io/api/v1/YOUR_REMINDER_SHEET_ID";   // <-- Update
+const assetSheet = "https://sheetdb.io/api/v1/YOUR_ASSET_SHEET_ID";         // <-- Update
+const preorderSheet = "https://sheetdb.io/api/v1/YOUR_PREORDER_SHEET_ID";   // <-- Update
+
+// Selected Customer Name from Local Storage
+const selectedCustomer = localStorage.getItem("selectedCustomer");
+
+// Global Customer Object
+let customer = {};
+
 // Toggle collapsible sections
 function toggleSection(id) {
   const section = document.getElementById(id);
@@ -235,7 +249,7 @@ function loadCustomerDetails(customerName) {
     .then(res => res.json())
     .then(data => {
       if (data.length > 0) {
-        const customer = data[0];
+        customer = data[0]; // <-- Correct now
 
         document.getElementById("custName").textContent = customer["Customer Name"] || "";
         document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
@@ -372,7 +386,10 @@ function saveEverything() {
   })
   .catch(() => alert("Something went wrong during save."));
 }
-</script>
 
-</body>
-</html>
+if (selectedCustomer) {
+  loadCustomerDetails(selectedCustomer);
+} else {
+  window.location.href = "dashboard.html";
+}
+</script>
