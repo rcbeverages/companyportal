@@ -32,19 +32,14 @@
 <!-- Page Content Here -->
 <div id="popupMessage" style="display:none;">Save/End Call Completed</div>
 
-<!-- Customer Details Section -->
-<div class="card">
-  <h2>Customer Details</h2>
-  <div id="detailsContent">Loading...</div>
-</div>
+<div class="form-container">
+    <div id="popupMessage">Save/End Call Completed</div><!-- Customer Details -->
+    <div class="card">
+      <h2>Customer Details</h2>
+      <div id="detailsContent">Loading...</div>
+    </div>
 
-<!-- Store Range Section -->
-<div class="card">
-  <button class="collapsible" onclick="toggleSection('storeRangeContent')">Edit Store Range</button>
-  <div id="storeRangeContent" class="hidden"></div>
-</div>
-
-<!-- Visit Log Section -->
+  <!-- Visit Log Section -->
 <div class="card">
   <button class="collapsible" onclick="toggleSection('logVisit')">Log Visit</button>
   <div id="logVisit" class="hidden">
@@ -72,23 +67,120 @@
   </div>
 </div>
 
-<div class="card action-buttons">
-  <button onclick="saveEverything()">Save / End Call</button>
+<!-- Store Range Section -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('storeRangeContent')">Edit Store Range</button>
+  <div id="storeRangeContent" class="hidden"></div>
 </div>
 
-</div>
+   <!-- Preorders -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('preorderForm')">Preorders</button>
+      <div id="preorderForm" class="hidden">
+        <div class="form-group">
+          <label>Creamy Soda</label><select id="preCreamy" onchange="toggleQty('preCreamy','qtyCreamy')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtyCreamy" placeholder="QTY" style="display:none;" />
+          <label>Sarsaparilla</label><select id="preSars" onchange="toggleQty('preSars','qtySars')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtySars" placeholder="QTY" style="display:none;" />
+          <label>Blueberry Rasp</label><select id="preBlue" onchange="toggleQty('preBlue','qtyBlue')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtyBlue" placeholder="QTY" style="display:none;" />
+          <label>Portello</label><select id="prePortello" onchange="toggleQty('prePortello','qtyPortello')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtyPortello" placeholder="QTY" style="display:none;" />
+          <label>LLB</label><select id="preLLB" onchange="toggleQty('preLLB','qtyLLB')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtyLLB" placeholder="QTY" style="display:none;" />
+          <label>Rasp Lemonade</label><select id="preRaspLem" onchange="toggleQty('preRaspLem','qtyRaspLem')"><option>No</option><option>Yes</option></select>
+          <input type="number" id="qtyRaspLem" placeholder="QTY" style="display:none;" />
+        </div>
+      </div>
+    </div>
+
+
+     <!-- Email Reminder -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('emailReminder')">Reminders</button>
+      <div id="emailReminder" class="hidden">
+        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
+        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('addressForm')">Edit Address</button>
+      <div id="addressForm" class="hidden">
+        <div class="form-group"><label>Address</label><input id="addr" /></div>
+        <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
+        <div class="form-group"><label>State</label><input id="state" /></div>
+        <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
+      </div>
+    </div>
+
+    <!-- Classification -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('classificationForm')">Edit Classification</button>
+      <div id="classificationForm" class="hidden">
+        <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
+        <div class="form-group"><label>Sub Owner Group</label><select id="ownerGroup"><option value="">—</option></select></div>
+        <div class="form-group"><label>Key Account Group</label><select id="keyGroup"></select></div>
+        <div class="form-group"><label>Grade</label><select id="grade"></select></div>
+        <div class="form-group"><label>Store Type</label><select id="storeType"></select></div>
+        <div class="form-group"><label>Segment</label><select id="segment"></select></div>
+        <div class="form-group"><label>BDM Assignment</label><select id="bdm"></select></div>
+      </div>
+    </div>
+
+
+    <!-- Asset Management -->
+    <div class="card">
+      <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
+      <div id="assetForm" class="hidden">
+        <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
+        <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
+        <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
+        <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
+        <div id="existingAssets" class="existing-assets">Loading existing assets...</div>
+      </div>
+    </div>
+
+
+    <!-- Past Notes -->
+    <div class="card">
+      <h2>Previous Visit Notes</h2>
+      <div id="pastNotes">Loading...</div>
+    </div>
+
+    <!-- Current Promos -->
+    <div class="card" id="promoSection" style="display: none;">
+      <h2>Current Promos</h2>
+      <div id="promoList"></div>
+    </div>
+
+    <!-- Final Buttons -->
+    <div class="card action-buttons">
+      <button onclick="saveEverything()">Save / End Call</button>
+    </div>
+
+  </div> <!-- Close form-container -->
+
 
 <footer>
   <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  <button class="footer-btn" onclick="location.href='journeyplanner.html'">Journey Planner</button>
-  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+
 </footer>
 
 <script>
+// API Endpoints
+const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
 const sheetUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
 const visitLogSheet = "https://sheetdb.io/api/v1/3jn3pg6hok7hj";
-const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
+const reminderSheet = "https://sheetdb.io/api/v1/lkhkbez8p8el9";
+const assetSheet = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";
+const preorderSheet = "https://sheetdb.io/api/v1/autq91pb2wsab";
+const promoSheet = "https://sheetdb.io/api/v1/98o62avm5tgtx";
 
 function toggleSection(id) {
   const el = document.getElementById(id);
