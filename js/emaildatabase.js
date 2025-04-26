@@ -53,31 +53,39 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         displayStores(filteredStores);
 
-        // Enable/Disable Send Email button based on search results
-        sendEmailButton.disabled = filteredStores.length === 0 || !Array.from(document.querySelectorAll(".selectStoreCheckbox:checked")).length;
-      });
+        // Select All Button functionality
+          selectAllButton.addEventListener("click", function() {
+            const visitButtons = document.querySelectorAll(".visit-btn");
+            const allVisited = Array.from(visitButtons).every(button => button.disabled);
+            visitButtons.forEach(button => button.disabled = !allVisited);
+          });
 
-      // Select All Button functionality
-      selectAllButton.addEventListener("click", function() {
-        const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
-        const selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-        checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
+          // Send Email Button functionality
+          sendEmailButton.addEventListener("click", function() {
+            // Get all selected stores (those with disabled visit buttons)
+            const selectedStores = document.querySelectorAll(".visit-btn:disabled");
+            
+            // Collect the emails of the selected stores
+            const storeEmails = Array.from(selectedStores).map(button => button.getAttribute('data-store-email'));
 
-        // Enable/Disable Send Email button based on selected checkboxes
-        sendEmailButton.disabled = !Array.from(document.querySelectorAll(".selectStoreCheckbox:checked")).length;
-      });
+            // Join emails to create the BCC string
+            const bccEmails = storeEmails.join(',');
 
-      // Send Email Button functionality
-      sendEmailButton.addEventListener("click", function() {
-        const selectedCheckboxes = document.querySelectorAll(".selectStoreCheckbox:checked");
-        const selectedEmails = Array.from(selectedCheckboxes).map(checkbox => checkbox.getAttribute('data-email'));
-        const bccEmails = selectedEmails.join(',');
+            // Check if there are any emails to send
+            if (bccEmails) {
+              // Create the mailto link with BCC field
+              const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
 
-        if (bccEmails) {
-          // Open the default email client with the selected emails in BCC
-          window.location.href = `mailto:?bcc=${bccEmails}`;
-        }
-      });
+              // Open the default email client (Outlook or others)
+              window.location.href = mailtoLink;
+            } else {
+              // Show a message or do nothing if no stores are selected
+              alert("Please select at least one store to send an email.");
+            }
+          });
+
+        })
+        .catch(error => console.error("Error fetching store data:", error));
     })
-    .catch(error => console.error("Error fetching store data:", error));
+    .catch(error => console.error("Error fetching BDM data:", error));
 });
