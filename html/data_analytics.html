@@ -2,161 +2,40 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Basic Body Styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
-    }
-
-    /* Fixed Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      z-index: 1000; /* Keeps the header on top */
-    }
-
-    /* Page Title Styling */
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-      /* Button Container Layout */
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 2rem;
-     padding: 6rem 0; /* Ensure the buttons are below the fixed header and welcome message */
-}
-
-    /* Button Styling */
-    .btn {
-      background-color: #2563eb;
-      color: white;
-      padding: 50px;
-      font-size: 1.5rem;
-      border-radius: 6px;
-      border: none;
-      text-decoration: none;
-      display: block;
-      width: 100%;
-      max-width: 300px;
-      margin: 10px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
-
-    .btn:hover {
-      background-color: #1e40af;
-    }
-
-    /* Footer Styling */
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #cfe2ff;
-      padding: 10px 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 2px solid #ccc;
-      z-index: 1000;
-    }
-
-    footer .footer-btn {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
-
-    footer .footer-btn:hover {
-      background-color: #1e40af;
-    }
-
-    /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .btn {
-        font-size: 1.2rem;
-        padding: 20px;
-      }
-    }
-
-    /* Media Queries for Mobile */
-    @media screen and (max-width: 600px) {
-      footer .footer-btn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data & Analytics - RC Beverages CRM</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-  <!-- Header Section with Page Title -->
-  <header>
-    <h1>Data & Analytics</h1>
-  </header>
 
-  <!-- Button Container for Groups -->
-  <div class="button-container" id="dashboard-sections">
-    <!-- Buttons will be dynamically populated here -->
+<header>
+  <h1>Data & Analytics</h1>
+</header>
+
+<div class="form-container">
+  <div class="section-header">
+    <h2>CRM Reporting</h2>
   </div>
 
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-  </footer>
+  <div class="button-container">
+    <button class="main-button" onclick="location.href='#'">Sales Reports</button>
+    <button class="main-button" onclick="location.href='#'">Visit Statistics</button>
+    <button class="main-button" onclick="location.href='#'">Performance Dashboards</button>
+    <button class="main-button" onclick="location.href='#'">Export Data</button>
+  </div>
+</div>
 
-  <script>
-    // Get username and role from localStorage
-    const username = localStorage.getItem("username");
-    const role = localStorage.getItem("role");
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-    // Define the button data (for each group)
-    const buttonData = [
-      { "label": "Store Performance", "href": "store_performance.html", "roles": ["Admin"] },
-      { "label": "Gap Targets", "href": "gap_targets.html", "roles": ["Admin"] },
-      { "label": "Activation Targets", "href": "activation_targets.html", "roles": ["Admin"] }
-    ];
-
-    // Create buttons dynamically based on the user role
-    const buttonContainer = document.getElementById("dashboard-sections");
-
-    buttonData.forEach(button => {
-      if (button.roles.includes(role)) {
-        const btnElement = document.createElement("a");
-        btnElement.classList.add("btn");
-        btnElement.textContent = button.label;
-        btnElement.href = button.href;
-        buttonContainer.appendChild(btnElement);
-      }
-    });
-  </script>
+<script src="../js/api.js"></script> <!-- Optional for future data APIs -->
 </body>
 
 </html>
