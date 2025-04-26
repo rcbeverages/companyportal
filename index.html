@@ -1,125 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RC Beverages</title>
+  <title>RC Beverages - Welcome</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #007BFF, #00BFFF); /* Updated blues */
-      color: #333;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #007BFF, #00BFFF);
+      color: white;
+      height: 100vh; /* Fill whole screen */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* prevent any accidental scroll */
       text-align: center;
+    }
+
+    .landing-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      max-width: 600px;
       padding: 20px;
-      min-height: 100vh;
       box-sizing: border-box;
     }
 
-    /* Header Styling */
-    header {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-
-    header img {
+    .logo {
       max-width: 200px;
-      height: auto;
+      margin-bottom: 20px;
     }
 
     h1 {
-      font-size: 3rem;
-      color: white;
-      font-weight: bold;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
 
-    /* Sub-header Styling */
-    .sub-header {
-      background-color: white;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      max-width: 900px;
-      margin: 0 auto 20px;
-      word-wrap: break-word;
-      white-space: normal;
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
     }
 
-    .sub-header p {
-      font-size: 1.25rem;
-      color: #080707;
-    }
-
-    /* Intro Section Styling */
-    .intro-text {
-      background-color: white;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      max-width: 900px;
-      margin: 0 auto 20px;
-    }
-
-    .intro-text p {
-      line-height: 1.7;
-      color: #080707;
-      font-size: 1.25rem;
-      margin: 10px 0;
-    }
-
-    /* Button Styling matching CRM */
     .main-button {
-      display: inline-block;
-      background-color: #007BFF;
-      color: white;
-      padding: 12px 24px;
-      font-size: 18px;
+      background-color: white;
+      color: #007BFF;
+      font-size: 1.2rem;
       font-weight: bold;
+      padding: 12px 24px;
       border: none;
-      border-radius: 8px;
+      border-radius: 30px;
       text-decoration: none;
-      text-align: center;
-      cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-top: 20px;
     }
 
     .main-button:hover {
-      background-color: #0056b3;
+      background-color: #e0e0e0;
     }
 
-    /* Media Queries for Mobile */
+    /* Mobile Tweaks */
     @media (max-width: 600px) {
       h1 {
         font-size: 2rem;
       }
 
-      .intro-text,
-      .sub-header {
-        padding: 20px;
+      p {
+        font-size: 1rem;
       }
 
-      .sub-header p,
-      .intro-text p {
-        font-size: 1.1rem;
+      .logo {
+        max-width: 150px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>
+
+  <div class="landing-container">
     <img src="assets/logo.png" alt="RC Beverages Logo" class="logo">
     <h1>Welcome to RC Beverages</h1>
-  </header>
-
-  <div class="sub-header">
-    <p>Your central hub for managing customer visits and field activities.</p>
-  </div>
-
-  <div class="intro-text">
-    <p>At RC Beverages, we craft bold, nostalgic, and flavour-forward drinks that bring a modern twist to classic favourites. Driven by creativity and grounded in industry know-how, our tight-knit team thrives on staying ahead of trends—moving fast, thinking big, and refusing to blend in. We’re here to shake up the liquor game with disruptive innovation, uncompromising quality, and unforgettable branding that speaks to a new generation of drinkers.</p>
+    <p>Manage your stores, customers, visits and communications with ease.</p>
     <a href="html/login.html" class="main-button">Get Started</a>
   </div>
 
