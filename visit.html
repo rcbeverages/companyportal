@@ -151,27 +151,22 @@
     <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
   </footer>
   
-  <div class="form-container">
-    <!-- Customer Details -->
 <div class="card">
   <h2>Customer Details</h2>
-  <div id="detailsContent">
-    <div class="form-group"><label>Customer Name</label><input id="editName" /></div>
-    <div class="form-group"><label>Sub Owner Group</label><input id="subOwnerGroup" /></div>
-    <div class="form-group"><label>Key Account Group</label><input id="keyAccountGroup" /></div>
-    <div class="form-group"><label>Grade</label><input id="grade" /></div>
-    <div class="form-group"><label>Store Type</label><input id="storeType" /></div>
-    <div class="form-group"><label>Segment</label><input id="segment" /></div>
-    <div class="form-group"><label>Contact Name</label><input id="contactName" /></div>
-    <div class="form-group"><label>Phone</label><input id="contactPhone" /></div>
-    <div class="form-group"><label>Email</label><input id="contactEmail" /></div>
-    <div class="form-group"><label>Address</label><input id="addr" /></div>
-    <div class="form-group"><label>Suburb</label><input id="suburb" /></div>
-    <div class="form-group"><label>State</label><input id="state" /></div>
-    <div class="form-group"><label>Postcode</label><input id="postcode" /></div>
-    <div class="form-group"><label>BDM Assignment</label><input id="bdm" /></div>
-  </div>
+  <div id="detailsContent">Loading...</div>
 </div>
+window.onload = () => {
+  const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
+  const fields = [
+    "Customer Name", "Sub Owner Group", "Key Account Group", "Grade",
+    "Store Type", "Segment", "Contact Name", "Phone", "Email",
+    "Address", "Suburb", "State", "Postcode", "BDM"
+  ];
+
+  document.getElementById("detailsContent").innerHTML = fields.map(k =>
+    `<strong>${k}:</strong> ${customer[k] || "—"}<br>`
+  ).join('');
+};
     
     <!-- Log Visit -->
 <div class="card">
