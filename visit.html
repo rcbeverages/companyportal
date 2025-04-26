@@ -12,20 +12,32 @@
   <style>
     /* Layout containers */
     .page-layout {
-      display: flex;
-      height: calc(100vh - 140px);
-      padding: 0 10px;
-      gap: 20px;
-      box-sizing: border-box;
-    }
+  display: flex;
+  height: auto;
+  padding: 15px;
+  gap: 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
 
-    .left-column, .right-column {
-      background: #eef3fd;
-      border-radius: 15px;
-      padding: 15px;
-      box-sizing: border-box;
-    }
+.left-column, .right-column {
+  background: #eef3fd;
+  border-radius: 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  min-height: fit-content;
+}
 
+.left-column {
+  width: 30%;
+  min-width: 280px;
+}
+
+.right-column {
+  flex: 1;
+  max-height: 100%;
+  overflow-y: auto;
+}
     .left-column {
       width: 30%;
       min-width: 280px;
