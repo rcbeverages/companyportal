@@ -221,4 +221,65 @@ footer .footer-btn:hover {
 .blue-box button:disabled {
   background-color: #ccc;
 }
+.white-box {
+  position: absolute;
+  top: 160px;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 900px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.search-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-controls input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.search-controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0057b7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
+.search-controls button:disabled {
+  background-color: #ccc;
+}
+
+.store-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.store-item label {
+  font-weight: normal;
+  display: block;
+  width: 100%;
+}
+
 
