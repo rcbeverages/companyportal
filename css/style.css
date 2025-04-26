@@ -128,16 +128,14 @@ footer {
 
 /* For main menu full-page spacing */
 .menu-container {
-  position: absolute;
-  top: 140px; /* was 100px or 80px */
-  bottom: 80px;
-  left: 20px;
-  right: 20px;
+  width: 90%;
+  max-width: 1300px;
+  margin: 20px auto 0 auto; /* 👈 Push down from Search Bar */
+  padding-top: 20px;
+  box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-  box-sizing: border-box;
 }
-
 }
 
 /* Big chunky buttons for dashboard and menus */
