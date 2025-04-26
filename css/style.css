@@ -151,15 +151,9 @@ footer {
    Form Container Action Menues
    ========================= */
 .form-container {
-  position: absolute;
-  top: 120px;
-  bottom: 80px;
-  left: 20px;
-  right: 20px;
-  margin: auto;
   width: 90%;
   max-width: 900px;
-  min-height: 600px; /* 👈 NEW LINE HERE */
+  margin: 120px auto 0 auto; /* 👈 Pushes it down 120px from the header */
   padding: 30px;
   background-color: white;
   border-radius: 10px;
