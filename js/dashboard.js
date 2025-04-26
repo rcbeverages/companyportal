@@ -3,11 +3,15 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const username = localStorage.getItem("username");
   const container = document.getElementById("dashboard-sections");
+  const welcomeMessage = document.getElementById("welcome-message");
 
   if (!username) {
     container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
     return;
   }
+
+  // Set the Welcome message with username
+  welcomeMessage.textContent = `Welcome, ${username}!`;
 
   try {
     const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0"); // Your Users API
@@ -19,26 +23,18 @@ document.addEventListener("DOMContentLoaded", async function () {
       container.innerHTML = "<p style='color: red;'>User not found. Please log in again.</p>";
       return;
     }
-    const welcomeMessage = document.getElementById("welcome-message");
-
-    if (username) {
-      welcomeMessage.textContent = `Welcome, ${username}!`;
-    }
-
-    
 
     const role = user.Role;
 
     const allButtons = [
-      { name: "CRM Tools", page: "crmtools.html", roles: ["Admin"] }
+      { name: "CRM Tools", page: "crmtools.html", roles: ["Admin"] },
       { name: "Orders & Visits", page: "orders_visits.html", roles: ["Admin", "Sales"] },
       { name: "Marketing & Promotions", page: "marketing_promotions.html", roles: ["Admin", "Marketing"] },
       { name: "Data & Analytics", page: "data_analytics.html", roles: ["Admin"] },
       { name: "Resources", page: "resources.html", roles: ["Admin", "Sales"] },
       { name: "Warehouse", page: "warehouse.html", roles: ["Admin", "Warehouse", "Sales"] },
-      { name: "Settings", page: "settings.html", roles: ["Admin"] },   
-      
-  
+      { name: "Settings", page: "settings.html", roles: ["Admin"] },
+    
     ];
 
     allButtons.forEach(button => {
