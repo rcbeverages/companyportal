@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   const storeListContainer = document.getElementById("storeList");
-  const selectAllCheckbox = document.getElementById("selectAllCheckbox");
+  const selectAllButton = document.getElementById("selectAllButton");
   const searchInput = document.getElementById("searchInputEmail");
   const sendEmailButton = document.getElementById("sendEmailButton");
   const searchButton = document.getElementById("searchButtonEmail");
-  const selectAllButton = document.getElementById("selectAllButton");
 
   const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
   const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
@@ -54,9 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
           );
         });
         displayStores(filteredStores);
-
-        // Enable/Disable Send Email button
-        sendEmailButton.disabled = searchTerm.length === 0;
       });
 
       // Manually trigger search when the "Search" button is clicked
@@ -71,4 +67,15 @@ document.addEventListener("DOMContentLoaded", function() {
             store["Store Type"].toLowerCase().includes(searchTerm)
           );
         });
-        displayStores(filteredStores
+        displayStores(filteredStores);
+      });
+
+      // Select All Button functionality
+      selectAllButton.addEventListener("click", function() {
+        const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
+        const selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
+      });
+    })
+    .catch(error => console.error("Error fetching store data:", error));
+});
