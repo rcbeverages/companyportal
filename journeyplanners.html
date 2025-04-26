@@ -263,9 +263,25 @@ function renderCalendar() {
         slot.innerHTML = `<div>${call["Customer Name"]} ${call.Status === "Completed" ? "✅" : ""}</div>`;
         slot.style.background = call.Status === "Completed" ? "#d1f7d6" : "#eef3fd";
         slot.onclick = () => {
-  const customer = storeData.find(s =>
-  s["Customer Name"].toLowerCase().trim() === call["Customer Name"].toLowerCase().trim()
-);
+  fetch(masterAPI)
+    .then(res => res.json())
+    .then(data => {
+      const customer = data.find(s =>
+        s["Customer Name"].trim().toLowerCase() === call["Customer Name"].trim().toLowerCase()
+      );
+      if (customer) {
+        localStorage.setItem('selectedCustomer', JSON.stringify(customer));
+        window.location.href = "visit.html";
+      } else {
+        alert("Customer not found in Master List!");
+      }
+    })
+    .catch(error => {
+      console.error("Failed to fetch master store list", error);
+      alert("Could not load master store list.");
+    });
+};
+
   if (customer) {
     localStorage.setItem('selectedCustomer', JSON.stringify(customer));
     window.location.href = "visit.html";
