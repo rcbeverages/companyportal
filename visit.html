@@ -241,20 +241,13 @@
       </div>
     </div>
 
-    <!-- Store Range -->
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
-      <div id="storeRange" class="hidden">
-        <div class="form-group">
-          <label>Creamy Soda</label><select id="rewindedCreamy"><option>No</option><option>Yes</option></select>
-          <label>Sarsaparilla</label><select id="rewindedSars"><option>No</option><option>Yes</option></select>
-          <label>Blueberry Rasp</label><select id="rewindedBlue"><option>No</option><option>Yes</option></select>
-          <label>Portello</label><select id="rewindedPortello"><option>No</option><option>Yes</option></select>
-          <label>LLB</label><select id="rewindedLLB"><option>No</option><option>Yes</option></select>
-          <label>Rasp Lemonade</label><select id="rewindedRaspLem"><option>No</option><option>Yes</option></select>
-        </div>
-      </div>
-    </div>
+  <!-- Store Range -->
+<div class="card">
+  <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
+  <div id="storeRange" class="hidden">
+    <div id="storeRangeContent" class="form-group">Loading store range...</div>
+  </div>
+</div>
 
     <!-- Preorders -->
     <div class="card">
@@ -587,18 +580,50 @@ function loadPastNotes() {
 
 // Load store range fields
 function loadStoreRange() {
-  const map = {
-    "rewindedCreamy": "Rewinded - Creamy Soda",
-    "rewindedSars": "Rewinded - Sarsaparilla",
-    "rewindedBlue": "Rewinded - Blueberry Rasp",
-    "rewindedPortello": "Rewinded - Portello",
-    "rewindedLLB": "Rewinded - LLB",
-    "rewindedRaspLem": "Rewinded - Rasp Lemonade"
-  };
-  for (const [id, col] of Object.entries(map)) {
-    if (customer[col]) document.getElementById(id).value = customer[col];
-  }
+  fetch("https://sheetdb.io/api/v1/2p0phuvm9dz42")
+    .then(res => res.json())
+    .then(data => {
+      const storeRangeContent = document.getElementById("storeRangeContent");
+      storeRangeContent.innerHTML = "";
+
+      // Build grouped layout
+      let currentBrand = "";
+      data.forEach(entry => {
+        if (entry.Brand && entry.Brand !== currentBrand) {
+          const brandHeader = document.createElement("h3");
+          brandHeader.innerText = entry.Brand;
+          brandHeader.style.marginTop = "20px";
+          storeRangeContent.appendChild(brandHeader);
+          currentBrand = entry.Brand;
+        }
+
+        const label = document.createElement("label");
+        label.innerText = entry.SKU;
+        const select = document.createElement("select");
+        select.id = "storeRange_" + entry.SKU.replace(/[^a-zA-Z0-9]/g, "");
+        select.innerHTML = "<option>No</option><option>Yes</option>";
+        storeRangeContent.appendChild(label);
+        storeRangeContent.appendChild(select);
+      });
+
+      // Prefill existing data
+      fetch(sheetUrl)
+        .then(res => res.json())
+        .then(customers => {
+          const thisCustomer = customers.find(c => c["Customer Name"] === customer["Customer Name"]);
+          if (!thisCustomer) return;
+
+          data.forEach(entry => {
+            const field = "Store - " + entry.SKU;
+            const select = document.getElementById("storeRange_" + entry.SKU.replace(/[^a-zA-Z0-9]/g, ""));
+            if (thisCustomer[field]) {
+              select.value = thisCustomer[field];
+            }
+          });
+        });
+    });
 }
+
 
 // Load preorders
 function loadPreorders() {
@@ -666,6 +691,14 @@ function loadExistingAssets() {
       }
     });
 }
+  // Add Store Range Save
+const storeRangeData = {};
+document.querySelectorAll("#storeRangeContent select").forEach(select => {
+  const fieldName = "Store - " + select.id.replace("storeRange_", "").replace(/([A-Z])/g, ' $1').trim();
+  storeRangeData[fieldName] = select.value;
+});
+Object.assign(update, storeRangeData);
+
 
 // Delete an asset
 function deleteAsset(tagCode) {
