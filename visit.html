@@ -14,7 +14,7 @@
       padding: 0;
       background-color: #f4f4f4;
       text-align: center;
-      padding-top: 100px; /* Add padding to prevent content being hidden behind fixed header */
+      padding-top: 150px; /* Added more padding to prevent content being hidden behind fixed header and welcome message */
     }
 
     /* Fixed Header */
@@ -27,7 +27,7 @@
       color: white;
       padding: 20px;
       text-align: center;
-      z-index: 1000; /* Keeps the header on top */
+      z-index: 1000;
     }
 
     /* Page Title Styling */
@@ -50,33 +50,60 @@
       z-index: 999;
     }
 
-    /* Button Container Layout */
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 2rem;
-     padding: 6rem 0; /* Ensure the buttons are below the fixed header and welcome message */
-}
-
-    /* Button Styling */
-    .btn {
-      background-color: #2563eb;
-      color: white;
-      padding: 50px;
-      font-size: 1.5rem;
+    /* Search Input Styling */
+    #searchInput {
+      width: 80%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 1.2rem;
       border-radius: 6px;
-      border: none;
-      text-decoration: none;
-      display: block;
-      width: 100%;
-      max-width: 300px;
-      margin: 10px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
     }
 
-    .btn:hover {
+    /* Store List Styling */
+    #customerTiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    /* Individual Tile Styling */
+    .tile {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      width: 25%; /* Adjust width so that 3 tiles fit across on large screens */
+      margin: 5px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .tile h3 {
+      margin: 0;
+      font-size: 1.1rem; /* Reduced font size for store name */
+    }
+
+    .tile p {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+
+    .tile button {
+      margin-top: 10px;
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tile button:hover {
       background-color: #1e40af;
     }
 
@@ -110,18 +137,34 @@
     }
 
     /* Media Queries for Tablet and Mobile */
-    @media screen and (max-width: 768px) {
-      .btn {
-        font-size: 1.2rem;
-        padding: 20px;
+    @media screen and (max-width: 1024px) {
+      .tile {
+        width: 32%; /* Two tiles per row on larger tablets */
       }
     }
 
-    /* Media Queries for Mobile */
+    @media screen and (max-width: 768px) {
+      .tile {
+        width: 45%; /* Two tiles per row on tablets */
+      }
+
+      #searchInput {
+        width: 90%;
+      }
+    }
+
     @media screen and (max-width: 600px) {
+      .tile {
+        width: 90%; /* One tile per row on mobile */
+      }
+
       footer .footer-btn {
         font-size: 1rem;
         padding: 10px 15px;
+      }
+
+      #searchInput {
+        width: 90%;
       }
     }
   </style>
@@ -130,17 +173,12 @@
 <body>
   <!-- Header Section with Page Title -->
   <header>
-    <h1>Dashboard</h1>
+    <h1>Store Database</h1>
   </header>
 
   <!-- Welcome Message Section -->
   <div class="welcome-message" id="welcome">
     <!-- Welcome message will be injected here -->
-  </div>
-
-  <!-- Button Container for Groups -->
-  <div class="button-container" id="dashboard-sections">
-    <!-- Buttons will be dynamically populated here -->
   </div>
 
   <footer>
@@ -150,7 +188,7 @@
     <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
     <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
   </footer>
-  
+    
 <div class="card">
   <h2>Customer Details</h2>
   <div id="detailsContent">Loading...</div>
@@ -279,8 +317,8 @@ window.onload = () => {
   <button onclick="saveEverything()">Save / End Call</button>
 </div>
 
-<script>
-   const username = localStorage.getItem("username");
+  <script>
+    const username = localStorage.getItem("username");
     const bdmMap = {
       rhincksman: "Ryan Hincksman",
       chawkins: "Chris Hawkins"
@@ -288,7 +326,7 @@ window.onload = () => {
 
     const bdmName = bdmMap[username];
 
-    let customerCache = [];
+ let customerCache = [];
     document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
 const customer = JSON.parse(localStorage.getItem("selectedCustomer") || "{}");
@@ -298,7 +336,14 @@ const reminderAPI = "https://sheetdb.io/api/v1/lkhkbez8p8el9"; // Reminders
 const assetAPI = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Assets
 const storeRangeAPI = "https://sheetdb.io/api/v1/2p0phuvm9dz42"; // Store Range
 
-function toggleSection(id) {
+
+    async function loadCustomers() {
+      const res = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
+      const data = await res.json();
+      customerCache = data;
+      displayTiles(data);
+    }
+    function toggleSection(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
@@ -435,5 +480,3 @@ window.onload = function() {
 
 </body>
 </html>
-
-
