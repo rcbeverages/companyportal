@@ -262,7 +262,9 @@ function renderCalendar() {
         slot.innerHTML = `<div>${call["Customer Name"]} ${call.Status === "Completed" ? "✅" : ""}</div>`;
         slot.style.background = call.Status === "Completed" ? "#d1f7d6" : "#eef3fd";
         slot.onclick = () => {
-  const customer = storeData.find(s => s["Customer Name"] === call["Customer Name"]);
+  const customer = storeData.find(s =>
+  s["Customer Name"].toLowerCase().trim() === call["Customer Name"].toLowerCase().trim()
+);
   if (customer) {
     localStorage.setItem('selectedCustomer', JSON.stringify(customer));
     window.location.href = "visit.html";
