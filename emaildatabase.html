@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Database</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Database - RC Beverages</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
+<body>
   <!-- Fixed Header -->
-  <header class="header">
+  <header>
     <h1>Email Database</h1>
-    <button class="back-button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
   </header>
+
+  <!-- Welcome Message -->
+  <div class="welcome-message">
+    Welcome <span id="username"></span>
+  </div>
 
   <!-- Scrollable Form Container -->
   <div class="form-container">
-    <div class="top-controls">
-      <input type="text" id="searchInput" placeholder="Search by Store, Sub Owner, Key Account, Grade, Retail/On Premise">
+
+    <!-- Section Title inside form container -->
+    <div class="section-header">
+      <h2>Email Database</h2>
+    </div>
+
+    <!-- Search bar and Send Email inside blue box -->
+    <div class="blue-box">
+      <input type="text" id="searchInput" placeholder="Search by Store, Sub Owner, Key Account, Grade, Store Type" />
       <button id="sendEmailButton" disabled>Send Email</button>
     </div>
 
+    <!-- Store List -->
     <div id="storeList" class="store-list">
-      <!-- Store list will be populated here by JS -->
+      <!-- JS will populate here -->
     </div>
+
   </div>
 
   <!-- Fixed Footer -->
-  <footer class="footer">
-    <p>RC Beverages Portal</p>
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
   </footer>
 
+  <!-- Link to the JS -->
   <script src="emaildatabase.js"></script>
 
+  <script>
+    // Set Username from Local Storage (like other pages)
+    const username = localStorage.getItem("username");
+    document.getElementById("username").textContent = username;
+  </script>
 </body>
 </html>
