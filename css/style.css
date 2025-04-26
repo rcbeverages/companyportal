@@ -117,7 +117,7 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   justify-items: center;
-  padding-top: 100px;
+  padding-top: 80px;
 }
 
 /* For main menu full-page spacing */
