@@ -270,3 +270,126 @@ textarea {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
+/* =========================
+   Search and Send Email Button Container
+   ========================= */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.search-box {
+  flex-grow: 1;  /* Allows the search bar to take most of the space */
+}
+
+.search-btn-box {
+  margin-left: 10px; /* Adds some space between the search bar and the button */
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.search-container .main-button {
+  background-color: #0057b7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-container .main-button:disabled {
+  background-color: #ccc;  /* Disabled state */
+  cursor: not-allowed;
+}
+
+/* =========================
+   Select All Button Styling
+   ========================= */
+.select-all-container {
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.select-all-container .main-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* =========================
+   Store List Header
+   ========================= */
+.store-list-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.store-list-header span {
+  flex: 1;
+  text-align: center;
+}
+
+/* =========================
+   Store List Styling
+   ========================= */
+.menu-container {
+  margin-top: 20px;
+}
+
+.store-list {
+  display: flex;
+  flex-direction: column; /* Stack each store item vertically */
+  gap: 20px; /* Adds space between store items */
+}
+
+.store-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.store-item label {
+  font-size: 0.9rem;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.store-item a {
+  color: #0057b7;
+  text-decoration: none;
+}
+
+.store-item a:hover {
+  text-decoration: underline;
+}
+
+.store-item input[type="checkbox"] {
+  margin-right: 10px;
+}
