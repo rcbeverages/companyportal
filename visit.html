@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
+.welcome-message {
+  position: fixed;
+  top: 70px; /* Directly under header */
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  color: #0057b7;
+  padding: 15px;
+  font-size: 2rem;
+  margin-top: 10px;
+  z-index: 999;
+}
+</style>
+
+  <style>
     .page-layout {
       display: flex;
       height: calc(100vh - 140px);
@@ -39,8 +54,8 @@
   <h1>Visit Log</h1>
 </header>
 
-<div class="welcome-bar">
-  Welcome <span id="username"></span>
+<div class="welcome-message" id="welcome">
+  <!-- Welcome will be injected -->
 </div>
 
 <div class="page-layout">
@@ -197,6 +212,20 @@
 
 <script>
 // Fetch Customer data (already covered earlier in our steps)
+
+// Username Welcome Logic
+const username = localStorage.getItem("username");
+const bdmMap = {
+  rhincksman: "Ryan Hincksman",
+  chawkins: "Chris Hawkins"
+};
+
+const bdmName = bdmMap[username] || "BDM";
+
+document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
+
+// (then your existing other functions like toggleSection() and saveEverything())
+</script>
 
 // Function to toggle collapsible sections
 function toggleSection(id) {
