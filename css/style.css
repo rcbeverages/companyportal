@@ -254,3 +254,18 @@ textarea {
   transform: translateY(-5px);
 }
 
+.search-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto 20px auto;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
