@@ -248,17 +248,16 @@ function loadCustomers() {
       });
     }
 
-    function loadCustomerDetails(customerName) {
-  fetch(customerSheet)
-    .then(res => res.json())
-    .then(data => {
-      const customer = data.find(c => c["Customer Name"].trim().toLowerCase() === customerName.trim().toLowerCase());
-      if (customer) {
-        displayCustomerDetails(customer); // Or however you're rendering it
-      } else {
-        alert("Customer not found in master list");
-      }
-    });
+    function startCall(customerName) {
+  const cleanName = customerName.trim().toLowerCase();
+  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
+
+  if (customer) {
+    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+    window.location.href = "visit.html";
+  } else {
+    alert("Customer not found: " + customerName);
+  }
 }
 
     window.onload = loadCustomers;
