@@ -228,6 +228,34 @@ function toggleSection(id) {
 function showPopup(message) {
   alert(message);
 }
+  const customerSheet = "https://sheetdb.io/api/v1/your-sheetdb-endpoint"; // <-- update this
+
+function loadCustomerDetails(customerName) {
+  fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customerName)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.length > 0) {
+        const customer = data[0];
+
+        document.getElementById("custName").textContent = customer["Customer Name"] || "";
+        document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
+        document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
+        document.getElementById("grade").textContent = customer["Grade"] || "";
+        document.getElementById("storeType").textContent = customer["Store Type"] || "";
+        document.getElementById("segment").textContent = customer["Segment"] || "";
+        document.getElementById("contactNameView").textContent = customer["Contact Name"] || "";
+        document.getElementById("contactPhoneView").textContent = customer["Phone"] || "";
+        document.getElementById("contactEmailView").textContent = customer["Email"] || "";
+        document.getElementById("address").textContent = customer["Address"] || "";
+        document.getElementById("suburb").textContent = customer["Suburb"] || "";
+        document.getElementById("state").textContent = customer["State"] || "";
+        document.getElementById("postcode").textContent = customer["Postcode"] || "";
+        document.getElementById("bdmView").textContent = customer["BDM"] || "";
+      }
+    })
+    .catch(err => console.error("Failed to load customer details", err));
+}
+
 
 // Save Everything Function
 function saveEverything() {
