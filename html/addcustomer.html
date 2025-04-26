@@ -1,42 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Customer - RC Beverages</title>
-  <link rel="stylesheet" href="style.css" /> <!-- External CSS file -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Customer - RC Beverages CRM</title>
+  <link rel="stylesheet" href="../css/style.css">
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      text-align: center;
-    }
-
-    header {
-      background-color: #0057b7;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    h1 {
-      margin: 0;
-    }
-
     .form-container {
       position: absolute;
-      top: 100px; /* anchors below header + welcome */
-      bottom: 80px; /* anchors above footer */
-      left: 0;
-      right: 0;
-      margin: 0 auto;
+      top: 100px;
+      bottom: 80px;
+      left: 20px;
+      right: 20px;
+      margin: auto;
       width: 90%;
       max-width: 900px;
       padding: 20px;
@@ -47,209 +25,160 @@
       box-sizing: border-box;
     }
 
-    .form-container label {
-      display: block;
-      text-align: left;
-      margin-bottom: 5px;
-      font-weight: bold;
+    .form-section {
+      margin-bottom: 20px;
     }
 
-    .form-container input,
-    .form-container select {
+    .form-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .form-section input,
+    .form-section select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 20px;
+      margin-top: 5px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
       box-sizing: border-box;
     }
 
-    .form-container button {
-      background-color: #0057b7;
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .form-container button:hover {
-      background-color: #00409a;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #cfe2ff;
-      padding: 10px 0;
-      display: flex;
-      justify-content: space-around;
-      border-top: 2px solid #ccc;
-      z-index: 999;
-    }
-
-    .footer-btn {
+    .submit-btn {
       background-color: #2563eb;
       color: white;
       border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 30px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
+      width: 100%;
+      margin-top: 10px;
     }
 
-    .footer-btn:hover {
+    .submit-btn:hover {
       background-color: #1e40af;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Add Customer</h1>
-  </header>
 
-  <div class="welcome-message">
-    Welcome <span id="username"></span>
-  </div>
+<header>
+  <h1>Add Customer</h1>
+</header>
 
+<div class="menu-container">
   <div class="form-container">
-    <form id="addCustomerForm">
-      <label for="customerName">Customer Name:</label>
-      <input type="text" id="customerName" name="customerName" required>
+    <form id="add-customer-form">
 
-      <label for="segment">Segment:</label>
-      <select id="segment" name="segment" required></select>
+      <div class="form-section">
+        <h2>Store Details</h2>
+        <input type="text" name="Customer Name" placeholder="Store Name" required>
+        <input type="text" name="Address" placeholder="Address" required>
+        <input type="text" name="Suburb" placeholder="Suburb" required>
+        <input type="text" name="State" placeholder="State" required>
+        <input type="text" name="Postcode" placeholder="Postcode" required>
+      </div>
 
-      <label for="keyAccountGroup">Key Account Group:</label>
-      <select id="keyAccountGroup" name="keyAccountGroup" required></select>
+      <div class="form-section">
+        <h2>Contact Details</h2>
+        <input type="text" name="Contact Name" placeholder="Contact Name">
+        <input type="tel" name="Phone" placeholder="Phone">
+        <input type="email" name="Email" placeholder="Email">
+      </div>
 
-      <label for="subOwnerGroup">Sub Owner Group:</label>
-      <select id="subOwnerGroup" name="subOwnerGroup" required></select>
+      <div class="form-section">
+        <h2>Classification</h2>
+        <select name="Segment" id="segment" required>
+          <option value="">Select Segment</option>
+        </select>
+        <select name="Key Account Group" id="keyaccountgroup" required>
+          <option value="">Select Key Account Group</option>
+        </select>
+        <select name="Store Type" id="storetype" required>
+          <option value="">Select Store Type</option>
+        </select>
+        <select name="Grade" id="grade" required>
+          <option value="">Select Grade</option>
+        </select>
+        <select name="BDM" id="bdm" required>
+          <option value="">Select BDM</option>
+        </select>
+      </div>
 
-      <label for="grade">Grade:</label>
-      <select id="grade" name="grade" required></select>
+      <button type="submit" class="submit-btn">Add Customer</button>
 
-      <label for="storeType">Store Type:</label>
-      <select id="storeType" name="storeType" required></select>
-
-      <label for="contactName">Contact Name:</label>
-      <input type="text" id="contactName" name="contactName" required>
-
-      <label for="contactPhone">Contact Phone:</label>
-      <input type="text" id="contactPhone" name="contactPhone" required>
-
-      <label for="contactEmail">Contact Email:</label>
-      <input type="email" id="contactEmail" name="contactEmail" required>
-
-      <label for="address">Address:</label>
-      <input type="text" id="address" name="address" required>
-
-      <label for="suburb">Suburb:</label>
-      <input type="text" id="suburb" name="suburb" required>
-
-      <label for="state">State:</label>
-      <input type="text" id="state" name="state" required>
-
-      <label for="postcode">Postcode:</label>
-      <input type="text" id="postcode" name="postcode" required>
-
-      <label for="bdm">BDM:</label>
-      <select id="bdm" name="bdm" required></select>
-
-      <button type="submit">Add Customer</button>
     </form>
   </div>
+</div>
 
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-  </footer>
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-  <script>
-  // Display logged in username
-  const username = localStorage.getItem("username");
-  document.getElementById("username").textContent = username;
-
-  // Fetch live dropdown data
-  async function fetchOptions() {
+<script src="../js/api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Populate dropdowns from API
+  const populateDropdown = async (dropdownId, column) => {
     try {
       const response = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1");
       const data = await response.json();
-
-      const fillDropdown = (id, field) => {
-        const dropdown = document.getElementById(id);
-        const options = [...new Set(data.map(item => item[field]))];
-        options.filter(o => o).forEach(option => {
-          const opt = document.createElement("option");
-          opt.value = option;
-          opt.textContent = option;
-          dropdown.appendChild(opt);
-        });
-      };
-
-      fillDropdown("segment", "Segment");
-      fillDropdown("keyAccountGroup", "Key Account Group");
-      fillDropdown("subOwnerGroup", "Sub Owner Group");
-      fillDropdown("grade", "Grade");
-      fillDropdown("storeType", "Store Type");
-      fillDropdown("bdm", "BDM");
-
+      const values = [...new Set(data.map(item => item[column]).filter(val => val))];
+      values.sort();
+      const dropdown = document.getElementById(dropdownId);
+      values.forEach(val => {
+        const option = document.createElement("option");
+        option.value = val;
+        option.textContent = val;
+        dropdown.appendChild(option);
+      });
     } catch (error) {
-      console.error('Error fetching dropdowns:', error);
+      console.error("Error loading dropdown:", error);
     }
-  }
+  };
 
-  window.onload = fetchOptions;
+  populateDropdown("segment", "Segment");
+  populateDropdown("keyaccountgroup", "Key Account Group");
+  populateDropdown("storetype", "Store Type");
+  populateDropdown("grade", "Grade");
+  populateDropdown("bdm", "BDM");
 
-  // Handle Add Customer form submission
-  document.getElementById("addCustomerForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const formData = {
-      "Customer Name": document.getElementById("customerName").value,
-      "Segment": document.getElementById("segment").value,
-      "Key Account Group": document.getElementById("keyAccountGroup").value,
-      "Sub Owner Group": document.getElementById("subOwnerGroup").value,
-      "Grade": document.getElementById("grade").value,
-      "Store Type": document.getElementById("storeType").value,
-      "Contact Name": document.getElementById("contactName").value,
-      "Phone": document.getElementById("contactPhone").value,
-      "Email": document.getElementById("contactEmail").value,
-      "Address": document.getElementById("address").value,
-      "Suburb": document.getElementById("suburb").value,
-      "State": document.getElementById("state").value,
-      "Postcode": document.getElementById("postcode").value,
-      "BDM": document.getElementById("bdm").value
-    };
+  // Handle form submission
+  const form = document.getElementById("add-customer-form");
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const jsonData = {};
+    formData.forEach((value, key) => { jsonData[key] = value; });
 
     try {
       const response = await fetch("https://sheetdb.io/api/v1/8ba1eug88u4y1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [formData] })
+        body: JSON.stringify({ data: [jsonData] })
       });
 
       if (response.ok) {
-        alert("Customer added successfully!");
-        document.getElementById("addCustomerForm").reset();
+        alert("Customer Added Successfully!");
+        form.reset();
       } else {
-        alert("Failed to add customer.");
+        alert("Failed to add customer. Please try again.");
       }
     } catch (error) {
-      console.error('Error adding customer:', error);
-      alert("An error occurred.");
+      console.error("Submission error:", error);
+      alert("Error submitting form. Please try again.");
     }
   });
+});
 </script>
+
 </body>
+
 </html>
