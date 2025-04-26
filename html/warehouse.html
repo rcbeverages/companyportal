@@ -53,21 +53,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const role = user.Role;
 
     const allButtons = [
-      { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
-      { "label": "Outbound / Dispatch", "href": "dispatch.html", "roles": ["Admin", "Warehouse"] },
-      { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
-      { "label": "View Stock Levels", "href": "stock_levels.html", "roles": ["Admin", "Warehouse"] },
-      { "label": "Low Stock Alerts", "href": "low_stock.html", "roles": ["Admin", "Warehouse"] },
-      { "label": "Low Code Stock Alerts", "href": "low_code_stock.html", "roles": ["Admin", "Warehouse"] }
-
+      { label: "Inbound / Receiving", href: "inbound.html", roles: ["Admin", "Warehouse"] },
+      { label: "Outbound / Dispatch", href: "dispatch.html", roles: ["Admin", "Warehouse"] },
+      { label: "Returns / Waste", href: "returns.html", roles: ["Admin", "Warehouse"] },
+      { label: "View Stock Levels", href: "stock_levels.html", roles: ["Admin", "Warehouse"] },
+      { label: "Low Stock Alerts", href: "low_stock.html", roles: ["Admin", "Warehouse"] },
+      { label: "Low Code Stock Alerts", href: "low_code_stock.html", roles: ["Admin", "Warehouse"] }
     ];
 
     allButtons.forEach(button => {
       if (button.roles.includes(role)) {
         const btn = document.createElement("button");
         btn.className = "dashboard-btn";
-        btn.textContent = button.name;
-        btn.onclick = () => location.href = button.page;
+        btn.textContent = button.label;
+        btn.onclick = () => location.href = button.href;
         container.appendChild(btn);
       }
     });
