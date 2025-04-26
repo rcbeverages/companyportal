@@ -215,8 +215,9 @@ function loadCustomers() {
   fetch(customerSheet)
     .then(res => res.json())
     .then(data => {
-      customerCache = data; // ✅ Store everything once globally
-      displayTiles(customerCache); // ✅ Build the visible tiles
+      customerCache = data; // ✅ save everything globally
+      const filtered = data.filter(c => c["BDM"] === bdmName); // ✅ filter here!
+      displayTiles(filtered);
     });
 }
 
@@ -229,10 +230,11 @@ function loadCustomers() {
     div.className = "tile";
 
     div.innerHTML = `
-      <h3>${c["Customer Name"]}</h3>
-      <p>Grade: ${c["Grade"] || "N/A"} | Suburb: ${c["Suburb"] || "N/A"}</p>
-      <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
-    `;
+  <h3>${c["Customer Name"]}</h3>
+  <p>Key Account Group: ${c["Key Account Group"] || "N/A"}</p>
+  <p>Grade: ${c["Grade"] || "N/A"} | Sub Owner Group: ${c["Sub Owner Group"] || "N/A"}</p>
+  <button class="visit-btn" onclick="startCall('${c["Customer Name"].replace(/'/g, "\\'")}')">Visit</button>
+`;
 
     container.appendChild(div);
   });
@@ -245,16 +247,17 @@ function loadCustomers() {
       });
     }
 
-    function startCall(customerName) {
-  const cleanName = customerName.trim().toLowerCase();
-  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
-
-  if (customer) {
-    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-    window.location.href = "visit.html";
-  } else {
-    alert("Customer not found: " + customerName);
-  }
+    function loadCustomerDetails(customerName) {
+  fetch(customerSheet)
+    .then(res => res.json())
+    .then(data => {
+      const customer = data.find(c => c["Customer Name"].trim().toLowerCase() === customerName.trim().toLowerCase());
+      if (customer) {
+        displayCustomerDetails(customer); // Or however you're rendering it
+      } else {
+        alert("Customer not found in master list");
+      }
+    });
 }
 
     window.onload = loadCustomers;
