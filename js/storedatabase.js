@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const searchInput = document.getElementById("searchInputStore");
   const sendEmailButton = document.getElementById("sendEmailButton");
 
-  const storeApiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // API endpoint for stores
-  const bdmApiEndpoint = "https://sheetdb.io/api/v1/your-bdm-endpoint"; // Replace with actual BDM API endpoint
+    const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
+  const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
 
   let bdmUsername = ""; // To store the logged-in BDM username
 
