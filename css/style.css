@@ -271,3 +271,84 @@ textarea {
   box-sizing: border-box;
 }
 
+/* =========================
+   Search and Send Email Button Container
+   ========================= */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.search-box {
+  flex-grow: 1;  /* Allows the search bar to take most of the space */
+}
+
+.send-email-box {
+  margin-left: 10px; /* Adds some space between the search bar and the button */
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.search-container .main-button {
+  background-color: #0057b7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-container .main-button:disabled {
+  background-color: #ccc;  /* Disabled state */
+  cursor: not-allowed;
+}
+
+/* =========================
+   Store List Styling
+   ========================= */
+.menu-container {
+  margin-top: 20px;
+}
+
+.store-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.store-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 350px;  /* Control the width of the store items */
+  box-sizing: border-box;
+}
+
+.store-item label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.store-item a {
+  color: #0057b7;  /* Styling the email link */
+  text-decoration: none;
+}
+
+.store-item a:hover {
+  text-decoration: underline;
+}
+
