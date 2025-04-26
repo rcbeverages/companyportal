@@ -115,12 +115,11 @@ footer {
 
 .button-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Match button size */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
   justify-content: center;
-  padding-top: 10px; /* Close to Welcome */
+  padding-top: 10px;
 }
-
 
 /* For main menu full-page spacing */
 .menu-container {
