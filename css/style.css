@@ -259,3 +259,15 @@ textarea {
   border-radius: 10px;
   box-sizing: border-box;
 }
+/* =========================
+   Form Container (for Add Customer Page)
+   ========================= */
+.form-container {
+  margin-top: 140px; /* 👈 Ensure enough space below the header */
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
