@@ -10,13 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const allButtons = [
-    { name: "Warehouse", page: "warehouse.html", roles: ["Admin", "Warehouse", "Sales"] },
-    { name: "Settings", page: "settings.html", roles: ["Admin"] },
-    { name: "Resources", page: "resources.html", roles: ["Admin", "Sales"] },
+    { name: "CRM Tools", page: "crmtools.html", roles: ["Admin"] }
     { name: "Orders & Visits", page: "orders_visits.html", roles: ["Admin", "Sales"] },
     { name: "Marketing & Promotions", page: "marketing_promotions.html", roles: ["Admin", "Marketing"] },
     { name: "Data & Analytics", page: "data_analytics.html", roles: ["Admin"] },
-    { name: "CRM Tools", page: "crmtools.html", roles: ["Admin"] }
+    { name: "Resources", page: "resources.html", roles: ["Admin", "Sales"] },
+    { name: "Warehouse", page: "warehouse.html", roles: ["Admin", "Warehouse", "Sales"] },
+    { name: "Settings", page: "settings.html", roles: ["Admin"] },
+    
   ];
 
   allButtons.forEach(button => {
