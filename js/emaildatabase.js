@@ -1,60 +1,59 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Placeholder: Replace this with an actual API call to fetch customer data
-  const customerData = [
-    { customerName: "Customer 1", subOwnerGroup: "Group A", keyAccountGroup: "Yes", grade: "A", storeType: "Retail", email: "customer1@example.com" },
-    { customerName: "Customer 2", subOwnerGroup: "Group B", keyAccountGroup: "No", grade: "B", storeType: "Wholesale", email: "customer2@example.com" },
-    { customerName: "Customer 3", subOwnerGroup: "Group A", keyAccountGroup: "Yes", grade: "A", storeType: "Retail", email: "customer3@example.com" },
-    // More customers
-  ];
-
-  // Filter customers who have emails
-  const customersWithEmails = customerData.filter(customer => customer.email);
-
   const storeListContainer = document.getElementById("storeList");
   const selectAllCheckbox = document.getElementById("selectAllCheckbox");
   const searchInput = document.getElementById("searchInput");
   const sendEmailButton = document.getElementById("sendEmailButton");
 
-  function displayStores(stores) {
-    storeListContainer.innerHTML = ""; // Clear previous results
+  const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace this with the correct API endpoint for your Master Store List
 
-    stores.forEach(store => {
-      const storeDiv = document.createElement("div");
-      storeDiv.className = "store-item";
-      storeDiv.innerHTML = `
-        <label>
-          <input type="checkbox" class="selectStoreCheckbox">
-          ${store.customerName} | ${store.subOwnerGroup} | ${store.keyAccountGroup} | ${store.grade} | ${store.storeType} | <a href="mailto:${store.email}">${store.email}</a>
-        </label>
-      `;
-      storeListContainer.appendChild(storeDiv);
-    });
-  }
+  // Fetch data from the Master Store List API
+  fetch(apiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      const customersWithEmails = data.filter(store => store.Email);  // Filter to include only customers with emails
 
-  // Display all customers initially
-  displayStores(customersWithEmails);
+      function displayStores(stores) {
+        storeListContainer.innerHTML = ""; // Clear previous results
 
-  // Search functionality
-  searchInput.addEventListener("input", function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const filteredStores = customersWithEmails.filter(store => {
-      return (
-        store.customerName.toLowerCase().includes(searchTerm) ||
-        store.subOwnerGroup.toLowerCase().includes(searchTerm) ||
-        store.keyAccountGroup.toLowerCase().includes(searchTerm) ||
-        store.grade.toLowerCase().includes(searchTerm) ||
-        store.storeType.toLowerCase().includes(searchTerm)
-      );
-    });
-    displayStores(filteredStores);
+        stores.forEach(store => {
+          const storeDiv = document.createElement("div");
+          storeDiv.className = "store-item";
+          storeDiv.innerHTML = `
+            <label>
+              <input type="checkbox" class="selectStoreCheckbox">
+              ${store.Customer_Name} | ${store.Sub_Owner_Group} | ${store.Key_Account_Group} | ${store.Grade} | ${store.Store_Type} | <a href="mailto:${store.Email}">${store.Email}</a>
+            </label>
+          `;
+          storeListContainer.appendChild(storeDiv);
+        });
+      }
 
-    // Enable/Disable Send Email button
-    sendEmailButton.disabled = searchTerm.length === 0;
-  });
+      // Display all stores initially
+      displayStores(customersWithEmails);
 
-  // Select All Checkbox
-  selectAllCheckbox.addEventListener("change", function() {
-    const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
-    checkboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
-  });
+      // Search functionality
+      searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredStores = customersWithEmails.filter(store => {
+          return (
+            store.Customer_Name.toLowerCase().includes(searchTerm) ||
+            store.Sub_Owner_Group.toLowerCase().includes(searchTerm) ||
+            store.Key_Account_Group.toLowerCase().includes(searchTerm) ||
+            store.Grade.toLowerCase().includes(searchTerm) ||
+            store.Store_Type.toLowerCase().includes(searchTerm)
+          );
+        });
+        displayStores(filteredStores);
+
+        // Enable/Disable Send Email button
+        sendEmailButton.disabled = searchTerm.length === 0;
+      });
+
+      // Select All Checkbox
+      selectAllCheckbox.addEventListener("change", function() {
+        const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
+        checkboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
+      });
+    })
+    .catch(error => console.error("Error fetching store data:", error));
 });
