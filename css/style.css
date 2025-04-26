@@ -263,7 +263,9 @@ textarea {
 .search-container {
   width: 90%;
   max-width: 900px;
-  margin: 30px auto 20px auto;
+  margin: 100px auto 20px auto; /* 👈 Push search 100px below header */
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 
 #searchInput {
@@ -274,5 +276,3 @@ textarea {
   border-radius: 10px;
   box-sizing: border-box;
 }
-
-
