@@ -51,104 +51,105 @@
     </div>
   </div>
   <script>
-    const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';
-    const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1'; // Master Store List
+  const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';
+  const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1'; // Master Store List
 
-    // Fetch and display reminders
-    async function loadReminders() {
-      try {
-        const response = await fetch(remindersApiUrl);
-        const data = await response.json();
+  // Fetch and display reminders
+  async function loadReminders() {
+    try {
+      const response = await fetch(remindersApiUrl);
+      const data = await response.json();
 
-        // Sort reminders by date ascending
-        data.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
+      const reminderList = document.getElementById('reminderList');
+      reminderList.innerHTML = '';
 
-        const reminderList = document.getElementById('reminderList');
-        reminderList.innerHTML = '';
+      // Filter to only valid entries
+      const validReminders = data.filter(reminder => reminder.Customer_Name && reminder.Date_to_Email);
 
-        data.forEach(reminder => {
-          if (reminder.Customer_Name && reminder.Date_to_Email) {
-            const reminderItem = document.createElement('div');
-            reminderItem.className = 'reminder-item';
-            reminderItem.innerHTML = `
-              <h3>${reminder.Customer_Name}</h3>
-              <p><strong>Date to Email:</strong> ${reminder.Date_to_Email}</p>
-              <p><strong>Comments:</strong> ${reminder.Comments || ''}</p>
-            `;
-            reminderList.appendChild(reminderItem);
-          }
-        });
-      } catch (error) {
-        console.error('Error loading reminders:', error);
-      }
+      // Sort newest first (Date to Email ascending)
+      validReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
+
+      validReminders.forEach(reminder => {
+        const reminderItem = document.createElement('div');
+        reminderItem.className = 'reminder-item';
+        reminderItem.innerHTML = `
+          <h3>${reminder.Customer_Name}</h3>
+          <p><strong>Due:</strong> ${reminder.Date_to_Email}</p>
+          <p><strong>Comments:</strong> ${reminder.Comments ? reminder.Comments : '(No Comments)'}</p>
+        `;
+        reminderList.appendChild(reminderItem);
+      });
+
+    } catch (error) {
+      console.error('Error loading reminders:', error);
+      const reminderList = document.getElementById('reminderList');
+      reminderList.innerHTML = '<p style="color:red;">Error loading reminders. Please try again later.</p>';
     }
+  }
 
-    // Open the Add Reminder popup
-    function openAddReminder() {
-      document.getElementById('addReminderPopup').style.display = 'block';
-      loadCustomersDropdown();
+  // Open the Add Reminder popup
+  function openAddReminder() {
+    document.getElementById('addReminderPopup').style.display = 'block';
+    loadCustomersDropdown();
+  }
+
+  function closeAddReminder() {
+    document.getElementById('addReminderPopup').style.display = 'none';
+    document.getElementById('addReminderForm').reset();
+  }
+
+  async function loadCustomersDropdown() {
+    try {
+      const response = await fetch(customersApiUrl);
+      const data = await response.json();
+      const customerDropdown = document.getElementById('reminderCustomer');
+      customerDropdown.innerHTML = '';
+
+      data.forEach(customer => {
+        if (customer.Customer_Name) {
+          const option = document.createElement('option');
+          option.value = customer.Customer_Name;
+          option.text = customer.Customer_Name;
+          customerDropdown.appendChild(option);
+        }
+      });
+    } catch (error) {
+      console.error('Error loading customers:', error);
     }
+  }
 
-    // Close the Add Reminder popup
-    function closeAddReminder() {
-      document.getElementById('addReminderPopup').style.display = 'none';
-      document.getElementById('addReminderForm').reset();
-    }
+  document.getElementById('addReminderForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-    // Load customers into dropdown
-    async function loadCustomersDropdown() {
-      try {
-        const response = await fetch(customersApiUrl);
-        const data = await response.json();
-        const customerDropdown = document.getElementById('reminderCustomer');
-        customerDropdown.innerHTML = '';
+    const date = document.getElementById('reminderDate').value;
+    const customer = document.getElementById('reminderCustomer').value;
+    const comments = document.getElementById('reminderComments').value;
 
-        data.forEach(customer => {
-          if (customer.Customer_Name) {
-            const option = document.createElement('option');
-            option.value = customer.Customer_Name;
-            option.text = customer.Customer_Name;
-            customerDropdown.appendChild(option);
-          }
-        });
-      } catch (error) {
-        console.error('Error loading customers:', error);
-      }
-    }
-    // Handle form submission
-    document.getElementById('addReminderForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
+    const reminderData = {
+      Date_to_Email: date,
+      Customer_Name: customer,
+      Comments: comments
+    };
 
-      const date = document.getElementById('reminderDate').value;
-      const customer = document.getElementById('reminderCustomer').value;
-      const comments = document.getElementById('reminderComments').value;
+    try {
+      await fetch(remindersApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: [reminderData] }),
+      });
 
-      const reminderData = {
-        Date_to_Email: date,
-        Customer_Name: customer,
-        Comments: comments
-      };
-
-      try {
-        await fetch(remindersApiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ data: [reminderData] }),
-        });
-
-        closeAddReminder();
-        loadReminders();
-      } catch (error) {
-        console.error('Error saving reminder:', error);
-      }
-    });
-
-    // Load reminders when page loads
-    window.onload = function() {
+      closeAddReminder();
       loadReminders();
+    } catch (error) {
+      console.error('Error saving reminder:', error);
     }
-  </script>
+  });
+
+  window.onload = function() {
+    loadReminders();
+  }
+</script>
 </body>
 </html>
