@@ -22,14 +22,15 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #0057b7;
+  background-color: #2563eb;
   color: white;
   text-align: center;
-  padding: 15px; /* 👈 SLIMMER! */
-  font-size: 1.5rem; /* 👈 SLIGHTLY smaller text */
+  padding: 8px 0; /* 👈 Much slimmer vertically */
+  font-size: 1.2rem; /* 👈 Smaller title text */
   font-weight: bold;
   z-index: 1000;
 }
+
 
 .logo {
   max-width: 150px;
