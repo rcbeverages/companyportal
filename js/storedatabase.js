@@ -47,9 +47,20 @@ function displayTiles(data) {
 function filterTiles() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const tiles = document.querySelectorAll(".tile");
+
   tiles.forEach(tile => {
-    const name = tile.querySelector("h3").textContent.toLowerCase();
-    tile.style.display = name.includes(query) ? "block" : "none";
+    const customerName = tile.querySelector("h3").textContent.toLowerCase();
+    const subOwnerGroup = tile.querySelector("p:nth-of-type(1)").textContent.toLowerCase();
+    const keyAccountGroup = tile.querySelector("p:nth-of-type(2)").textContent.toLowerCase();
+    const grade = tile.querySelector("p:nth-of-type(3)").textContent.toLowerCase();
+
+    const fullText = customerName + " " + subOwnerGroup + " " + keyAccountGroup + " " + grade;
+
+    if (fullText.includes(query)) {
+      tile.style.display = "block";
+    } else {
+      tile.style.display = "none";
+    }
   });
 }
 
