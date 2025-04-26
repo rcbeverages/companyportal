@@ -87,7 +87,29 @@ footer {
 
 .main-button:hover {
   background-color: #0056b3;
+   
 }
+.dashboard-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 50px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: none;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  text-align: center;
+}
+
+.dashboard-btn:hover {
+  background-color: #1e40af;
+}
+
 
 /* =========================
    Form Container
