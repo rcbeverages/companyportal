@@ -249,15 +249,23 @@ function loadCustomers() {
     }
 
     function startCall(customerName) {
-  const cleanName = customerName.trim().toLowerCase();
-  const customer = customerCache.find(c => c["Customer Name"].trim().toLowerCase() === cleanName);
-
-  if (customer) {
-    localStorage.setItem("selectedCustomer", JSON.stringify(customer));
-    window.location.href = "visit.html";
-  } else {
-    alert("Customer not found: " + customerName);
-  }
+  fetch(masterAPI)
+    .then(res => res.json())
+    .then(data => {
+      const customer = data.find(s => 
+        s["Customer Name"].trim().toLowerCase() === customerName.trim().toLowerCase()
+      );
+      if (customer) {
+        localStorage.setItem("selectedCustomer", JSON.stringify(customer));
+        window.location.href = "visit.html";
+      } else {
+        alert("Customer not found in Master List!");
+      }
+    })
+    .catch(error => {
+      console.error("Failed to fetch master store list", error);
+      alert("Could not load master store list.");
+    });
 }
 
     window.onload = loadCustomers;
