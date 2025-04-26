@@ -449,33 +449,35 @@ document.getElementById("welcome").textContent = `Welcome, ${bdmName}`;
 
 // === Customer Data Variables ===
 const selectedCustomer = JSON.parse(localStorage.getItem("selectedCustomer"));
-let customer = {};
+
+if (selectedCustomer) {
+  displayCustomerDetails(selectedCustomer);
+} else {
+  window.location.href = "storedatabase.html";
+}
 
 // === Load Customer Details ===
-function loadCustomerDetails(customerName) {
-  fetch(`${customerSheet}?Customer%20Name=${encodeURIComponent(customerName)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.length > 0) {
-        customer = data[0];
-        document.getElementById("custName").textContent = customer["Customer Name"] || "";
-        document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
-        document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
-        document.getElementById("grade").textContent = customer["Grade"] || "";
-        document.getElementById("storeType").textContent = customer["Store Type"] || "";
-        document.getElementById("segment").textContent = customer["Segment"] || "";
-        document.getElementById("contactNameView").textContent = customer["Contact Name"] || "";
-        document.getElementById("contactPhoneView").textContent = customer["Phone"] || "";
-        document.getElementById("contactEmailView").textContent = customer["Email"] || "";
-        document.getElementById("address").textContent = customer["Address"] || "";
-        document.getElementById("suburb").textContent = customer["Suburb"] || "";
-        document.getElementById("state").textContent = customer["State"] || "";
-        document.getElementById("postcode").textContent = customer["Postcode"] || "";
-        document.getElementById("bdmView").textContent = customer["BDM"] || "";
+function displayCustomerDetails(customer) {
+  document.getElementById("custName").textContent = customer["Customer Name"] || "";
+  document.getElementById("subOwnerGroup").textContent = customer["Sub Owner Group"] || "";
+  document.getElementById("keyAccountGroup").textContent = customer["Key Account Group"] || "";
+  document.getElementById("grade").textContent = customer["Grade"] || "";
+  document.getElementById("storeType").textContent = customer["Store Type"] || "";
+  document.getElementById("segment").textContent = customer["Segment"] || "";
+  document.getElementById("contactNameView").textContent = customer["Contact Name"] || "";
+  document.getElementById("contactPhoneView").textContent = customer["Phone"] || "";
+  document.getElementById("contactEmailView").textContent = customer["Email"] || "";
+  document.getElementById("address").textContent = customer["Address"] || "";
+  document.getElementById("suburb").textContent = customer["Suburb"] || "";
+  document.getElementById("state").textContent = customer["State"] || "";
+  document.getElementById("postcode").textContent = customer["Postcode"] || "";
+  document.getElementById("bdmView").textContent = customer["BDM"] || "";
 
-        loadPreorders();
-        loadStoreRange();
-      }
+  // Optional: trigger other sections after customer is displayed
+  loadPreorders();
+  loadStoreRange();
+}
+
     });
 }
 
