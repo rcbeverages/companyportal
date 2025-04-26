@@ -1,86 +1,46 @@
-// emaildatabase.js
+document.addEventListener("DOMContentLoaded", function() {
+  // Set Username from Local Storage (like other pages)
+  const username = localStorage.getItem("username");
+  document.getElementById("username").textContent = username;
 
-// Your API endpoint (Master Store List)
-const apiUrl = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // <-- Confirm this is your latest Master Store List
+  // Function to fetch and display store list (this is just a sample implementation)
+  function fetchStoreList() {
+    // Placeholder: You would replace this with your dynamic data-fetching logic, e.g., API calls.
+    const storeList = [
+      { storeName: "Store 1", subOwner: "Owner 1", grade: "A", keyAccount: "Yes", storeType: "Retail" },
+      { storeName: "Store 2", subOwner: "Owner 2", grade: "B", keyAccount: "No", storeType: "Wholesale" },
+    ];
 
-// Store the fetched store data
-let stores = [];
+    const storeListContainer = document.getElementById("storeList");
+    storeListContainer.innerHTML = ""; // Clear any previous content
 
-// Fetch data on load
-window.onload = function() {
-  fetchStores();
-};
-
-function fetchStores() {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      // Filter stores with an Email
-      stores = data.filter(store => store.Email && store.Email.trim() !== "");
-      renderStores(stores);
-    })
-    .catch(error => console.error('Error fetching store data:', error));
-}
-
-function renderStores(storeArray) {
-  const storeList = document.getElementById('storeList');
-  storeList.innerHTML = "";
-
-  storeArray.forEach((store, index) => {
-    const storeItem = document.createElement('div');
-    storeItem.className = 'store-item';
-
-    storeItem.innerHTML = `
-      <input type="checkbox" class="store-checkbox" data-email="${store.Email}" id="store-${index}">
-      <label for="store-${index}">
-        <strong>${store['Customer Name']}</strong> | 
-        ${store['Sub Owner Group']} | 
-        ${store['Key Account Group']} | 
-        ${store['Grade']} | 
-        ${store['Store Type']} | 
-        ${store['Email']}
-      </label>
-    `;
-
-    storeList.appendChild(storeItem);
-  });
-
-  setupCheckboxListener();
-}
-
-// Search functionality
-document.getElementById('searchInput').addEventListener('input', function(e) {
-  const searchTerm = e.target.value.toLowerCase();
-  const filteredStores = stores.filter(store =>
-  (store['Customer Name'] && store['Customer Name'].toLowerCase().includes(searchTerm)) ||
-  (store['Sub Owner Group'] && store['Sub Owner Group'].toLowerCase().includes(searchTerm)) ||
-  (store['Key Account Group'] && store['Key Account Group'].toLowerCase().includes(searchTerm)) ||
-  (store['Grade'] && store['Grade'].toLowerCase().includes(searchTerm)) ||
-  (store['Store Type'] && store['Store Type'].toLowerCase().includes(searchTerm))
-);
-
-  renderStores(filteredStores);
-});
-
-// Enable/Disable Send Email button based on selection
-function setupCheckboxListener() {
-  const checkboxes = document.querySelectorAll('.store-checkbox');
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-      const anyChecked = Array.from(checkboxes).some(c => c.checked);
-      document.getElementById('sendEmailButton').disabled = !anyChecked;
+    // Populate the store list dynamically
+    storeList.forEach(store => {
+      const storeDiv = document.createElement("div");
+      storeDiv.className = "store-item";
+      storeDiv.innerHTML = `
+        <h3>${store.storeName}</h3>
+        <p>Sub Owner: ${store.subOwner}</p>
+        <p>Grade: ${store.grade}</p>
+        <p>Key Account: ${store.keyAccount}</p>
+        <p>Store Type: ${store.storeType}</p>
+      `;
+      storeListContainer.appendChild(storeDiv);
     });
-  });
-}
-
-// Send email button logic
-document.getElementById('sendEmailButton').addEventListener('click', function() {
-  const selectedEmails = Array.from(document.querySelectorAll('.store-checkbox:checked'))
-    .map(checkbox => checkbox.getAttribute('data-email'));
-
-  if (selectedEmails.length > 0) {
-    const mailtoLink = `mailto:?bcc=${encodeURIComponent(selectedEmails.join(','))}`;
-    window.location.href = mailtoLink;
   }
-});
 
+  // Call fetchStoreList to display data
+  fetchStoreList();
+
+  // Enable the 'Send Email' button when there is search input
+  const searchInput = document.getElementById("searchInput");
+  const sendEmailButton = document.getElementById("sendEmailButton");
+
+  searchInput.addEventListener("input", function() {
+    if (searchInput.value.length > 0) {
+      sendEmailButton.disabled = false;
+    } else {
+      sendEmailButton.disabled = true;
+    }
+  });
+});
