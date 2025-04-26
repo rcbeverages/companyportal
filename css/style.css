@@ -153,7 +153,7 @@ footer {
 .form-container {
   width: 90%;
   max-width: 900px;
-  margin: 120px auto 0 auto; /* 👈 Pushes it down 120px from the header */
+  margin: 140px auto 0 auto; /* 👈 Pushes it down 120px from the header */
   padding: 30px;
   background-color: white;
   border-radius: 10px;
