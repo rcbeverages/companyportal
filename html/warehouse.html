@@ -15,10 +15,8 @@
 </header>
 
 <div class="menu-container">
-  <div class="button-container">
-    <button class="dashboard-btn">Inventory Management</button>
-    <button class="dashboard-btn">Stock Movement</button>
-    <button class="dashboard-btn">Warehouse Settings</button>
+  <div class="button-container" id="dashboard-sections">
+    <!-- Dynamic buttons based on Role will load here -->
   </div>
 </div>
 
@@ -29,6 +27,57 @@
   <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
+
+<!-- Scripts -->
+<script src="../js/api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const username = localStorage.getItem("username");
+  const container = document.getElementById("dashboard-sections");
+
+  if (!username) {
+    container.innerHTML = "<p style='color: red;'>No username detected. Please log in again.</p>";
+    return;
+  }
+
+  try {
+    const response = await fetch("https://sheetdb.io/api/v1/abgzvmn3160g0");
+    const users = await response.json();
+    const user = users.find(u => u.Username === username);
+
+    if (!user) {
+      container.innerHTML = "<p style='color: red;'>User not found. Please log in again.</p>";
+      return;
+    }
+
+    const role = user.Role;
+
+    const allButtons = [
+      { "label": "Inbound / Receiving", "href": "inbound.html", "roles": ["Admin", "Warehouse"] },
+      { "label": "Outbound / Dispatch", "href": "dispatch.html", "roles": ["Admin", "Warehouse"] },
+      { "label": "Returns / Waste", "href": "returns.html", "roles": ["Admin", "Warehouse"] },
+      { "label": "View Stock Levels", "href": "stock_levels.html", "roles": ["Admin", "Warehouse"] },
+      { "label": "Low Stock Alerts", "href": "low_stock.html", "roles": ["Admin", "Warehouse"] },
+      { "label": "Low Code Stock Alerts", "href": "low_code_stock.html", "roles": ["Admin", "Warehouse"] }
+
+    ];
+
+    allButtons.forEach(button => {
+      if (button.roles.includes(role)) {
+        const btn = document.createElement("button");
+        btn.className = "dashboard-btn";
+        btn.textContent = button.name;
+        btn.onclick = () => location.href = button.page;
+        container.appendChild(btn);
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    container.innerHTML = "<p style='color: red;'>Error loading buttons. Please try again later.</p>";
+  }
+});
+</script>
 
 </body>
 
