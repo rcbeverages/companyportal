@@ -413,6 +413,15 @@ function populateDropdown(selectId, columnName, selectedValue) {
       const uniqueOptions = [...new Set(data.map(row => row[columnName]).filter(Boolean))];
       const select = document.getElementById(selectId);
       select.innerHTML = "";
+
+      // ✅ Add a blank option ONLY if it's Sub Owner Group
+      if (selectId === "editSubOwnerGroup") {
+        const blank = document.createElement("option");
+        blank.value = "";
+        blank.textContent = "";
+        select.appendChild(blank);
+      }
+
       uniqueOptions.sort().forEach(option => {
         const opt = document.createElement("option");
         opt.value = option;
@@ -422,6 +431,7 @@ function populateDropdown(selectId, columnName, selectedValue) {
       });
     });
 }
+
 
 // === API Endpoints ===
 const customerSheet = "https://sheetdb.io/api/v1/8ba1eug88u4y1";
