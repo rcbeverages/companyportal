@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Display all stores initially for the BDM
       displayStores(storesForBDM);
 
-      // Search functionality
+      // Search functionality (applies on input event of the search field)
       searchInput.addEventListener("input", function() {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredStores = storesForBDM.filter(store => {
@@ -53,26 +53,18 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         displayStores(filteredStores);
 
-        // Enable/Disable Send Email button
+        // Enable/Disable Send Email button based on search results
         sendEmailButton.disabled = filteredStores.length === 0;
       });
 
-      // Manually trigger search when the "Search" button is clicked
-      searchButton.addEventListener("click", function() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredStores = storesForBDM.filter(store => {
-          return (
-            store["Customer Name"].toLowerCase().includes(searchTerm) ||
-            store["Sub Owner Group"].toLowerCase().includes(searchTerm) ||
-            store["Key Account Group"].toLowerCase().includes(searchTerm) ||
-            store["Grade"].toLowerCase().includes(searchTerm) ||
-            store["Store Type"].toLowerCase().includes(searchTerm)
-          );
-        });
-        displayStores(filteredStores);
+      // Select All Button functionality
+      selectAllButton.addEventListener("click", function() {
+        const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
+        const selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
       });
 
-      // Collect selected emails and open mailto link for Send Email
+      // Send Email Button functionality
       sendEmailButton.addEventListener("click", function() {
         const selectedCheckboxes = document.querySelectorAll(".selectStoreCheckbox:checked");
         const selectedEmails = Array.from(selectedCheckboxes).map(checkbox => checkbox.getAttribute('data-email'));
@@ -82,13 +74,6 @@ document.addEventListener("DOMContentLoaded", function() {
           // Open the default email client with the selected emails in BCC
           window.location.href = `mailto:?bcc=${bccEmails}`;
         }
-      });
-
-      // Select All Button functionality
-      selectAllButton.addEventListener("click", function() {
-        const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
-        const selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-        checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
       });
     })
     .catch(error => console.error("Error fetching store data:", error));
