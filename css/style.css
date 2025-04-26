@@ -271,81 +271,23 @@ textarea {
   box-sizing: border-box;
 }
 /* =========================
-   Store List Header Styling
+   Table Store List Layout
    ========================= */
-.store-list-header {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
-  font-weight: bold;
-  background-color: #f2f2f2;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  padding-left: 20px; /* Add left padding for alignment */
-}
-
-.header-item {
-  text-align: center;
-  padding: 10px 0; /* Adjust vertical alignment */
-}
-
-/* =========================
-   Store List Header Styling
-   ========================= */
-.store-list-header {
-  display: flex;
-  font-weight: bold;
-  background-color: #f2f2f2;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  justify-content: space-between;
-}
-
-.header-item {
-  text-align: center;
-  flex: 1;
-}
-
-/* =========================
-   Store List Container (List Format)
-   ========================= */
-.menu-container {
+.store-list-table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 20px;
 }
 
-.store-list {
-  display: flex;
-  flex-direction: column; /* Stack each store item vertically */
-  gap: 15px; /* Adds space between store items */
-}
-
-.store-item {
-  background-color: white;
-  padding: 15px;
-  border-radius: 10px;
+.store-list-table th, .store-list-table td {
+  padding: 12px 20px;
+  text-align: left;
   border: 1px solid #ddd;
-  display: flex;
-  justify-content: space-between;
 }
 
-.store-item span {
-  text-align: center;
-  flex: 1; /* Ensures all columns take equal width */
-  padding: 5px;
-}
-
-.store-item a {
-  color: #0057b7;
-  text-decoration: none;
-}
-
-.store-item a:hover {
-  text-decoration: underline;
-}
-
-.store-item input[type="checkbox"] {
-  margin-right: 10px;
+.store-list-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 /* =========================
@@ -355,6 +297,7 @@ textarea {
   margin: 10px 0;
   display: flex;
   justify-content: flex-end;
+  padding-right: 10px; /* Adds padding to right to align with content */
 }
 
 .select-all-container .main-button {
@@ -373,7 +316,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 20px 20px;  /* Add space on the right side */
 }
 
 .search-box {
