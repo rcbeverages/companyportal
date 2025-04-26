@@ -15,13 +15,17 @@
 
 <!-- Search Container -->
 <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search by Store, Sub Owner, Key Account, Grade, Store Type" />
+  <input type="text" id="searchInput" placeholder="Search by Customer Name, Sub Owner Group, Key Account Group, Grade, Store Type" />
+  <button id="sendEmailButton" class="main-button" disabled>Send Email</button>
+  <div>
+    <input type="checkbox" id="selectAllCheckbox"> Select All
+  </div>
 </div>
 
 <!-- Menu Container for Store List -->
 <div class="menu-container">
   <div id="storeList">
-    <!-- Email Store List will populate here -->
+    <!-- Store list populated dynamically -->
   </div>
 </div>
 
