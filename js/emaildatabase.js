@@ -4,28 +4,33 @@ document.addEventListener("DOMContentLoaded", function() {
   const searchInput = document.getElementById("searchInput");
   const sendEmailButton = document.getElementById("sendEmailButton");
 
-  const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace this with the correct API endpoint for your Master Store List
+  const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
 
   // Fetch data from the Master Store List API
   fetch(apiEndpoint)
     .then(response => response.json())
     .then(data => {
-      const customersWithEmails = data.filter(store => store.Email);  // Filter to include only customers with emails
+      // Filter out stores that do not have an email
+      const customersWithEmails = data.filter(store => store["Email"]);
 
       function displayStores(stores) {
         storeListContainer.innerHTML = ""; // Clear previous results
 
-        stores.forEach(store => {
-          const storeDiv = document.createElement("div");
-          storeDiv.className = "store-item";
-          storeDiv.innerHTML = `
-            <label>
-              <input type="checkbox" class="selectStoreCheckbox">
-              ${store.Customer Name} | ${store.Sub Owner Group} | ${store.Key Account Group} | ${store.Grade} | ${store.Store Type} | <a href="mailto:${store.Email}">${store.Email}</a>
-            </label>
-          `;
-          storeListContainer.appendChild(storeDiv);
-        });
+        if (stores.length === 0) {
+          storeListContainer.innerHTML = "<p>No stores found.</p>";
+        } else {
+          stores.forEach(store => {
+            const storeDiv = document.createElement("div");
+            storeDiv.className = "store-item";
+            storeDiv.innerHTML = `
+              <label>
+                <input type="checkbox" class="selectStoreCheckbox">
+                ${store["Customer Name"]} | ${store["Sub Owner Group"]} | ${store["Key Account Group"]} | ${store["Grade"]} | ${store["Store Type"]} | <a href="mailto:${store["Email"]}">${store["Email"]}</a>
+              </label>
+            `;
+            storeListContainer.appendChild(storeDiv);
+          });
+        }
       }
 
       // Display all stores initially
@@ -36,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredStores = customersWithEmails.filter(store => {
           return (
-            store.Customer_Name.toLowerCase().includes(searchTerm) ||
-            store.Sub_Owner_Group.toLowerCase().includes(searchTerm) ||
-            store.Key_Account_Group.toLowerCase().includes(searchTerm) ||
-            store.Grade.toLowerCase().includes(searchTerm) ||
-            store.Store_Type.toLowerCase().includes(searchTerm)
+            store["Customer Name"].toLowerCase().includes(searchTerm) ||
+            store["Sub Owner Group"].toLowerCase().includes(searchTerm) ||
+            store["Key Account Group"].toLowerCase().includes(searchTerm) ||
+            store["Grade"].toLowerCase().includes(searchTerm) ||
+            store["Store Type"].toLowerCase().includes(searchTerm)
           );
         });
         displayStores(filteredStores);
