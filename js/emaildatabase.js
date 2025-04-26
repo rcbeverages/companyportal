@@ -14,27 +14,28 @@ document.addEventListener("DOMContentLoaded", function() {
       // Filter stores that belong to the logged-in BDM
       const storesForBDM = data.filter(store => store["BDM"] === bdmUsername && store["Email"]);
 
-      function displayStores(stores) {
-        storeListContainer.innerHTML = ""; // Clear previous results
+     function displayStores(stores) {
+    storeListContainer.innerHTML = ""; // Clear previous results
 
-        if (stores.length === 0) {
-          storeListContainer.innerHTML = "<p>No stores found for this BDM.</p>";
-        } else {
-          stores.forEach(store => {
+    if (stores.length === 0) {
+        storeListContainer.innerHTML = "<p>No stores found for this BDM.</p>";
+    } else {
+        stores.forEach(store => {
             const storeRow = document.createElement("tr");
             storeRow.innerHTML = `
-              <td><input type="checkbox" class="select-store" data-store-email="${store["Email"]}" /></td>
-              <td>${store["Customer Name"]}</td>
-              <td>${store["Sub Owner Group"]}</td>
-              <td>${store["Key Account Group"]}</td>
-              <td>${store["Grade"]}</td>
-              <td>${store["Store Type"]}</td>
-              <td>${store["Email"]}</td>
+                <td><input type="checkbox" class="select-store" data-store-email="${store["Email"]}" /></td>
+                <td>${store["Customer Name"]}</td>
+                <td>${store["Sub Owner Group"]}</td>
+                <td>${store["Key Account Group"]}</td>
+                <td>${store["Grade"]}</td>
+                <td>${store["Store Type"]}</td>
+                <td><a href="mailto:${store["Email"]}" target="_blank">${store["Email"]}</a></td>
             `;
             storeListContainer.appendChild(storeRow);
-          });
-        }
-      }
+        });
+    }
+}
+
 
       // Display all stores initially for the BDM
       displayStores(storesForBDM);
