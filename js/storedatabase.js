@@ -23,13 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
           stores.forEach(store => {
             const storeRow = document.createElement("tr");
             storeRow.innerHTML = `
-              <td><button class="visit-btn" data-store="${store["Store Name"]}">Visit</button></td>
-              <td>${store["Store Name"]}</td>
-              <td>${store["Segment"]}</td>
+              <td><button class="visit-btn" data-store="${store["Customer Name"]}">Visit</button></td>
+              <td>${store["Customer Name"]}</td>
+              <td>${store["Sub Owner Group"]}</td>
               <td>${store["Key Account Group"]}</td>
               <td>${store["Grade"]}</td>
               <td>${store["Store Type"]}</td>
-              <td>${store["Visit Status"]}</td>
             `;
             storeListContainer.appendChild(storeRow);
           });
@@ -44,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredStores = storesForBDM.filter(store => {
           return (
-            store["Store Name"].toLowerCase().includes(searchTerm) ||
-            store["Segment"].toLowerCase().includes(searchTerm) ||
+            store["Customer Name"].toLowerCase().includes(searchTerm) ||
+            store["Sub Owner Group"].toLowerCase().includes(searchTerm) ||
             store["Key Account Group"].toLowerCase().includes(searchTerm) ||
             store["Grade"].toLowerCase().includes(searchTerm) ||
             store["Store Type"].toLowerCase().includes(searchTerm)
