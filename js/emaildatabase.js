@@ -1,46 +1,60 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Set Username from Local Storage (like other pages)
-  const username = localStorage.getItem("username");
-  document.getElementById("username").textContent = username;
+  // Placeholder: Replace this with an actual API call to fetch customer data
+  const customerData = [
+    { customerName: "Customer 1", subOwnerGroup: "Group A", keyAccountGroup: "Yes", grade: "A", storeType: "Retail", email: "customer1@example.com" },
+    { customerName: "Customer 2", subOwnerGroup: "Group B", keyAccountGroup: "No", grade: "B", storeType: "Wholesale", email: "customer2@example.com" },
+    { customerName: "Customer 3", subOwnerGroup: "Group A", keyAccountGroup: "Yes", grade: "A", storeType: "Retail", email: "customer3@example.com" },
+    // More customers
+  ];
 
-  // Function to fetch and display store list (this is just a sample implementation)
-  function fetchStoreList() {
-    // Placeholder: You would replace this with your dynamic data-fetching logic, e.g., API calls.
-    const storeList = [
-      { storeName: "Store 1", subOwner: "Owner 1", grade: "A", keyAccount: "Yes", storeType: "Retail" },
-      { storeName: "Store 2", subOwner: "Owner 2", grade: "B", keyAccount: "No", storeType: "Wholesale" },
-    ];
+  // Filter customers who have emails
+  const customersWithEmails = customerData.filter(customer => customer.email);
 
-    const storeListContainer = document.getElementById("storeList");
-    storeListContainer.innerHTML = ""; // Clear any previous content
+  const storeListContainer = document.getElementById("storeList");
+  const selectAllCheckbox = document.getElementById("selectAllCheckbox");
+  const searchInput = document.getElementById("searchInput");
+  const sendEmailButton = document.getElementById("sendEmailButton");
 
-    // Populate the store list dynamically
-    storeList.forEach(store => {
+  function displayStores(stores) {
+    storeListContainer.innerHTML = ""; // Clear previous results
+
+    stores.forEach(store => {
       const storeDiv = document.createElement("div");
       storeDiv.className = "store-item";
       storeDiv.innerHTML = `
-        <h3>${store.storeName}</h3>
-        <p>Sub Owner: ${store.subOwner}</p>
-        <p>Grade: ${store.grade}</p>
-        <p>Key Account: ${store.keyAccount}</p>
-        <p>Store Type: ${store.storeType}</p>
+        <label>
+          <input type="checkbox" class="selectStoreCheckbox">
+          ${store.customerName} | ${store.subOwnerGroup} | ${store.keyAccountGroup} | ${store.grade} | ${store.storeType} | <a href="mailto:${store.email}">${store.email}</a>
+        </label>
       `;
       storeListContainer.appendChild(storeDiv);
     });
   }
 
-  // Call fetchStoreList to display data
-  fetchStoreList();
+  // Display all customers initially
+  displayStores(customersWithEmails);
 
-  // Enable the 'Send Email' button when there is search input
-  const searchInput = document.getElementById("searchInput");
-  const sendEmailButton = document.getElementById("sendEmailButton");
-
+  // Search functionality
   searchInput.addEventListener("input", function() {
-    if (searchInput.value.length > 0) {
-      sendEmailButton.disabled = false;
-    } else {
-      sendEmailButton.disabled = true;
-    }
+    const searchTerm = searchInput.value.toLowerCase();
+    const filteredStores = customersWithEmails.filter(store => {
+      return (
+        store.customerName.toLowerCase().includes(searchTerm) ||
+        store.subOwnerGroup.toLowerCase().includes(searchTerm) ||
+        store.keyAccountGroup.toLowerCase().includes(searchTerm) ||
+        store.grade.toLowerCase().includes(searchTerm) ||
+        store.storeType.toLowerCase().includes(searchTerm)
+      );
+    });
+    displayStores(filteredStores);
+
+    // Enable/Disable Send Email button
+    sendEmailButton.disabled = searchTerm.length === 0;
+  });
+
+  // Select All Checkbox
+  selectAllCheckbox.addEventListener("change", function() {
+    const checkboxes = document.querySelectorAll(".selectStoreCheckbox");
+    checkboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
   });
 });
