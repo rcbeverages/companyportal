@@ -4,14 +4,15 @@
 body {
   margin: 0;
   padding: 0;
-   display: flex;
-   flex-direction: column;
-  min-height: 100vh; /* 👈 FULL screen height */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   box-sizing: border-box;
   font-family: 'Arial', sans-serif;
   background-color: #f5f5f5;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden; /* 👈 ONLY hide side scroll */
+  overflow-y: auto;    /* 👈 ALLOW page vertical scrolling */
 }
 
 /* =========================
@@ -233,10 +234,10 @@ textarea {
    ========================= */
 #customerTiles {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* 👈 300px to fit 4 across nicely */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
   padding: 20px;
-  max-width: 1500px; /* 👈 Slightly tighter so 4 across fits nicely */
+  max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -264,7 +265,7 @@ textarea {
 .search-container {
   width: 90%;
   max-width: 900px;
-  margin: 40px auto 0 auto; /* 👈 40px gap under header */
+  margin: 120px auto 20px auto; /* 👈 120px from top to properly clear header */
   padding: 10px 0;
   box-sizing: border-box;
 }
