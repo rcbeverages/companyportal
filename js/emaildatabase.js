@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
           stores.forEach(store => {
             const storeRow = document.createElement("tr");
             storeRow.innerHTML = `
-              <td><button class="visit-btn" data-store="${store["Customer Name"]}" data-store-id="${store["Store ID"]}" data-store-email="${store["Email"]}">Visit</button></td>
+              <td><input type="checkbox" class="select-store" data-store-email="${store["Email"]}" /></td>
               <td>${store["Customer Name"]}</td>
               <td>${store["Sub Owner Group"]}</td>
               <td>${store["Key Account Group"]}</td>
@@ -31,13 +31,6 @@ document.addEventListener("DOMContentLoaded", function() {
               <td>${store["Store Type"]}</td>
             `;
             storeListContainer.appendChild(storeRow);
-
-            // Add event listener to the Visit button
-            const visitButton = storeRow.querySelector(".visit-btn");
-            visitButton.addEventListener("click", function() {
-              const storeId = visitButton.getAttribute("data-store-id"); // Assuming you have Store ID to pass
-              window.location.href = `visit.html?storeId=${storeId}`; // Redirect to visit.html with the store's ID
-            });
           });
         }
       }
@@ -62,18 +55,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Select All Button functionality
       selectAllButton.addEventListener("click", function() {
-        const visitButtons = document.querySelectorAll(".visit-btn");
-        const allVisited = Array.from(visitButtons).every(button => button.disabled);
-        visitButtons.forEach(button => button.disabled = !allVisited);
+        const checkboxes = document.querySelectorAll(".select-store");
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
       });
 
       // Send Email Button functionality
       sendEmailButton.addEventListener("click", function() {
-        // Get all selected stores (those with disabled visit buttons)
-        const selectedStores = document.querySelectorAll(".visit-btn:disabled");
-        
+        // Get all selected stores (those with checked checkboxes)
+        const selectedStores = document.querySelectorAll(".select-store:checked");
+
         // Collect the emails of the selected stores
-        const storeEmails = Array.from(selectedStores).map(button => button.getAttribute('data-store-email'));
+        const storeEmails = Array.from(selectedStores).map(checkbox => checkbox.getAttribute('data-store-email'));
 
         // Join emails to create the BCC string
         const bccEmails = storeEmails.join(',');
