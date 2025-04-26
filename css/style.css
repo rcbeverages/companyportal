@@ -97,14 +97,15 @@ footer {
   border-radius: 10px;
   border: none;
   text-decoration: none;
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 20px auto;
+  width: 280px; /* <-- Force fixed width */
+  max-width: 90%;
+  margin: 10px auto;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   text-align: center;
+  box-sizing: border-box;
 }
+
 
 .dashboard-btn:hover {
   background-color: #1e40af;
