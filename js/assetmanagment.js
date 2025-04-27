@@ -35,25 +35,31 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Fetch the asset data
-  fetch(assetApiEndpoint)
-    .then(response => response.json())
-    .then(assetData => {
-      displayAssets(assetData); // Display assets after fetching
-    })
-    .catch(error => console.error("Error fetching asset data:", error));
+  function fetchAssets() {
+    fetch(assetApiEndpoint)
+      .then(response => response.json())
+      .then(assetData => {
+        displayAssets(assetData); // Display assets after fetching
+      })
+      .catch(error => console.error("Error fetching asset data:", error));
+  }
 
   // Search functionality (applies on input event of the search field)
   searchInput.addEventListener("input", function() {
     const searchTerm = searchInput.value.toLowerCase();
-    const filteredAssets = assetData.filter(asset => {
-      return (
-        asset["Asset Tag Code"].toLowerCase().includes(searchTerm) ||
-        asset["Asset Type"].toLowerCase().includes(searchTerm) ||
-        asset["Customer Name"].toLowerCase().includes(searchTerm) ||
-        asset["Agreement"].toLowerCase().includes(searchTerm)
-      );
-    });
-    displayAssets(filteredAssets); // Re-render the filtered list
+    fetch(assetApiEndpoint)
+      .then(response => response.json())
+      .then(assetData => {
+        const filteredAssets = assetData.filter(asset => {
+          return (
+            asset["Asset Tag Code"].toLowerCase().includes(searchTerm) ||
+            asset["Asset Type"].toLowerCase().includes(searchTerm) ||
+            asset["Customer Name"].toLowerCase().includes(searchTerm) ||
+            asset["Agreement"].toLowerCase().includes(searchTerm)
+          );
+        });
+        displayAssets(filteredAssets); // Re-render the filtered list
+      });
   });
 
   // Modal functionality
@@ -71,18 +77,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const assetTag = document.getElementById("assetTag").value;
     const assetType = document.getElementById("assetType").value;
-    const customerName = document.getElementById("customerName").value;
-    const agreement = document.getElementById("agreement").value;
-    const datePlaced = document.getElementById("datePlaced").value;
     const status = document.getElementById("status").value;
     const comments = document.getElementById("comments").value;
 
     const newAsset = {
       "Asset Tag Code": assetTag,
       "Asset Type": assetType,
-      "Customer Name": customerName,
-      "Agreement": agreement,
-      "Date Placed": datePlaced,
       "Status": status,
       "Comments": comments
     };
@@ -98,13 +98,9 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(response => response.json())
     .then(data => {
       console.log("Asset added:", data);
-      closeModal(); // Close the modal after successful submission
-      // Optionally, you can re-fetch the asset list and refresh the view
-      fetch(assetApiEndpoint)
-        .then(response => response.json())
-        .then(assetData => {
-          displayAssets(assetData); // Refresh asset list after adding new asset
-        });
+      closeModal();
+      // Optionally, refresh the asset list to show the new asset
+      fetchAssets();  // Fetches the updated list of assets
     })
     .catch(error => console.error("Error adding asset:", error));
   });
@@ -118,4 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Add New Asset button
   document.querySelector(".add-button").addEventListener("click", openModal);
+
+  // Fetch assets on page load
+  fetchAssets(); // Initial asset list fetch when the page loads
 });
