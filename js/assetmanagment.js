@@ -1,67 +1,59 @@
-// API Endpoints
-const availableAssetsAPI = "https://sheetdb.io/api/v1/8kwtvisrhm2zd/search?Status=Available";
-const placedAssetsAPI = "https://sheetdb.io/api/v1/8kwtvisrhm2zd/search?Status=Placed";
+document.addEventListener("DOMContentLoaded", function() {
+  const assetListContainer = document.getElementById("assetList");
+  const searchInput = document.getElementById("searchInputAsset");
 
-// Function to create a row-style asset tile
-function createAssetTile(asset, type) {
-  const tile = document.createElement('div');
-  tile.className = 'tile';
+  const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Replace with your actual Asset API endpoint
 
-  if (type === 'available') {
-    tile.innerHTML = `
-      <div class="tile-row">
-        <div><strong>Asset Tag:</strong> ${asset["Asset Tag Code"] || ""}</div>
-        <div><strong>Type:</strong> ${asset["Asset Type"] || ""}</div>
-        <div><strong>Agreement:</strong> ${asset["Agreement"] || ""}</div>
-        <div><strong>Status:</strong> ${asset["Status"] || ""}</div>
-        <div><strong>Comments:</strong> ${asset["Comments"] || ""}</div>
-      </div>
-    `;
-  } else if (type === 'placed') {
-    tile.innerHTML = `
-      <div class="tile-row">
-        <div><strong>Asset Tag:</strong> ${asset["Asset Tag Code"] || ""}</div>
-        <div><strong>Type:</strong> ${asset["Asset Type"] || ""}</div>
-        <div><strong>Customer:</strong> ${asset["Customer Name"] || ""}</div>
-        <div><strong>Agreement:</strong> ${asset["Agreement"] || ""}</div>
-        <div><strong>Date Placed:</strong> ${asset["Date Placed"] || ""}</div>
-        <div><strong>Status:</strong> ${asset["Status"] || ""}</div>
-        <div><strong>Comments:</strong> ${asset["Comments"] || ""}</div>
-      </div>
-    `;
-  }
+  // Fetch the asset data
+  fetch(assetApiEndpoint)
+    .then(response => response.json())
+    .then(assetData => {
+      // Function to display the assets
+      function displayAssets(assets) {
+        assetListContainer.innerHTML = ""; // Clear previous results
 
-  return tile;
-}
+        if (assets.length === 0) {
+          assetListContainer.innerHTML = "<p>No assets found.</p>";
+        } else {
+          assets.forEach(asset => {
+            const assetRow = document.createElement("tr");
+            assetRow.innerHTML = `
+              <td><button class="visit-btn" data-asset="${asset["Asset Tag Code"]}" data-asset-id="${asset["Asset Tag Code"]}">Visit</button></td>
+              <td>${asset["Asset Tag Code"]}</td>
+              <td>${asset["Asset Type"]}</td>
+              <td>${asset["Customer Name"]}</td>
+              <td>${asset["Agreement"]}</td>
+              <td>${asset["Status"]}</td>
+              <td>${asset["Comments"]}</td>
+            `;
+            assetListContainer.appendChild(assetRow);
 
-// Fetch and Display Available Assets
-fetch(availableAssetsAPI)
-  .then(response => response.json())
-  .then(data => {
-    const availableAssetsList = document.getElementById('availableAssetsList');
-    if (data.length === 0) {
-      availableAssetsList.innerHTML = "<p>No available assets found.</p>";
-    } else {
-      data.forEach(asset => {
-        const tile = createAssetTile(asset, 'available');
-        availableAssetsList.appendChild(tile);
+            // Add event listener to the Visit button
+            const visitButton = assetRow.querySelector(".visit-btn");
+            visitButton.addEventListener("click", function() {
+              const assetId = visitButton.getAttribute("data-asset-id");
+              window.location.href = `visit.html?assetId=${assetId}`; // Redirect to visit.html with the asset's ID
+            });
+          });
+        }
+      }
+
+      // Display all assets
+      displayAssets(assetData);
+
+      // Search functionality (applies on input event of the search field)
+      searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredAssets = assetData.filter(asset => {
+          return (
+            asset["Asset Tag Code"].toLowerCase().includes(searchTerm) ||
+            asset["Asset Type"].toLowerCase().includes(searchTerm) ||
+            asset["Customer Name"].toLowerCase().includes(searchTerm) ||
+            asset["Agreement"].toLowerCase().includes(searchTerm)
+          );
+        });
+        displayAssets(filteredAssets);
       });
-    }
-  })
-  .catch(error => console.error('Error fetching available assets:', error));
-
-// Fetch and Display Placed Assets
-fetch(placedAssetsAPI)
-  .then(response => response.json())
-  .then(data => {
-    const placedAssetsList = document.getElementById('placedAssetsList');
-    if (data.length === 0) {
-      placedAssetsList.innerHTML = "<p>No placed assets found.</p>";
-    } else {
-      data.forEach(asset => {
-        const tile = createAssetTile(asset, 'placed');
-        placedAssetsList.appendChild(tile);
-      });
-    }
-  })
-  .catch(error => console.error('Error fetching placed assets:', error));
+    })
+    .catch(error => console.error("Error fetching asset data:", error));
+});
