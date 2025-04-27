@@ -1,37 +1,43 @@
-// Define the API URL for reminders
+// Define the API URLs
 const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API endpoint
+const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API endpoint
 
-// Function to display reminders in the table
-function displayReminders(reminders) {
-  console.log("Fetched reminders:", reminders);  // Log fetched reminders for debugging
+// Fetch and display reminders specific to the logged-in BDM
+async function loadReminders() {
+  try {
+    const bdmName = sessionStorage.getItem('bdmName');  // Get the logged-in BDM name
+    console.log('Logged-in BDM:', bdmName);  // Log BDM name to check if it's correct
 
-  const reminderList = document.getElementById('reminderList');
-  reminderList.innerHTML = ''; // Clear previous results
+    const response = await fetch(remindersApiUrl);
+    const data = await response.json();
 
-  if (reminders.length === 0) {
-    reminderList.innerHTML = "<p>No reminders found.</p>";
-  } else {
-    reminders.forEach(reminder => {
-      const reminderRow = document.createElement("tr");
-      reminderRow.innerHTML = `
-       <td>${reminder["Date"]}</td>  <!-- Use 'Date' from the sheet -->
-        <td>${reminder["Customer Name"]}</td>  <!-- Use 'Customer Name' from the sheet -->
-        <td>${reminder["Comments"] || '(No Comments)'}</td>  <!-- Use 'Comments' from the sheet -->
-      `;
-      reminderList.appendChild(reminderRow);
-    });
+    console.log('API Response:', data);  // Log the response to see the full data
+
+    const reminderList = document.getElementById('reminderList');
+    reminderList.innerHTML = ''; // Clear previous results
+
+    // Filter reminders for the logged-in BDM
+    const filteredReminders = data.filter(reminder => reminder["BDM Name"] === bdmName);
+
+    if (filteredReminders.length === 0) {
+      reminderList.innerHTML = "<p>No reminders found for this BDM.</p>";
+    } else {
+      // Display reminders for the logged-in BDM
+      filteredReminders.forEach(reminder => {
+        const reminderRow = document.createElement("tr");
+        reminderRow.innerHTML = `
+          <td>${reminder["Date"]}</td>  <!-- Use 'Date' from the sheet -->
+          <td>${reminder["Customer Name"]}</td>  <!-- Use 'Customer Name' from the sheet -->
+          <td>${reminder["Comments"] || '(No Comments)'}</td>  <!-- Use 'Comments' from the sheet -->
+        `;
+        reminderList.appendChild(reminderRow);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading reminders:', error);
+    const reminderList = document.getElementById('reminderList');
+    reminderList.innerHTML = '<p style="color:red;">Error loading reminders. Please try again later.</p>';
   }
-}
-
-// Fetch reminders from the API
-function loadReminders() {
-  fetch(remindersApiUrl)
-    .then(response => response.json())  // Parse JSON data from API response
-    .then(reminderData => {
-      console.log("Fetched Reminders:", reminderData); // Log the data for debugging
-      displayReminders(reminderData);  // Display reminders in the table
-    })
-    .catch(error => console.error("Error fetching reminder data:", error));
 }
 
 // Open the Add Reminder popup
@@ -62,11 +68,11 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
   }
 
   const reminderData = {
-  "Date": date,  // Ensure this matches the exact header
-  "Customer Name": customerName,  // This needs quotes because of the space
-  "Comments": comments,  // This also needs to be quoted
-  "BDM Name": bdmName  // Correct usage of "BDM Name" with quotes
-};
+    "Date": date,  // Use 'Date' from the sheet
+    "Customer Name": customer,  // Correct key with space
+    "Comments": comments,  // Correct key with space
+    "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
+  };
 
   // POST request to add the new reminder
   fetch(remindersApiUrl, {
@@ -80,13 +86,46 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
   .then(data => {
     console.log("Reminder added:", data);
     closeAddReminder();  // Close the modal after success
-    loadReminders();  // Refresh the reminder list
+    loadReminders();  // Refresh the reminder list after adding a new one
   })
   .catch(error => console.error("Error adding reminder:", error));
 });
 
 // Event listener for Add Reminder button
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
+
+// Load customers for the logged-in BDM
+async function loadCustomersDropdown() {
+  try {
+    const bdmName = sessionStorage.getItem('bdmName');  // Get logged-in BDM name
+    const response = await fetch(customersApiUrl);
+    const data = await response.json();
+
+    // Filter customers by the logged-in BDM
+    const filteredCustomers = data.filter(customer => customer["BDM Name"] === bdmName);  // Filter by "BDM Name"
+
+    const customerDropdown = document.getElementById('reminderCustomer');
+    customerDropdown.innerHTML = '';  // Clear existing dropdown options
+
+    // Add "Non Store Reminder" option
+    const nonStoreOption = document.createElement('option');
+    nonStoreOption.value = "Non Store Reminder";
+    nonStoreOption.text = "Non Store Reminder";
+    customerDropdown.appendChild(nonStoreOption);
+
+    // Add filtered customers to the dropdown
+    filteredCustomers.forEach(customer => {
+      if (customer["Customer Name"]) {  // Use "Customer Name" from the sheet
+        const option = document.createElement('option');
+        option.value = customer["Customer Name"];
+        option.text = customer["Customer Name"];
+        customerDropdown.appendChild(option);
+      }
+    });
+  } catch (error) {
+    console.error('Error loading customers:', error);
+  }
+}
 
 // Load reminders when the page loads
 window.onload = function() {
