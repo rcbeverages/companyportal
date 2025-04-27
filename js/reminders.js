@@ -1,4 +1,3 @@
-// Assuming BDM name is stored in sessionStorage or passed to the script
 const bdmName = sessionStorage.getItem('bdmName'); // Replace with actual method to get logged-in BDM name
 
 const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';
@@ -111,6 +110,9 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     console.error('Error saving reminder:', error);
   }
 });
+
+// Open the modal when the "Add New Reminder" button is clicked
+document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
 
 window.onload = function() {
   loadReminders(); // Load reminders for the logged-in BDM when the page loads
