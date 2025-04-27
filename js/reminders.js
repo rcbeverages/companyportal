@@ -40,10 +40,12 @@ async function loadReminders() {
     reminderList.innerHTML = '';  // Clear current list
 
     // Filter reminders for the logged-in BDM
-    const filteredReminders = data.filter(reminder => reminder.BDM_Name === bdmName);
+    const filteredReminders = data.filter(reminder => {
+      console.log('Reminder BDM_Name:', reminder.BDM_Name);  // Log BDM_Name field from each reminder
+      return reminder.BDM_Name === bdmName;
+    });
 
-    // Log filtered reminders
-    console.log('Filtered Reminders:', filteredReminders);
+    console.log('Filtered Reminders:', filteredReminders);  // Check if filtering works
 
     // Sort reminders by Date to Email (ascending)
     filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
@@ -54,7 +56,7 @@ async function loadReminders() {
       row.innerHTML = `
         <td>${reminder.Date_to_Email}</td>
         <td>${reminder.Customer_Name}</td>
-        <td>${reminder.Comments ? reminder.Comments : '(No Comments)'}</td>
+        <td>${reminder.Comments || '(No Comments)'}</td>  <!-- Display "(No Comments)" if comments are empty -->
       `;
       reminderList.appendChild(row);  // Append the row to the table
     });
