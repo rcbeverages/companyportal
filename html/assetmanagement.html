@@ -185,9 +185,11 @@
     <input type="text" id="searchInputAsset" placeholder="Search by Asset Tag, Asset Type, Customer Name, Agreement" />
 </div>
 
-<!-- Add New Asset Button -->
+<!-- Button Row for Show Available and Show Placed Assets -->
 <div class="button-row">
-  <button onclick="openModal()" class="main-button">+ Add New Asset</button>
+  <button class="main-button" onclick="showAvailableAssets()">Show Available Assets</button>
+  <button class="main-button" onclick="showPlacedAssets()">Show Placed Assets</button>
+  <button class="main-button" onclick="openModal()">+ Add New Asset</button>
 </div>
 
 <!-- Modal for Adding New Asset -->
