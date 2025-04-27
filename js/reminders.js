@@ -8,10 +8,12 @@ async function fetchUserData() {
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
 
+    console.log("API Data:", data);  // Log the full API data to check the structure
+
     if (data.length > 0) {
       const bdmName = data[0].Username;  // Username is used as BDM name
 
-      // Store the BDM name in sessionStorage
+      // Store the BDM name and role in sessionStorage
       sessionStorage.setItem('bdmName', bdmName);
 
       console.log(`Logged in as: ${bdmName}`);
