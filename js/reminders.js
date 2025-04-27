@@ -23,12 +23,16 @@ async function loadReminders() {
 
     // Filter reminders for the logged-in BDM, using the correct "BDM Name" field
     const filteredReminders = data.filter(reminder => {
-      const bdmNameInReminder = reminder["BDM Name"] || '';  // Correct field name with space, not underscore
-      console.log('Reminder BDM Name:', bdmNameInReminder);  // Log BDM Name field from each reminder
+      const bdmNameInReminder = reminder["BDM Name"] || '';  // Correct field with space in name
+      console.log('Checking Reminder BDM Name:', bdmNameInReminder);  // Log BDM Name field from each reminder
       return bdmNameInReminder === bdmName;  // Ensure BDM Name matches the logged-in BDM
     });
 
     console.log('Filtered Reminders:', filteredReminders);  // Check if filtering works
+
+    if (filteredReminders.length === 0) {
+      console.log('No reminders found for the logged-in BDM');
+    }
 
     // Sort reminders by Date to Email (ascending)
     filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
