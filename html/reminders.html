@@ -178,13 +178,24 @@
     <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
   </div>
 
-  <!-- Modal for Adding New Asset -->
+  <table id="reminderListTable" class="reminder-list-table">
+    <thead>
+      <tr>
+        <th>Date Due</th>
+        <th>Customer Name</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody id="reminderList"></tbody>
+  </table>
+
   <div id="addReminderPopup" class="modal">
     <div class="modal-content">
       <h2>Add New Reminder</h2>
       <form id="addReminderForm">
         <label for="reminderDate">Date Due:</label>
         <input type="date" id="reminderDate" name="reminderDate" required />
+
         <label for="reminderCustomer">Customer Name:</label>
         <select id="reminderCustomer" name="reminderCustomer" required>
           <option value="">Select Customer</option>
@@ -200,21 +211,8 @@
         </div>
       </form>
     </div>
+  </div>
 
-    <!-- Table for Asset List -->
-  <table id="reminderListTable" class="reminder-list-table">
-    <thead>
-      <tr>
-        <th>Date Due</th>
-        <th>Customer Name</th>
-        <th>Comments</th>
-      </tr>
-    </thead>
-    <tbody id="reminderList">
-    </tbody>
-  </table>
-
-    <!-- Fixed Footer with Navigation Buttons -->
   <footer>
     <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
     <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
@@ -224,6 +222,5 @@
   </footer>
 
   <script src="../js/reminders.js"></script>
-    
 </body>
 </html>
