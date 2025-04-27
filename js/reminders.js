@@ -121,19 +121,20 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   };
 
   try {
-  await fetch(remindersApiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: [reminderData] }),
-  });
+    await fetch(remindersApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data: [reminderData] }),
+    });
 
-  closeAddReminder(); // Close the modal after adding the reminder
-  loadReminders();    // Refresh the reminders list after adding a new one
-} catch (error) {
-  console.error('Error saving reminder:', error);
-}
+    closeAddReminder(); // Close the modal after adding the reminder
+    loadReminders();    // Refresh the reminders list after adding a new one
+  } catch (error) {
+    console.error('Error saving reminder:', error);
+  }
+});
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
@@ -142,4 +143,4 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 window.onload = function() {
   fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
   loadReminders();  // Load reminders for the logged-in BDM
-};  // <-- Make sure this bracket is here to close the function
+};  // <-- This was the missing closing bracket
