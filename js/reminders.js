@@ -138,4 +138,5 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 // Load reminders when the page loads
 window.onload = function() {
   loadReminders();  // Load reminders for the logged-in BDM
-};
+  }
+});
