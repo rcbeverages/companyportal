@@ -29,14 +29,21 @@ async function fetchUserData() {
 async function loadReminders() {
   try {
     const bdmName = sessionStorage.getItem('bdmName');  // Get the logged-in BDM name
+    console.log('Logged-in BDM:', bdmName);  // Log BDM name to check if it's correct
+
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
+
+    console.log('API Response:', data);  // Log the response to see the full data
 
     const reminderList = document.getElementById('reminderList');
     reminderList.innerHTML = '';  // Clear current list
 
     // Filter reminders for the logged-in BDM
     const filteredReminders = data.filter(reminder => reminder.BDM_Name === bdmName);
+
+    // Log filtered reminders
+    console.log('Filtered Reminders:', filteredReminders);
 
     // Sort reminders by Date to Email (ascending)
     filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
