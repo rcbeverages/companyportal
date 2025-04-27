@@ -59,11 +59,11 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
   const date = document.getElementById('reminderDate').value;
   const customer = document.getElementById('reminderCustomer').value;
   const comments = document.getElementById('reminderComments').value;
-  const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
+  const username = localStorage.getItem('username');  // Get the username from localStorage
 
-  // Ensure bdmName is available before proceeding
-  if (!bdmName) {
-    console.error("BDM name is not set. Cannot add reminder.");
+  // Ensure username is available before proceeding
+  if (!username) {
+    console.error("Username is not set. Cannot add reminder.");
     return;
   }
 
@@ -71,7 +71,7 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
     "Date": date,  // Use 'Date' from the sheet
     "Customer Name": customer,  // Correct key with space
     "Comments": comments,  // Correct key with space
-    "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
+    "BDM Name": username  // Attach the logged-in BDM's name to the reminder
   };
 
   // POST request to add the new reminder
@@ -97,12 +97,12 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 // Load customers for the logged-in BDM
 async function loadCustomersDropdown() {
   try {
-    const bdmName = sessionStorage.getItem('bdmName');  // Get logged-in BDM name
+    const username = localStorage.getItem('username');  // Get logged-in BDM name from localStorage
     const response = await fetch(customersApiUrl);
     const data = await response.json();
 
     // Filter customers by the logged-in BDM
-    const filteredCustomers = data.filter(customer => customer["BDM Name"] === bdmName);  // Filter by "BDM Name"
+    const filteredCustomers = data.filter(customer => customer["BDM Name"] === username);  // Filter by "BDM Name"
 
     const customerDropdown = document.getElementById('reminderCustomer');
     customerDropdown.innerHTML = '';  // Clear existing dropdown options
