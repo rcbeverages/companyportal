@@ -33,7 +33,7 @@
       align-items: left;
       justify-content: flex-start;
       margin: 20px 20px;
-      margin-top: 140px;
+      margin-top: 140px; /* Ensure space for fixed header */
       width: 40%;
     }
 
@@ -163,7 +163,11 @@
   </header>
 
   <div class="button-row">
-    <button class="add-button" id="addReminderBtn">+ Add New Reminder</button>
+    <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
+  </div>
+
+  <div class="search-container">
+    <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date, Comments" />
   </div>
 
   <table id="reminderListTable" class="reminder-list-table">
