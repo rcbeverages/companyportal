@@ -61,38 +61,37 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Add asset functionality
-  document.getElementById("addAssetForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+ document.getElementById("addAssetForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent form from reloading the page
 
-    const assetTag = document.getElementById("assetTag").value;
-    const assetType = document.getElementById("assetType").value;
-    const status = document.getElementById("status").value;
-    const comments = document.getElementById("comments").value;
+  const assetTag = document.getElementById("assetTag").value;
+  const assetType = document.getElementById("assetType").value;
+  const status = document.getElementById("status").value;
+  const comments = document.getElementById("comments").value;
 
-    const newAsset = {
-      "Asset Tag Code": assetTag,
-      "Asset Type": assetType,
-      "Status": status,
-      "Comments": comments
-    };
+  const newAsset = {
+    "Asset Tag Code": assetTag,
+    "Asset Type": assetType,
+    "Status": status,
+    "Comments": comments
+  };
 
-    // Make a POST request to add the new asset to the Google Sheet via SheetDB API
-    fetch(assetApiEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify([newAsset])
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Asset added:", data);
-      closeModal();
-      // Refresh the asset list to show the new asset
-      showAvailableAssets();  // Fetch and show available assets after adding a new asset
-    })
-    .catch(error => console.error("Error adding asset:", error));
-  });
+  // POST request to add the new asset to SheetDB
+  fetch(assetApiEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify([newAsset])
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Asset added:", data);
+    closeModal(); // Close the modal after success
+    showAvailableAssets(); // Refresh the asset list
+  })
+  .catch(error => console.error("Error adding asset:", error));
+});
 
   // Event listeners for buttons
   document.getElementById("availableAssetsBtn").addEventListener("click", showAvailableAssets);
