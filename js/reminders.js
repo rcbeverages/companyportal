@@ -23,7 +23,6 @@ async function fetchUserData() {
   } catch (error) {
     console.error('Error fetching user data:', error);
   }
-}
 
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
