@@ -134,39 +134,55 @@
     /* =========================
        Modal Styling
        ========================= */
-   /* Center the "Add New Asset" Header */
-.modal-content h3 {
-  text-align: center; /* Centers the header */
-  margin-bottom: 20px; /* Add space below the header */
+  /* Modal Styling - Hidden by default */
+.modal {
+  display: none; /* Hide modal by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Make all form fields the same width */
+/* Modal Content Styling */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 35%; /* Narrower width */
+  border-radius: 5px;
+  max-width: 500px;
+}
+
+/* Input Fields Styling */
 .modal-content input,
 .modal-content select {
-  width: 100%; /* Make inputs and selects full width */
+  width: 100%;
   padding: 10px;
-  margin-bottom: 10px; /* Add margin between fields */
+  margin-bottom: 15px;
   font-size: 1rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  box-sizing: border-box; /* Ensure padding is included in width */
+  box-sizing: border-box;
 }
 
 /* Button Styling */
 .modal-content button {
   background-color: #0057b7;
   color: white;
-  padding: 8px 16px; /* Smaller padding for smaller buttons */
-  font-size: 0.9rem; /* Smaller font size for buttons */
+  padding: 8px 16px;
+  font-size: 0.9rem;
   cursor: pointer;
   border-radius: 5px;
-  width: 100%; /* Full width of the container */
-  margin-bottom: 10px; /* Increased gap between buttons */
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-/* Adding space between "Add Asset" and "Cancel" buttons */
+/* Space Between Buttons */
 .modal-content button + button {
-  margin-top: 10px; /* Increased gap between the two buttons */
+  margin-top: 10px;
 }
 
   </style>
