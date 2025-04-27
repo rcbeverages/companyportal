@@ -48,16 +48,15 @@ async function loadReminders() {
     // Sort reminders by Date to Email (ascending)
     filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
 
-    // Display filtered and sorted reminders
+    // Display filtered and sorted reminders in the table
     filteredReminders.forEach(reminder => {
-      const reminderItem = document.createElement('div');
-      reminderItem.className = 'reminder-item';
-      reminderItem.innerHTML = `
-        <h3>${reminder.Customer_Name}</h3>
-        <p><strong>Due:</strong> ${reminder.Date_to_Email}</p>
-        <p><strong>Comments:</strong> ${reminder.Comments ? reminder.Comments : '(No Comments)'}</p>
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${reminder.Date_to_Email}</td>
+        <td>${reminder.Customer_Name}</td>
+        <td>${reminder.Comments ? reminder.Comments : '(No Comments)'}</td>
       `;
-      reminderList.appendChild(reminderItem);
+      reminderList.appendChild(row);  // Append the row to the table
     });
 
   } catch (error) {
