@@ -14,9 +14,9 @@ function displayReminders(reminders) {
     reminders.forEach(reminder => {
       const reminderRow = document.createElement("tr");
       reminderRow.innerHTML = `
-        <td>${reminder.Email}</td>
-        <td>${reminder.Customer Name}</td>
-        <td>${reminder.Comments || '(No Comments)'}</td>
+       <td>${reminder["Date"]}</td>  <!-- Use 'Date' from the sheet -->
+        <td>${reminder["Customer Name"]}</td>  <!-- Use 'Customer Name' from the sheet -->
+        <td>${reminder["Comments"] || '(No Comments)'}</td>  <!-- Use 'Comments' from the sheet -->
       `;
       reminderList.appendChild(reminderRow);
     });
