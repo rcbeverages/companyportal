@@ -1,21 +1,18 @@
-// Set the logged-in BDM name (should be dynamically retrieved from the login)
-const username = 'rhincksman';  // This would be dynamically set based on login form
+const username = 'rhincksman';  // This should be dynamically set based on login form
 const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
 const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
 
 // Fetch user data from the username API (filtering based on username)
 async function fetchUserData() {
   try {
-    // Fetch user data based on username from the API
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
 
     if (data.length > 0) {
-      // If user exists, extract BDM name and role
       const bdmName = data[0].Username;  // Username is used as BDM name
       const role = data[0].Role;  // Role
 
-      // Store BDM name and role in sessionStorage
+      // Store the BDM name and role in sessionStorage
       sessionStorage.setItem('bdmName', bdmName);
       sessionStorage.setItem('role', role);
 
@@ -137,7 +134,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   } catch (error) {
     console.error('Error saving reminder:', error);
   }
-});
+}
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
