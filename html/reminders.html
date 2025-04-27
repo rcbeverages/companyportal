@@ -194,31 +194,12 @@
   <h1>Reminders</h1>
 </header>
 
+<!-- Button to open the modal -->
 <div class="button-row">
-    <button class="main-button add-button" id="addReminderBtn">+ Add New Reminder</button>
+    <button class="add-button" id="addReminderBtn">+ Add New Reminder</button>
 </div>
 
-<!-- Modal for Adding New Asset -->
-<form id="addReminderForm">
-  <label for="reminderDate">Date Due:</label>
-  <input type="date" id="reminderDate" name="reminderDate" required />
-
-  <label for="reminderCustomer">Customer Name:</label>
-  <select id="reminderCustomer" name="reminderCustomer" required>
-    <option value="">Select Customer</option>
-    <option value="Non Store Reminder">Non Store Reminder</option> <!-- Non Store Reminder option -->
-  </select>
-
-  <label for="reminderComments">Comments:</label>
-  <textarea id="reminderComments" name="reminderComments" rows="10" required></textarea> <!-- 10 rows for comments -->
-
-  <div class="popup-buttons">
-    <button type="submit" class="save-button">Save Reminder</button>
-    <button type="button" class="cancel-button" onclick="closeAddReminder()">Cancel</button>
-  </div>
-</form>
-
-<!-- Table for Asset List -->
+<!-- Table for Reminder List -->
 <table id="assetListTable" class="asset-list-table">
   <thead>
     <tr>
@@ -232,14 +213,30 @@
   </tbody>
 </table>
 
-<!-- Fixed Footer with Navigation Buttons -->
-<footer>
-  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-</footer>
+<!-- Modal for Adding New Reminder -->
+<div id="addReminderPopup" class="modal">
+  <div class="modal-content">
+    <h2>Add New Reminder</h2>
+    <form id="addReminderForm">
+      <label for="reminderDate">Date Due:</label>
+      <input type="date" id="reminderDate" name="reminderDate" required />
+
+      <label for="reminderCustomer">Customer Name:</label>
+      <select id="reminderCustomer" name="reminderCustomer" required>
+        <option value="">Select Customer</option>
+        <option value="Non Store Reminder">Non Store Reminder</option> <!-- Non Store Reminder option -->
+      </select>
+
+      <label for="reminderComments">Comments:</label>
+      <textarea id="reminderComments" name="reminderComments" rows="10" required></textarea> <!-- 10 rows for comments -->
+
+      <div class="popup-buttons">
+        <button type="submit" class="save-button">Save Reminder</button>
+        <button type="button" class="cancel-button" onclick="closeAddReminder()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script src="../js/reminders.js"></script>
 
