@@ -37,12 +37,18 @@ async function loadReminders() {
     console.log('API Response:', data);  // Log the response to see the full data
 
     const reminderList = document.getElementById('reminderList');
+    if (!reminderList) {
+      console.error("Reminder list table body not found.");
+      return;
+    }
+
     reminderList.innerHTML = '';  // Clear current list
 
-    // Filter reminders for the logged-in BDM
+    // Filter reminders for the logged-in BDM, using correct "BDM Name" field
     const filteredReminders = data.filter(reminder => {
-      console.log('Reminder BDM_Name:', reminder.BDM_Name);  // Log BDM_Name field from each reminder
-      return reminder.BDM_Name === bdmName;
+      const bdmNameInReminder = reminder["BDM Name"] || '';  // Access "BDM Name" correctly
+      console.log('Reminder BDM Name:', bdmNameInReminder);  // Log BDM Name field from each reminder
+      return bdmNameInReminder === bdmName;  // Ensure BDM Name matches the logged-in BDM
     });
 
     console.log('Filtered Reminders:', filteredReminders);  // Check if filtering works
@@ -87,7 +93,7 @@ async function loadCustomersDropdown() {
     const response = await fetch(customersApiUrl);
     const data = await response.json();
 
-    const filteredCustomers = data.filter(customer => customer.BDM_Name === bdmName);  // Filter by BDM
+    const filteredCustomers = data.filter(customer => customer.BDM Name === bdmName);  // Filter by BDM
 
     const customerDropdown = document.getElementById('reminderCustomer');
     customerDropdown.innerHTML = '';  // Clear existing dropdown options
@@ -131,7 +137,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     Date_to_Email: date,
     Customer_Name: customer,
     Comments: comments,
-    BDM_Name: bdmName  // Attach the logged-in BDM's name to the reminder
+    BDM Name: bdmName  // Attach the logged-in BDM's name to the reminder
   };
 
   try {
