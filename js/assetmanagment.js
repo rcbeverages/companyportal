@@ -91,16 +91,11 @@ document.addEventListener("DOMContentLoaded", function() {
     .catch(error => console.error("Error adding asset:", error));
   });
 
+  // Event listeners for buttons
+  document.getElementById("availableAssetsBtn").addEventListener("click", showAvailableAssets);
+  document.getElementById("placedAssetsBtn").addEventListener("click", showPlacedAssets);
+  document.getElementById("addAssetBtn").addEventListener("click", openModal);
+
   // Fetch assets on page load (default fetch of available assets)
   showAvailableAssets(); // Initial asset list fetch when the page loads
-
-  // Close modal if clicked outside
-  window.onclick = function(event) {
-    if (event.target === assetModal) {
-      closeModal();
-    }
-  };
-
-  // Add New Asset button functionality
-  document.querySelector(".add-button").addEventListener("click", openModal);
 });
