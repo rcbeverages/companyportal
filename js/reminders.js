@@ -61,6 +61,13 @@ async function loadCustomersDropdown() {
     const customerDropdown = document.getElementById('reminderCustomer');
     customerDropdown.innerHTML = '';
 
+    // Add "Non Store Reminder" option
+    const nonStoreOption = document.createElement('option');
+    nonStoreOption.value = "Non Store Reminder";
+    nonStoreOption.text = "Non Store Reminder";
+    customerDropdown.appendChild(nonStoreOption);
+
+    // Add filtered customers to the dropdown
     filteredCustomers.forEach(customer => {
       if (customer.Customer_Name) {
         const option = document.createElement('option');
