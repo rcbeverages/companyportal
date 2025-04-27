@@ -1,3 +1,7 @@
+// Define the API URLs
+const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API endpoint
+const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API endpoint
+
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
   try {
@@ -127,7 +131,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   } catch (error) {
     console.error('Error saving reminder:', error);
   }
-});
+}
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
