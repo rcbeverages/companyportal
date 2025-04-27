@@ -1,30 +1,3 @@
-// Set the logged-in BDM name (should be dynamically retrieved from login)
-const username = 'rhincksman';  // Replace with dynamic value if needed
-const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
-const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
-
-// Fetch user data from the username API (filtering based on username)
-async function fetchUserData() {
-  try {
-    // Fetch user data based on username from the API
-    const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
-    const data = await response.json();
-
-    if (data.length > 0) {
-      // If user exists, extract BDM name
-      const bdmName = data[0].Username;  // Username is used as BDM name
-
-      // Store BDM name in sessionStorage
-      sessionStorage.setItem('bdmName', bdmName);
-      console.log(`Logged in as: ${bdmName}`);
-    } else {
-      console.log('User not found.');
-    }
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-  }
-}
-
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
   try {
@@ -44,9 +17,9 @@ async function loadReminders() {
 
     reminderList.innerHTML = '';  // Clear current list
 
-    // Filter reminders for the logged-in BDM, using correct "BDM Name" field
+    // Filter reminders for the logged-in BDM, using the correct "BDM Name" field
     const filteredReminders = data.filter(reminder => {
-      const bdmNameInReminder = reminder["BDM Name"] || '';  // Access "BDM Name" correctly
+      const bdmNameInReminder = reminder["BDM Name"] || '';  // Use "BDM Name" with the space
       console.log('Reminder BDM Name:', bdmNameInReminder);  // Log BDM Name field from each reminder
       return bdmNameInReminder === bdmName;  // Ensure BDM Name matches the logged-in BDM
     });
@@ -93,7 +66,7 @@ async function loadCustomersDropdown() {
     const response = await fetch(customersApiUrl);
     const data = await response.json();
 
-    const filteredCustomers = data.filter(customer => customer.BDM Name === bdmName);  // Filter by BDM
+    const filteredCustomers = data.filter(customer => customer["BDM Name"] === bdmName);  // Filter by "BDM Name"
 
     const customerDropdown = document.getElementById('reminderCustomer');
     customerDropdown.innerHTML = '';  // Clear existing dropdown options
@@ -137,7 +110,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     Date_to_Email: date,
     Customer_Name: customer,
     Comments: comments,
-    BDM Name: bdmName  // Attach the logged-in BDM's name to the reminder
+    "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
   };
 
   try {
@@ -161,6 +134,5 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 
 // Load reminders when the page loads
 window.onload = function() {
-  fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
   loadReminders();  // Load reminders for the logged-in BDM
 };
