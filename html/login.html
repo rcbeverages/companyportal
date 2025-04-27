@@ -81,17 +81,23 @@
 </head>
 
 <body>
-
   <div class="login-container">
-    <img src="../assets/logo.png" alt="RC Beverages Logo" class="logo">
-    
-    <h1>RC Beverages Login</h1>
+    <h2>Login</h2>
     <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit" class="btn">Login</button>
+      <!-- Username Input -->
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+      <!-- Password Input -->
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+      <!-- Error Message -->
+      <div id="error-message" style="color: red; display: none;">Invalid username or password.</div>
+
+      <!-- Submit Button -->
+      <button type="submit">Login</button>
     </form>
-    <p id="error-message" style="color: red; display: none;">Invalid username or password.</p>
   </div>
 
   <!-- Scripts -->
