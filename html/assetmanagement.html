@@ -146,13 +146,13 @@
     }
 
     .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 20px;
-      width: 50%;
-      border-radius: 5px;
-    }
-
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 40%; /* Reduced the width */
+  border-radius: 5px;
+  max-width: 500px; /* Optional: Max width for larger screens */
+}
     .modal-content input, .modal-content select {
       width: 100%;
       padding: 10px;
@@ -163,14 +163,18 @@
     }
 
     .modal-content button {
-      background-color: #0057b7;
-      color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      width: 100%;
-    }
+  background-color: #0057b7;
+  color: white;
+  padding: 8px 16px; /* Smaller padding for smaller buttons */
+  font-size: 0.9rem; /* Smaller font size for buttons */
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%; /* Full width of the container */
+  margin-bottom: 10px; /* Increased gap between buttons */
+}
+
+    .modal-content button + button {
+      margin-top: 10px; /* Increased gap between the two buttons */
   </style>
 </head>
 
