@@ -43,12 +43,12 @@ async function loadReminders() {
 
     // Display filtered and sorted reminders
     filteredReminders.forEach(reminder => {
-      const reminderItem = document.createElement('div');
+      const reminderItem = document.createElement('tr');
       reminderItem.className = 'reminder-item';
       reminderItem.innerHTML = `
-        <h3>${reminder.Customer_Name}</h3>
-        <p><strong>Due:</strong> ${reminder.Date_to_Email}</p>
-        <p><strong>Comments:</strong> ${reminder.Comments ? reminder.Comments : '(No Comments)'}</p>
+        <td>${reminder.Date_to_Email}</td>
+        <td>${reminder.Customer_Name}</td>
+        <td>${reminder.Comments ? reminder.Comments : '(No Comments)'}</td>
       `;
       reminderList.appendChild(reminderItem);
     });
@@ -56,7 +56,7 @@ async function loadReminders() {
   } catch (error) {
     console.error('Error loading reminders:', error);
     const reminderList = document.getElementById('reminderList');
-    reminderList.innerHTML = '<p style="color:red;">Error loading reminders. Please try again later.</p>';
+    reminderList.innerHTML = '<tr><td colspan="3" style="color:red;">Error loading reminders. Please try again later.</td></tr>';
   }
 }
 
