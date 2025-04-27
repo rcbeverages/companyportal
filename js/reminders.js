@@ -131,26 +131,28 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   const comments = document.getElementById('reminderComments').value;
   const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
 
- const reminderData = {
-  Date: date,
-  'Customer Name': customer,
-  Comments: comments,
-  'BDM Name': bdmName,  // Attach the logged-in BDM's name to the reminder
-};
+  const reminderData = {
+    Date: date,
+    'Customer Name': customer,
+    Comments: comments,
+    'BDM Name': bdmName,  // Attach the logged-in BDM's name to the reminder
+  };
 
-try {
-  await fetch(remindersApiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: [reminderData] }),  // Corrected syntax here
-  });
+  try {
+    await fetch(remindersApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data: [reminderData] }),  // Corrected syntax here
+    });
 
-  closeAddReminder(); // Close the modal after adding the reminder
-  loadReminders();    // Refresh the reminders list after adding a new one
-} catch (error) {
-  console.error('Error saving reminder:', error);
+    closeAddReminder(); // Close the modal after adding the reminder
+    loadReminders();    // Refresh the reminders list after adding a new one
+  } catch (error) {
+    console.error('Error saving reminder:', error);
+  }
+});
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
