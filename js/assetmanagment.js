@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   const assetListContainer = document.getElementById("assetList");
   const searchInput = document.getElementById("searchInputAsset");
-  
-  // Correct API endpoint for your Asset data
-  const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";  // Ensure this is the right endpoint
+  const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Correct SheetDB API endpoint
   const assetModal = document.getElementById("assetModal");
 
   // Function to display assets in the table
@@ -20,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <td>${asset["Asset Type"]}</td>
           <td>${asset["Customer Name"]}</td>
           <td>${asset["Agreement"]}</td>
-          <td>${asset["Status"]}</td>
+          <td>${asset["Status"]}</td>  <!-- Display Status -->
           <td>${asset["Comments"]}</td>
         `;
         assetListContainer.appendChild(assetRow);
@@ -28,12 +26,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Fetch the asset data from the API
+  // Fetch all asset data from the API (without status filtering)
   function fetchAssets() {
     fetch(assetApiEndpoint)
-      .then(response => response.json())  // Parse response as JSON
+      .then(response => response.json())
       .then(assetData => {
-        displayAssets(assetData); // Display assets after fetching
+        displayAssets(assetData); // Display all assets after fetching
       })
       .catch(error => console.error("Error fetching asset data:", error));
   }
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
   searchInput.addEventListener("input", function() {
     const searchTerm = searchInput.value.toLowerCase();
     fetch(assetApiEndpoint)
-      .then(response => response.json())  // Ensure JSON response
+      .then(response => response.json())
       .then(assetData => {
         const filteredAssets = assetData.filter(asset => {
           return (
@@ -93,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
       console.log("Asset added:", data);
       closeModal();
-      // Optionally, refresh the asset list to show the new asset
+      // Refresh the asset list to show the new asset
       fetchAssets();  // Fetches the updated list of assets
     })
     .catch(error => console.error("Error adding asset:", error));
