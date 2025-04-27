@@ -62,11 +62,11 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
   }
 
   const reminderData = {
-    Email: date,
-    Customer Name: customerName,
-    Comments: comments,
-    "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
-  };
+  "Date": date,  // Ensure this matches the exact header
+  "Customer Name": customerName,  // This needs quotes because of the space
+  "Comments": comments,  // This also needs to be quoted
+  "BDM Name": bdmName  // Correct usage of "BDM Name" with quotes
+};
 
   // POST request to add the new reminder
   fetch(remindersApiUrl, {
