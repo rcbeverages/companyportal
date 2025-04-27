@@ -23,7 +23,7 @@ async function loadReminders() {
 
     // Filter reminders for the logged-in BDM, using the correct "BDM Name" field
     const filteredReminders = data.filter(reminder => {
-      const bdmNameInReminder = reminder["BDM Name"] || '';  // Use "BDM Name" with the space
+      const bdmNameInReminder = reminder["BDM Name"] || '';  // Correct field name with space, not underscore
       console.log('Reminder BDM Name:', bdmNameInReminder);  // Log BDM Name field from each reminder
       return bdmNameInReminder === bdmName;  // Ensure BDM Name matches the logged-in BDM
     });
