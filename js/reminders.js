@@ -1,7 +1,3 @@
-const username = 'rhincksman';  // This should be dynamically set based on login form
-const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
-const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
-
 // Fetch user data from the username API (filtering based on username)
 async function fetchUserData() {
   try {
