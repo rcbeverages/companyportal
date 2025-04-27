@@ -121,19 +121,18 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   };
 
   try {
-    await fetch(remindersApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data: [reminderData] }),
-    });
+  await fetch(remindersApiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: [reminderData] }),
+  });
 
-    closeAddReminder();
-    loadReminders();  // Refresh the reminders list after adding a new one
-  } catch (error) {
-    console.error('Error saving reminder:', error);
-  }
+  closeAddReminder(); // Close the modal after adding the reminder
+  loadReminders();    // Refresh the reminders list after adding a new one
+} catch (error) {
+  console.error('Error saving reminder:', error);
 }
 
 // Open the modal when the "Add New Reminder" button is clicked
