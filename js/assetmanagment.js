@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   const assetListContainer = document.getElementById("assetList");
   const searchInput = document.getElementById("searchInputAsset");
-  const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Replace with your actual Asset API endpoint
+  
+  // Correct API endpoint for your Asset data
+  const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd";  // Ensure this is the right endpoint
   const assetModal = document.getElementById("assetModal");
 
   // Function to display assets in the table
@@ -26,10 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Fetch the asset data
+  // Fetch the asset data from the API
   function fetchAssets() {
     fetch(assetApiEndpoint)
-      .then(response => response.json())
+      .then(response => response.json())  // Parse response as JSON
       .then(assetData => {
         displayAssets(assetData); // Display assets after fetching
       })
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
   searchInput.addEventListener("input", function() {
     const searchTerm = searchInput.value.toLowerCase();
     fetch(assetApiEndpoint)
-      .then(response => response.json())
+      .then(response => response.json())  // Ensure JSON response
       .then(assetData => {
         const filteredAssets = assetData.filter(asset => {
           return (
@@ -70,11 +72,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const assetTag = document.getElementById("assetTag").value;
     const assetType = document.getElementById("assetType").value;
     const status = document.getElementById("status").value;
+    const comments = document.getElementById("comments").value;
 
     const newAsset = {
       "Asset Tag Code": assetTag,
       "Asset Type": assetType,
       "Status": status,
+      "Comments": comments
     };
 
     // Make a POST request to add the new asset to the Google Sheet via SheetDB API
