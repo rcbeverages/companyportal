@@ -80,21 +80,21 @@
     }
 
     /* =========================
-       Table Asset List Layout
+       Table Reminder List Layout
        ========================= */
-    .asset-list-table {
+    .reminder-list-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
 
-    .asset-list-table th, .asset-list-table td {
+    .reminder-list-table th, .reminder-list-table td {
       padding: 12px 20px;
       text-align: left;
       border: 1px solid #ddd;
     }
 
-    .asset-list-table th {
+    .reminder-list-table th {
       background-color: #f2f2f2;
       font-weight: bold;
     }
@@ -237,6 +237,29 @@
     </form>
   </div>
 </div>
+
+  <!-- Table for Reminder List -->
+<table id="reminderListTable" class="reminder-list-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Customer Name</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody id="reminderList">
+    <!-- Reminder list will populate dynamically here -->
+  </tbody>
+</table>
+
+<!-- Fixed Footer with Navigation Buttons -->
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
 <script src="../js/reminders.js"></script>
 
