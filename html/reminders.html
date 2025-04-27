@@ -168,24 +168,13 @@
     <h1>Reminders</h1>
   </header>
 
+  <div class="search-container">
+    <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date" />
+  </div>
+  
   <div class="button-row">
     <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
   </div>
-
-  <div class="search-container">
-    <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date, Comments" />
-  </div>
-
-  <table id="reminderListTable" class="reminder-list-table">
-    <thead>
-      <tr>
-        <th>Date Due</th>
-        <th>Customer Name</th>
-        <th>Comments</th>
-      </tr>
-    </thead>
-    <tbody id="reminderList"></tbody>
-  </table>
 
   <div id="addReminderPopup" class="modal">
     <div class="modal-content">
@@ -209,7 +198,18 @@
         </div>
       </form>
     </div>
-  </div>
+    
+  <table id="reminderListTable" class="reminder-list-table">
+    <thead>
+      <tr>
+        <th>Date Due</th>
+        <th>Customer Name</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody id="reminderList">
+    </tbody>
+  </table>
 
   <footer>
     <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
@@ -220,5 +220,6 @@
   </footer>
 
   <script src="../js/reminders.js"></script>
+    
 </body>
 </html>
