@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const assetListContainer = document.getElementById("assetList");
   const searchInput = document.getElementById("searchInputAsset");
   const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Correct SheetDB API endpoint
+  const availableAssetsApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd/search?Status=Available";
+  const placedAssetsApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd/search?Status=Placed";
   const assetModal = document.getElementById("assetModal");
 
   // Function to display assets in the table
@@ -26,33 +28,25 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Fetch all asset data from the API (without status filtering)
-  function fetchAssets() {
-    fetch(assetApiEndpoint)
+  // Function to fetch available assets
+  function showAvailableAssets() {
+    fetch(availableAssetsApiEndpoint)
       .then(response => response.json())
       .then(assetData => {
-        displayAssets(assetData); // Display all assets after fetching
+        displayAssets(assetData); // Display available assets after fetching
       })
-      .catch(error => console.error("Error fetching asset data:", error));
+      .catch(error => console.error("Error fetching available asset data:", error));
   }
 
-  // Search functionality (applies on input event of the search field)
-  searchInput.addEventListener("input", function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    fetch(assetApiEndpoint)
+  // Function to fetch placed assets
+  function showPlacedAssets() {
+    fetch(placedAssetsApiEndpoint)
       .then(response => response.json())
       .then(assetData => {
-        const filteredAssets = assetData.filter(asset => {
-          return (
-            asset["Asset Tag Code"].toLowerCase().includes(searchTerm) ||
-            asset["Asset Type"].toLowerCase().includes(searchTerm) ||
-            asset["Customer Name"].toLowerCase().includes(searchTerm) ||
-            asset["Agreement"].toLowerCase().includes(searchTerm)
-          );
-        });
-        displayAssets(filteredAssets); // Re-render the filtered list
-      });
-  });
+        displayAssets(assetData); // Display placed assets after fetching
+      })
+      .catch(error => console.error("Error fetching placed asset data:", error));
+  }
 
   // Modal functionality
   function openModal() {
@@ -92,21 +86,11 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log("Asset added:", data);
       closeModal();
       // Refresh the asset list to show the new asset
-      fetchAssets();  // Fetches the updated list of assets
+      showAvailableAssets();  // Fetch and show available assets after adding a new asset
     })
     .catch(error => console.error("Error adding asset:", error));
   });
 
-  // Close modal if clicked outside
-  window.onclick = function(event) {
-    if (event.target === assetModal) {
-      closeModal();
-    }
-  };
-
-  // Add New Asset button
-  document.querySelector(".add-button").addEventListener("click", openModal);
-
-  // Fetch assets on page load
-  fetchAssets(); // Initial asset list fetch when the page loads
+  // Fetch assets on page load (default fetch of available assets)
+  showAvailableAssets(); // Initial asset list fetch when the page loads
 });
