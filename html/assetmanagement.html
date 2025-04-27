@@ -1,55 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Asset Management</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset Management - RC Beverages</title>
+
+  <!-- Embedded CSS -->
+  <style>
+    /* General Page Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    /* Search Container Styling */
+    .search-container {
+      display: flex;
+      align-items: left;
+      justify-content: flex-start;
+      margin: 20px 20px;
+      margin-top: 140px; /* Ensure space for fixed header */
+      width: 40%;
+    }
+
+    .search-box {
+      flex-grow: 1;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
+
+    /* Button Row Styling */
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 20px 20px;
+    }
+
+    .button-row .main-button {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      flex: 1;
+    }
+
+    /* Table Asset List Layout */
+    .asset-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .asset-list-table th, .asset-list-table td {
+      padding: 12px 20px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .asset-list-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    /* Visit Button Styling */
+    .visit-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 5px 10px;
+      font-size: .9rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .visit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #cfe2ff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
+
+    .footer-btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .footer-btn:hover {
+      background-color: #1e40af;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="header">
-    <h1>Asset Management</h1>
-    <button class="back-button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
-  </header>
 
-  <div class="welcome-message">
-    <h2>Manage Your Assets</h2>
-  </div>
+<header>
+  <h1>Asset Management</h1>
+</header>
 
-  <div class="form-container">
+<!-- Search Container for Asset Database -->
+<div class="search-container">
+    <input type="text" id="searchInputAsset" placeholder="Search by Asset Tag, Asset Type, Customer Name, Agreement" />
+</div>
 
-    <!-- Search Bar -->
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search Assets...">
-    </div>
+<!-- Table for Asset List -->
+<table id="assetListTable" class="asset-list-table">
+  <thead>
+    <tr>
+      <th>Visit</th>
+      <th>Asset Tag</th>
+      <th>Asset Type</th>
+      <th>Customer Name</th>
+      <th>Agreement</th>
+      <th>Status</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody id="assetList">
+    <!-- Asset list will populate dynamically here -->
+  </tbody>
+</table>
 
-    <!-- Add Asset Button -->
-    <div class="button-container">
-      <button class="add-button" onclick="window.location.href='addasset.html'">+ Add Asset</button>
-    </div>
+<!-- Fixed Footer with Navigation Buttons -->
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-    <!-- Available Assets Section -->
-    <section>
-      <h3>Available Assets</h3>
-      <div id="availableAssetsList" class="tile-container">
-        <!-- Available assets will load here -->
-      </div>
-    </section>
+<!-- External JavaScript Files -->
+<script src="../js/api.js"></script> <!-- Shared API code -->
+<script src="../js/assetmanagement.js"></script> <!-- Asset management JS -->
 
-    <!-- Placed Assets Section -->
-    <section>
-      <h3>Placed Assets</h3>
-      <div id="placedAssetsList" class="tile-container">
-        <!-- Placed assets will load here -->
-      </div>
-    </section>
-
-  </div>
-
-  <footer class="footer">
-    <p>RC Beverages Portal</p>
-  </footer>
-
-  <script src="assetmanagement.js"></script>
 </body>
+
 </html>
