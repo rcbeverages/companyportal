@@ -1,5 +1,5 @@
-// Set the logged-in BDM name (should be dynamically retrieved from the login)
-const username = 'rhincksman';  // This would be dynamically set based on login form
+// Set the logged-in BDM name (should be dynamically retrieved from login)
+const username = 'rhincksman';  // Replace with dynamic value if needed
 const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
 const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
 
@@ -11,15 +11,12 @@ async function fetchUserData() {
     const data = await response.json();
 
     if (data.length > 0) {
-      // If user exists, extract BDM name and role
+      // If user exists, extract BDM name
       const bdmName = data[0].Username;  // Username is used as BDM name
-      const role = data[0].Role;  // Role
 
-      // Store BDM name and role in sessionStorage
+      // Store BDM name in sessionStorage
       sessionStorage.setItem('bdmName', bdmName);
-      sessionStorage.setItem('role', role);
-
-      console.log(`Logged in as: ${bdmName} with Role: ${role}`);
+      console.log(`Logged in as: ${bdmName}`);
     } else {
       console.log('User not found.');
     }
