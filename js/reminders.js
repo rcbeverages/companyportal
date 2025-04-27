@@ -8,18 +8,20 @@ async function fetchUserData() {
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
 
-    if (data.length > 0) {
-      const bdmName = data[0].Username;  // Username is used as BDM name
-      const role = data[0].Role;  // Role
+   if (data.length > 0) {
+  console.log("API Data:", data);  // Log the full data to inspect its structure
 
-      // Store the BDM name and role in sessionStorage
-      sessionStorage.setItem('bdmName', bdmName);
-      sessionStorage.setItem('role', role);
+ const bdmName = data[0].bdmName;  // Adjust the property name based on the actual data
+const role = data[0].user_role;   // Adjust the property name based on the actual data
+  
+  // Store the BDM name and role in sessionStorage
+  sessionStorage.setItem('bdmName', bdmName);
+  sessionStorage.setItem('role', role);
 
-      console.log(`Logged in as: ${bdmName} with Role: ${role}`);
-    } else {
-      console.log('User not found.');
-    }
+  console.log(`Logged in as: ${bdmName} with Role: ${role}`);
+} else {
+  console.log('User not found.');
+}
   } catch (error) {
     console.error('Error fetching user data:', error);
   }
