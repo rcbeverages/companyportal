@@ -71,37 +71,63 @@
       flex: 1;
     }
 
-    /* Table Asset List Layout */
-    .asset-list-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    .asset-list-table th, .asset-list-table td {
-      padding: 12px 20px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-
-    .asset-list-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-
-    /* Visit Button Styling */
-    .visit-btn {
-      background-color: #007bff;
-      color: white;
-      padding: 5px 10px;
-      font-size: .9rem;
-      cursor: pointer;
-      border-radius: 5px;
+    /* Add New Asset Button Styling */
+    .add-button-container {
+      margin: 20px 20px;
       text-align: center;
     }
 
-    .visit-btn:hover {
-      background-color: #0056b3;
+    .add-button-container button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .add-button-container button:hover {
+      background-color: #218838;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 50%;
+      border-radius: 5px;
+    }
+
+    .modal-content input, .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .modal-content button {
+      background-color: #0057b7;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
     }
 
     /* Footer Styling */
@@ -147,6 +173,33 @@
     <input type="text" id="searchInputAsset" placeholder="Search by Asset Tag, Asset Type, Customer Name, Agreement" />
 </div>
 
+<!-- Add New Asset Button -->
+<div class="add-button-container">
+    <button onclick="openModal()">+ Add New Asset</button>
+</div>
+
+<!-- Modal for Adding New Asset -->
+<div id="assetModal" class="modal">
+  <div class="modal-content">
+    <h3>Add New Asset</h3>
+    <form id="addAssetForm">
+      <input type="text" id="assetTag" placeholder="Asset Tag Code" required />
+      <input type="text" id="assetType" placeholder="Asset Type" required />
+      <input type="text" id="customerName" placeholder="Customer Name" required />
+      <input type="text" id="agreement" placeholder="Agreement" required />
+      <input type="date" id="datePlaced" placeholder="Date Placed" required />
+      <select id="status" required>
+        <option value="">Select Status</option>
+        <option value="Available">Available</option>
+        <option value="Placed">Placed</option>
+      </select>
+      <textarea id="comments" placeholder="Comments"></textarea>
+      <button type="submit">Add Asset</button>
+      <button type="button" onclick="closeModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+
 <!-- Table for Asset List -->
 <table id="assetListTable" class="asset-list-table">
   <thead>
@@ -177,6 +230,56 @@
 <!-- External JavaScript Files -->
 <script src="../js/api.js"></script> <!-- Shared API code -->
 <script src="../js/assetmanagement.js"></script> <!-- Asset management JS -->
+
+<script>
+// Modal functionality
+function openModal() {
+  document.getElementById("assetModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("assetModal").style.display = "none";
+}
+
+// Add asset functionality
+document.getElementById("addAssetForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const assetTag = document.getElementById("assetTag").value;
+  const assetType = document.getElementById("assetType").value;
+  const customerName = document.getElementById("customerName").value;
+  const agreement = document.getElementById("agreement").value;
+  const datePlaced = document.getElementById("datePlaced").value;
+  const status = document.getElementById("status").value;
+  const comments = document.getElementById("comments").value;
+
+  const newAsset = {
+    "Asset Tag Code": assetTag,
+    "Asset Type": assetType,
+    "Customer Name": customerName,
+    "Agreement": agreement,
+    "Date Placed": datePlaced,
+    "Status": status,
+    "Comments": comments
+  };
+
+  // Make a POST request to add the new asset to the Google Sheet via SheetDB API
+  fetch("https://sheetdb.io/api/v1/8kwtvisrhm2zd", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify([newAsset])
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Asset added:", data);
+    closeModal();
+    // Optionally, refresh the asset list to show the new asset
+  })
+  .catch(error => console.error("Error adding asset:", error));
+});
+</script>
 
 </body>
 
