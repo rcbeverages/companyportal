@@ -110,27 +110,26 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     return;
   }
 
-  const reminderData = {
-    Date_to_Email: date,
-    Customer_Name: customer,
-    Comments: comments,
-    "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
-  };
+ const reminderData = {
+  Date_to_Email: date,
+  Customer_Name: customer,
+  Comments: comments,
+  "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
+};
 
-  try {
-    await fetch(remindersApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data: [reminderData] }),
-    });
+try {
+  await fetch(remindersApiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: [reminderData] })  // Ensure proper closing of parentheses
+  });
 
-    closeAddReminder();
-    loadReminders();  // Refresh the reminders list after adding a new one
-  } catch (error) {
-    console.error('Error saving reminder:', error);
-  }
+  closeAddReminder();
+  loadReminders();  // Refresh the reminders list after adding a new one
+} catch (error) {
+  console.error('Error saving reminder:', error);
 }
 
 // Open the modal when the "Add New Reminder" button is clicked
