@@ -8,20 +8,16 @@ async function fetchUserData() {
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
 
-   if (data.length > 0) {
-  console.log("API Data:", data);  // Log the full data to inspect its structure
+    if (data.length > 0) {
+      const bdmName = data[0].Username;  // Username is used as BDM name
 
- const bdmName = data[0].bdmName;  // Adjust the property name based on the actual data
-const role = data[0].user_role;   // Adjust the property name based on the actual data
-  
-  // Store the BDM name and role in sessionStorage
-  sessionStorage.setItem('bdmName', bdmName);
-  sessionStorage.setItem('role', role);
+      // Store the BDM name in sessionStorage
+      sessionStorage.setItem('bdmName', bdmName);
 
-  console.log(`Logged in as: ${bdmName} with Role: ${role}`);
-} else {
-  console.log('User not found.');
-}
+      console.log(`Logged in as: ${bdmName}`);
+    } else {
+      console.log('User not found.');
+    }
   } catch (error) {
     console.error('Error fetching user data:', error);
   }
@@ -30,31 +26,32 @@ const role = data[0].user_role;   // Adjust the property name based on the actua
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
   try {
-    const bdmName = sessionStorage.getItem('bdmName');  // Get the logged-in BDM name
+    const bdmName = sessionStorage.getItem('bdmName').toLowerCase().trim();  // Get the logged-in BDM name, make it lowercase and trim spaces
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
 
     const reminderList = document.getElementById('reminderList');
     reminderList.innerHTML = '';  // Clear current list
 
-    // Filter reminders for the logged-in BDM
-    const filteredReminders = data.filter(reminder => reminder.BDM_Name === bdmName);
+    // Filter reminders for the logged-in BDM (case-insensitive and trimmed)
+    const filteredReminders = data.filter(reminder => reminder['BDM Name'].toLowerCase().trim() === bdmName);
 
     if (filteredReminders.length === 0) {
-      reminderList.innerHTML = '<tr><td colspan="3" style="color:red;">No reminders found for the logged-in BDM.</td></tr>';
+      reminderList.innerHTML = '<tr><td colspan="4" style="color:red;">No reminders found for the logged-in BDM.</td></tr>';
     }
 
     // Sort reminders by Date to Email (ascending)
-    filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
+    filteredReminders.sort((a, b) => new Date(a['Date']) - new Date(b['Date']));
 
     // Display filtered and sorted reminders
     filteredReminders.forEach(reminder => {
       const reminderItem = document.createElement('tr');
       reminderItem.className = 'reminder-item';
       reminderItem.innerHTML = `
-        <td>${reminder.Date_to_Email}</td>
-        <td>${reminder.Customer_Name}</td>
+        <td>${reminder['Date']}</td>
+        <td>${reminder['Customer Name']}</td>
         <td>${reminder.Comments ? reminder.Comments : '(No Comments)'}</td>
+        <td>${reminder['BDM Name']}</td> <!-- Display the BDM Name here -->
       `;
       reminderList.appendChild(reminderItem);
     });
@@ -62,7 +59,7 @@ async function loadReminders() {
   } catch (error) {
     console.error('Error loading reminders:', error);
     const reminderList = document.getElementById('reminderList');
-    reminderList.innerHTML = '<tr><td colspan="3" style="color:red;">Error loading reminders. Please try again later.</td></tr>';
+    reminderList.innerHTML = '<tr><td colspan="4" style="color:red;">Error loading reminders. Please try again later.</td></tr>';
   }
 }
 
@@ -85,7 +82,7 @@ async function loadCustomersDropdown() {
     const response = await fetch(customersApiUrl);
     const data = await response.json();
 
-    const filteredCustomers = data.filter(customer => customer.BDM_Name === bdmName);  // Filter by BDM
+    const filteredCustomers = data.filter(customer => customer['BDM Name'] === bdmName);  // Filter by BDM
 
     const customerDropdown = document.getElementById('reminderCustomer');
     customerDropdown.innerHTML = '';  // Clear existing dropdown options
@@ -98,10 +95,10 @@ async function loadCustomersDropdown() {
 
     // Add filtered customers to the dropdown
     filteredCustomers.forEach(customer => {
-      if (customer.Customer_Name) {
+      if (customer['Customer Name']) {
         const option = document.createElement('option');
-        option.value = customer.Customer_Name;
-        option.text = customer.Customer_Name;
+        option.value = customer['Customer Name'];
+        option.text = customer['Customer Name'];
         customerDropdown.appendChild(option);
       }
     });
@@ -134,10 +131,10 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
 
   const reminderData = {
-    Date_to_Email: date,
-    Customer_Name: customer,
+    Date: date,
+    'Customer Name': customer,
     Comments: comments,
-    BDM_Name: bdmName  // Attach the logged-in BDM's name to the reminder
+    'BDM Name': bdmName  // Attach the logged-in BDM's name to the reminder
   };
 
   try {
@@ -154,7 +151,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   } catch (error) {
     console.error('Error saving reminder:', error);
   }
-});
+}
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
@@ -163,4 +160,4 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 window.onload = function() {
   fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
   loadReminders();  // Load reminders for the logged-in BDM
-};  // <-- This was the missing closing bracket
+};
