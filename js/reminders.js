@@ -1,6 +1,9 @@
+const username = 'rhincksman';  // This should be dynamically set based on login form
+const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
+const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
+
 // Fetch user data from the username API (filtering based on username)
 async function fetchUserData() {
-  const username = 'rhincksman';  // Define or dynamically set this value based on login
   try {
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
@@ -150,7 +153,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   } catch (error) {
     console.error('Error saving reminder:', error);
   }
-});
+}
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
