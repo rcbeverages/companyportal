@@ -62,7 +62,7 @@ document.getElementById('addReminderForm').addEventListener('submit', function(e
   }
 
   const reminderData = {
-    Date to Email: date,
+    Email: date,
     Customer Name: customer,
     Comments: comments,
     "BDM Name": bdmName  // Attach the logged-in BDM's name to the reminder
