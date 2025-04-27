@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const searchInput = document.getElementById("searchInputAsset");
   const assetApiEndpoint = "https://sheetdb.io/api/v1/8kwtvisrhm2zd"; // Replace with your actual Asset API endpoint
   const assetModal = document.getElementById("assetModal");
-  
-  // Function to display assets
+
+  // Function to display assets in the table
   function displayAssets(assets) {
     assetListContainer.innerHTML = ""; // Clear previous results
 
@@ -70,13 +70,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const assetTag = document.getElementById("assetTag").value;
     const assetType = document.getElementById("assetType").value;
     const status = document.getElementById("status").value;
-    const comments = document.getElementById("comments").value;
 
     const newAsset = {
       "Asset Tag Code": assetTag,
       "Asset Type": assetType,
       "Status": status,
-      "Comments": comments
     };
 
     // Make a POST request to add the new asset to the Google Sheet via SheetDB API
