@@ -3,177 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Database - RC Beverages</title>
+  <title>Asset Management - RC Beverages</title>
 
   <!-- Embedded CSS -->
   <style>
-  /* =========================
-     General Page Styling
-     ========================= */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-  }
+    /* General Page Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* =========================
-     Header Styling
-     ========================= */
-  header {
-    background-color: #0057b7;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
+    /* Header Styling */
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-  /* =========================
-   Search Container Styling
-   ========================= */
-.search-container {
-  display: flex;
-  align-items: left; /* Aligns search bar to the left */
-  justify-content: flex-start; /* Adjusts buttons to the left as well */
-  margin: 20px 20px;
-  margin-top: 140px; /* Ensure space for fixed header */
-  width: 40%;  /* Set width to 40% */
-}
-    .search-box {
-    flex-grow: 1; /* Ensures the search bar takes the majority of space */
-  }
+    /* Search Container Styling */
+    .search-container {
+      display: flex;
+      align-items: left;
+      justify-content: flex-start;
+      margin: 20px 20px;
+      margin-top: 140px; /* Ensure space for fixed header */
+      width: 40%;
+    }
 
-  .search-container input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-right: 10px;
-  }
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
 
-  .search-container .main-button {
-    background-color: #0057b7;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+    /* Add New Asset Button Styling */
+    .add-button-container {
+      margin: 20px 20px;
+      text-align: center;
+    }
 
-  .search-container .main-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
+    .add-button-container button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-  /* =========================
-     Button Row Styling (Search, Select All, Send Email)
-     ========================= */
-  .button-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; /* Adds space between the buttons */
-    margin: 20px 20px;
-  }
+    .add-button-container button:hover {
+      background-color: #218838;
+    }
 
-  .button-row .main-button {
-    background-color: #0057b7;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    flex: 1;
-  }
+    /* Table Asset List Layout */
+    .asset-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-  /* =========================
-     Table Store List Layout
-     ========================= */
-  .store-list-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+    .asset-list-table th, .asset-list-table td {
+      padding: 12px 20px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
 
-  .store-list-table th, .store-list-table td {
-    padding: 12px 20px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
+    .asset-list-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
 
-  .store-list-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-  /* =========================
-     Select All Button Styling
-     ========================= */
-  .select-all-container {
-    margin: 10px 0;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 10px;
-  }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 50%;
+      border-radius: 5px;
+    }
 
-  .select-all-container .main-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+    .modal-content input, .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-  /* =========================
-     Footer Styling
-     ========================= */
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #cfe2ff;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    z-index: 1000;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-  }
+    .modal-content button {
+      background-color: #0057b7;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
 
-  .footer-btn {
-    background-color: #0057b7;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    font-size: 1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
+    /* Footer Styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #cfe2ff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
 
-  .footer-btn:hover {
-    background-color: #1e40af;
-  }
-</style>
+    .footer-btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
 
+    .footer-btn:hover {
+      background-color: #1e40af;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Asset Managment</h1>
+  <h1>Asset Management</h1>
 </header>
 
-<!-- Search Container for Email Database -->
+<!-- Search Container for Asset Database -->
 <div class="search-container">
     <input type="text" id="searchInputAsset" placeholder="Search by Asset Tag, Asset Type, Customer Name, Agreement" />
 </div>
@@ -249,18 +239,12 @@ document.getElementById("addAssetForm").addEventListener("submit", function(even
 
   const assetTag = document.getElementById("assetTag").value;
   const assetType = document.getElementById("assetType").value;
-  const customerName = document.getElementById("customerName").value;
-  const agreement = document.getElementById("agreement").value;
-  const datePlaced = document.getElementById("datePlaced").value;
   const status = document.getElementById("status").value;
   const comments = document.getElementById("comments").value;
 
   const newAsset = {
     "Asset Tag Code": assetTag,
     "Asset Type": assetType,
-    "Customer Name": customerName,
-    "Agreement": agreement,
-    "Date Placed": datePlaced,
     "Status": status,
     "Comments": comments
   };
@@ -278,9 +262,54 @@ document.getElementById("addAssetForm").addEventListener("submit", function(even
     console.log("Asset added:", data);
     closeModal();
     // Optionally, refresh the asset list to show the new asset
+    fetchAssets();  // Fetches the updated list of assets
   })
   .catch(error => console.error("Error adding asset:", error));
 });
+
+// Function to display assets
+function displayAssets(assets) {
+  const assetListContainer = document.getElementById("assetList");
+  assetListContainer.innerHTML = ""; // Clear previous results
+
+  if (assets.length === 0) {
+    assetListContainer.innerHTML = "<p>No assets found.</p>";
+  } else {
+    assets.forEach(asset => {
+      const assetRow = document.createElement("tr");
+      assetRow.innerHTML = `
+        <td><button class="visit-btn" data-asset="${asset["Asset Tag Code"]}" data-asset-id="${asset["Asset Tag Code"]}">Visit</button></td>
+        <td>${asset["Asset Tag Code"]}</td>
+        <td>${asset["Asset Type"]}</td>
+        <td>${asset["Customer Name"]}</td>
+        <td>${asset["Agreement"]}</td>
+        <td>${asset["Status"]}</td>
+        <td>${asset["Comments"]}</td>
+      `;
+      assetListContainer.appendChild(assetRow);
+
+      // Add event listener to the Visit button
+      const visitButton = assetRow.querySelector(".visit-btn");
+      visitButton.addEventListener("click", function() {
+        const assetId = visitButton.getAttribute("data-asset-id");
+        window.location.href = `visit.html?assetId=${assetId}`; // Redirect to visit.html with the asset's ID
+      });
+    });
+  }
+}
+
+// Fetch asset data
+function fetchAssets() {
+  fetch("https://sheetdb.io/api/v1/8kwtvisrhm2zd")
+    .then(response => response.json())
+    .then(assetData => {
+      displayAssets(assetData); // Display assets after fetching
+    })
+    .catch(error => console.error("Error fetching asset data:", error));
+}
+
+// Fetch assets on page load
+fetchAssets();
 </script>
 
 </body>
