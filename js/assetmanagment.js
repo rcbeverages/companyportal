@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
       assets.forEach(asset => {
         const assetRow = document.createElement("tr");
         assetRow.innerHTML = `
-          <td><button class="visit-btn" data-asset="${asset["Asset Tag Code"]}" data-asset-id="${asset["Asset Tag Code"]}">Visit</button></td>
           <td>${asset["Asset Tag Code"]}</td>
           <td>${asset["Asset Type"]}</td>
           <td>${asset["Customer Name"]}</td>
@@ -23,9 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
           <td>${asset["Comments"]}</td>
         `;
         assetListContainer.appendChild(assetRow);
-
-        
-        });
       });
     }
   }
