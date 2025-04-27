@@ -120,6 +120,12 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   const comments = document.getElementById('reminderComments').value;
   const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
 
+  // Ensure bdmName is available before proceeding
+  if (!bdmName) {
+    console.error("BDM name is not set. Cannot add reminder.");
+    return;
+  }
+
   const reminderData = {
     Date_to_Email: date,
     Customer_Name: customer,
