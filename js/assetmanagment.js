@@ -24,11 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
         assetListContainer.appendChild(assetRow);
 
-        // Add event listener to the Visit button
-        const visitButton = assetRow.querySelector(".visit-btn");
-        visitButton.addEventListener("click", function() {
-          const assetId = visitButton.getAttribute("data-asset-id");
-          window.location.href = `visit.html?assetId=${assetId}`; // Redirect to visit.html with the asset's ID
+        
         });
       });
     }
