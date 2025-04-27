@@ -1,16 +1,42 @@
-const bdmName = sessionStorage.getItem('bdmName'); // Replace with actual method to get logged-in BDM name
+// Set the logged-in BDM name (should be dynamically retrieved from the login)
+const username = 'rhincksman';  // This would be dynamically set based on login form
+const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
+const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
 
-const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';
-const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1'; // Master Store List
+// Fetch user data from the username API (filtering based on username)
+async function fetchUserData() {
+  try {
+    // Fetch user data based on username from the API
+    const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
+    const data = await response.json();
+
+    if (data.length > 0) {
+      // If user exists, extract BDM name and role
+      const bdmName = data[0].Username;  // Username is used as BDM name
+      const role = data[0].Role;  // Role
+
+      // Store BDM name and role in sessionStorage
+      sessionStorage.setItem('bdmName', bdmName);
+      sessionStorage.setItem('role', role);
+
+      console.log(`Logged in as: ${bdmName} with Role: ${role}`);
+    } else {
+      console.log('User not found.');
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+}
 
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
   try {
+    const bdmName = sessionStorage.getItem('bdmName');  // Get the logged-in BDM name
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
 
     const reminderList = document.getElementById('reminderList');
-    reminderList.innerHTML = '';
+    reminderList.innerHTML = '';  // Clear current list
 
     // Filter reminders for the logged-in BDM
     const filteredReminders = data.filter(reminder => reminder.BDM_Name === bdmName);
@@ -40,25 +66,26 @@ async function loadReminders() {
 // Open the Add Reminder popup
 function openAddReminder() {
   document.getElementById('addReminderPopup').style.display = 'block';
-  loadCustomersDropdown();
+  loadCustomersDropdown();  // Load customers into the dropdown
 }
 
+// Close the Add Reminder popup
 function closeAddReminder() {
   document.getElementById('addReminderPopup').style.display = 'none';
-  document.getElementById('addReminderForm').reset();
+  document.getElementById('addReminderForm').reset();  // Reset the form
 }
 
 // Load customers for the logged-in BDM
 async function loadCustomersDropdown() {
   try {
+    const bdmName = sessionStorage.getItem('bdmName');  // Get logged-in BDM name
     const response = await fetch(customersApiUrl);
     const data = await response.json();
 
-    // Filter customers by the logged-in BDM
-    const filteredCustomers = data.filter(customer => customer.BDM_Name === bdmName);
+    const filteredCustomers = data.filter(customer => customer.BDM_Name === bdmName);  // Filter by BDM
 
     const customerDropdown = document.getElementById('reminderCustomer');
-    customerDropdown.innerHTML = '';
+    customerDropdown.innerHTML = '';  // Clear existing dropdown options
 
     // Add "Non Store Reminder" option
     const nonStoreOption = document.createElement('option');
@@ -87,6 +114,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
   const date = document.getElementById('reminderDate').value;
   const customer = document.getElementById('reminderCustomer').value;
   const comments = document.getElementById('reminderComments').value;
+  const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
 
   const reminderData = {
     Date_to_Email: date,
@@ -105,7 +133,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     });
 
     closeAddReminder();
-    loadReminders(); // Refresh the reminders list after adding a new one
+    loadReminders();  // Refresh the reminders list after adding a new one
   } catch (error) {
     console.error('Error saving reminder:', error);
   }
@@ -114,6 +142,8 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
 
+// Load reminders when the page loads
 window.onload = function() {
-  loadReminders(); // Load reminders for the logged-in BDM when the page loads
-}
+  fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
+  loadReminders();  // Load reminders for the logged-in BDM
+};
