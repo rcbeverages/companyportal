@@ -1,13 +1,10 @@
 // Define the API URLs
 const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API endpoint
 const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API endpoint
+const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
 
-// Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
-  try {
-    const bdmName = sessionStorage.getItem('bdmName');  // Get the logged-in BDM name
-    console.log('Logged-in BDM:', bdmName);  // Log BDM name to check if it's correct
-
+  try {       
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
 
