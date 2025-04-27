@@ -199,17 +199,24 @@
 </div>
 
 <!-- Modal for Adding New Asset -->
-<div id="assetModal" class="modal">
-  <div class="modal-content">
-    <h3>Add New Asset</h3>
-    <form id="addAssetForm">
-  <input type="text" id="CustomerName" placeholder="Customer Name" required />
-  <input type="text" id="comments" placeholder="Comments" required />
-  <button type="submit">Add Reminder</button>
-  <button type="button" onclick="closeModal()">Cancel</button>
-</form>
+<form id="addReminderForm">
+  <label for="reminderDate">Date Due:</label>
+  <input type="date" id="reminderDate" name="reminderDate" required />
+
+  <label for="reminderCustomer">Customer Name:</label>
+  <select id="reminderCustomer" name="reminderCustomer" required>
+    <option value="">Select Customer</option>
+    <option value="Non Store Reminder">Non Store Reminder</option> <!-- Non Store Reminder option -->
+  </select>
+
+  <label for="reminderComments">Comments:</label>
+  <textarea id="reminderComments" name="reminderComments" rows="10" required></textarea> <!-- 10 rows for comments -->
+
+  <div class="popup-buttons">
+    <button type="submit" class="save-button">Save Reminder</button>
+    <button type="button" class="cancel-button" onclick="closeAddReminder()">Cancel</button>
   </div>
-</div>
+</form>
 
 <!-- Table for Asset List -->
 <table id="assetListTable" class="asset-list-table">
