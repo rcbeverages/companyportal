@@ -1,5 +1,6 @@
 // Fetch user data from the username API (filtering based on username)
 async function fetchUserData() {
+  const username = 'rhincksman';  // Define or dynamically set this value based on login
   try {
     const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
     const data = await response.json();
