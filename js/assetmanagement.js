@@ -64,16 +64,14 @@ document.addEventListener("DOMContentLoaded", function() {
  document.getElementById("addAssetForm").addEventListener("submit", function(event) {
   event.preventDefault(); // Prevent form from reloading the page
 
-  const assetTag = document.getElementById("assetTag").value;
-  const assetType = document.getElementById("assetType").value;
-  const status = document.getElementById("status").value;
-  const comments = document.getElementById("comments").value;
+  const assetTag = document.getElementById("assetTag") ? document.getElementById("assetTag").value : '';
+  const assetType = document.getElementById("assetType") ? document.getElementById("assetType").value : '';
+  const status = document.getElementById("status") ? document.getElementById("status").value : '';
 
   const newAsset = {
     "Asset Tag Code": assetTag,
     "Asset Type": assetType,
-    "Status": status,
-    "Comments": comments
+    "Status": status
   };
 
   // POST request to add the new asset to SheetDB
