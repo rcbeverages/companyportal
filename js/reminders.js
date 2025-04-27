@@ -22,7 +22,7 @@ async function fetchUserData() {
     }
   } catch (error) {
     console.error('Error fetching user data:', error);
-  });
+  }
 
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
@@ -151,7 +151,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     loadReminders();    // Refresh the reminders list after adding a new one
   } catch (error) {
     console.error('Error saving reminder:', error);
-  }
+  });
 
 // Open the modal when the "Add New Reminder" button is clicked
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
