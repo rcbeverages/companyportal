@@ -167,22 +167,24 @@
   <header>
     <h1>Reminders</h1>
   </header>
-
+  
+<!-- Search Container for Asset Database -->
   <div class="search-container">
     <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date" />
   </div>
-  
+
+  <!-- Button Row for Show Available and Show Placed Assets -->
   <div class="button-row">
     <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
   </div>
 
+  <!-- Modal for Adding New Asset -->
   <div id="addReminderPopup" class="modal">
     <div class="modal-content">
       <h2>Add New Reminder</h2>
       <form id="addReminderForm">
         <label for="reminderDate">Date Due:</label>
         <input type="date" id="reminderDate" name="reminderDate" required />
-
         <label for="reminderCustomer">Customer Name:</label>
         <select id="reminderCustomer" name="reminderCustomer" required>
           <option value="">Select Customer</option>
@@ -198,7 +200,8 @@
         </div>
       </form>
     </div>
-    
+
+    <!-- Table for Asset List -->
   <table id="reminderListTable" class="reminder-list-table">
     <thead>
       <tr>
@@ -211,6 +214,7 @@
     </tbody>
   </table>
 
+    <!-- Fixed Footer with Navigation Buttons -->
   <footer>
     <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
     <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
