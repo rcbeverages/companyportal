@@ -38,6 +38,10 @@ async function loadReminders() {
     // Filter reminders for the logged-in BDM
     const filteredReminders = data.filter(reminder => reminder.BDM_Name === bdmName);
 
+    if (filteredReminders.length === 0) {
+      reminderList.innerHTML = '<tr><td colspan="3" style="color:red;">No reminders found for the logged-in BDM.</td></tr>';
+    }
+
     // Sort reminders by Date to Email (ascending)
     filteredReminders.sort((a, b) => new Date(a.Date_to_Email) - new Date(b.Date_to_Email));
 
@@ -99,6 +103,20 @@ async function loadCustomersDropdown() {
         customerDropdown.appendChild(option);
       }
     });
+
+    // Add search functionality (simple version)
+    customerDropdown.addEventListener('input', function() {
+      const filter = customerDropdown.value.toLowerCase();
+      const options = customerDropdown.getElementsByTagName('option');
+      Array.from(options).forEach(option => {
+        if (option.text.toLowerCase().indexOf(filter) === -1) {
+          option.style.display = 'none';
+        } else {
+          option.style.display = 'block';
+        }
+      });
+    });
+
   } catch (error) {
     console.error('Error loading customers:', error);
   }
