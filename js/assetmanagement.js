@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Function to display assets in the table
   function displayAssets(assets) {
+    console.log("Fetched assets:", assets);  // Log fetched assets for debugging
     assetListContainer.innerHTML = ""; // Clear previous results
 
     if (assets.length === 0) {
@@ -31,9 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to fetch available assets
   function showAvailableAssets() {
     fetch(availableAssetsApiEndpoint)
-      .then(response => response.json())
+      .then(response => response.json())  // Parse JSON data from API response
       .then(assetData => {
-        displayAssets(assetData); // Display available assets after fetching
+        console.log("Fetched Available Assets:", assetData); // Log the data for debugging
+        displayAssets(assetData);  // Display available assets
       })
       .catch(error => console.error("Error fetching available asset data:", error));
   }
@@ -41,9 +43,10 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to fetch placed assets
   function showPlacedAssets() {
     fetch(placedAssetsApiEndpoint)
-      .then(response => response.json())
+      .then(response => response.json())  // Parse JSON data from API response
       .then(assetData => {
-        displayAssets(assetData); // Display placed assets after fetching
+        console.log("Fetched Placed Assets:", assetData); // Log the data for debugging
+        displayAssets(assetData);  // Display placed assets
       })
       .catch(error => console.error("Error fetching placed asset data:", error));
   }
