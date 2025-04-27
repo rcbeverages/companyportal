@@ -75,23 +75,27 @@
   /* =========================
      Button Row Styling (Search, Select All, Send Email)
      ========================= */
-  .button-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; /* Adds space between the buttons */
-    margin: 20px 20px;
-  }
+   .button-row {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin: 20px 20px;
+    }
 
-  .button-row .main-button {
-    background-color: #0057b7;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    flex: 1;
-  }
+    .button-row .main-button {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button-row .main-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
 
   /* =========================
      Table Store List Layout
