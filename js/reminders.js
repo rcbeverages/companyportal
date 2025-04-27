@@ -142,4 +142,4 @@ document.getElementById('addReminderBtn').addEventListener('click', openAddRemin
 window.onload = function() {
   fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
   loadReminders();  // Load reminders for the logged-in BDM
-};
+};  // <-- Make sure this bracket is here to close the function
