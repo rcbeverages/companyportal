@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Asset Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Asset Management</h1>
+    <button class="back-button" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+  </header>
+
+  <div class="welcome-message">
+    <h2>Manage Your Assets</h2>
+  </div>
+
+  <div class="form-container">
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search Assets...">
+    </div>
+
+    <!-- Add Asset Button -->
+    <div class="button-container">
+      <button class="add-button" onclick="window.location.href='addasset.html'">+ Add Asset</button>
+    </div>
+
+    <!-- Available Assets Section -->
+    <section>
+      <h3>Available Assets</h3>
+      <div id="availableAssetsList" class="tile-container">
+        <!-- Available assets will load here -->
+      </div>
+    </section>
+
+    <!-- Placed Assets Section -->
+    <section>
+      <h3>Placed Assets</h3>
+      <div id="placedAssetsList" class="tile-container">
+        <!-- Placed assets will load here -->
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <p>RC Beverages Portal</p>
+  </footer>
+
+  <script src="assetmanagement.js"></script>
+</body>
+</html>
