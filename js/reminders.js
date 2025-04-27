@@ -17,11 +17,15 @@ async function fetchUserData() {
       sessionStorage.setItem('bdmName', bdmName);
 
       console.log(`Logged in as: ${bdmName}`);
+      return bdmName;  // Return the BDM name for further use
     } else {
       console.log('User not found.');
+      return null;  // Return null if user is not found
     }
   } catch (error) {
     console.error('Error fetching user data:', error);
+    alert('Error fetching user data. Please try again.');
+    return null;  // Return null if there's an error
   }
 }
 
@@ -29,6 +33,12 @@ async function fetchUserData() {
 async function loadReminders() {
   try {
     const bdmName = sessionStorage.getItem('bdmName').toLowerCase().trim();  // Get the logged-in BDM name, make it lowercase and trim spaces
+
+    if (!bdmName) {
+      alert('No valid user data found.');
+      return;  // If no user data, stop further execution
+    }
+
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
 
@@ -62,6 +72,7 @@ async function loadReminders() {
     console.error('Error loading reminders:', error);
     const reminderList = document.getElementById('reminderList');
     reminderList.innerHTML = '<tr><td colspan="4" style="color:red;">Error loading reminders. Please try again later.</td></tr>';
+    alert('Error loading reminders. Please try again.');
   }
 }
 
@@ -120,6 +131,7 @@ async function loadCustomersDropdown() {
 
   } catch (error) {
     console.error('Error loading customers:', error);
+    alert('Error loading customers. Please try again.');
   }
 }
 
@@ -152,6 +164,7 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
     loadReminders();    // Refresh the reminders list after adding a new one
   } catch (error) {
     console.error('Error saving reminder:', error);
+    alert('Error saving reminder. Please try again.');
   }
 }
 
@@ -159,7 +172,11 @@ document.getElementById('addReminderForm').addEventListener('submit', async func
 document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
 
 // Load reminders when the page loads
-window.onload = function() {
-  fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
-  loadReminders();  // Load reminders for the logged-in BDM
-};  // Ensure this closing brace is here
+window.onload = async function() {
+  const bdmName = await fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
+  if (bdmName) {
+    loadReminders();  // Load reminders for the logged-in BDM if user data is available
+  } else {
+    alert('No user data available. Please try again.');
+  }
+};
