@@ -5,8 +5,8 @@ const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master St
 // Fetch and display reminders specific to the logged-in BDM
 async function loadReminders() {
   try {
-    const bdmName = localStorage.getItem('username');  // Get the logged-in BDM name from localStorage
-    console.log('Logged-in BDM:', bdmName);  // Log BDM name to check if it's correct
+    const username = localStorage.getItem('username');  // Get username from localStorage
+    console.log('Logged-in BDM (username):', username);  // Log username to check if it's correct
 
     const response = await fetch(remindersApiUrl);
     const data = await response.json();
@@ -16,8 +16,8 @@ async function loadReminders() {
     const reminderList = document.getElementById('reminderList');
     reminderList.innerHTML = ''; // Clear previous results
 
-    // Filter reminders for the logged-in BDM
-    const filteredReminders = data.filter(reminder => reminder["BDM Name"] === bdmName);
+    // Filter reminders using "Username" instead of "BDM Name"
+    const filteredReminders = data.filter(reminder => reminder["BDM Name"] === username);
 
     if (filteredReminders.length === 0) {
       reminderList.innerHTML = "<p>No reminders found for this BDM.</p>";
