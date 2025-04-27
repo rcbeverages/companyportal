@@ -1,182 +1,92 @@
-const username = 'rhincksman';  // This should be dynamically set based on login form
-const remindersApiUrl = 'https://sheetdb.io/api/v1/lkhkbez8p8el9';  // Reminders API
-const customersApiUrl = 'https://sheetdb.io/api/v1/8ba1eug88u4y1';  // Master Store List API
+document.addEventListener("DOMContentLoaded", function() {
+  const storeListContainer = document.getElementById("storeList");
+  const selectAllButton = document.getElementById("selectAllButton");
+  const searchInput = document.getElementById("searchInputEmail");
+  const sendEmailButton = document.getElementById("sendEmailButton");
 
-// Fetch user data from the username API (filtering based on username)
-async function fetchUserData() {
-  try {
-    const response = await fetch(`https://sheetdb.io/api/v1/abgzvmn3160g0/search?Username=${username}`);
-    const data = await response.json();
+  const apiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1"; // Replace with your actual API endpoint for Master Store List
+  const bdmUsername = localStorage.getItem("username"); // Get logged-in BDM's username
 
-    console.log("API Data:", data);  // Log the full API data to check the structure
+  // Fetch data from the Master Store List API
+  fetch(apiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      // Filter stores that belong to the logged-in BDM
+      const storesForBDM = data.filter(store => store["BDM"] === bdmUsername && store["Email"]);
 
-    if (data.length > 0) {
-      const bdmName = data[0].Username;  // Username is used as BDM name
+     function displayStores(stores) {
+    storeListContainer.innerHTML = ""; // Clear previous results
 
-      // Store the BDM name and role in sessionStorage
-      sessionStorage.setItem('bdmName', bdmName);
-
-      console.log(`Logged in as: ${bdmName}`);
-      return bdmName;  // Return the BDM name for further use
+    if (stores.length === 0) {
+        storeListContainer.innerHTML = "<p>No stores found for this BDM.</p>";
     } else {
-      console.log('User not found.');
-      return null;  // Return null if user is not found
+        stores.forEach(store => {
+            const storeRow = document.createElement("tr");
+            storeRow.innerHTML = `
+                <td><input type="checkbox" class="select-store" data-store-email="${store["Email"]}" /></td>
+                <td>${store["Customer Name"]}</td>
+                <td>${store["Sub Owner Group"]}</td>
+                <td>${store["Key Account Group"]}</td>
+                <td>${store["Grade"]}</td>
+                <td>${store["Store Type"]}</td>
+                <td><a href="mailto:${store["Email"]}" target="_blank">${store["Email"]}</a></td>
+            `;
+            storeListContainer.appendChild(storeRow);
+        });
     }
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    alert('Error fetching user data. Please try again.');
-    return null;  // Return null if there's an error
-  }
 }
 
-// Fetch and display reminders specific to the logged-in BDM
-async function loadReminders() {
-  try {
-    const bdmName = sessionStorage.getItem('bdmName').toLowerCase().trim();  // Get the logged-in BDM name, make it lowercase and trim spaces
 
-    if (!bdmName) {
-      alert('No valid user data found.');
-      return;  // If no user data, stop further execution
-    }
+      // Display all stores initially for the BDM
+      displayStores(storesForBDM);
 
-    const response = await fetch(remindersApiUrl);
-    const data = await response.json();
-
-    const reminderList = document.getElementById('reminderList');
-    reminderList.innerHTML = '';  // Clear current list
-
-    // Filter reminders for the logged-in BDM (case-insensitive and trimmed)
-    const filteredReminders = data.filter(reminder => reminder['BDM Name'].toLowerCase().trim() === bdmName);
-
-    if (filteredReminders.length === 0) {
-      reminderList.innerHTML = '<tr><td colspan="4" style="color:red;">No reminders found for the logged-in BDM.</td></tr>';
-    }
-
-    // Sort reminders by Date to Email (ascending)
-    filteredReminders.sort((a, b) => new Date(a['Date']) - new Date(b['Date']));
-
-    // Display filtered and sorted reminders
-    filteredReminders.forEach(reminder => {
-      const reminderItem = document.createElement('tr');
-      reminderItem.className = 'reminder-item';
-      reminderItem.innerHTML = `
-        <td>${reminder['Date']}</td>
-        <td>${reminder['Customer Name']}</td>
-        <td>${reminder.Comments ? reminder.Comments : '(No Comments)'}</td>
-        <td>${reminder['BDM Name']}</td> <!-- Display the BDM Name here -->
-      `;
-      reminderList.appendChild(reminderItem);
-    });
-
-  } catch (error) {
-    console.error('Error loading reminders:', error);
-    const reminderList = document.getElementById('reminderList');
-    reminderList.innerHTML = '<tr><td colspan="4" style="color:red;">Error loading reminders. Please try again later.</td></tr>';
-    alert('Error loading reminders. Please try again.');
-  }
-}
-
-// Open the Add Reminder popup
-function openAddReminder() {
-  document.getElementById('addReminderPopup').style.display = 'block';
-  loadCustomersDropdown();  // Load customers into the dropdown
-}
-
-// Close the Add Reminder popup
-function closeAddReminder() {
-  document.getElementById('addReminderPopup').style.display = 'none';
-  document.getElementById('addReminderForm').reset();  // Reset the form
-}
-
-// Load customers for the logged-in BDM
-async function loadCustomersDropdown() {
-  try {
-    const bdmName = sessionStorage.getItem('bdmName');  // Get logged-in BDM name
-    const response = await fetch(customersApiUrl);
-    const data = await response.json();
-
-    const filteredCustomers = data.filter(customer => customer['BDM Name'] === bdmName);  // Filter by BDM
-
-    const customerDropdown = document.getElementById('reminderCustomer');
-    customerDropdown.innerHTML = '';  // Clear existing dropdown options
-
-    // Add "Non Store Reminder" option
-    const nonStoreOption = document.createElement('option');
-    nonStoreOption.value = "Non Store Reminder";
-    nonStoreOption.text = "Non Store Reminder";
-    customerDropdown.appendChild(nonStoreOption);
-
-    // Add filtered customers to the dropdown
-    filteredCustomers.forEach(customer => {
-      if (customer['Customer Name']) {
-        const option = document.createElement('option');
-        option.value = customer['Customer Name'];
-        option.text = customer['Customer Name'];
-        customerDropdown.appendChild(option);
-      }
-    });
-
-    // Add search functionality (simple version)
-    customerDropdown.addEventListener('input', function() {
-      const filter = customerDropdown.value.toLowerCase();
-      const options = customerDropdown.getElementsByTagName('option');
-      Array.from(options).forEach(option => {
-        if (option.text.toLowerCase().indexOf(filter) === -1) {
-          option.style.display = 'none';
-        } else {
-          option.style.display = 'block';
-        }
+      // Search functionality (applies on input event of the search field)
+      searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredStores = storesForBDM.filter(store => {
+          return (
+            store["Customer Name"].toLowerCase().includes(searchTerm) ||
+            store["Sub Owner Group"].toLowerCase().includes(searchTerm) ||
+            store["Key Account Group"].toLowerCase().includes(searchTerm) ||
+            store["Grade"].toLowerCase().includes(searchTerm) ||
+            store["Store Type"].toLowerCase().includes(searchTerm)
+          );
+        });
+        displayStores(filteredStores);
       });
-    });
 
-  } catch (error) {
-    console.error('Error loading customers:', error);
-    alert('Error loading customers. Please try again.');
-  }
-}
+      // Select All Button functionality
+      selectAllButton.addEventListener("click", function() {
+        const checkboxes = document.querySelectorAll(".select-store");
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+      });
 
-// Handle the form submission to add a new reminder
-document.getElementById('addReminderForm').addEventListener('submit', async function(event) {
-  event.preventDefault();
+      sendEmailButton.addEventListener("click", function() {
+    console.log("Send Email Button clicked");  // Add this line to check if the event is firing
+    // Get all selected stores (those with checked checkboxes)
+    const selectedStores = document.querySelectorAll(".select-store:checked");
 
-  const date = document.getElementById('reminderDate').value;
-  const customer = document.getElementById('reminderCustomer').value;
-  const comments = document.getElementById('reminderComments').value;
-  const bdmName = sessionStorage.getItem('bdmName');  // Get BDM name from sessionStorage
+    // Collect the emails of the selected stores
+    const storeEmails = Array.from(selectedStores).map(checkbox => checkbox.getAttribute('data-store-email'));
 
-  const reminderData = {
-    Date: date,
-    'Customer Name': customer,
-    Comments: comments,
-    'BDM Name': bdmName,  // Attach the logged-in BDM's name to the reminder
-  };
+    // Join emails to create the BCC string
+    const bccEmails = storeEmails.join(',');
 
-  try {
-    await fetch(remindersApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data: [reminderData] }),  // Corrected syntax here
-    });
+    // Check if there are any emails to send
+    if (bccEmails) {
+        // Create the mailto link with BCC field
+        const mailtoLink = `mailto:?bcc=${bccEmails}&subject=Store Visits&body=Please%20find%20the%20list%20of%20stores%20below:%0A%0A${encodeURIComponent(storeEmails.join('\n'))}`;
 
-    closeAddReminder(); // Close the modal after adding the reminder
-    loadReminders();    // Refresh the reminders list after adding a new one
-  } catch (error) {
-    console.error('Error saving reminder:', error);
-    alert('Error saving reminder. Please try again.');
-  }
-}
+        console.log(mailtoLink);  // Check the mailto link in the console
+        // Open the default email client (Outlook or others)
+        window.location.href = mailtoLink;
+    } else {
+        // Show a message or do nothing if no stores are selected
+        alert("Please select at least one store to send an email.");
+    }
+});
 
-// Open the modal when the "Add New Reminder" button is clicked
-document.getElementById('addReminderBtn').addEventListener('click', openAddReminder);
-
-// Load reminders when the page loads
-window.onload = async function() {
-  const bdmName = await fetchUserData();  // Fetch user data (set BDM name and role in sessionStorage)
-  if (bdmName) {
-    loadReminders();  // Load reminders for the logged-in BDM if user data is available
-  } else {
-    alert('No user data available. Please try again.');
-  }
-};
+    })
+    .catch(error => console.error("Error fetching store data:", error));
+});
