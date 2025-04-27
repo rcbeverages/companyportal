@@ -93,4 +93,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Fetch assets on page load (default fetch of available assets)
   showAvailableAssets(); // Initial asset list fetch when the page loads
+
+  // Close modal if clicked outside
+  window.onclick = function(event) {
+    if (event.target === assetModal) {
+      closeModal();
+    }
+  };
+
+  // Add New Asset button functionality
+  document.querySelector(".add-button").addEventListener("click", openModal);
 });
