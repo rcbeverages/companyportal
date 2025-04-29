@@ -14,6 +14,15 @@ body {
   overflow-y: auto;    /* 👈 ALLOW page vertical scrolling */
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); /* Adjust based on header/footer size */
+}
+
 /* =========================
    Header
    ========================= */
