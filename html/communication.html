@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reminders</title>
+  
+  <style>
+    /* =========================
+       General Page Styling
+       ========================= */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0057b7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: left;
+      justify-content: flex-start;
+      margin: 20px 20px;
+      margin-top: 140px; /* Ensure space for fixed header */
+      width: 40%;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin: 20px 20px;
+    }
+
+    .button-row .main-button {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+     .button-row .main-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .reminder-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .reminder-list-table th, .reminder-list-table td {
+      padding: 12px 20px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .reminder-list-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    
+    .reminder-list-table td {
+      background-color: #ffffff;  /* White background for table rows */
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #cfe2ff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
+
+    .footer-btn {
+      background-color: #0057b7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .footer-btn:hover {
+      background-color: #1e40af;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 35%;
+      border-radius: 5px;
+      max-width: 500px;
+    }
+
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .modal-content button {
+      background-color: #0057b7;
+      color: white;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .modal-content button + button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Reminders</h1>
+  </header>
+  
+<!-- Search Container for Asset Database -->
+  <div class="search-container">
+    <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date" />
+  </div>
+
+  <!-- Button Row for Show Available and Show Placed Assets -->
+  <div class="button-row">
+    <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
+  </div>
+
+  <table id="reminderListTable" class="reminder-list-table">
+  <thead>
+    <tr>
+     <td>Email</td>
+      <td>Customer Name</td>
+      <td>Comments</td>
+      </tr>
+  </thead>
+  <tbody id="reminderList"></tbody>  <!-- This is where the reminders will be added -->
+</table>
+
+  <div id="addReminderPopup" class="modal">
+    <div class="modal-content">
+      <h2>Add New Reminder</h2>
+      <form id="addReminderForm">
+        <label for="reminderDate">Date Due:</label>
+        <input type="date" id="reminderDate" name="reminderDate" required />
+
+        <label for="reminderCustomer">Customer Name:</label>
+        <select id="reminderCustomer" name="reminderCustomer" required>
+          <option value="">Select Customer</option>
+          <option value="Non Store Reminder">Non Store Reminder</option>"
+        </select>
+
+       <label for="reminderComments">Comments:</label>
+        <textarea id="reminderComments" name="reminderComments" rows="10" required></textarea>
+
+        <div class="popup-buttons">
+          <button type="submit" class="save-button">Save Reminder</button>
+          <button type="button" class="cancel-button" onclick="closeAddReminder()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+  </footer>
+
+  <script src="../js/reminders.js"></script>
+</body>
+</html>
