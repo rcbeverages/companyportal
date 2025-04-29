@@ -1,10 +1,17 @@
-const apiURL = "https://sheetdb.io/api/v1/cnx2w00xwchqe";
-
 // Load Communications
 fetch(apiURL)
   .then(response => response.json())
   .then(data => {
     const commList = document.getElementById('communicationList');
+    
+    // 🆕 Sort by Date DESCENDING
+    data.sort((a, b) => {
+      const dateA = new Date(a.Date || '1970-01-01');
+      const dateB = new Date(b.Date || '1970-01-01');
+      return dateB - dateA; // Newest date first
+    });
+
+    // Now add rows
     data.forEach(comm => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -19,61 +26,3 @@ fetch(apiURL)
       commList.appendChild(row);
     });
   });
-
-// Search Functionality
-document.getElementById('searchInputComm').addEventListener('input', function() {
-  const searchValue = this.value.toLowerCase();
-  const rows = document.querySelectorAll('#communicationList tr');
-  rows.forEach(row => {
-    const type = row.children[2].textContent.toLowerCase();
-    const subject = row.children[1].textContent.toLowerCase();
-    if (type.includes(searchValue) || subject.includes(searchValue)) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
-  });
-});
-
-// Open Add Comm Modal
-document.getElementById('addCommBtn').addEventListener('click', () => {
-  document.getElementById('addCommPopup').style.display = 'block';
-});
-
-// Cancel Add Comm Modal
-document.getElementById('cancelAddComm').addEventListener('click', () => {
-  document.getElementById('addCommPopup').style.display = 'none';
-});
-
-// Save New Comm
-document.getElementById('addCommForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const newComm = {
-    Date: document.getElementById('commDate').value,
-    Subject: document.getElementById('commSubject').value,
-    Type: document.getElementById('commType').value,
-    Notes: document.getElementById('commNotes').value,
-  };
-
-  fetch(apiURL, {
-    method: 'POST',
-    body: JSON.stringify({ data: [newComm] }),
-    headers: { 'Content-Type': 'application/json' },
-  }).then(() => {
-    location.reload();
-  });
-});
-
-// Open View Communication
-function openViewComm(comm) {
-  document.getElementById('viewDate').innerText = comm.Date || '';
-  document.getElementById('viewSubject').innerText = comm.Subject || '';
-  document.getElementById('viewType').innerText = comm.Type || '';
-  document.getElementById('viewNotes').innerText = comm.Notes || '';
-  document.getElementById('viewCommPopup').style.display = 'block';
-}
-
-// Close View Communication
-document.getElementById('closeViewComm').addEventListener('click', () => {
-  document.getElementById('viewCommPopup').style.display = 'none';
-});
