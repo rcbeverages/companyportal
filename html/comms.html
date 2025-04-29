@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reminders</title>
-  
+  <title>Communications</title>
+
   <style>
-    /* =========================
-       General Page Styling
-       ========================= */
+    /* General Styling */
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -33,7 +31,7 @@
       align-items: left;
       justify-content: flex-start;
       margin: 20px 20px;
-      margin-top: 140px; /* Ensure space for fixed header */
+      margin-top: 140px;
       width: 40%;
     }
 
@@ -64,30 +62,25 @@
       border-radius: 5px;
     }
 
-     .button-row .main-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    .reminder-list-table {
+    .communication-list-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
 
-    .reminder-list-table th, .reminder-list-table td {
+    .communication-list-table th, .communication-list-table td {
       padding: 12px 20px;
       text-align: left;
       border: 1px solid #ddd;
     }
 
-    .reminder-list-table th {
+    .communication-list-table th {
       background-color: #f2f2f2;
       font-weight: bold;
     }
-    
-    .reminder-list-table td {
-      background-color: #ffffff;  /* White background for table rows */
+
+    .communication-list-table td {
+      background-color: #ffffff;
     }
 
     footer {
@@ -140,7 +133,8 @@
     }
 
     .modal-content input,
-    .modal-content select {
+    .modal-content select,
+    .modal-content textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -168,63 +162,132 @@
 </head>
 
 <body>
-  <header>
-    <h1>Reminders</h1>
-  </header>
-  
-<!-- Search Container for Asset Database -->
-  <div class="search-container">
-    <input type="text" id="searchInputReminder" placeholder="Search by Customer Name, Date" />
-  </div>
+<header>
+  <h1>Communications</h1>
+</header>
 
-  <!-- Button Row for Show Available and Show Placed Assets -->
-  <div class="button-row">
-    <button class="main-button" id="addReminderBtn">+ Add New Reminder</button>
-  </div>
+<div class="search-container">
+  <input type="text" id="searchInputComm" placeholder="Search by Type or Subject" />
+</div>
 
-  <table id="reminderListTable" class="reminder-list-table">
+<div class="button-row">
+  <button class="main-button" id="addCommBtn">+ Add New Communication</button>
+</div>
+
+<table id="communicationListTable" class="communication-list-table">
   <thead>
     <tr>
-     <td>Email</td>
-      <td>Customer Name</td>
-      <td>Comments</td>
-      </tr>
+      <th>Date Sent</th>
+      <th>Subject</th>
+      <th>Type</th>
+      <th>Notes</th>
+    </tr>
   </thead>
-  <tbody id="reminderList"></tbody>  <!-- This is where the reminders will be added -->
+  <tbody id="communicationList"></tbody>
 </table>
 
-  <div id="addReminderPopup" class="modal">
-    <div class="modal-content">
-      <h2>Add New Reminder</h2>
-      <form id="addReminderForm">
-        <label for="reminderDate">Date Due:</label>
-        <input type="date" id="reminderDate" name="reminderDate" required />
+<div id="addCommPopup" class="modal">
+  <div class="modal-content">
+    <h2>Add New Communication</h2>
+    <form id="addCommForm">
+      <label for="commDate">Date Sent:</label>
+      <input type="date" id="commDate" name="commDate" required />
 
-        <label for="reminderCustomer">Customer Name:</label>
-        <select id="reminderCustomer" name="reminderCustomer" required>
-          <option value="">Select Customer</option>
-          <option value="Non Store Reminder">Non Store Reminder</option>"
-        </select>
+      <label for="commSubject">Subject:</label>
+      <input type="text" id="commSubject" name="commSubject" required />
 
-       <label for="reminderComments">Comments:</label>
-        <textarea id="reminderComments" name="reminderComments" rows="10" required></textarea>
+      <label for="commType">Type:</label>
+      <select id="commType" name="commType" required>
+        <option value="">Select Type</option>
+        <option value="Email">Email</option>
+        <option value="Call">Call</option>
+        <option value="Meeting">Meeting</option>
+        <option value="Other">Other</option>
+      </select>
 
-        <div class="popup-buttons">
-          <button type="submit" class="save-button">Save Reminder</button>
-          <button type="button" class="cancel-button" onclick="closeAddReminder()">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <label for="commNotes">Notes:</label>
+      <textarea id="commNotes" name="commNotes" rows="6" required></textarea>
+
+      <div class="popup-buttons">
+        <button type="submit" class="save-button">Save Communication</button>
+        <button type="button" class="cancel-button" onclick="closeAddComm()">Cancel</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <footer>
-    <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-    <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
-    <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
-    <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
-    <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
-  </footer>
+<footer>
+  <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+  <button class="footer-btn" onclick="location.href='comms.html'">Communication</button>
+  <button class="footer-btn" onclick="location.href='journeyplanners.html'">Journey Planner</button>
+  <button class="footer-btn" onclick="location.href='reminders.html'">Reminders</button>
+  <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
+</footer>
 
-  <script src="../js/reminders.js"></script>
+<script>
+const apiURL = "https://sheetdb.io/api/v1/cnx2w00xwchqe";
+
+// Fetch Communications on Load
+fetch(apiURL)
+  .then(response => response.json())
+  .then(data => {
+    const commList = document.getElementById('communicationList');
+    data.forEach(comm => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${comm.Date || ''}</td>
+        <td>${comm.Subject || ''}</td>
+        <td>${comm.Type || ''}</td>
+        <td>${comm.Notes || ''}</td>
+      `;
+      commList.appendChild(row);
+    });
+  });
+
+// Search Functionality
+document.getElementById('searchInputComm').addEventListener('input', function() {
+  const searchValue = this.value.toLowerCase();
+  const rows = document.querySelectorAll('#communicationList tr');
+  rows.forEach(row => {
+    const type = row.children[2].textContent.toLowerCase();
+    const subject = row.children[1].textContent.toLowerCase();
+    if (type.includes(searchValue) || subject.includes(searchValue)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
+
+// Open Add Communication Modal
+document.getElementById('addCommBtn').addEventListener('click', () => {
+  document.getElementById('addCommPopup').style.display = 'block';
+});
+
+// Close Modal
+function closeAddComm() {
+  document.getElementById('addCommPopup').style.display = 'none';
+}
+
+// Submit New Communication
+document.getElementById('addCommForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const newComm = {
+    Date: document.getElementById('commDate').value,
+    Subject: document.getElementById('commSubject').value,
+    Type: document.getElementById('commType').value,
+    Notes: document.getElementById('commNotes').value,
+  };
+
+  fetch(apiURL, {
+    method: 'POST',
+    body: JSON.stringify({ data: [newComm] }),
+    headers: { 'Content-Type': 'application/json' },
+  }).then(() => {
+    location.reload();
+  });
+});
+</script>
+
 </body>
 </html>
