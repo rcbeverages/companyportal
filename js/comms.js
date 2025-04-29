@@ -1,7 +1,6 @@
-<script>
 const apiURL = "https://sheetdb.io/api/v1/cnx2w00xwchqe";
 
-// Fetch Communications on Load
+// Load Communications
 fetch(apiURL)
   .then(response => response.json())
   .then(data => {
@@ -12,8 +11,11 @@ fetch(apiURL)
         <td>${comm.Date || ''}</td>
         <td>${comm.Subject || ''}</td>
         <td>${comm.Type || ''}</td>
-        <td>${comm.Notes || ''}</td>
+        <td class="clickable-note" style="color:blue; text-decoration:underline; cursor:pointer;">${comm.Notes ? (comm.Notes.length > 30 ? comm.Notes.substring(0,30)+'...' : comm.Notes) : ''}</td>
       `;
+      row.querySelector('.clickable-note').addEventListener('click', () => {
+        openViewComm(comm);
+      });
       commList.appendChild(row);
     });
   });
@@ -33,17 +35,17 @@ document.getElementById('searchInputComm').addEventListener('input', function() 
   });
 });
 
-// Open Add Communication Modal
+// Open Add Comm Modal
 document.getElementById('addCommBtn').addEventListener('click', () => {
   document.getElementById('addCommPopup').style.display = 'block';
 });
 
-// Close Modal
-function closeAddComm() {
+// Cancel Add Comm Modal
+document.getElementById('cancelAddComm').addEventListener('click', () => {
   document.getElementById('addCommPopup').style.display = 'none';
-}
+});
 
-// Submit New Communication
+// Save New Comm
 document.getElementById('addCommForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const newComm = {
@@ -61,7 +63,17 @@ document.getElementById('addCommForm').addEventListener('submit', function(e) {
     location.reload();
   });
 });
-</script>
 
-</body>
-</html>
+// Open View Communication
+function openViewComm(comm) {
+  document.getElementById('viewDate').innerText = comm.Date || '';
+  document.getElementById('viewSubject').innerText = comm.Subject || '';
+  document.getElementById('viewType').innerText = comm.Type || '';
+  document.getElementById('viewNotes').innerText = comm.Notes || '';
+  document.getElementById('viewCommPopup').style.display = 'block';
+}
+
+// Close View Communication
+document.getElementById('closeViewComm').addEventListener('click', () => {
+  document.getElementById('viewCommPopup').style.display = 'none';
+});
