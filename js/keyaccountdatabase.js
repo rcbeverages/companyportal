@@ -1,26 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const apiURL = "https://sheetdb.io/api/v1/8ba1eug88u4y1?sheet=Key%20Accounts";
   const keyAccountListContainer = document.getElementById("storeList");
   const searchInput = document.getElementById("searchInputStore");
-  const apiURL = "https://sheetdb.io/api/v1/8ba1eug88u4y1?sheet=Key%20Accounts";
 
   let allData = [];
 
-  // Fetch and display data
+  // Load data
   fetch(apiURL)
     .then(response => response.json())
     .then(data => {
       allData = data.filter(row => row["Status"] !== "Deleted");
       populateTable(allData);
-      populateDropdown(allData);
+      populateDropdowns(allData);
+      populateSegmentOptions(allData);
     });
 
   function populateTable(data) {
     keyAccountListContainer.innerHTML = "";
-    if (data.length === 0) {
-      keyAccountListContainer.innerHTML = "<tr><td colspan='7'>No key accounts available.</td></tr>";
-      return;
-    }
-
     data.forEach(account => {
       const row = document.createElement("tr");
       row.innerHTML = `
@@ -36,14 +32,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function populateDropdown(data) {
-    const select = document.getElementById("accountSelect");
-    select.innerHTML = '<option value="">-- Select Account --</option>';
+  function populateDropdowns(data) {
+    const delSelect = document.getElementById("accountSelect");
+    const editSelect = document.getElementById("editAccountSelect");
+    delSelect.innerHTML = '<option value="">-- Select Account --</option>';
+    editSelect.innerHTML = '<option value="">-- Select Account --</option>';
+
     data.forEach(account => {
+      const name = account["Vok Off Prem Key Accounts"];
+      const opt1 = document.createElement("option");
+      opt1.value = name;
+      opt1.textContent = name;
+      delSelect.appendChild(opt1);
+
+      const opt2 = opt1.cloneNode(true);
+      editSelect.appendChild(opt2);
+    });
+  }
+
+  function populateSegmentOptions(data) {
+    const segmentSelect = document.getElementById("editSegmentSelect");
+    const segments = [...new Set(data.map(row => row["Segment"]))].sort();
+    segments.forEach(seg => {
       const opt = document.createElement("option");
-      opt.value = account["Vok Off Prem Key Accounts"];
-      opt.textContent = account["Vok Off Prem Key Accounts"];
-      select.appendChild(opt);
+      opt.value = seg;
+      opt.textContent = seg;
+      segmentSelect.appendChild(opt);
     });
   }
 
@@ -56,16 +70,18 @@ document.addEventListener("DOMContentLoaded", function () {
     populateTable(filtered);
   });
 
-  // Open modals
+  // Show modals
   document.getElementById("addKeyAccountBtn").onclick = () => {
     document.getElementById("keyAccountModal").style.display = "block";
   };
-
   document.getElementById("deleteKeyAccountBtn").onclick = () => {
     document.getElementById("deleteKeyAccountModal").style.display = "block";
   };
+  document.getElementById("editKeyAccountBtn").onclick = () => {
+    document.getElementById("editKeyAccountModal").style.display = "block";
+  };
 
-  // Add Key Account
+  // Add
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -76,27 +92,64 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data })
-    }).then(res => res.json())
-      .then(() => {
-        alert("Key account added.");
-        location.reload();
-      });
+    }).then(() => {
+      alert("Key account added.");
+      location.reload();
+    });
   });
 
-  // Delete (PATCH to mark as "Deleted")
+  // Delete
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const selected = document.getElementById("accountSelect").value;
     if (!selected) return;
 
-    fetch(`https://sheetdb.io/api/v1/8ba1eug88u4y1?sheet=Key%20Accounts&search=Vok Off Prem Key Accounts&value=${encodeURIComponent(selected)}`, {
+    fetch(`${apiURL}&search=Vok Off Prem Key Accounts&value=${encodeURIComponent(selected)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: { Status: "Deleted" } })
-    }).then(res => res.json())
-      .then(() => {
-        alert("Key account deleted.");
-        location.reload();
-      });
+    }).then(() => {
+      alert("Deleted.");
+      location.reload();
+    });
+  });
+
+  // Edit dropdown change: autofill form
+  document.getElementById("editAccountSelect").addEventListener("change", function () {
+    const selected = this.value;
+    const record = allData.find(row => row["Vok Off Prem Key Accounts"] === selected);
+    if (!record) return;
+
+    document.getElementById("editKeyAccountName").value = record["Vok Off Prem Key Accounts"];
+    document.getElementById("editSegmentSelect").value = record["Segment"];
+    document.getElementById("editOutlets").value = record["Outlets"] || "";
+    document.getElementById("editContact").value = record["Contact"] || "";
+    document.getElementById("editEmail").value = record["Email"] || "";
+    document.getElementById("editMobile").value = record["Mobile"] || "";
+    document.getElementById("editComments").value = record["Comments"] || "";
+  });
+
+  // Edit form submit
+  document.getElementById("editKeyForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const patchTarget = document.getElementById("editKeyAccountName").value;
+    const data = {
+      Segment: document.getElementById("editSegmentSelect").value,
+      Outlets: document.getElementById("editOutlets").value,
+      Contact: document.getElementById("editContact").value,
+      Email: document.getElementById("editEmail").value,
+      Mobile: document.getElementById("editMobile").value,
+      Comments: document.getElementById("editComments").value
+    };
+
+    fetch(`${apiURL}&search=Vok Off Prem Key Accounts&value=${encodeURIComponent(patchTarget)}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data })
+    }).then(() => {
+      alert("Changes saved.");
+      location.reload();
+    });
   });
 });
