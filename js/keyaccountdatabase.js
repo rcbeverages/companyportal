@@ -8,13 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(apiURL)
     .then(res => res.json())
     .then(data => {
-   allData = data
-  .filter(row => !row["Status"] || row["Status"] !== "Deleted")
-  .sort((a, b) => {
-    const segA = (a["Segment"] || "").toLowerCase();
-    const segB = (b["Segment"] || "").toLowerCase();
-    return segA.localeCompare(segB);
-  });
+  allData = data
+    .filter(row => row["Status"] !== "Deleted")
+    .sort((a, b) => {
+      const segA = (a["Segment"] || "").toLowerCase();
+      const segB = (b["Segment"] || "").toLowerCase();
+      return segA.localeCompare(segB);
+    });
+
+  populateTable(allData);
+  populateDropdowns(allData);
+  populateSegmentOptions(allData);
 
   function populateTable(data) {
     keyAccountListContainer.innerHTML = "";
@@ -69,9 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Search
   searchInput.addEventListener("input", function () {
     const term = this.value.toLowerCase();
-    const filtered = .filter(account =>
-      Object.values(account).some(val => val.toLowerCase().includes(term))
-    );
+   const filtered = allData.filter(account =>
+  Object.values(account).some(val => val?.toString().toLowerCase().includes(term))
+);
+
     populateTable(filtered);
   });
 
