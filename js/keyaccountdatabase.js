@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(apiURL)
     .then(res => res.json())
     .then(data => {
-     allData = data
-  .filter(row => row["Status"] !== "Deleted")
+   allData = data
+  .filter(row => !row["Status"] || row["Status"] !== "Deleted")
   .sort((a, b) => {
     const segA = (a["Segment"] || "").toLowerCase();
     const segB = (b["Segment"] || "").toLowerCase();
