@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${account["Segment"]}</td>
-        <td>${account["Vok Off Prem Key Accounts"]}</td>
+        <td>${account["Key Account Name"]}</td>
         <td>${account["Outlets"]}</td>
         <td>${account["Contact"]}</td>
         <td>${account["Email"]}</td>
