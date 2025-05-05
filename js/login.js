@@ -1,5 +1,9 @@
 // login.js
 
+// Clear any previous session
+localStorage.clear();
+
+
 document.getElementById("loginForm").addEventListener("submit", async function (event) {
   event.preventDefault();
 
