@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
           list.forEach(account => {
             const row = document.createElement("tr");
             row.innerHTML = `
-              <td><button class="visit-btn" data-name="${account["Vok Off Prem Key Accounts"]}">Visit</button></td>
               <td>${account["Segment"]}</td>
               <td>${account["Account Name"]}</td>
               <td>${account["Outlets"]}</td>
