@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${account["Key Account Name"]}</td>
         <td>${account["Contact"]}</td>
         <td>${account["Mobile"]}</td>
-        <td>${account["Email"]}</td>
+        <td><a href="mailto:${account["Email"]}">${account["Email"]}</a></td>
       
       `;
       keyAccountListContainer.appendChild(row);
