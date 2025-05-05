@@ -95,7 +95,6 @@
       cursor: pointer;
     }
 
-    /* Modals */
     .modal {
       display: none;
       position: fixed;
@@ -132,6 +131,7 @@
   <input type="text" id="searchInputStore" placeholder="Search by Key Account Name, Segment, etc." />
   <button id="addKeyAccountBtn" class="main-button">+ Add Key Account</button>
   <button id="deleteKeyAccountBtn" class="main-button">🗑️ Delete Key Account</button>
+  <button id="editKeyAccountBtn" class="main-button">✏️ Edit Key Account</button>
 </div>
 
 <table>
@@ -149,13 +149,13 @@
   <tbody id="storeList"></tbody>
 </table>
 
-<!-- Add Key Account Modal -->
+<!-- Modals -->
 <div id="keyAccountModal" class="modal">
   <div class="modal-content">
     <h2>Add New Key Account</h2>
     <form id="keyAccountForm">
       <input name="Segment" placeholder="Segment" required />
-      <input name="Vok Off Prem Key Accounts" placeholder="Key Account Name" required />
+      <input name="Key Account Name" placeholder="Key Account Name" required />
       <input name="Outlets" placeholder="Outlets" required />
       <input name="Contact" placeholder="Contact" />
       <input name="Email" type="email" placeholder="Email" />
@@ -167,7 +167,6 @@
   </div>
 </div>
 
-<!-- Delete Key Account Modal -->
 <div id="deleteKeyAccountModal" class="modal">
   <div class="modal-content">
     <h2>Delete Key Account</h2>
@@ -176,6 +175,32 @@
       <select name="accountName" id="accountSelect" required></select>
       <button type="submit" class="main-button">Confirm Delete</button>
       <button type="button" class="main-button" onclick="document.getElementById('deleteKeyAccountModal').style.display='none'">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div id="editKeyAccountModal" class="modal">
+  <div class="modal-content">
+    <h2>Edit Key Account</h2>
+    <form id="editKeyForm">
+      <label>Select Key Account:</label>
+      <select id="editAccountSelect" required></select>
+      <label>Segment:</label>
+      <select name="Segment" id="editSegmentSelect" required></select>
+      <label>Key Account Name (locked):</label>
+      <input name="Vok Off Prem Key Accounts" id="editKeyAccountName" readonly />
+      <label>Outlets:</label>
+      <input name="Outlets" id="editOutlets" required />
+      <label>Contact:</label>
+      <input name="Contact" id="editContact" />
+      <label>Email:</label>
+      <input name="Email" id="editEmail" type="email" />
+      <label>Mobile:</label>
+      <input name="Mobile" id="editMobile" />
+      <label>Comments:</label>
+      <textarea name="Comments" id="editComments"></textarea>
+      <button type="submit" class="main-button">Save Changes</button>
+      <button type="button" class="main-button" onclick="document.getElementById('editKeyAccountModal').style.display='none'">Cancel</button>
     </form>
   </div>
 </div>
