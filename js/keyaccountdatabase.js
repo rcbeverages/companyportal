@@ -8,17 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(apiURL)
     .then(res => res.json())
     .then(data => {
-  allData = data
-    .filter(row => row["Status"] !== "Deleted")
-    .sort((a, b) => {
-      const segA = (a["Segment"] || "").toLowerCase();
-      const segB = (b["Segment"] || "").toLowerCase();
-      return segA.localeCompare(segB);
-    });
+      allData = data
+        .filter(row => row["Status"] !== "Deleted")
+        .sort((a, b) => {
+          const segA = (a["Segment"] || "").toLowerCase();
+          const segB = (b["Segment"] || "").toLowerCase();
+          return segA.localeCompare(segB);
+        });
 
-  populateTable(allData);
-  populateDropdowns(allData);
-  populateSegmentOptions(allData);
+      populateTable(allData);
+      populateDropdowns(allData);
+      populateSegmentOptions(allData);
+    });
 
   function populateTable(data) {
     keyAccountListContainer.innerHTML = "";
@@ -30,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${account["Contact"]}</td>
         <td>${account["Mobile"]}</td>
         <td><a href="mailto:${account["Email"]}">${account["Email"]}</a></td>
-      
       `;
       keyAccountListContainer.appendChild(row);
     });
@@ -70,17 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Search
+  // Search functionality
   searchInput.addEventListener("input", function () {
     const term = this.value.toLowerCase();
-   const filtered = allData.filter(account =>
-  Object.values(account).some(val => val?.toString().toLowerCase().includes(term))
-);
-
+    const filtered = allData.filter(account =>
+      Object.values(account).some(val => val?.toString().toLowerCase().includes(term))
+    );
     populateTable(filtered);
   });
 
-  // Show Modals
+  // Show modals
   document.getElementById("addKeyAccountBtn").onclick = () => {
     document.getElementById("keyAccountModal").style.display = "block";
   };
@@ -91,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editKeyAccountModal").style.display = "block";
   };
 
-  // Add New
+  // Add new key account
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Delete (Patch Status)
+  // Delete key account (mark as deleted)
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const selected = document.getElementById("accountSelect").value;
@@ -124,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Edit — Dropdown Change Autofill
+  // Edit dropdown change (autofill)
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
     const record = allData.find(row => row["Key Account Name"] === selected);
@@ -135,14 +134,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editContact").value = record["Contact"] || "";
     document.getElementById("editMobile").value = record["Mobile"] || "";
     document.getElementById("editEmail").value = record["Email"] || "";
-
- 
   });
 
-  // Edit — Submit
+  // Edit form submission
   document.getElementById("editKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
-
     const target = document.getElementById("editKeyAccountName").value;
     const data = {
       Segment: document.getElementById("editSegmentSelect").value,
