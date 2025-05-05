@@ -21,11 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
       row.innerHTML = `
         <td>${account["Segment"]}</td>
         <td>${account["Key Account Name"]}</td>
-        <td>${account["Outlets"]}</td>
         <td>${account["Contact"]}</td>
-        <td>${account["Email"]}</td>
         <td>${account["Mobile"]}</td>
-        <td>${account["Comments"]}</td>
+        <td>${account["Email"]}</td>
+      
       `;
       keyAccountListContainer.appendChild(row);
     });
@@ -126,11 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("editKeyAccountName").value = record["Key Account Name"] || "";
     document.getElementById("editSegmentSelect").value = record["Segment"] || "";
-    document.getElementById("editOutlets").value = record["Outlets"] || "";
     document.getElementById("editContact").value = record["Contact"] || "";
-    document.getElementById("editEmail").value = record["Email"] || "";
     document.getElementById("editMobile").value = record["Mobile"] || "";
-    document.getElementById("editComments").value = record["Comments"] || "";
+    document.getElementById("editEmail").value = record["Email"] || "";
+
+ 
   });
 
   // Edit — Submit
@@ -140,11 +139,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const target = document.getElementById("editKeyAccountName").value;
     const data = {
       Segment: document.getElementById("editSegmentSelect").value,
-      Outlets: document.getElementById("editOutlets").value,
       Contact: document.getElementById("editContact").value,
-      Email: document.getElementById("editEmail").value,
       Mobile: document.getElementById("editMobile").value,
-      Comments: document.getElementById("editComments").value
+      Email: document.getElementById("editEmail").value,
     };
 
     fetch(`${apiURL}&search=Key Account Name&value=${encodeURIComponent(target)}`, {
