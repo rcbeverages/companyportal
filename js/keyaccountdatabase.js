@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
             row.innerHTML = `
               <td><button class="visit-btn" data-name="${account["Vok Off Prem Key Accounts"]}">Visit</button></td>
               <td>${account["Segment"]}</td>
-              <td>${account["Vok Off Prem Key Accounts"]}</td>
+              <td>${account["Account Name"]}</td>
               <td>${account["Outlets"]}</td>
               <td>${account["Contact"]}</td>
               <td>${account["Email"]}</td>
