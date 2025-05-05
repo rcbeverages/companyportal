@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const selectAllButton = document.getElementById("selectAllKeyButton");
   const sendEmailButton = document.getElementById("sendKeyEmailButton");
 
-  const keyAccountApiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1/Key Accounts";
+  const keyAccountApiEndpoint = "https://sheetdb.io/api/v1/8ba1eug88u4y1?sheet=Key Accounts";
 
   fetch(keyAccountApiEndpoint)
     .then(response => response.json())
