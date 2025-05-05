@@ -5,9 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let allData = [];
 
-  // Load data
   fetch(apiURL)
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
       allData = data.filter(row => row["Status"] !== "Deleted");
       populateTable(allData);
@@ -35,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function populateDropdowns(data) {
     const delSelect = document.getElementById("accountSelect");
     const editSelect = document.getElementById("editAccountSelect");
-    delSelect.innerHTML = '<option value="">-- Select Account --</option>';
-    editSelect.innerHTML = '<option value="">-- Select Account --</option>';
+    delSelect.innerHTML = '<option value="">-- Select --</option>';
+    editSelect.innerHTML = '<option value="">-- Select --</option>';
 
     data.forEach(account => {
-      const name = account["Vok Off Prem Key Accounts"];
+      const name = account["Key Account Name"];
       const opt1 = document.createElement("option");
       opt1.value = name;
       opt1.textContent = name;
@@ -51,13 +50,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function populateSegmentOptions(data) {
-    const segmentSelect = document.getElementById("editSegmentSelect");
-    const segments = [...new Set(data.map(row => row["Segment"]))].sort();
-    segments.forEach(seg => {
-      const opt = document.createElement("option");
-      opt.value = seg;
-      opt.textContent = seg;
-      segmentSelect.appendChild(opt);
+    const segments = [...new Set(data.map(row => row["Segment"]).filter(Boolean))].sort();
+
+    const addSelect = document.getElementById("addSegmentSelect");
+    const editSelect = document.getElementById("editSegmentSelect");
+    [addSelect, editSelect].forEach(select => {
+      select.innerHTML = '<option value="">-- Select Segment --</option>';
+      segments.forEach(seg => {
+        const opt = document.createElement("option");
+        opt.value = seg;
+        opt.textContent = seg;
+        select.appendChild(opt);
+      });
     });
   }
 
@@ -70,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     populateTable(filtered);
   });
 
-  // Show modals
+  // Show Modals
   document.getElementById("addKeyAccountBtn").onclick = () => {
     document.getElementById("keyAccountModal").style.display = "block";
   };
@@ -81,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editKeyAccountModal").style.display = "block";
   };
 
-  // Add
+  // Add New
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -98,30 +102,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Delete
+  // Delete (Patch Status)
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const selected = document.getElementById("accountSelect").value;
     if (!selected) return;
 
-    fetch(`${apiURL}&search=Vok Off Prem Key Accounts&value=${encodeURIComponent(selected)}`, {
+    fetch(`${apiURL}&search=Key Account Name&value=${encodeURIComponent(selected)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: { Status: "Deleted" } })
     }).then(() => {
-      alert("Deleted.");
+      alert("Key account marked as deleted.");
       location.reload();
     });
   });
 
-  // Edit dropdown change: autofill form
+  // Edit — Dropdown Change Autofill
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
-    const record = allData.find(row => row["Vok Off Prem Key Accounts"] === selected);
+    const record = allData.find(row => row["Key Account Name"] === selected);
     if (!record) return;
 
-    document.getElementById("editKeyAccountName").value = record["Vok Off Prem Key Accounts"];
-    document.getElementById("editSegmentSelect").value = record["Segment"];
+    document.getElementById("editKeyAccountName").value = record["Key Account Name"] || "";
+    document.getElementById("editSegmentSelect").value = record["Segment"] || "";
     document.getElementById("editOutlets").value = record["Outlets"] || "";
     document.getElementById("editContact").value = record["Contact"] || "";
     document.getElementById("editEmail").value = record["Email"] || "";
@@ -129,11 +133,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editComments").value = record["Comments"] || "";
   });
 
-  // Edit form submit
+  // Edit — Submit
   document.getElementById("editKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const patchTarget = document.getElementById("editKeyAccountName").value;
+    const target = document.getElementById("editKeyAccountName").value;
     const data = {
       Segment: document.getElementById("editSegmentSelect").value,
       Outlets: document.getElementById("editOutlets").value,
@@ -143,12 +147,12 @@ document.addEventListener("DOMContentLoaded", function () {
       Comments: document.getElementById("editComments").value
     };
 
-    fetch(`${apiURL}&search=Vok Off Prem Key Accounts&value=${encodeURIComponent(patchTarget)}`, {
+    fetch(`${apiURL}&search=Key Account Name&value=${encodeURIComponent(target)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data })
     }).then(() => {
-      alert("Changes saved.");
+      alert("Key account updated.");
       location.reload();
     });
   });
