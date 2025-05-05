@@ -148,11 +148,10 @@
     <tr>
       <th>Segment</th>
       <th>Key Account Name</th>
-      <th>Outlets</th>
       <th>Contact</th>
-      <th>Email</th>
       <th>Mobile</th>
-      <th>Comments</th>
+      <th>Email</th>
+      
     </tr>
   </thead>
   <tbody id="storeList"></tbody>
@@ -169,20 +168,15 @@
       <label>Key Account Name:</label>
       <input name="Key Account Name" required />
 
-      <label>Outlets:</label>
-      <input name="Outlets" required />
-
       <label>Contact:</label>
       <input name="Contact" />
+
+       <label>Mobile:</label>
+      <input name="Mobile" />
 
       <label>Email:</label>
       <input name="Email" type="email" />
 
-      <label>Mobile:</label>
-      <input name="Mobile" />
-
-      <label>Comments:</label>
-      <textarea name="Comments"></textarea>
 
       <button type="submit" class="main-button">Submit</button>
       <button type="button" class="main-button" onclick="document.getElementById('keyAccountModal').style.display='none'">Cancel</button>
@@ -217,20 +211,16 @@
       <label>Key Account Name (locked):</label>
       <input name="Key Account Name" id="editKeyAccountName" readonly />
 
-      <label>Outlets:</label>
-      <input name="Outlets" id="editOutlets" required />
 
       <label>Contact:</label>
       <input name="Contact" id="editContact" />
 
-      <label>Email:</label>
-      <input name="Email" id="editEmail" type="email" />
-
       <label>Mobile:</label>
       <input name="Mobile" id="editMobile" />
 
-      <label>Comments:</label>
-      <textarea name="Comments" id="editComments"></textarea>
+      <label>Email:</label>
+      <input name="Email" id="editEmail" type="email" />
+
 
       <button type="submit" class="main-button">Save Changes</button>
       <button type="button" class="main-button" onclick="document.getElementById('editKeyAccountModal').style.display='none'">Cancel</button>
