@@ -356,3 +356,9 @@ textarea {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+/* Prevent content from hiding behind footer */
+body {
+  padding-bottom: 140px; /* adjust to match footer height + spacing */
+}
+
