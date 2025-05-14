@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const keyAccountListContainer = document.getElementById("storeList");
   const searchInput = document.getElementById("searchInputStore");
-  const API_URL = KEY_ACCOUNT + "?sheet=Key Accounts";
+  const apiEndpoint = "https://sheetdb.io/api/v1/hklellq80sjc7"; // Replace with your actual API endpoint for Master Store List
+  
 
   let allData = [];
 
