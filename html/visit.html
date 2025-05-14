@@ -8,30 +8,31 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visit Page - RC Beverages</title>
+  <title>Visit Page</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .content-wrapper {
       display: flex;
       flex-wrap: wrap;
-      padding: 160px 20px 140px 20px;
+      justify-content: space-between;
+      padding: 160px 20px 140px;
       box-sizing: border-box;
       gap: 20px;
     }
 
     .left-panel, .right-panel {
       flex: 1 1 480px;
-      background-color: #ffffff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 20px;
     }
 
     .panel-header {
       font-weight: bold;
       font-size: 1.2rem;
       color: #0057b7;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     .section {
@@ -40,37 +41,19 @@
 
     .section button.toggle-btn {
       background-color: #0057b7;
-      color: #fff;
+      color: white;
       border: none;
       padding: 8px 12px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.9rem;
       margin-bottom: 10px;
+      font-size: 0.9rem;
     }
 
     .section-content {
       border: 1px solid #ccc;
+      border-radius: 6px;
       padding: 10px;
-      border-radius: 4px;
-    }
-
-    .field {
-      margin-bottom: 10px;
-    }
-
-    .field label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .field input, .field textarea, .field select {
-      width: 100%;
-      padding: 8px;
-      font-size: 0.95rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
     }
 
     .save-button {
@@ -81,8 +64,8 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 20px;
       width: 100%;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -93,65 +76,53 @@
 </header>
 
 <div class="content-wrapper">
-  <!-- LEFT PANEL: CUSTOMER DETAILS -->
+  <!-- LEFT: Customer Details -->
   <div class="left-panel">
     <div class="panel-header">Customer Details</div>
-    <div class="section-content" id="customerDetailsContainer">
-      <!-- Dynamic customer info will load here -->
+    <div id="customerDetailsContainer">
+      <!-- Injected customer details go here -->
     </div>
   </div>
 
-  <!-- RIGHT PANEL: CALL VISIT SECTIONS -->
+  <!-- RIGHT: Visit Sections -->
   <div class="right-panel">
     <div class="panel-header">Store Visit</div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('visitDetails')">Log Visit</button>
       <div class="section-content" id="visitDetails">
-        <!-- Log visit form fields here -->
+        <!-- Visit info -->
       </div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('storeRange')">Store Range</button>
-      <div class="section-content" id="storeRange">
-        <!-- Store range fields -->
-      </div>
+      <div class="section-content" id="storeRange"></div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('preOrders')">Pre Orders</button>
-      <div class="section-content" id="preOrders">
-        <!-- Preorders fields -->
-      </div>
+      <div class="section-content" id="preOrders"></div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('assets')">Assets</button>
-      <div class="section-content" id="assets">
-        <!-- Assets info -->
-      </div>
+      <div class="section-content" id="assets"></div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('contactDetails')">Edit Contact</button>
-      <div class="section-content" id="contactDetails">
-        <!-- Editable contact fields -->
-      </div>
+      <div class="section-content" id="contactDetails"></div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('addressDetails')">Edit Address</button>
-      <div class="section-content" id="addressDetails">
-        <!-- Editable address fields -->
-      </div>
+      <div class="section-content" id="addressDetails"></div>
     </div>
 
     <div class="section">
       <button class="toggle-btn" onclick="toggleSection('classification')">Classification</button>
-      <div class="section-content" id="classification">
-        <!-- Segment, Grade, etc. -->
-      </div>
+      <div class="section-content" id="classification"></div>
     </div>
 
     <button class="save-button" onclick="submitVisit()">Save / End Call</button>
@@ -173,7 +144,7 @@
   }
 
   function submitVisit() {
-    alert("Visit submitted. (Hook up to real save logic)");
+    alert("Visit submitted. (Hook up logic here)");
   }
 </script>
 
