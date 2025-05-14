@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
+  const API_URL = "https://sheetdb.io/api/v1/hklellq80sjc7?sheet=Key Accounts";
   const keyAccountListContainer = document.getElementById("storeList");
   const searchInput = document.getElementById("searchInputStore");
-  const apiEndpoint = "https://sheetdb.io/api/v1/hklellq80sjc7"; // Replace with your actual API endpoint for Master Store List
-  
 
   let allData = [];
 
@@ -158,4 +157,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       location.reload();
     });
   });
-});I
+});
