@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let allData = [];
   let currentSort = { column: "Segment", direction: "asc" };
 
-  // Fetch data
+  // Fetch and display
   try {
     const response = await fetch(API_URL);
     const rawData = await response.json();
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Error fetching data:", error);
   }
 
-  // Sort and re-render table
   function sortAndRender(column, direction) {
     currentSort = { column, direction };
 
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     populateTable(sorted);
   }
 
-  // Table rendering
   function populateTable(data) {
     keyAccountListContainer.innerHTML = "";
     data.forEach(account => {
@@ -51,14 +49,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Header click sorting
+  // Sort by clicking headers
   document.querySelectorAll("thead th").forEach(th => {
     const colName = th.innerText.trim();
     if (tableHeaders.includes(colName)) {
       th.style.cursor = "pointer";
       th.addEventListener("click", () => {
-        const newDirection = (currentSort.column === colName && currentSort.direction === "asc") ? "desc" : "asc";
-        sortAndRender(colName, newDirection);
+        const newDir = currentSort.column === colName && currentSort.direction === "asc" ? "desc" : "asc";
+        sortAndRender(colName, newDir);
       });
     }
   });
@@ -99,6 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     populateTable(filtered);
   });
 
+  // Show modals
   document.getElementById("addKeyAccountBtn").onclick = () =>
     document.getElementById("keyAccountModal").style.display = "block";
 
@@ -108,6 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("editKeyAccountBtn").onclick = () =>
     document.getElementById("editKeyAccountModal").style.display = "block";
 
+  // Add
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -124,27 +124,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   });
 
+  // Delete
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const selected = document.getElementById("accountSelect").value;
-  if (!selected) return;
+    e.preventDefault();
+    const selected = document.getElementById("accountSelect").value;
+    if (!selected) return;
 
-  const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(selected)}`;
-  console.log("Deleting:", patchUrl); // debug log
+    const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(selected)}`;
+    console.log("PATCH delete:", patchUrl);
 
-  fetch(patchUrl, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: { Status: "Deleted" } })
-  }).then(() => {
-    alert("Key account deleted.");
-    location.reload();
-  }).catch(err => {
-    console.error("PATCH failed:", err);
-    alert("Error deleting. Check Sheet column and value match.");
+    fetch(patchUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: { Status: "Deleted" } })
+    }).then(() => {
+      alert("Key account deleted.");
+      location.reload();
+    });
   });
-});
 
+  // Load Edit Form
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
     const record = allData.find(row => row["Key Account Name"] === selected);
@@ -157,6 +156,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("editEmail").value = record["Email"] || "";
   });
 
+  // Submit Edit
   document.getElementById("editKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -168,7 +168,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       Mobile: document.getElementById("editMobile").value
     };
 
-    const patchUrl = `${API_URL}/search?Key Account Name=${encodeURIComponent(target)}`;
+    const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(target)}`;
+    console.log("PATCH edit:", patchUrl, data);
+
     fetch(patchUrl, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
