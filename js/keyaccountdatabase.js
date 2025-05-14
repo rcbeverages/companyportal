@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const API_URL = "https://sheetdb.io/api/v1/hklellq80sjc7?sheet=Key Accounts";
+  const API_URL = "https://sheetdb.io/api/v1/hklellq80sjc7";
   const keyAccountListContainer = document.getElementById("storeList");
   const searchInput = document.getElementById("searchInputStore");
 
