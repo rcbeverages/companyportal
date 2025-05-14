@@ -125,20 +125,25 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const selected = document.getElementById("accountSelect").value;
-    if (!selected) return;
+  e.preventDefault();
+  const selected = document.getElementById("accountSelect").value;
+  if (!selected) return;
 
-    const patchUrl = `${API_URL}/search?Key Account Name=${encodeURIComponent(selected)}`;
-    fetch(patchUrl, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: { Status: "Deleted" } })
-    }).then(() => {
-      alert("Key account deleted.");
-      location.reload();
-    });
+  const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(selected)}`;
+  console.log("Deleting:", patchUrl); // debug log
+
+  fetch(patchUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: { Status: "Deleted" } })
+  }).then(() => {
+    alert("Key account deleted.");
+    location.reload();
+  }).catch(err => {
+    console.error("PATCH failed:", err);
+    alert("Error deleting. Check Sheet column and value match.");
   });
+});
 
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
