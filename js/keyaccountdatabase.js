@@ -1,25 +1,29 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const apiURL = "https://sheetdb.io/api/v1/8ba1eug88u4y1?sheet=Key%20Accounts";
+document.addEventListener("DOMContentLoaded", async function () {
   const keyAccountListContainer = document.getElementById("storeList");
   const searchInput = document.getElementById("searchInputStore");
+  const API_URL = KEY_ACCOUNT + "?sheet=Key Accounts";
 
   let allData = [];
 
-  fetch(apiURL)
-    .then(res => res.json())
-    .then(data => {
-      allData = data
-        .filter(row => row["Status"] !== "Deleted")
-        .sort((a, b) => {
-          const segA = (a["Segment"] || "").toLowerCase();
-          const segB = (b["Segment"] || "").toLowerCase();
-          return segA.localeCompare(segB);
-        });
+  // Fetch and sort data by Segment
+  try {
+    const response = await fetch(API_URL);
+    const rawData = await response.json();
 
-      populateTable(allData);
-      populateDropdowns(allData);
-      populateSegmentOptions(allData);
-    });
+    allData = rawData
+      .filter(row => !row["Status"] || row["Status"] !== "Deleted")
+      .sort((a, b) => {
+        const segA = (a["Segment"] || "").toLowerCase();
+        const segB = (b["Segment"] || "").toLowerCase();
+        return segA.localeCompare(segB);
+      });
+
+    populateTable(allData);
+    populateDropdowns(allData);
+    populateSegmentOptions(allData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 
   function populateTable(data) {
     keyAccountListContainer.innerHTML = "";
@@ -44,60 +48,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
     data.forEach(account => {
       const name = account["Key Account Name"];
-      const opt1 = document.createElement("option");
-      opt1.value = name;
-      opt1.textContent = name;
-      delSelect.appendChild(opt1);
-
-      const opt2 = opt1.cloneNode(true);
-      editSelect.appendChild(opt2);
+      const opt1 = new Option(name, name);
+      const opt2 = new Option(name, name);
+      delSelect.add(opt1);
+      editSelect.add(opt2);
     });
   }
 
   function populateSegmentOptions(data) {
     const segments = [...new Set(data.map(row => row["Segment"]).filter(Boolean))].sort();
-
     const addSelect = document.getElementById("addSegmentSelect");
     const editSelect = document.getElementById("editSegmentSelect");
+
     [addSelect, editSelect].forEach(select => {
       select.innerHTML = '<option value="">-- Select Segment --</option>';
       segments.forEach(seg => {
-        const opt = document.createElement("option");
-        opt.value = seg;
-        opt.textContent = seg;
-        select.appendChild(opt);
+        const opt = new Option(seg, seg);
+        select.add(opt);
       });
     });
   }
 
-  // Search functionality
+  // Search function
   searchInput.addEventListener("input", function () {
     const term = this.value.toLowerCase();
     const filtered = allData.filter(account =>
-      Object.values(account).some(val => val?.toString().toLowerCase().includes(term))
+      Object.values(account).some(val => val.toLowerCase().includes(term))
     );
     populateTable(filtered);
   });
 
   // Show modals
-  document.getElementById("addKeyAccountBtn").onclick = () => {
+  document.getElementById("addKeyAccountBtn").onclick = () =>
     document.getElementById("keyAccountModal").style.display = "block";
-  };
-  document.getElementById("deleteKeyAccountBtn").onclick = () => {
-    document.getElementById("deleteKeyAccountModal").style.display = "block";
-  };
-  document.getElementById("editKeyAccountBtn").onclick = () => {
-    document.getElementById("editKeyAccountModal").style.display = "block";
-  };
 
-  // Add new key account
+  document.getElementById("deleteKeyAccountBtn").onclick = () =>
+    document.getElementById("deleteKeyAccountModal").style.display = "block";
+
+  document.getElementById("editKeyAccountBtn").onclick = () =>
+    document.getElementById("editKeyAccountModal").style.display = "block";
+
+  // Add
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
     const data = {};
     formData.forEach((value, key) => data[key] = value);
 
-    fetch(apiURL, {
+    fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data })
@@ -107,13 +105,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Delete key account (mark as deleted)
+  // Delete (PATCH to set Status = Deleted)
   document.getElementById("deleteKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const selected = document.getElementById("accountSelect").value;
     if (!selected) return;
 
-    fetch(`${apiURL}&search=Key Account Name&value=${encodeURIComponent(selected)}`, {
+    fetch(`${API_URL}&search=Key Account Name&value=${encodeURIComponent(selected)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: { Status: "Deleted" } })
@@ -123,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Edit dropdown change (autofill)
+  // Edit - load selected data
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
     const record = allData.find(row => row["Key Account Name"] === selected);
@@ -136,18 +134,21 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("editEmail").value = record["Email"] || "";
   });
 
-  // Edit form submission
+  // Edit - submit patch
   document.getElementById("editKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
+
     const target = document.getElementById("editKeyAccountName").value;
     const data = {
       Segment: document.getElementById("editSegmentSelect").value,
       Contact: document.getElementById("editContact").value,
-      Mobile: document.getElementById("editMobile").value,
       Email: document.getElementById("editEmail").value,
+      Mobile: document.getElementById("editMobile").value
     };
 
-    fetch(`${apiURL}&search=Key Account Name&value=${encodeURIComponent(target)}`, {
+    console.log("PATCHING:", target, data); // Debug log
+
+    fetch(`${API_URL}&search=Key Account Name&value=${encodeURIComponent(target)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data })
@@ -156,4 +157,4 @@ document.addEventListener("DOMContentLoaded", function () {
       location.reload();
     });
   });
-});
+});I
