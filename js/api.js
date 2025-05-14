@@ -13,7 +13,8 @@ const API = {
   EMAIL_REMINDERS: "https://sheetdb.io/api/v1/lkhkbez8p8el9",
   ASSET_LOG: "https://sheetdb.io/api/v1/8kwtvisrhm2zd",
   MASTER_STORE_LIST: "https://sheetdb.io/api/v1/8ba1eug88u4y1",
-  ARCADE_LEADERBOARD: "https://sheetdb.io/api/v1/m2stlpl38zxyx"
+  ARCADE_LEADERBOARD: "https://sheetdb.io/api/v1/m2stlpl38zxyx",
+  KEY_ACCOUNT: "https://sheetdb.io/api/v1/hklellq80sjc7"
 };
 
 // ===================
