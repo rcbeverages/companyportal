@@ -2,213 +2,161 @@
 <html lang="en">
 <head>
   <script>
-  if (!localStorage.getItem("username")) {
-    window.location.href = "login.html";
-  }
-</script>
+    if (!localStorage.getItem("username")) {
+      window.location.href = "login.html";
+    }
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visit Log - RC Beverages</title>
-  
+  <title>Visit Page - RC Beverages</title>
   <link rel="stylesheet" href="style.css" />
-
   <style>
-    /* Left/Right layout */
-    .page-layout {
+    .content-wrapper {
       display: flex;
-      height: auto;
-      padding: 15px;
+      flex-wrap: wrap;
+      padding: 160px 20px 140px 20px;
+      box-sizing: border-box;
       gap: 20px;
-      box-sizing: border-box;
-      align-items: flex-start;
     }
-    .left-column {
-      position: absolute;
-      top: 160px;
-      bottom: 80px;
-      left: 5%;
-      width: 28%;
-      padding: 100px;
-      background: #eef3fd;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      box-sizing: border-box;
+
+    .left-panel, .right-panel {
+      flex: 1 1 480px;
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .right-column {
-      position: absolute;
-      top: 100px;
-      bottom: 80px;
-      right: 5%;
-      width: 60%;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      box-sizing: border-box;
+
+    .panel-header {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #0057b7;
+      margin-bottom: 10px;
     }
-    /* Edit button styling */
-    .edit-btn {
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section button.toggle-btn {
+      background-color: #0057b7;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .section-content {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .field input, .field textarea, .field select {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.95rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .save-button {
       background-color: #0057b7;
       color: white;
+      padding: 10px 16px;
+      font-size: 1rem;
       border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 25px;
-      font-weight: bold;
-      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
-    }
-    .edit-btn:hover {
-      background-color: #0041a3;
-    }
-    /* Modal styling */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
+      margin-top: 20px;
       width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-    }
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      box-sizing: border-box;
-    }
-    .close-btn {
-      float: right;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #0057b7;
-    }
-    .close-btn:hover {
-      color: darkred;
     }
   </style>
 </head>
-
 <body>
+
 <header>
-  <h1>Visit Log</h1>
+  <h1>Visit Page</h1>
 </header>
 
-<div class="page-layout">
-  
-  <!-- Left Column -->
-  <div class="left-column">
-    <h2>Customer Details</h2>
-    <div class="card">
-      <div id="detailsContent">
-        <p><strong>Customer Name:</strong> <span id="custName">Loading...</span></p>
-        <p><strong>Sub Owner Group:</strong> <span id="subOwnerGroup">Loading...</span></p>
-        <p><strong>Key Account Group:</strong> <span id="keyAccountGroup">Loading...</span></p>
-        <p><strong>Grade:</strong> <span id="grade">Loading...</span></p>
-        <p><strong>Store Type:</strong> <span id="storeType">Loading...</span></p>
-        <p><strong>Segment:</strong> <span id="segment">Loading...</span></p>
-        <p><strong>Contact Name:</strong> <span id="contactNameView">Loading...</span></p>
-        <p><strong>Phone:</strong> <span id="contactPhoneView">Loading...</span></p>
-        <p><strong>Email:</strong> <span id="contactEmailView">Loading...</span></p>
-        <p><strong>Address:</strong> <span id="address">Loading...</span></p>
-        <p><strong>Suburb:</strong> <span id="suburb">Loading...</span></p>
-        <p><strong>State:</strong> <span id="state">Loading...</span></p>
-        <p><strong>Postcode:</strong> <span id="postcode">Loading...</span></p>
-        <p><strong>BDM:</strong> <span id="bdmView">Loading...</span></p>
-      </div>
-    </div>
-
-    <div class="card">
-      <button class="edit-btn" onclick="openStoreModal()">Edit Store</button>
-      <button class="edit-btn" onclick="openContactModal()">Edit Contact</button>
-      <button class="edit-btn" onclick="openAddressModal()">Edit Address</button>
+<div class="content-wrapper">
+  <!-- LEFT PANEL: CUSTOMER DETAILS -->
+  <div class="left-panel">
+    <div class="panel-header">Customer Details</div>
+    <div class="section-content" id="customerDetailsContainer">
+      <!-- Dynamic customer info will load here -->
     </div>
   </div>
 
-  <!-- Right Column -->
-  <div class="right-column">
-    <h2>Store Visit</h2>
+  <!-- RIGHT PANEL: CALL VISIT SECTIONS -->
+  <div class="right-panel">
+    <div class="panel-header">Store Visit</div>
 
-    <div class="card">
-      <h3>Store Visit</h3>
-      <div class="form-group">
-        <label>Visit Reason</label>
-        <select id="reason">
-          <option>Planned Visit</option>
-          <option>Ranging Update</option>
-          <option>Tasting</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Outcome</label>
-        <select id="outcome">
-          <option>Positive</option>
-          <option>Neutral</option>
-          <option>Negative</option>
-          <option>Follow-Up Required</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Notes</label>
-        <textarea id="notes" rows="4"></textarea>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('visitDetails')">Log Visit</button>
+      <div class="section-content" id="visitDetails">
+        <!-- Log visit form fields here -->
       </div>
     </div>
 
-    <div class="card">
-      <h3>Preorders</h3>
-      <div id="preorderContainer">Loading preorders...</div>
-    </div>
-
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('storeRange')">Store Range</button>
-      <div id="storeRange" class="hidden">
-        <div id="storeRangeContainer">Loading store range...</div>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('storeRange')">Store Range</button>
+      <div class="section-content" id="storeRange">
+        <!-- Store range fields -->
       </div>
     </div>
 
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('assetForm')">Asset Management</button>
-      <div id="assetForm" class="hidden">
-        <div class="form-group"><label>Asset Type</label><input id="assetType" /></div>
-        <div class="form-group"><label>Asset Tag Code</label><input id="assetTag" /></div>
-        <div class="form-group"><label>Agreement</label><input id="assetAgreement" /></div>
-        <div class="form-group"><label>Comments</label><textarea id="assetComments" rows="4"></textarea></div>
-        <div id="existingAssets">Loading existing assets...</div>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('preOrders')">Pre Orders</button>
+      <div class="section-content" id="preOrders">
+        <!-- Preorders fields -->
       </div>
     </div>
 
-    <div class="card">
-      <button class="collapsible" onclick="toggleSection('emailReminder')">Email Reminder</button>
-      <div id="emailReminder" class="hidden">
-        <div class="form-group"><label>Date to Email</label><input type="date" id="reminderDate" /></div>
-        <div class="form-group"><label>Reminder Comments</label><textarea id="reminderNotes" rows="2"></textarea></div>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('assets')">Assets</button>
+      <div class="section-content" id="assets">
+        <!-- Assets info -->
       </div>
     </div>
 
-    <div class="card">
-      <h3>Previous Visit Notes</h3>
-      <div id="pastNotes">Loading previous notes...</div>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('contactDetails')">Edit Contact</button>
+      <div class="section-content" id="contactDetails">
+        <!-- Editable contact fields -->
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Current Promos</h3>
-      <div id="promoList">Loading current promos...</div>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('addressDetails')">Edit Address</button>
+      <div class="section-content" id="addressDetails">
+        <!-- Editable address fields -->
+      </div>
     </div>
 
-    <div class="card action-buttons">
-      <button onclick="saveEverything()">Save / End Call</button>
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleSection('classification')">Classification</button>
+      <div class="section-content" id="classification">
+        <!-- Segment, Grade, etc. -->
+      </div>
     </div>
 
-  </div> <!-- End Right Column -->
-
-</div> <!-- End Page Layout -->
+    <button class="save-button" onclick="submitVisit()">Save / End Call</button>
+  </div>
+</div>
 
 <footer>
   <button class="footer-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
@@ -218,8 +166,16 @@
   <button class="footer-btn" onclick="location.href='portfolio.html'">Portfolio</button>
 </footer>
 
-<!-- Link to the separated JavaScript file -->
-<script src="visit.js"></script>
+<script>
+  function toggleSection(id) {
+    const section = document.getElementById(id);
+    section.style.display = section.style.display === "none" ? "block" : "none";
+  }
+
+  function submitVisit() {
+    alert("Visit submitted. (Hook up to real save logic)");
+  }
+</script>
 
 </body>
 </html>
