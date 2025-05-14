@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let allData = [];
   let currentSort = { column: "Segment", direction: "asc" };
 
-  // Fetch and display
+  // Fetch data
   try {
     const response = await fetch(API_URL);
     const rawData = await response.json();
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Sort by clicking headers
+  // Enable header sorting
   document.querySelectorAll("thead th").forEach(th => {
     const colName = th.innerText.trim();
     if (tableHeaders.includes(colName)) {
@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     populateTable(filtered);
   });
 
-  // Show modals
   document.getElementById("addKeyAccountBtn").onclick = () =>
     document.getElementById("keyAccountModal").style.display = "block";
 
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("editKeyAccountBtn").onclick = () =>
     document.getElementById("editKeyAccountModal").style.display = "block";
 
-  // Add
+  // Add new account
   document.getElementById("keyAccountForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -130,20 +129,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     const selected = document.getElementById("accountSelect").value;
     if (!selected) return;
 
-    const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(selected)}`;
-    console.log("PATCH delete:", patchUrl);
-
-    fetch(patchUrl, {
+    fetch(API_URL, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: { Status: "Deleted" } })
+      body: JSON.stringify({
+        search: { "Key Account Name": selected },
+        data: { Status: "Deleted" }
+      })
     }).then(() => {
       alert("Key account deleted.");
       location.reload();
+    }).catch(err => {
+      console.error("DELETE failed:", err);
+      alert("Delete error — check console.");
     });
   });
 
-  // Load Edit Form
+  // Load edit form
   document.getElementById("editAccountSelect").addEventListener("change", function () {
     const selected = this.value;
     const record = allData.find(row => row["Key Account Name"] === selected);
@@ -156,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("editEmail").value = record["Email"] || "";
   });
 
-  // Submit Edit
+  // Submit edit
   document.getElementById("editKeyForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -168,16 +170,19 @@ document.addEventListener("DOMContentLoaded", async function () {
       Mobile: document.getElementById("editMobile").value
     };
 
-    const patchUrl = `${API_URL}/search?Key%20Account%20Name=${encodeURIComponent(target)}`;
-    console.log("PATCH edit:", patchUrl, data);
-
-    fetch(patchUrl, {
+    fetch(API_URL, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data })
+      body: JSON.stringify({
+        search: { "Key Account Name": target },
+        data
+      })
     }).then(() => {
       alert("Key account updated.");
       location.reload();
+    }).catch(err => {
+      console.error("EDIT failed:", err);
+      alert("Update error — check console.");
     });
   });
 });
